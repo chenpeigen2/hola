@@ -7,11 +7,12 @@ plugins {
 group = "cn.edu.ruc"
 version = "1.0-SNAPSHOT"
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+tasks.compileJava {
+    options.release.set(17)
+    options.isIncremental = true
+    options.isFork = true
+    options.isFailOnError = true
 }
-
 
 repositories {
     mavenCentral()
@@ -19,16 +20,11 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.9.0")
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
-// https://mvnrepository.com/artifact/commons-io/commons-io
     implementation("commons-io:commons-io:2.11.0")
-// https://mvnrepository.com/artifact/commons-codec/commons-codec
     implementation("commons-codec:commons-codec:1.15")
 }
 
@@ -37,5 +33,5 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
+    kotlinOptions.jvmTarget = "11"
 }
