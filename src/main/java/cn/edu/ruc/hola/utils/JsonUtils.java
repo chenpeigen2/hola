@@ -7,9 +7,11 @@ import cn.edu.ruc.hola.config.model.Host;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public final class JsonUtils {
 
@@ -31,7 +33,7 @@ public final class JsonUtils {
     @SneakyThrows
     public synchronized static List<Host> readProps() {
         if (hosts == null) {
-            hosts = gson.fromJson(new FileReader("/home/mi/demo_java/bc/algorithm/src/main/resources/localsid.json"), new TypeToken<List<Host>>() {
+            hosts = gson.fromJson(new FileReader(Objects.requireNonNull(JsonUtils.class.getClassLoader().getResource("localsid.json")).getFile()), new TypeToken<List<Host>>() {
             }.getType());
         }
         return hosts;
@@ -79,5 +81,9 @@ public final class JsonUtils {
             }
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        readProps();
     }
 }
