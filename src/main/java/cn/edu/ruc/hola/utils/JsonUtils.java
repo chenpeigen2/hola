@@ -81,8 +81,4 @@ public final class JsonUtils {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        readProps();
-    }
 }
