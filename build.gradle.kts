@@ -7,20 +7,6 @@ plugins {
 group = "cn.edu.ruc"
 version = "1.0-SNAPSHOT"
 
-tasks.compileJava {
-    options.release.set(17)
-    options.isIncremental = true
-    options.isFork = true
-    options.isFailOnError = true
-}
-
-tasks.compileTestJava {
-    options.release.set(17)
-    options.isIncremental = true
-    options.isFork = true
-    options.isFailOnError = true
-}
-
 repositories {
     mavenCentral()
 }
@@ -37,6 +23,13 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+    options.isIncremental = true
+    options.isFork = true
+    options.isFailOnError = true
 }
 
 tasks.withType<KotlinCompile> {
