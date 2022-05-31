@@ -25,6 +25,7 @@ public final class SHA256Utils {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        logger.info(encodeStr);
         return encodeStr;
     }
 
