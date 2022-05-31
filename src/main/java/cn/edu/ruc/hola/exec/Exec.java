@@ -69,7 +69,7 @@ public class Exec implements Reachable {
 
         int MAX_CNT = quickQueue.getMaxKeyCnt();
         String DATA = quickQueue.getMaxKey();
-        String en = MD5Utils.md5(DATA);
+        String en = SHA256Utils.getSHA256Str(DATA);
 
         float percent = (float) MAX_CNT / len;
 

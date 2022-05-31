@@ -1,13 +1,12 @@
 package cn.edu.ruc.hola.utils;
 
+import cn.edu.ruc.hola.config.model.Host;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import cn.edu.ruc.hola.config.model.Host;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
-import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
