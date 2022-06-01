@@ -16,6 +16,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
+/**
+ * only support instance method ,
+ * do not support static method !!!
+ * if you are trying to proxy the static method , consider use the ASM to manipulate class
+ */
 public final class BuddyUtils2 {
     private static final Logger logger = Logger.getLogger("RBuddyUtils");
 
