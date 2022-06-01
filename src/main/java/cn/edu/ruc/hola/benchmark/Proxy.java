@@ -6,9 +6,10 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 public interface Proxy<T> {
+    Stopwatch stopwatch = Stopwatch.createStarted();
 
     default Object stopwatch(T t, Method m, Object[] args) {
-        Stopwatch stopwatch = Stopwatch.createStarted();
+        stopwatch.start();
         Object obj = proxy(t, m, args);
         stopwatch.stop();
         System.out.printf("执行时长：%d 秒. %n", stopwatch.elapsed().getSeconds());
