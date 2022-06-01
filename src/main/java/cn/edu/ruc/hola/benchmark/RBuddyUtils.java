@@ -45,7 +45,7 @@ public class RBuddyUtils {
                 .method(ElementMatchers.isDeclaredBy(cls))
                 .intercept(MethodDelegation.to(new RBuddyUtils.MethodInterceptor<T>(t)))
                 .make();
-        DynamicType.Loaded<T> proxy = make.load(BuddyUtils.class.getClassLoader());
+        DynamicType.Loaded<T> proxy = make.load(RBuddyUtils.class.getClassLoader());
         return proxy.getLoaded();
     }
 
