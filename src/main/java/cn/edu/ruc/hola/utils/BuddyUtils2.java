@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * if you are trying to proxy the static method , consider use the ASM to manipulate class
  */
 public final class BuddyUtils2 {
-    private static final Logger logger = Logger.getLogger("RBuddyUtils");
+    private static final Logger logger = Logger.getLogger("BuddyUtils2");
 
     private BuddyUtils2() {
 
