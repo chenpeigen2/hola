@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.utils;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,15 +17,8 @@ public final class SHA256Utils {
     }
 
     public static String getSHA256Str(String str) {
-        MessageDigest messageDigest;
-        String encodeStr = "";
-        try {
-            messageDigest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = messageDigest.digest(str.getBytes(StandardCharsets.UTF_8));
-            encodeStr = Hex.encodeHexString(hash);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        String encodeStr;
+        encodeStr = DigestUtils.sha256Hex(str);
         logger.info(encodeStr);
         return encodeStr;
     }
