@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public final class BuddyUtils {
+public class BuddyUtils {
 
 
     public static class MethodInterceptor<T> {
