@@ -14,7 +14,12 @@ import net.bytebuddy.matcher.ElementMatchers;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class RBuddyUtils {
+public final class RBuddyUtils {
+
+    private RBuddyUtils() {
+
+    }
+
     private static final Stopwatch stopwatch = Proxy.stopwatch;
 
     public static class MethodInterceptor<T> {
@@ -42,7 +47,7 @@ public class RBuddyUtils {
         var make = new ByteBuddy()
                 .subclass(cls)
                 .method(ElementMatchers.isDeclaredBy(cls))
-                .intercept(MethodDelegation.to(new RBuddyUtils.MethodInterceptor<T>(t)))
+                .intercept(MethodDelegation.to(new RBuddyUtils.MethodInterceptor<>(t)))
                 .make();
         DynamicType.Loaded<T> proxy = make.load(RBuddyUtils.class.getClassLoader());
         return proxy.getLoaded();
