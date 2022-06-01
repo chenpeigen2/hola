@@ -1,5 +1,7 @@
 package cn.edu.ruc.hola.benchmark;
 
+import cn.edu.ruc.hola.utils.BuddyUtils;
+import cn.edu.ruc.hola.utils.RBuddyUtils;
 import com.google.common.base.Stopwatch;
 
 import java.lang.reflect.Method;

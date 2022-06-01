@@ -1,5 +1,6 @@
-package cn.edu.ruc.hola.benchmark;
+package cn.edu.ruc.hola.utils;
 
+import cn.edu.ruc.hola.benchmark.Proxy;
 import com.google.common.base.Stopwatch;
 import lombok.SneakyThrows;
 import net.bytebuddy.ByteBuddy;

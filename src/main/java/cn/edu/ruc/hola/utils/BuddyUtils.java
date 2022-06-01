@@ -1,5 +1,6 @@
-package cn.edu.ruc.hola.benchmark;
+package cn.edu.ruc.hola.utils;
 
+import cn.edu.ruc.hola.benchmark.Proxy;
 import lombok.SneakyThrows;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.DynamicType;
