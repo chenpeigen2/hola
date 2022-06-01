@@ -14,7 +14,6 @@ import net.bytebuddy.matcher.ElementMatchers;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
 
 public class RBuddyUtils {
     private static final Stopwatch stopwatch = Proxy.stopwatch;
