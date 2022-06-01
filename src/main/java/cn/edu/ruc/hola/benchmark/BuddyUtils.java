@@ -29,7 +29,7 @@ public final class BuddyUtils {
 
         @RuntimeType
         public Object interceptor(@This Object instance, @Origin Method method, @AllArguments Object[] args) throws InvocationTargetException, IllegalAccessException {
-            return consumer.stopwatch(t, method);
+            return consumer.stopwatch(t, method, args);
         }
     }
 

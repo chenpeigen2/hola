@@ -9,7 +9,7 @@ public class Demo4 {
 
     public static class Call {
         public String call1(String ok) {
-            System.out.println(" call 1 call fucking ");
+            System.out.println(" call 1 call fucking " + ok);
             return "";
         }
 
@@ -20,13 +20,16 @@ public class Demo4 {
     }
 
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         var c = BuddyUtils.getInstance(new Call(), Call.class, new Proxy<Call>() {
             @Override
-            public Object proxy(Call call, Method m) {
+            public Object proxy(Call call, Method m, Object[] arg) {
                 Object obj = null;
                 if (m.getName().equals("call1")) {
-                    call.call1("fff");
+                    System.out.println(arg.length);
+                    System.out.println("fucking============");
+                    call.call1((String) arg[0]);
+                    System.out.println("fuckingEnding============");
                     return null;
                 }
                 if (m.getName().equals("call2")) {
@@ -38,7 +41,7 @@ public class Demo4 {
 
         Stopwatch stopwatch = Stopwatch.createStarted();
         Call fucking = new Call();
-        fucking.call1("1123");
+        fucking.call1("hhhhhhhahahahaha");
         stopwatch.stop();
         // 执行时间（单位：秒）
         System.out.printf("执行时长：%d 秒. %n", stopwatch.elapsed().getSeconds()); // %n 为换行

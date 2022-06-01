@@ -7,9 +7,9 @@ import java.util.concurrent.TimeUnit;
 
 public interface Proxy<T> {
 
-    default Object stopwatch(T t, Method m) {
+    default Object stopwatch(T t, Method m, Object[] args) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        Object obj = proxy(t, m);
+        Object obj = proxy(t, m, args);
         stopwatch.stop();
         System.out.printf("执行时长：%d 秒. %n", stopwatch.elapsed().getSeconds());
         System.out.printf("执行时长：%d 豪秒.%n", stopwatch.elapsed(TimeUnit.MILLISECONDS));
@@ -17,5 +17,5 @@ public interface Proxy<T> {
         return obj;
     }
 
-    Object proxy(T t, Method m);
+    Object proxy(T t, Method m, Object[] args);
 }
