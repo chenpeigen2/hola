@@ -3,7 +3,8 @@ package cn.edu.ruc.hola.service.extension.couchdb;
 import com.google.gson.Gson;
 import cn.edu.ruc.hola.config.model.Host;
 import cn.edu.ruc.hola.entity.Node;
-import org.apache.commons.io.FileUtils;
+import kotlin.io.FilesKt;
+import kotlin.text.Charsets;
 import cn.edu.ruc.hola.service.extension.couchdb.models.AllDocs;
 import cn.edu.ruc.hola.service.extension.couchdb.models.Doc;
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs;
@@ -79,23 +80,16 @@ public class CouchDbExtension {
      */
     public void addDocs() {
 
-        String data = null;
-        try {
-            String all = Objects.requireNonNull(this.getClass().getClassLoader().getResource("all.json")).getFile();
-            data = FileUtils.readFileToString(new File(all), "utf-8");
+        String data;
+        String all = Objects.requireNonNull(this.getClass().getClassLoader().getResource("all.json")).getFile();
+        data = FilesKt.readText(new File(all), Charsets.UTF_8);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (data != null) {
-            try (var res = dbUtils.addBulkDoc("fake", data)) {
-                if (res.body() != null) {
-                    try {
-                        System.out.println(res.body().string());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+        try (var res = dbUtils.addBulkDoc("fake", data)) {
+            if (res.body() != null) {
+                try {
+                    System.out.println(res.body().string());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }
