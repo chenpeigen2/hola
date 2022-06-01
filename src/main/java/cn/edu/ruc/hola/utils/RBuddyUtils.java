@@ -34,7 +34,7 @@ public final class RBuddyUtils {
 
         @RuntimeType
         public Object interceptor(@This Object instance, @Origin Method method, @AllArguments Object[] args) throws InvocationTargetException, IllegalAccessException {
-            logger.info("proxy at method : " + method.getName() + ", at class: " + t.getClass().toGenericString());
+            logger.info("$$$ proxy at method : " + method.getName() + ", at class: " + t.getClass().toGenericString());
             stopwatch.start();
             Object obj = method.invoke(t, args);
             stopwatch.stop();
