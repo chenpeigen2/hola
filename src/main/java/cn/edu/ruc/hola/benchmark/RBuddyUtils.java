@@ -11,7 +11,6 @@ import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
 import net.bytebuddy.matcher.ElementMatchers;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -39,7 +38,7 @@ public class RBuddyUtils {
      * @param cls class can't be final
      * @return the proxy class
      */
-    public static <T> Class<? extends T> createClass(Class<T> cls, T t) throws IOException {
+    public static <T> Class<? extends T> createClass(Class<T> cls, T t) {
         var make = new ByteBuddy()
                 .subclass(cls)
                 .method(ElementMatchers.isDeclaredBy(cls))
