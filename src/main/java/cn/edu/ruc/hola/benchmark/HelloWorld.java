@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.benchmark;
 
-import cn.edu.ruc.hola.utils.RBuddyUtils;
+import cn.edu.ruc.hola.utils.BuddyUtils2;
 
 public class HelloWorld {
 
@@ -17,7 +17,7 @@ public class HelloWorld {
     }
 
     public static void main(String[] args) {
-        var c = RBuddyUtils.getInstance(new Call(), Call.class);
+        var c = BuddyUtils2.getInstance(new Call(), Call.class);
         c.call1("1123");
         c.call2();
     }

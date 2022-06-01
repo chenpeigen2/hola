@@ -1,6 +1,5 @@
 package cn.edu.ruc.hola.utils;
 
-import cn.edu.ruc.hola.benchmark.Proxy;
 import cn.edu.ruc.hola.benchmark.StopWatch;
 import com.google.common.base.Stopwatch;
 import lombok.SneakyThrows;
@@ -17,10 +16,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
-public final class RBuddyUtils {
+public final class BuddyUtils2 {
     private static final Logger logger = Logger.getLogger("RBuddyUtils");
 
-    private RBuddyUtils() {
+    private BuddyUtils2() {
 
     }
 
@@ -52,9 +51,9 @@ public final class RBuddyUtils {
         var make = new ByteBuddy()
                 .subclass(cls)
                 .method(ElementMatchers.isDeclaredBy(cls))
-                .intercept(MethodDelegation.to(new RBuddyUtils.MethodInterceptor<>(t)))
+                .intercept(MethodDelegation.to(new BuddyUtils2.MethodInterceptor<>(t)))
                 .make();
-        DynamicType.Loaded<T> proxy = make.load(RBuddyUtils.class.getClassLoader());
+        DynamicType.Loaded<T> proxy = make.load(BuddyUtils2.class.getClassLoader());
         return proxy.getLoaded();
     }
 
