@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 public interface Proxy<T> {
     Stopwatch stopwatch = Stopwatch.createUnstarted();
 
+    @Deprecated
     default Object stopwatch(T t, Method m, Object[] args) {
         stopwatch.start();
         Object obj = proxy(t, m, args);
@@ -22,5 +23,6 @@ public interface Proxy<T> {
         System.out.printf("执行时长：%d 纳秒.%n", stopwatch.elapsed(TimeUnit.NANOSECONDS));
     }
 
+    @Deprecated
     Object proxy(T t, Method m, Object[] args);
 }
