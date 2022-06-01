@@ -14,8 +14,11 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * for test the performance is lower than the RBuddyUtils , do not use it
+ */
+@Deprecated
 public class BuddyUtils {
-
 
     public static class MethodInterceptor<T> {
         private final T t;

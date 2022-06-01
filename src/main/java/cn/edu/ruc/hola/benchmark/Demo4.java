@@ -53,16 +53,18 @@ public class Demo4 {
 
 
         var c1 = RBuddyUtils.getInstance(new Call(), Call.class);
-
-        c.call1("1123");
+//        c.call1("1123");
 
         c1.call1("1123");
-
+//c1.call1("1123");
+//
         var c2 = new Call();
         Proxy.stopwatch.start();
         c2.call1("1123");
         Proxy.stopwatch.stop();
         Proxy.print();
+
+
 
     }
 }
