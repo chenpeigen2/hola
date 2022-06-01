@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.utils;
 
 import cn.edu.ruc.hola.benchmark.Proxy;
+import cn.edu.ruc.hola.benchmark.StopWatch;
 import com.google.common.base.Stopwatch;
 import lombok.SneakyThrows;
 import net.bytebuddy.ByteBuddy;
@@ -23,7 +24,7 @@ public final class RBuddyUtils {
 
     }
 
-    private static final Stopwatch stopwatch = Proxy.stopwatch;
+    private static final Stopwatch stopwatch = StopWatch.INSTANCE.getStopwatch();
 
     public static class MethodInterceptor<T> {
         private final T t;
@@ -38,7 +39,7 @@ public final class RBuddyUtils {
             stopwatch.start();
             Object obj = method.invoke(t, args);
             stopwatch.stop();
-            Proxy.print();
+            StopWatch.INSTANCE.print();
             return obj;
         }
     }
