@@ -1,25 +1,9 @@
 package cn.edu.ruc.hola.benchmark;
 
-import lombok.ToString;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.agent.builder.AgentBuilder;
-import net.bytebuddy.description.type.TypeDescription;
-import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.dynamic.DynamicType.Loaded;
-import net.bytebuddy.implementation.FixedValue;
-import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.bind.annotation.AllArguments;
-import net.bytebuddy.implementation.bind.annotation.Origin;
-import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import net.bytebuddy.implementation.bind.annotation.This;
-import net.bytebuddy.matcher.ElementMatchers;
-import net.bytebuddy.utility.JavaModule;
+import com.google.common.base.Stopwatch;
 
-import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Method;
-
-import static net.bytebuddy.matcher.ElementMatchers.isAnnotatedWith;
-import static net.bytebuddy.matcher.ElementMatchers.named;
+import java.util.concurrent.TimeUnit;
 
 public class Demo4 {
 
@@ -29,61 +13,42 @@ public class Demo4 {
             return "";
         }
 
-        public void call2() {
+        public String call2() {
             System.out.println(" call 2 ");
+            return "mother fucking";
         }
     }
 
 
     public static void main(String[] args) throws Exception {
-        Call proxy = createByteBuddyDynamicProxy();
-        proxy.call1("");
-    }
+        var c = BuddyUtils.getInstance(new Call(), Call.class, new Proxy<Call>() {
+            @Override
+            public Object proxy(Call call, Method m) {
+                Object obj = null;
+                if (m.getName().equals("call1")) {
+                    call.call1("fff");
+                    return null;
+                }
+                if (m.getName().equals("call2")) {
+                    return call.call2();
+                }
+                return obj;
+            }
+        });
 
-    private static Call createByteBuddyDynamicProxy() throws Exception {
-        Loaded<Call> proxy = new ByteBuddy().subclass(Call.class)
-                .method(ElementMatchers.isDeclaredBy(Call.class))
-                .intercept(MethodDelegation.to(new MethodInterceptor(new Call())))
-                .make().load(Demo4.class.getClassLoader());
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        Call fucking = new Call();
+        fucking.call1("1123");
+        stopwatch.stop();
+        // 执行时间（单位：秒）
+        System.out.printf("执行时长：%d 秒. %n", stopwatch.elapsed().getSeconds()); // %n 为换行
+        // 执行时间（单位：毫秒）
+        System.out.printf("执行时长：%d 豪秒.%n", stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        // 执行时间（单位：纳秒）
+        System.out.printf("执行时长：%d 纳秒.%n", stopwatch.elapsed(TimeUnit.NANOSECONDS));
+        // 427651 438832 395661
 
-        return proxy.getLoaded().getDeclaredConstructor().newInstance();
-    }
-
-    public static class MethodInterceptor {
-        public Call call;
-
-        public MethodInterceptor(Call call) {
-            this.call = call;
-        }
-
-        @RuntimeType
-        public Object interceptor(@This Object instance, @Origin Method method, @AllArguments Object[] args) throws Exception {
-            System.out.println("bytebuddy method call before  ");
-            Object result = method.invoke(this.call, args);
-            System.out.println("bytebuddy method call after   ");
-            return result;
-        }
-    }
-}
-
-@ToString
-class ToStringAgent {
-    public static void premain(String arguments, Instrumentation instrumentation) {
-        new AgentBuilder.Default()
-                .type(isAnnotatedWith(ToString.class))
-                .transform(new AgentBuilder.Transformer() {
-                    @Override
-                    public DynamicType.Builder<?> transform(DynamicType.Builder<?> builder, TypeDescription typeDescription, ClassLoader classLoader, JavaModule module) {
-                        return builder.method(named("toString"))
-                                .intercept(FixedValue.value("transformed"));
-
-                    }
-                }).installOn(instrumentation);
-    }
-
-    public static void main(String[] args) {
-        var app = new ToStringAgent();
-        app.toString();
+        c.call1("1123");
     }
 }
 
