@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 import static cn.edu.ruc.hola.utils.DbUtils.checkDbUtils;
 
+@Deprecated
 public final class FakeDbUtils {
 
 
@@ -26,8 +27,6 @@ public final class FakeDbUtils {
      */
     public void createFakeDb(Host host) {
         DbUtils dbUtils = checkDbUtils(host);
-        dbUtils.setHOST(host.getHost());
-        dbUtils.setPORT(host.getPort());
         var res = dbUtils.createDb("fake");
         try {
             assert res.body() != null;
@@ -87,7 +86,7 @@ public final class FakeDbUtils {
 
     public List<String> generateFakeData() {
         var l = JsonUtils.readProps();
-        return Fake.basicFake(l.size(), 0.8f, false);
+        return FakeData.basicFake(l.size(), 0.8f, false);
     }
 
     public void createFakeIndex() {

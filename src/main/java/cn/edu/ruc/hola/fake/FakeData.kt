@@ -3,7 +3,7 @@ package cn.edu.ruc.hola.fake
 import cn.edu.ruc.hola.service.extension.couchdb.models.Doc
 import java.util.*
 
-object Fake {
+object FakeData {
 
     @JvmStatic
     fun fakeData(doc: Doc): String {
@@ -88,6 +88,6 @@ object Fake {
 }
 
 fun main() {
-    val faken = Fake.basicFake(26, 0.8f, false)
-    println(faken[0])
+    val fakeData = FakeData.basicFake(26, 0.8f, false)
+    println(fakeData[0])
 }

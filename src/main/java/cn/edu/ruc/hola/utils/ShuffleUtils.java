@@ -1,6 +1,8 @@
 package cn.edu.ruc.hola.utils;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public final class ShuffleUtils {
@@ -8,6 +10,11 @@ public final class ShuffleUtils {
     public static String[] randomChoose(String[] ids, int cnt) {
         shuffle(ids);
         return Arrays.copyOf(ids, cnt);
+    }
+
+    public static List<String> randomChoose(List<String> ids, int cnt) {
+        Collections.shuffle(ids);
+        return ids.subList(0, cnt);
     }
 
 
