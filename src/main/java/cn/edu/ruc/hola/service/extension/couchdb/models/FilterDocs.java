@@ -6,17 +6,17 @@ import java.util.List;
 
 @Data
 public class FilterDocs {
-    private List<Doc> docs;
-    private String bookmark;
+    public List<Doc> docs;
+    public String bookmark;
 
-    private State execution_stats;
+    public State execution_stats;
 
     @Data
     public static class State {
-        private int total_keys_examined;
-        private int total_docs_examined;
-        private int total_quorum_docs_examined;
-        private int results_returned;
-        private float execution_time_ms;
+        public int total_keys_examined;
+        public int total_docs_examined;
+        public int total_quorum_docs_examined;
+        public int results_returned;
+        public float execution_time_ms;
     }
 }

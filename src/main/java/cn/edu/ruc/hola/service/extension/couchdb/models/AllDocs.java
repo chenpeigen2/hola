@@ -19,7 +19,7 @@ public class AllDocs {
         public REV value;
 
         @Data
-        static
+        public static
         class REV {
             public String rev;
         }

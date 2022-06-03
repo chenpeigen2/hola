@@ -1,6 +1,8 @@
 package cn.edu.ruc.hola.fake
 
 import cn.edu.ruc.hola.config.model.Host
+import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
 import cn.edu.ruc.hola.utils.DbUtils
 import cn.edu.ruc.hola.utils.JsonUtils
 import java.util.logging.Logger
@@ -12,7 +14,7 @@ object Faken {
     /**
      * make cnt to repeat create
      */
-    fun createFakeDb(host: Host, cnt: Int) {
+    private fun createFakeDb(host: Host, cnt: Int) {
         val dbUtils = DbUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.createDb("fake$it").use { res ->
@@ -25,10 +27,10 @@ object Faken {
     /**
      * with repeat count 10 by default
      */
-    fun createFakeDb() {
+    fun createFakeDb(cnt: Int) {
         JsonUtils.readProps().forEach {
             it?.let {
-                createFakeDb(it, 10)
+                createFakeDb(it, cnt)
             }
         }
     }
@@ -36,7 +38,7 @@ object Faken {
     /**
      * make cnt to repeat delete
      */
-    fun deleteFakeDb(host: Host, cnt: Int) {
+    private fun deleteFakeDb(host: Host, cnt: Int) {
         val dbUtils = DbUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.deleteDb("fake$it").use { res ->
@@ -50,10 +52,10 @@ object Faken {
     /**
      * with repeat count 10 by default
      */
-    fun deleteFakeDb() {
+    fun deleteFakeDb(cnt: Int) {
         JsonUtils.readProps().forEach {
             it?.let {
-                deleteFakeDb(it, 10)
+                deleteFakeDb(it, cnt)
             }
         }
     }
@@ -116,16 +118,38 @@ object Faken {
         }
     }
 
+    fun fakeComplexQuery(cnt: Int): List<Node> {
+        val query = """
+                   {
+                "selector": {
+                        "data.countryid": {"${'$'}gt": -1}
+                    },
+                    "execution_stats": true
+                }         
+        """.trimIndent()
+        val l = mutableListOf<Node>()
+        JsonUtils.readProps().forEach {
+            it?.let { host ->
+                val dbUtils = DbUtils.checkDbUtils(host)
+                repeat(cnt) {
+                    dbUtils.filterDocs("fake$it", query).use { res ->
+                        val data = JsonUtils.gson
+                            .fromJson(res?.body?.string(), FilterDocs::class.java).docs[0]
+                            ?.data.toString()
+                        val n = Node(query, data)
+                        l.add(n)
+                    }
+                }
+            }
+        }
+        return l
+    }
 
 
 }
 
 fun main() {
-//    repeat(10) {
-//        println(it)
-//    }
+    val cnt = 10
+    Faken.createFakeDb(cnt)
 
-    for (idx in 1 until 100) {
-        println(idx)
-    }
 }
