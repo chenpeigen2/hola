@@ -133,8 +133,10 @@ object Faken {
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) {
                     dbUtils.filterDocs("fake$it", query).use { res ->
+                        val result = res?.body?.string()
+                        logger.info("$host fake$it $result")
                         val data = JsonUtils.gson
-                            .fromJson(res?.body?.string(), FilterDocs::class.java).docs[0]
+                            .fromJson(result, FilterDocs::class.java).docs[0]
                             ?.data.toString()
                         val n = Node(query, data)
                         l.add(n)
@@ -150,6 +152,11 @@ object Faken {
 
 fun main() {
     val cnt = 10
-    Faken.createFakeDb(cnt)
+//    Faken.createFakeDb(cnt)
 
+//    Faken.createFakeIndex(cnt)
+
+//    Faken.addFakeData(cnt)
+    val ans = Faken.fakeComplexQuery(cnt)
+    print(ans.size)
 }

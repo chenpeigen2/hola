@@ -2,7 +2,6 @@ package cn.edu.ruc.hola.fake;
 
 import cn.edu.ruc.hola.config.model.Host;
 import cn.edu.ruc.hola.entity.Node;
-import cn.edu.ruc.hola.exec.Exec;
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs;
 import cn.edu.ruc.hola.utils.DbUtils;
 import cn.edu.ruc.hola.utils.JsonUtils;
@@ -10,7 +9,6 @@ import cn.edu.ruc.hola.utils.JsonUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import static cn.edu.ruc.hola.utils.DbUtils.checkDbUtils;
@@ -126,55 +124,25 @@ public final class FakeDbUtils {
 
         List<Node> list = new ArrayList<>();
 
-        JsonUtils.readProps().forEach(new Consumer<Host>() {
-            @Override
-            public void accept(Host host) {
-                DbUtils dbUtils = checkDbUtils(host);
+        JsonUtils.readProps().forEach(host -> {
+            DbUtils dbUtils = checkDbUtils(host);
 
-                var res = dbUtils.filterDocs("fake", query);
-                try {
-                    assert res.body() != null;
-                    logger.info("HOST :" + host);
-                    var body = res.body().string();
-                    logger.info(body);
-                    var data = JsonUtils.getGson().fromJson(body, FilterDocs.class).getDocs().get(0).toString();
-                    System.out.println("=====================");
-                    System.out.println(data);
-                    list.add(new Node(query, JsonUtils.getGson().fromJson(body, FilterDocs.class).getDocs().get(0).getData().toString()));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                res.close();
+            var res = dbUtils.filterDocs("fake", query);
+            try {
+                assert res.body() != null;
+                logger.info("HOST :" + host);
+                var body = res.body().string();
+                logger.info(body);
+                var data = JsonUtils.getGson().fromJson(body, FilterDocs.class).getDocs().get(0).toString();
+                System.out.println("=====================");
+                System.out.println(data);
+                list.add(new Node(query, JsonUtils.getGson().fromJson(body, FilterDocs.class).getDocs().get(0).getData().toString()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            res.close();
         });
 
         return list;
-    }
-
-    public static void main(String[] args) throws IOException {
-        var app = new FakeDbUtils();
-//        app.createFakeDb();
-//        app.addFakeData();
-
-
-//        app.createFakeIndex();
-
-        var l = app.fakeComplexQuery();
-
-        var ex = new Exec();
-        var ans = ex.partition(l);
-
-
-        System.out.println(l);
-
-
-        System.out.println(ans);
-
-//
-//
-
-//        app.generateFakeData();
-//        app.createIndex();
-//        app.deleteFakeDb();
     }
 }
