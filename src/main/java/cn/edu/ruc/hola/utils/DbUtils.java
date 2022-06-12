@@ -1,6 +1,5 @@
 package cn.edu.ruc.hola.utils;
 
-import cn.edu.ruc.hola.common.Removable;
 import cn.edu.ruc.hola.config.model.Host;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,13 +32,8 @@ public final class DbUtils {
     /**
      * may return null
      */
-    @Removable
     public static DbUtils checkDbUtils(String sid) {
         return m1.get(sid);
-    }
-
-    @Deprecated
-    public DbUtils() {
     }
 
     public String Cookie;
