@@ -16,7 +16,7 @@ public class App {
                 }
                 """;
 
-        MultiQuery multiRetry = new MultiQuery();
+        QueryWithMulti multiRetry = new QueryWithMulti();
         var ans = multiRetry.queryWithTry(config, query);
         if (ans != null) {
             System.out.println("============ result ============");

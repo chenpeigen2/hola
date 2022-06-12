@@ -1,11 +1,9 @@
 package cn.edu.ruc.hola.exec;
 
 import cn.edu.ruc.hola.common.Reachable;
-import cn.edu.ruc.hola.common.Removable;
 import cn.edu.ruc.hola.config.Config;
 import cn.edu.ruc.hola.entity.Node;
 import lombok.Getter;
-import lombok.NonNull;
 import cn.edu.ruc.hola.query.Query;
 import cn.edu.ruc.hola.utils.*;
 import cn.edu.ruc.hola.config.model.Pair;
@@ -18,22 +16,15 @@ public class Exec implements Reachable {
     private static final Logger logger = Logger.getLogger("Exec");
 
     @Getter
-    @NonNull
-    private final Config config;
+    protected Config config;
 
     @Getter
-    private final Query query;
+    protected Query query;
 
-    private Pair pair;
+    protected Pair pair;
 
-    public Exec(@NonNull Config config) {
+    public Exec(Config config) {
         this.config = config;
-        query = new Query(config);
-    }
-
-    @Removable
-    public Exec() {
-        this.config = new Config(0.75f, 1000, 10, 8);
         query = new Query(config);
     }
 
@@ -47,17 +38,10 @@ public class Exec implements Reachable {
         return analyze(queries);
     }
 
-
-    @Removable
-    public Response partition(List<Node> nodes) {
-        pair = Generations2.optimize(config.getThreshold(), 26, 20);
-        return analyze(nodes);
-    }
-
     /**
      * @param queries the given queries to analyze
      */
-    private Response analyze(List<Node> queries) {
+    protected Response analyze(List<Node> queries) {
         QuickQueue quickQueue = new QuickQueue();
 
         int len = queries.size();

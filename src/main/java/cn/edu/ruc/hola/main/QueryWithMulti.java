@@ -2,11 +2,12 @@ package cn.edu.ruc.hola.main;
 
 import cn.edu.ruc.hola.config.Config;
 import cn.edu.ruc.hola.exec.Exec;
+import cn.edu.ruc.hola.exec.MultiExec;
 import cn.edu.ruc.hola.utils.Response;
 
 import java.util.logging.Logger;
 
-public class MultiQuery {
+public class QueryWithMulti {
 
     private static final Logger logger = Logger.getLogger("MultiQuery");
     static int RetryCnt;
@@ -27,7 +28,7 @@ public class MultiQuery {
     }
 
     public Response query(Config config, String condition) {
-        var exec = new Exec(config);
+        var exec = new MultiExec(config);
         return exec.partition(condition);
     }
 }
