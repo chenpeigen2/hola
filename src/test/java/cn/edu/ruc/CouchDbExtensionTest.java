@@ -13,6 +13,4 @@ public class CouchDbExtensionTest {
         couchDbExtension.createDb();
         couchDbExtension.addDocs();
     }
-
-
 }
