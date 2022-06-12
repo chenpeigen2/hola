@@ -1,6 +1,5 @@
 package cn.edu.ruc.hola.exec;
 
-import cn.edu.ruc.hola.common.Reachable;
 import cn.edu.ruc.hola.config.Config;
 import cn.edu.ruc.hola.entity.Node;
 import lombok.Getter;
