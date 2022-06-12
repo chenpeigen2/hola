@@ -10,10 +10,16 @@ import cn.edu.ruc.hola.service.extension.couchdb.models.Doc;
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs;
 import cn.edu.ruc.hola.utils.DbUtils;
 import cn.edu.ruc.hola.utils.JsonUtils;
+import lombok.SneakyThrows;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 /**
@@ -27,6 +33,8 @@ public class CouchDbExtension {
     private static final Logger logger = Logger.getLogger("CouchDbExtension");
 
     private static final Gson gson = JsonUtils.getGson();
+
+    private static final int DEFAULT_THREAD_POOL_SIZE = 12;
 
     private final DbUtils dbUtils;
 
@@ -177,6 +185,20 @@ public class CouchDbExtension {
         return node;
     }
 
+    @SneakyThrows
+    public List<Node> queries(String condition, List<String> db_names) {
+        ExecutorService pool = Executors.newFixedThreadPool(DEFAULT_THREAD_POOL_SIZE);
+        final CountDownLatch latch = new CountDownLatch(db_names.size());
+        List<Node> queriesNode = new CopyOnWriteArrayList<>();
+        db_names.forEach(db_name -> {
+            Node n = query(condition, db_name);
+            queriesNode.add(n);
+            latch.countDown();
+        });
+        latch.await();
+        if (!pool.isShutdown()) pool.shutdown();
+        return queriesNode;
+    }
 
     /* -----------------------------------API End----------------------------------------*/
 

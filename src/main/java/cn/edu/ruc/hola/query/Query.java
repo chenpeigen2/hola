@@ -50,6 +50,23 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
         return query;
     }
 
+    @Override
+    public List<Node> query(String condition, List<String> sids, String db_name) {
+        List<Node> query = new CopyOnWriteArrayList<>();
+        executeAsync(query, condition, sids, db_name);
+        return query;
+    }
+
+    @Override
+    public List<Node> queries(String condition, List<String> sids, List<String> db_names) {
+        List<Node> query = new CopyOnWriteArrayList<>();
+        db_names.forEach(db_name -> {
+            List<Node> nodes = query(condition, sids, db_name);
+            query.addAll(nodes);
+        });
+        return query;
+    }
+
     /**
      * query sync with single-thread
      *
@@ -60,6 +77,14 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
     private void executeSync(List<Node> query, String condition, List<String> sids) {
         for (String sid : sids) {
             Node n = createService(sid).query(condition);
+            System.out.println(n);
+            query.add(n);
+        }
+    }
+
+    private void executeSync(List<Node> query, String condition, List<String> sids, String db_name) {
+        for (String sid : sids) {
+            Node n = createService(sid).query(condition, db_name);
             System.out.println(n);
             query.add(n);
         }
@@ -89,6 +114,22 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
         if (!pool.isShutdown()) pool.shutdown();
     }
 
+    @SneakyThrows
+    private void executeAsync(List<Node> query, String condition, List<String> sids, String db_name) {
+        ExecutorService pool = Executors.newFixedThreadPool(DEFAULT_LEN);
+        final CountDownLatch latch = new CountDownLatch(sids.size());
+        sids.forEach(sid -> pool.submit(() -> {
+            loadService(sid);
+            Node node = service.get().query(condition, db_name);
+            if (node != null) {
+                logger.info(node.toString());
+                query.add(node);
+            }
+            latch.countDown();
+        }));
+        latch.await();
+        if (!pool.isShutdown()) pool.shutdown();
+    }
 
     /**
      * load the service we are calling

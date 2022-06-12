@@ -4,6 +4,7 @@ import cn.edu.ruc.hola.entity.Node;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -25,6 +26,13 @@ public interface Service {
      * @return the node-value
      */
     Node query(String condition, String db_name);
+
+    /**
+     * @param condition query-condition
+     * @param db_names  database names
+     * @return list of node-value support by one instance
+     */
+    List<Node> queries(String condition, List<String> db_names);
 
     /**
      * add some tricks
