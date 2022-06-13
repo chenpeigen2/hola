@@ -30,8 +30,6 @@ public final class Generations2 {
      * @return the pair holder
      */
     public static Pair optimize(float threshHolder, int M, int H) {
-        M *= MULTIPLY;
-        H *= MULTIPLY;
         logger.info("threshHolder: " + threshHolder + ",M:" + M + ",H:" + H);
         double holder = Double.MAX_VALUE;
         Pair p = null;
