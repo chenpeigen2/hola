@@ -8,12 +8,12 @@ public class App {
     public static void main(String[] args) {
         // the condition we are using , and now is couchdb
         var query = """
-                {
-                "selector": {
-                        "data.countryid": {"$gt": -1}
-                    },
-                    "execution_stats": true
-                }
+                           {
+                        "selector": {
+                                "data.countryid": {"$gt": -1}
+                            },
+                            "execution_stats": true
+                        }    
                 """;
 
         QueryWithMulti queryWithMulti = new QueryWithMulti();

@@ -166,6 +166,9 @@ public class CouchDbExtension {
         return node;
     }
 
+    /**
+     * tmp to bugfix
+     */
     public Node query(String condition, String db_name) {
         Node node = null;
         try (var res = dbUtils.filterDocs(db_name, condition)) {
@@ -173,7 +176,8 @@ public class CouchDbExtension {
                 System.out.println(res);
                 try {
                     var body = res.body().string();
-                    Doc doc = gson.fromJson(body, Doc.class);
+                    FilterDocs filterDocs = gson.fromJson(body, FilterDocs.class);
+                    Doc doc = filterDocs.getDocs().get(0);
                     Doc.Data data = doc.getData();
                     node = new Node(condition, data.toString());
                 } catch (IOException e) {
