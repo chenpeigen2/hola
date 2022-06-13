@@ -3,7 +3,7 @@ package cn.edu.ruc.hola.main;
 import cn.edu.ruc.hola.config.Config;
 
 public class App {
-    private final static Config config = new Config(0.65f, 1000, 10, 8);
+    private final static Config config = new Config(0.8f, 1000, 10, 8);
 
     public static void main(String[] args) {
         // the condition we are using , and now is couchdb

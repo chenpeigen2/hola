@@ -9,6 +9,7 @@ import cn.edu.ruc.hola.utils.ShuffleUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MultiExec extends Exec {
 
@@ -32,6 +33,14 @@ public class MultiExec extends Exec {
         pair = Generations2.optimize(config.getThreshold(), config.getM(), config.getH());
         String[] cut_ids = ShuffleUtils.randomChoose(sids().toArray(String[]::new), pair.m());
         List<Node> queries = query.queries(condition, Arrays.stream(cut_ids).toList(), getDBNames(DEFAULT_CNT));
+
+        System.out.println(queries.size());
+        queries.forEach(new Consumer<Node>() {
+            @Override
+            public void accept(Node node) {
+                System.out.println(node);
+            }
+        });
         return analyze(queries);
     }
 }

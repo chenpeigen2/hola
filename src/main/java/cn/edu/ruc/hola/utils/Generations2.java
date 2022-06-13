@@ -12,12 +12,16 @@ import java.util.logging.Logger;
  */
 public final class Generations2 {
 
+    private static final int MULTIPLY = 10;
+
     private static final Logger logger = Logger.getLogger("Generations2");
 
     /**
      * @return the PBA
      */
     public static double infPBA(int m, float λ, int M, int H) {
+        M *= MULTIPLY;
+        H *= MULTIPLY;
         logger.info("m: " + m + ",λ:" + λ + ",M:" + M + ",H:" + H);
         return (double) getTop(m, λ, M, H) / (double) getBase(m, λ, M, H);
     }
@@ -26,6 +30,8 @@ public final class Generations2 {
      * @return the pair holder
      */
     public static Pair optimize(float threshHolder, int M, int H) {
+        M *= MULTIPLY;
+        H *= MULTIPLY;
         logger.info("threshHolder: " + threshHolder + ",M:" + M + ",H:" + H);
         double holder = Double.MAX_VALUE;
         Pair p = null;
