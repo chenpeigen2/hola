@@ -31,7 +31,7 @@ class CouchDbExtension(host: Host) {
     private val POOL_SIZE = 12
 
     @Throws(IOException::class)
-    fun query(condition: String, db_name: String?): Node? {
+    fun query(condition: String, db_name: String): Node? {
         var node: Node? = null
         dbUtils.filterDocs(db_name, condition).use { res ->
             res.body?.let {
