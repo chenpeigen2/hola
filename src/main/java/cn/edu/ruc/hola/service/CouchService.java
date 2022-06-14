@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.service;
 
 import cn.edu.ruc.hola.entity.Node;
 import cn.edu.ruc.hola.service.extension.couchdb.CouchDbExtension;
+import cn.edu.ruc.hola.service.extension.couchdb.CouchDbExtensionKt;
 import cn.edu.ruc.hola.service.extension.couchdb.CouchDbServiceHolder;
 
 import java.util.List;

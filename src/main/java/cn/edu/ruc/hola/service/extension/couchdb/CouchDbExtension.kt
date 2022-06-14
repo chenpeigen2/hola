@@ -5,7 +5,6 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
 import cn.edu.ruc.hola.utils.DbUtils
 import cn.edu.ruc.hola.utils.JsonUtils
-import java.io.IOException
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
@@ -30,7 +29,6 @@ class CouchDbExtension(host: Host) {
 
     private val POOL_SIZE = 12
 
-    @Throws(IOException::class)
     fun query(condition: String, db_name: String): Node? {
         var node: Node? = null
         dbUtils.filterDocs(db_name, condition).use { res ->
@@ -50,7 +48,6 @@ class CouchDbExtension(host: Host) {
         return node
     }
 
-    @Throws(InterruptedException::class)
     fun queries(condition: String, db_names: List<String>): List<Node?> {
         val pool = Executors.newFixedThreadPool(POOL_SIZE)
         val latch = CountDownLatch(db_names.size)
