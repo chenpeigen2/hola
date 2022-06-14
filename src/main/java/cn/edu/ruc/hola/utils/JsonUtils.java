@@ -21,7 +21,6 @@ public final class JsonUtils {
     @Getter
     public final static Gson gson;
 
-
     private static volatile List<Host> hosts;
 
     static {

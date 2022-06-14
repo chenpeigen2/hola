@@ -1,6 +1,5 @@
 package cn.edu.ruc.hola.utils;
 
-import cn.edu.ruc.hola.benchmark.HelloWorld;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

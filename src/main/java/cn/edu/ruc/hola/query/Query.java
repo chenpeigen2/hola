@@ -2,12 +2,12 @@ package cn.edu.ruc.hola.query;
 
 import cn.edu.ruc.hola.config.Config;
 import cn.edu.ruc.hola.entity.Node;
+import cn.edu.ruc.hola.service.AbsService;
 import cn.edu.ruc.hola.service.Service;
 import cn.edu.ruc.hola.service.ServiceHelper;
 import cn.edu.ruc.hola.service.ServiceType;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import cn.edu.ruc.hola.service.AbsService;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
