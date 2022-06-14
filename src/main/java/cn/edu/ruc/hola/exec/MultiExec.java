@@ -31,8 +31,8 @@ public class MultiExec extends Exec {
     @Override
     public Response partition(String condition) {
         pair = Generations2.optimize(config.getThreshold(), config.getM(), config.getH());
-        String[] cut_ids = ShuffleUtils.randomChoose(sids().toArray(String[]::new), pair.m());
-        List<Node> queries = query.queries(condition, Arrays.stream(cut_ids).toList(), getDBNames(DEFAULT_CNT));
+        List<String> cut_ids = ShuffleUtils.INSTANCE.randomChoose(sids(), pair.m());
+        List<Node> queries = query.queries(condition, cut_ids, getDBNames(DEFAULT_CNT));
 
         System.out.println(queries.size());
         queries.forEach(new Consumer<Node>() {
