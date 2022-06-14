@@ -7,7 +7,6 @@ import cn.edu.ruc.hola.utils.Response;
 import cn.edu.ruc.hola.utils.ShuffleUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 

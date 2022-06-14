@@ -47,7 +47,7 @@ public class Exec implements Reachable {
 
         // data 数据
         queries.forEach(query -> {
-            quickQueue.inc(query.value());
+            quickQueue.inc(query.getValue());
         });
 
         int MAX_CNT = quickQueue.getMaxKeyCnt();

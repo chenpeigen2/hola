@@ -1,8 +1,8 @@
 package cn.edu.ruc.hola.service.extension.couchdb;
 
+import cn.edu.ruc.hola.entity.Node;
 import com.google.gson.Gson;
 import cn.edu.ruc.hola.config.model.Host;
-import cn.edu.ruc.hola.entity.Node;
 import kotlin.io.FilesKt;
 import kotlin.text.Charsets;
 import cn.edu.ruc.hola.service.extension.couchdb.models.AllDocs;
