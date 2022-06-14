@@ -51,4 +51,7 @@ public final class Response extends ConcurrentHashMap<String, Object> {
         response.put("data", data);
         return response;
     }
+
+    private Response() {
+    }
 }
