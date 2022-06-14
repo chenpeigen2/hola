@@ -33,7 +33,7 @@ public class Exec implements Reachable {
     public Response partition(String condition) {
         pair = Generations2.optimize(config.getThreshold(), config.getM(), config.getH());
         List<String> cut_ids = ShuffleUtils.INSTANCE.randomChoose(sids(), pair.m());
-        List<Node> queries = query.query(condition, cut_ids);
+        List<Node> queries = query.query(condition, cut_ids, "fake");
         return analyze(queries);
     }
 

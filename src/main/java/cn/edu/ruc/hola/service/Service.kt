@@ -4,16 +4,6 @@ import cn.edu.ruc.hola.entity.Node
 
 interface Service {
     /**
-     * for mysql
-     *
-     * @param condition query-condition
-     * @return the node-value
-     */
-    fun query(condition: String?): Node?
-
-    /**
-     * for couchdb
-     *
      * @param condition query-condition
      * @param db_name   database name
      * @return the node-value

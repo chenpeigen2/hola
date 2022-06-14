@@ -2,7 +2,6 @@ package cn.edu.ruc;
 
 import cn.edu.ruc.hola.config.model.Host;
 import org.junit.jupiter.api.Test;
-import cn.edu.ruc.hola.service.extension.couchdb.CouchDbExtension;
 
 public class CouchDbExtensionTest {
 

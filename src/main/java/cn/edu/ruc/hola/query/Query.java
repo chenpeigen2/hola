@@ -38,18 +38,6 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
      */
     private static final int DEFAULT_LEN = 12;
 
-    /**
-     * @param condition condition the query use
-     * @return we find all the data,and prepare the partition
-     */
-    @Override
-    @SneakyThrows
-    public List<Node> query(String condition, List<String> sids) {
-        List<Node> query = new CopyOnWriteArrayList<>();
-        executeAsync(query, condition, sids);
-        return query;
-    }
-
     @Override
     public List<Node> query(String condition, List<String> sids, String db_name) {
         List<Node> query = new CopyOnWriteArrayList<>();
@@ -67,20 +55,6 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
         return query;
     }
 
-    /**
-     * query sync with single-thread
-     *
-     * @param query     execute result data holder
-     * @param condition query condition
-     * @param sids      the service-ids
-     */
-    private void executeSync(List<Node> query, String condition, List<String> sids) {
-        for (String sid : sids) {
-            Node n = createService(sid).query(condition);
-            System.out.println(n);
-            query.add(n);
-        }
-    }
 
     private void executeSync(List<Node> query, String condition, List<String> sids, String db_name) {
         for (String sid : sids) {
@@ -88,30 +62,6 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
             System.out.println(n);
             query.add(n);
         }
-    }
-
-    /**
-     * query async with multi-thread
-     *
-     * @param query     execute result data holder
-     * @param condition query condition
-     * @param sids      the service-ids
-     */
-    @SneakyThrows
-    private void executeAsync(List<Node> query, String condition, List<String> sids) {
-        ExecutorService pool = Executors.newFixedThreadPool(DEFAULT_LEN);
-        final CountDownLatch latch = new CountDownLatch(sids.size());
-        sids.forEach(sid -> pool.submit(() -> {
-            loadService(sid);
-            Node node = service.get().query(condition);
-            if (node != null) {
-                logger.info(node.toString());
-                query.add(node);
-            }
-            latch.countDown();
-        }));
-        latch.await();
-        if (!pool.isShutdown()) pool.shutdown();
     }
 
     @SneakyThrows
