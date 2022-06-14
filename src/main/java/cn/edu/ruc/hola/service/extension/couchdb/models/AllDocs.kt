@@ -5,7 +5,7 @@ import lombok.Data
 class AllDocs {
     var total_rows = -1
     var offset = -1
-    var rows: List<AllDocs.Container>? = null
+    lateinit var rows: List<Container>
 
     class Container {
         lateinit var id: String

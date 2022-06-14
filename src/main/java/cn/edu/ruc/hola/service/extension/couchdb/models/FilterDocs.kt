@@ -4,7 +4,7 @@ class FilterDocs {
     lateinit var docs: List<Doc>
     lateinit var bookmark: String
 
-    lateinit var execution_stats: FilterDocs.State
+    lateinit var execution_stats: State
 
     class State {
         var total_keys_examined = -1
