@@ -136,7 +136,7 @@ object Faken {
                         val result = res?.body?.string()
                         logger.info("$host fake$it $result")
                         val data = JsonUtils.gson
-                            .fromJson(result, FilterDocs::class.java).docs[0]
+                            .fromJson(result, FilterDocs::class.java).docs?.get(0)
                             ?.data.toString()
                         val n = Node(query, data)
                         l.add(n)
