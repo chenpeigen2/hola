@@ -10,14 +10,14 @@ import cn.edu.ruc.hola.utils.SHA256Utils;
  */
 public record Node(String condition, String value) {
     public String valueSHA() {
-        return SHA256Utils.getSHA256Str(value);
+        return SHA256Utils.INSTANCE.getSHA256Str(value);
     }
 
     public String conditionSHA() {
-        return SHA256Utils.getSHA256Str(condition);
+        return SHA256Utils.INSTANCE.getSHA256Str(condition);
     }
 
     public String dataSHA() {
-        return SHA256Utils.getSHA256Str(toString());
+        return SHA256Utils.INSTANCE.getSHA256Str(toString());
     }
 }
