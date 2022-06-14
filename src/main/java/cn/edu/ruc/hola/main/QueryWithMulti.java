@@ -1,7 +1,6 @@
 package cn.edu.ruc.hola.main;
 
 import cn.edu.ruc.hola.config.Config;
-import cn.edu.ruc.hola.exec.Exec;
 import cn.edu.ruc.hola.exec.MultiExec;
 import cn.edu.ruc.hola.utils.Response;
 
