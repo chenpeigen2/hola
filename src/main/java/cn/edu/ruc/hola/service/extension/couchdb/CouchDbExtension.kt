@@ -9,7 +9,6 @@ import java.io.IOException
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
-import java.util.function.Consumer
 import java.util.logging.Logger
 
 /**
@@ -19,7 +18,7 @@ import java.util.logging.Logger
  * for further optimize !
  */
 class CouchDbExtension(host: Host) {
-    private var dbUtils: DbUtils? = null
+    private val dbUtils: DbUtils
 
     init {
         dbUtils = DbUtils.checkDbUtils(host)
@@ -31,45 +30,37 @@ class CouchDbExtension(host: Host) {
 
     private val POOL_SIZE = 12
 
-
+    @Throws(IOException::class)
     fun query(condition: String, db_name: String?): Node? {
         var node: Node? = null
-        dbUtils!!.filterDocs(db_name, condition).use { res ->
+        dbUtils.filterDocs(db_name, condition).use { res ->
             res.body?.let {
                 println(res)
-                node = try {
-                    val body = it.string()
-                    val filterDocs: FilterDocs =
-                        gson.fromJson(
-                            body,
-                            FilterDocs::class.java
-                        )
-                    val doc = filterDocs.docs[0]
-                    val data = doc.data
-                    Node(condition, data.toString())
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    throw RuntimeException(e)
-                }
+                val body = it.string()
+                val filterDocs: FilterDocs =
+                    gson.fromJson(
+                        body,
+                        FilterDocs::class.java
+                    )
+                val doc = filterDocs.docs[0]
+                val data = doc.data
+                node = Node(condition, data.toString())
             }
         }
         return node
     }
 
-    fun queries(condition: String, db_names: List<String?>): List<Node?> {
+    @Throws(InterruptedException::class)
+    fun queries(condition: String, db_names: List<String>): List<Node?> {
         val pool = Executors.newFixedThreadPool(POOL_SIZE)
         val latch = CountDownLatch(db_names.size)
         val queriesNode: MutableList<Node?> = CopyOnWriteArrayList()
-        db_names.forEach(Consumer { db_name: String? ->
+        db_names.forEach { db_name ->
             val n = query(condition, db_name)
             queriesNode.add(n)
             latch.countDown()
-        })
-        try {
-            latch.await()
-        } catch (e: InterruptedException) {
-            throw RuntimeException(e)
         }
+        latch.await()
         if (!pool.isShutdown) pool.shutdown()
         return queriesNode
     }
