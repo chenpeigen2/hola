@@ -2,7 +2,6 @@ package cn.edu.ruc.hola.utils;
 
 import cn.edu.ruc.hola.benchmark.StopWatch;
 import com.google.common.base.Stopwatch;
-import lombok.SneakyThrows;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -65,9 +64,13 @@ public final class BuddyUtils2 {
     /**
      * get instance object
      **/
-    @SneakyThrows
-    public static <T> T getInstance(T t, Class<T> cls, Object... initargs) {
+    public static <T> T getInstance(T t, Class<T> cls, Object... args) {
         var c = createClass(cls, t);
-        return c.getDeclaredConstructor().newInstance(initargs);
+        try {
+            return c.getDeclaredConstructor().newInstance(args);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                 NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
