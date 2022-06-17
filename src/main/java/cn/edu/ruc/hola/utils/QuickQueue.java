@@ -57,7 +57,7 @@ public final class QuickQueue {
 
             clear(node);
         } else {
-            Node node = null;
+            Node node;
             if (hh.right.cnt == 1) {
                 node = hh.right;
             } else {

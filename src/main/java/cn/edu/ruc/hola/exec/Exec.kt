@@ -10,7 +10,6 @@ import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
 import cn.edu.ruc.hola.utils.SHA256Utils.getSHA256Str
-import cn.edu.ruc.hola.utils.ShuffleUtils.randomChoose
 import java.util.logging.Logger
 
 open class Exec(protected val config: Config) : Reachable {
@@ -70,5 +69,9 @@ open class Exec(protected val config: Config) : Reachable {
             snods.add(ServerNode(it, "fake"))
         }
         return snods
+    }
+
+    private fun randomChoose(nodes: List<ServerNode>, cnt: Int): List<ServerNode> {
+        return nodes.shuffled().subList(0, cnt)
     }
 }
