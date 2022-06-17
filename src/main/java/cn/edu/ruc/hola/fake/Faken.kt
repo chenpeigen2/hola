@@ -28,10 +28,8 @@ object Faken {
      * with repeat count 10 by default
      */
     fun createFakeDb(cnt: Int) {
-        ServiceIdHelper.readProps().forEach {
-            it?.let {
-                createFakeDb(it, cnt)
-            }
+        ServiceIdHelper.hosts.forEach {
+            createFakeDb(it, cnt)
         }
     }
 
@@ -53,10 +51,8 @@ object Faken {
      * with repeat count 10 by default
      */
     fun deleteFakeDb(cnt: Int) {
-        ServiceIdHelper.readProps().forEach {
-            it?.let {
-                deleteFakeDb(it, cnt)
-            }
+        ServiceIdHelper.hosts.forEach {
+            deleteFakeDb(it, cnt)
         }
     }
 
@@ -64,7 +60,7 @@ object Faken {
      * generate the fake data and then shuffle
      */
     private fun generateFakeData(cnt: Int, threshold: Float = 0.8f, conspired: Boolean = false): List<String> {
-        val size = ServiceIdHelper.readProps()?.size ?: 0
+        val size = ServiceIdHelper.hosts.size
         val l = FakeData.basicFake(size * cnt, threshold, conspired)
         l.shuffle() // shuffle it
         return l
@@ -74,9 +70,9 @@ object Faken {
      * very complex operation , do not change
      */
     fun addFakeData(cnt: Int) {
-        val props = ServiceIdHelper.readProps()
+        val props = ServiceIdHelper.hosts
         val fakeData: List<String> = generateFakeData(cnt)
-        for (idx in 0 until props.size) {
+        for (idx in props.indices) {
             val host: Host = props[idx]
             val dbUtils = DbUtils.checkDbUtils(host)
             repeat(cnt) {
@@ -104,8 +100,8 @@ object Faken {
             
         """.trimIndent()
 
-        ServiceIdHelper.readProps().forEach {
-            it?.let { host ->
+        ServiceIdHelper.hosts.forEach {
+            it.let { host ->
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) { cnt ->
                     dbUtils.createIndex("fake$cnt", info).use { res ->
@@ -128,8 +124,8 @@ object Faken {
                 }         
         """.trimIndent()
         val l = mutableListOf<Node>()
-        ServiceIdHelper.readProps().forEach {
-            it?.let { host ->
+        ServiceIdHelper.hosts.forEach {
+            it.let { host ->
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) {
                     dbUtils.filterDocs("fake$it", query).use { res ->

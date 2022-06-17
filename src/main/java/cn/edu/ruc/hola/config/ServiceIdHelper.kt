@@ -9,10 +9,10 @@ import java.util.*
 object ServiceIdHelper {
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
-    private val hosts: List<Host> = readProps()
+    val hosts: List<Host> = readProps()
 
     @Synchronized
-    fun readProps(): List<Host> {
+    private fun readProps(): List<Host> {
         return gson.fromJson(
             FileReader(
                 Objects.requireNonNull(
@@ -23,7 +23,6 @@ object ServiceIdHelper {
     }
 
     fun sids(): List<String> {
-        val hosts = readProps()
         val ans: MutableList<String> = ArrayList()
         for (host in hosts) {
             ans.add(host.sid)
