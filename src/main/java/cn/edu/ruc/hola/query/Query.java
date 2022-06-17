@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.query;
 
 import cn.edu.ruc.hola.config.Config;
+import cn.edu.ruc.hola.config.ServerNode;
 import cn.edu.ruc.hola.entity.Node;
 import cn.edu.ruc.hola.service.AbsService;
 import cn.edu.ruc.hola.service.Service;
@@ -39,14 +40,14 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
     private static final int DEFAULT_LEN = 12;
 
     @Override
-    public List<Node> query(String condition, List<String> sids, String db_name) {
+    public List<Node> query(String condition, List<ServerNode> sids, String db_name) {
         List<Node> query = new CopyOnWriteArrayList<>();
         executeAsync(query, condition, sids, db_name);
         return query;
     }
 
     @Override
-    public List<Node> queries(String condition, List<String> sids, List<String> db_names) {
+    public List<Node> queries(String condition, List<ServerNode> sids, List<String> db_names) {
         List<Node> query = new CopyOnWriteArrayList<>();
         db_names.forEach(db_name -> {
             List<Node> nodes = query(condition, sids, db_name);
@@ -65,11 +66,11 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
     }
 
     @SneakyThrows
-    private void executeAsync(List<Node> query, String condition, List<String> sids, String db_name) {
+    private void executeAsync(List<Node> query, String condition, List<ServerNode> serverNodes, String db_name) {
         ExecutorService pool = Executors.newFixedThreadPool(DEFAULT_LEN);
-        final CountDownLatch latch = new CountDownLatch(sids.size());
-        sids.forEach(sid -> pool.submit(() -> {
-            loadService(sid);
+        final CountDownLatch latch = new CountDownLatch(serverNodes.size());
+        serverNodes.forEach(serverNode -> pool.submit(() -> {
+            loadService(serverNode.getSid());
             Node node = service.get().query(condition, db_name);
             if (node != null) {
                 logger.info(node.toString());

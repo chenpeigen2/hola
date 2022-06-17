@@ -9,7 +9,7 @@ object QueryWithMulti {
     private val logger = Logger.getLogger("MultiQuery")
     var RetryCnt = 5
 
-    fun queryWithTry(config: Config, condition: String?): Response? {
+    fun queryWithTry(config: Config, condition: String): Response? {
         for (i in 0 until RetryCnt) {
             val res = query(config, condition)
             if (Response.SUCCESS_CODE == res["code"] as Int?) {
@@ -20,7 +20,7 @@ object QueryWithMulti {
         return null
     }
 
-    fun query(config: Config, condition: String?): Response {
+    fun query(config: Config, condition: String): Response {
         val exec = MultiExec(config)
         return exec.partition(condition)
     }

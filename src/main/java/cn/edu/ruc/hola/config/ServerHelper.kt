@@ -19,13 +19,14 @@ object ServerHelper {
         )
     }
 
-    fun sids(): List<String> {
-        val ans: MutableList<String> = ArrayList()
-        for (host in hosts) {
-            ans.add(host.sid)
+    val sids: List<String>
+        get() {
+            val sids: MutableList<String> = ArrayList()
+            for (host in hosts) {
+                sids.add(host.sid)
+            }
+            return sids
         }
-        return ans
-    }
 
     fun host(sid: String): Host? {
         for (h in hosts) {

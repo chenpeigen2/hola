@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.exec
 
 import cn.edu.ruc.hola.config.Config
+import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.Response
 import cn.edu.ruc.hola.utils.ShuffleUtils.randomChoose
@@ -21,8 +22,8 @@ class MultiExec(config: Config) : Exec(config) {
         return l
     }
 
-    override fun partition(condition: String?): Response {
-        val cutIds: List<String?> = randomChoose(sids(), queryConfig.m)
+    override fun partition(condition: String): Response {
+        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
         val queries = query.queries(condition, cutIds, getDBNames(DEFAULT_CNT))
 
         println(queries!!.size)

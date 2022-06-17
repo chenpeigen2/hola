@@ -1,8 +1,10 @@
 package cn.edu.ruc.hola.utils
 
+import cn.edu.ruc.hola.config.ServerNode
+
 object ShuffleUtils {
-    fun randomChoose(ids: List<String>, cnt: Int): List<String> {
-        return ids.shuffled().subList(0, cnt)
+    fun randomChoose(nodes: List<ServerNode>, cnt: Int): List<ServerNode> {
+        return nodes.shuffled().subList(0, cnt)
     }
 
 }

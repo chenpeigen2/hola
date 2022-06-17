@@ -1,5 +1,7 @@
 package cn.edu.ruc.hola.exec
 
+import cn.edu.ruc.hola.config.ServerNode
+
 interface Reachable {
-    fun sids(): List<String>
+    fun serverNodes(): List<ServerNode>
 }

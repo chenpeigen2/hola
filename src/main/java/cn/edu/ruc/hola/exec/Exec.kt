@@ -6,6 +6,7 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.query.Query
 import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.config.ServerHelper
+import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
 import cn.edu.ruc.hola.utils.SHA256Utils.getSHA256Str
@@ -26,8 +27,8 @@ open class Exec(protected val config: Config) : Reachable {
     /**
      * the core method
      */
-    open fun partition(condition: String?): Response? {
-        val cutIds: List<String?> = randomChoose(sids(), queryConfig.m)
+    open fun partition(condition: String): Response? {
+        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
         val queries = query.query(condition, cutIds, "fake")
         return analyze(queries)
     }
@@ -63,7 +64,11 @@ open class Exec(protected val config: Config) : Reachable {
         return Response.SuccessCode(m)
     }
 
-    override fun sids(): List<String> {
-        return ServerHelper.sids()
+    override fun serverNodes(): List<ServerNode> {
+        val snods = mutableListOf<ServerNode>()
+        ServerHelper.sids.forEach {
+            snods.add(ServerNode(it, "fake"))
+        }
+        return snods
     }
 }
