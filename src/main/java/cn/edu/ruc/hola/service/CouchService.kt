@@ -1,15 +1,15 @@
 package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.service.extension.ServiceHolder
 import cn.edu.ruc.hola.service.extension.couchdb.CouchDbExtension
-import cn.edu.ruc.hola.service.extension.couchdb.CouchDbServiceHolder
 
 class CouchService(sid: String) : AbsService(sid) {
 
     private val dbExtension: CouchDbExtension
 
     init {
-        dbExtension = CouchDbExtension(CouchDbServiceHolder.getHost(sid))
+        dbExtension = CouchDbExtension(ServiceHolder.getHost(sid))
     }
 
     override fun query(condition: String, db_name: String): Node? {
