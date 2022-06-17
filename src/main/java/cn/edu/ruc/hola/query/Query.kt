@@ -26,7 +26,7 @@ class Query(val config: Config) : Serviceable, Queryable {
     /**
      * temporary define the thread counts
      */
-    private val THREADPULLSIZE = 12
+    private val nThreads = 12
 
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
         val query: MutableList<Node> = CopyOnWriteArrayList()
@@ -35,7 +35,7 @@ class Query(val config: Config) : Serviceable, Queryable {
     }
 
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) {
-        val pool = Executors.newFixedThreadPool(THREADPULLSIZE)
+        val pool = Executors.newFixedThreadPool(nThreads)
         val latch = CountDownLatch(serverNodes.size)
         serverNodes.forEach(Consumer { (sid, databaseName): ServerNode ->
             pool.submit {
