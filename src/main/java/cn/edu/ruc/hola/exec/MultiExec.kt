@@ -22,16 +22,8 @@ class MultiExec(config: Config) : Exec(config) {
         return l
     }
 
-    override fun partition(condition: String): Response {
-        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
-        val queries = query.queries(condition, cutIds, getDBNames(DEFAULT_CNT))
-
-        println(queries!!.size)
-        queries.forEach { x: Node? ->
-            println(
-                x
-            )
-        }
-        return analyze(queries)
+    override fun serverNodes(): List<ServerNode> {
+        return super.serverNodes()
     }
+
 }

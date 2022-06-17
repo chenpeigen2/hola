@@ -40,38 +40,19 @@ public record Query(@NonNull Config config) implements Serviceable, Queryable {
     private static final int DEFAULT_LEN = 12;
 
     @Override
-    public List<Node> query(String condition, List<ServerNode> sids, String db_name) {
+    public List<Node> query(String condition, List<ServerNode> sids) {
         List<Node> query = new CopyOnWriteArrayList<>();
-        executeAsync(query, condition, sids, db_name);
+        executeAsync(query, condition, sids);
         return query;
-    }
-
-    @Override
-    public List<Node> queries(String condition, List<ServerNode> sids, List<String> db_names) {
-        List<Node> query = new CopyOnWriteArrayList<>();
-        db_names.forEach(db_name -> {
-            List<Node> nodes = query(condition, sids, db_name);
-            query.addAll(nodes);
-        });
-        return query;
-    }
-
-
-    private void executeSync(List<Node> query, String condition, List<String> sids, String db_name) {
-        for (String sid : sids) {
-            Node n = createService(sid).query(condition, db_name);
-            System.out.println(n);
-            query.add(n);
-        }
     }
 
     @SneakyThrows
-    private void executeAsync(List<Node> query, String condition, List<ServerNode> serverNodes, String db_name) {
+    private void executeAsync(List<Node> query, String condition, List<ServerNode> serverNodes) {
         ExecutorService pool = Executors.newFixedThreadPool(DEFAULT_LEN);
         final CountDownLatch latch = new CountDownLatch(serverNodes.size());
         serverNodes.forEach(serverNode -> pool.submit(() -> {
             loadService(serverNode.getSid());
-            Node node = service.get().query(condition, db_name);
+            Node node = service.get().query(condition, serverNode.getDatabaseName());
             if (node != null) {
                 logger.info(node.toString());
                 query.add(node);

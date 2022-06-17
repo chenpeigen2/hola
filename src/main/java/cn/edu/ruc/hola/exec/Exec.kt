@@ -29,7 +29,7 @@ open class Exec(protected val config: Config) : Reachable {
      */
     open fun partition(condition: String): Response? {
         val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
-        val queries = query.query(condition, cutIds, "fake")
+        val queries = query.query(condition, cutIds)
         return analyze(queries)
     }
 

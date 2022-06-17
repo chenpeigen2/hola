@@ -22,6 +22,6 @@ object QueryWithMulti {
 
     fun query(config: Config, condition: String): Response {
         val exec = MultiExec(config)
-        return exec.partition(condition)
+        return exec.partition(condition)!!
     }
 }
