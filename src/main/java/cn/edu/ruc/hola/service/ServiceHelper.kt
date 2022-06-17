@@ -1,7 +1,5 @@
 package cn.edu.ruc.hola.service
 
-import cn.edu.ruc.hola.config.ServiceIdNode
-
 object ServiceHelper {
     /**
      * create a service that a man can hold

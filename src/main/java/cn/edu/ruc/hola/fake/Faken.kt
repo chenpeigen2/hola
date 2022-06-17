@@ -4,7 +4,7 @@ import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
 import cn.edu.ruc.hola.utils.DbUtils
-import cn.edu.ruc.hola.config.ServiceIdHelper
+import cn.edu.ruc.hola.config.ServerHelper
 import java.util.logging.Logger
 
 object Faken {
@@ -28,7 +28,7 @@ object Faken {
      * with repeat count 10 by default
      */
     fun createFakeDb(cnt: Int) {
-        ServiceIdHelper.hosts.forEach {
+        ServerHelper.hosts.forEach {
             createFakeDb(it, cnt)
         }
     }
@@ -51,7 +51,7 @@ object Faken {
      * with repeat count 10 by default
      */
     fun deleteFakeDb(cnt: Int) {
-        ServiceIdHelper.hosts.forEach {
+        ServerHelper.hosts.forEach {
             deleteFakeDb(it, cnt)
         }
     }
@@ -60,7 +60,7 @@ object Faken {
      * generate the fake data and then shuffle
      */
     private fun generateFakeData(cnt: Int, threshold: Float = 0.8f, conspired: Boolean = false): List<String> {
-        val size = ServiceIdHelper.hosts.size
+        val size = ServerHelper.hosts.size
         val l = FakeData.basicFake(size * cnt, threshold, conspired)
         l.shuffle() // shuffle it
         return l
@@ -70,7 +70,7 @@ object Faken {
      * very complex operation , do not change
      */
     fun addFakeData(cnt: Int) {
-        val props = ServiceIdHelper.hosts
+        val props = ServerHelper.hosts
         val fakeData: List<String> = generateFakeData(cnt)
         for (idx in props.indices) {
             val host: Host = props[idx]
@@ -100,7 +100,7 @@ object Faken {
             
         """.trimIndent()
 
-        ServiceIdHelper.hosts.forEach {
+        ServerHelper.hosts.forEach {
             it.let { host ->
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) { cnt ->
@@ -124,14 +124,14 @@ object Faken {
                 }         
         """.trimIndent()
         val l = mutableListOf<Node>()
-        ServiceIdHelper.hosts.forEach {
+        ServerHelper.hosts.forEach {
             it.let { host ->
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) {
                     dbUtils.filterDocs("fake$it", query).use { res ->
                         val result = res?.body?.string()
                         logger.info("$host fake$it $result")
-                        val data = ServiceIdHelper.gson
+                        val data = ServerHelper.gson
                             .fromJson(result, FilterDocs::class.java).docs[0]
                             .data.toString()
                         val n = Node(query, data)

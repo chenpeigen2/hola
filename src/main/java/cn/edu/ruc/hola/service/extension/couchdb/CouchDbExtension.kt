@@ -4,7 +4,7 @@ import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
 import cn.edu.ruc.hola.utils.DbUtils
-import cn.edu.ruc.hola.config.ServiceIdHelper
+import cn.edu.ruc.hola.config.ServerHelper
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
@@ -25,7 +25,7 @@ class CouchDbExtension(host: Host) {
 
     private val logger = Logger.getLogger("CouchDbExtension")
 
-    private val gson = ServiceIdHelper.gson
+    private val gson = ServerHelper.gson
 
     private val POOL_SIZE = 12
 

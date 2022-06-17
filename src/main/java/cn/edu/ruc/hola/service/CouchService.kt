@@ -1,6 +1,5 @@
 package cn.edu.ruc.hola.service
 
-import cn.edu.ruc.hola.config.ServiceIdNode
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.CouchDbExtension
 
