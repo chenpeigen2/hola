@@ -16,7 +16,4 @@ object SHA256Utils {
         val sha256Str = getSHA256Str(text)
         return sha256Str.equals(sha256, ignoreCase = true)
     }
-
-
-
 }
