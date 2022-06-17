@@ -2,7 +2,6 @@ package cn.edu.ruc;
 
 import org.junit.jupiter.api.Test;
 import cn.edu.ruc.hola.utils.Generations2;
-import cn.edu.ruc.hola.config.ServiceIdHelper;
 
 public class Generations2Test {
 

@@ -8,6 +8,6 @@ import cn.edu.ruc.hola.config.ServiceIdHelper
  */
 object ServiceHolder {
     fun getHost(sid: String): Host {
-        return ServiceIdHelper.host(sid)
+        return ServiceIdHelper.host(sid)!!
     }
 }
