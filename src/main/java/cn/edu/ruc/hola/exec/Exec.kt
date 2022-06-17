@@ -5,7 +5,7 @@ import cn.edu.ruc.hola.config.QueryConfig
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.query.Query
 import cn.edu.ruc.hola.utils.Generations2
-import cn.edu.ruc.hola.utils.JsonUtils
+import cn.edu.ruc.hola.config.ServiceIdHelper
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
 import cn.edu.ruc.hola.utils.SHA256Utils.getSHA256Str
@@ -64,6 +64,6 @@ open class Exec(protected val config: Config) : Reachable {
     }
 
     override fun sids(): List<String> {
-        return JsonUtils.sids()
+        return ServiceIdHelper.sids()
     }
 }

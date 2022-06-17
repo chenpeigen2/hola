@@ -1,6 +1,5 @@
-package cn.edu.ruc.hola.utils;
+package cn.edu.ruc.hola.config;
 
-import cn.edu.ruc.hola.config.Host;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class JsonUtils {
+public final class ServiceIdHelper {
 
-    private JsonUtils() {
+    private ServiceIdHelper() {
 
     }
 
@@ -32,7 +31,7 @@ public final class JsonUtils {
     @SneakyThrows
     public synchronized static List<Host> readProps() {
         if (hosts == null) {
-            hosts = gson.fromJson(new FileReader(Objects.requireNonNull(JsonUtils.class.getClassLoader().getResource("localsid.json")).getFile()), new TypeToken<List<Host>>() {
+            hosts = gson.fromJson(new FileReader(Objects.requireNonNull(ServiceIdHelper.class.getClassLoader().getResource("localsid.json")).getFile()), new TypeToken<List<Host>>() {
             }.getType());
         }
         return hosts;

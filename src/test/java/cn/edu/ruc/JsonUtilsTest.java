@@ -2,7 +2,7 @@ package cn.edu.ruc;
 
 import org.junit.jupiter.api.Test;
 
-import static cn.edu.ruc.hola.utils.JsonUtils.readProps;
+import static cn.edu.ruc.hola.config.ServiceIdHelper.readProps;
 
 public class JsonUtilsTest {
     @Test

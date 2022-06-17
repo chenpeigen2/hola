@@ -2,7 +2,7 @@ package cn.edu.ruc;
 
 import org.junit.jupiter.api.Test;
 import cn.edu.ruc.hola.utils.Generations2;
-import cn.edu.ruc.hola.utils.JsonUtils;
+import cn.edu.ruc.hola.config.ServiceIdHelper;
 
 public class Generations2Test {
 
@@ -16,7 +16,7 @@ public class Generations2Test {
     public void testForBuildOptimize() {
         var ans = Generations2.optimize(0.95f, 26, 20);
         System.out.println(ans);
-        var an = JsonUtils.getGson().toJson(ans);
+        var an = ServiceIdHelper.getGson().toJson(ans);
         System.out.println(an);
     }
 }
