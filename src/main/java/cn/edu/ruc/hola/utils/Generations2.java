@@ -11,9 +11,6 @@ import java.util.logging.Logger;
  * private float λ; // 本次查询partition percentage >= thresh-hold (fixed value)
  */
 public final class Generations2 {
-
-
-
     private static final Logger logger = Logger.getLogger("Generations2");
 
     /**
@@ -25,7 +22,7 @@ public final class Generations2 {
     }
 
     /**
-     * @return the pair holder
+     * @return the QueryConfig holder
      */
     public static QueryConfig optimize(float threshHolder, int M, int H) {
         logger.info("threshHolder: " + threshHolder + ",M:" + M + ",H:" + H);
