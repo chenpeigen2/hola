@@ -4,7 +4,7 @@ object ServiceHelper {
     /**
      * create a service that a man can hold
      */
-    fun createService(sid: String?, type: ServiceType): Service? {
+    fun createService(sid: String, type: ServiceType): Service? {
         when (type) {
             ServiceType.TYPE_COUCHDB -> {
                 return CouchService(sid)

@@ -1,11 +1,11 @@
 package cn.edu.ruc.hola.exec;
 
 import cn.edu.ruc.hola.config.Config;
+import cn.edu.ruc.hola.config.model.Pair;
 import cn.edu.ruc.hola.entity.Node;
 import lombok.Getter;
 import cn.edu.ruc.hola.query.Query;
 import cn.edu.ruc.hola.utils.*;
-import cn.edu.ruc.hola.config.model.Pair;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -32,7 +32,7 @@ public class Exec implements Reachable {
      */
     public Response partition(String condition) {
         pair = Generations2.optimize(config.getThreshold(), config.getM(), config.getH());
-        List<String> cut_ids = ShuffleUtils.INSTANCE.randomChoose(sids(), pair.m());
+        List<String> cut_ids = ShuffleUtils.INSTANCE.randomChoose(sids(), pair.getM());
         List<Node> queries = query.query(condition, cut_ids, "fake");
         return analyze(queries);
     }
@@ -62,7 +62,7 @@ public class Exec implements Reachable {
             return Response.ErrorCode();
         }
 
-        if (percent < pair.λ()) {
+        if (percent < pair.getλ()) {
             return Response.WeakErrorCode();
         }
 
