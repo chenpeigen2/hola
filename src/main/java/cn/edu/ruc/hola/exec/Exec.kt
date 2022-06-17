@@ -18,7 +18,7 @@ open class Exec(protected val config: Config) : Reachable {
 
 
     protected val query: Query = Query(config)
-    protected val queryConfig: QueryConfig
+    private val queryConfig: QueryConfig
         get() {
             return config.queryConfig
         }

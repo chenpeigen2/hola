@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.exec
 
 import cn.edu.ruc.hola.config.Config
+import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.config.ServerNode
 
 /**
@@ -9,16 +10,15 @@ import cn.edu.ruc.hola.config.ServerNode
  */
 class MultiExec(config: Config) : Exec(config) {
 
-    private fun getDBNames(cnt: Int): List<String> {
-        val l: MutableList<String> = ArrayList()
-        for (i in 0 until cnt) {
-            l.add("fake$i")
-        }
-        return l
-    }
+    private val cnt = 10
 
     override fun serverNodes(): List<ServerNode> {
-        return super.serverNodes()
+        val snods = mutableListOf<ServerNode>()
+        ServerHelper.sids.forEach { sid ->
+            repeat(cnt) {
+                snods.add(ServerNode(sid, "fake$it"))
+            }
+        }
+        return snods
     }
-
 }

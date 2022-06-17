@@ -8,7 +8,7 @@ fun main() {
 
     StopWatch.start()
 
-    val config = Config(0.8f, 1000, 10, 8)
+    val config = Config(0.8f, 1000, 100, 80)
     // the condition we are using , and now is couchdb
 
     val query = """

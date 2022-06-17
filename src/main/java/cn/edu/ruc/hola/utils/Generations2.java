@@ -33,6 +33,10 @@ public final class Generations2 {
                 try {
                     long top = getTop(m, λ, M, H);
                     long base = getBase(m, λ, M, H);
+
+                    System.out.println("top: " + top + " , base: " + base);
+                    System.out.println("m: " + m + ", λ" + λ + " ,M: " + M + ", H" + H);
+
                     if (top >= threshHolder * base) {
                         double v = min(m, λ, M, H);
                         if (v <= holder) {
@@ -72,23 +76,8 @@ public final class Generations2 {
         return (double) top / (double) base;
     }
 
-    private static float C(int lower, int upper) {
-        float up = NumPlex(lower);
-        long low = NumPlex(upper) * NumPlex(lower - upper);
-        return up / low;
+    private static double C(int lower, int upper) {
+        return Combination.INSTANCE.combine(lower, upper);
     }
 
-    /**
-     * 普通的循环方法求阶乘
-     */
-    private static long NumPlex(int num) {
-        long sum = 1;
-        if (num < 0) {
-            throw new IllegalArgumentException("需要计算的参数必须为正数！");//抛出不合理参数异常
-        }
-        for (int i = 1; i <= num; i++) {
-            sum *= i;
-        }
-        return sum;
-    }
 }
