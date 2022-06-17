@@ -8,7 +8,6 @@ import cn.edu.ruc.hola.utils.ShuffleUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class MultiExec extends Exec {
 
@@ -34,12 +33,7 @@ public class MultiExec extends Exec {
         List<Node> queries = query.queries(condition, cut_ids, getDBNames(DEFAULT_CNT));
 
         System.out.println(queries.size());
-        queries.forEach(new Consumer<Node>() {
-            @Override
-            public void accept(Node node) {
-                System.out.println(node);
-            }
-        });
+        queries.forEach(System.out::println);
         return analyze(queries);
     }
 }

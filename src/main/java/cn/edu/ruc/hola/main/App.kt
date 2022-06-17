@@ -19,6 +19,9 @@ fun main() {
     print(query)
 
     val ans = queryWithTry(config, query)
+    println("============ ////////////////////////////////// ============")
+
+    print(ans)
     if (ans != null) {
         println("============ result ============")
         println(ans)
