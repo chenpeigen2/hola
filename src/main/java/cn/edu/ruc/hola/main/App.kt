@@ -16,6 +16,8 @@ fun main() {
       }    
     """.trimIndent()
 
+    print(query)
+
     val ans = queryWithTry(config, query)
     if (ans != null) {
         println("============ result ============")

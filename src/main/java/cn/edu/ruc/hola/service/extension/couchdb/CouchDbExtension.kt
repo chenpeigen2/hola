@@ -48,13 +48,13 @@ class CouchDbExtension(host: Host) {
         return node
     }
 
-    fun queries(condition: String, db_names: List<String>): List<Node?> {
+    fun queries(condition: String, db_names: List<String>): List<Node> {
         val pool = Executors.newFixedThreadPool(POOL_SIZE)
         val latch = CountDownLatch(db_names.size)
-        val queriesNode: MutableList<Node?> = CopyOnWriteArrayList()
+        val queriesNode: MutableList<Node> = CopyOnWriteArrayList()
         db_names.forEach { db_name ->
             val n = query(condition, db_name)
-            queriesNode.add(n)
+            if (n != null) queriesNode.add(n)
             latch.countDown()
         }
         latch.await()
