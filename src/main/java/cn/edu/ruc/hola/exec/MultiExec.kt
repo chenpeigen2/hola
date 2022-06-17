@@ -4,7 +4,6 @@ import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.Response
 import cn.edu.ruc.hola.utils.ShuffleUtils.randomChoose
-import java.util.function.Consumer
 
 /**
  * exec with multi holder
@@ -27,11 +26,11 @@ class MultiExec(config: Config) : Exec(config) {
         val queries = query.queries(condition, cutIds, getDBNames(DEFAULT_CNT))
 
         println(queries!!.size)
-        queries.forEach(Consumer { x: Node? ->
+        queries.forEach { x: Node? ->
             println(
                 x
             )
-        })
+        }
         return analyze(queries)
     }
 }
