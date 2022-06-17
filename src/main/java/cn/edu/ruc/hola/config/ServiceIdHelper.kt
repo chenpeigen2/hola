@@ -4,20 +4,17 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.FileReader
-import java.util.*
 
 object ServiceIdHelper {
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     val hosts: List<Host> = readProps()
 
-    @Synchronized
     private fun readProps(): List<Host> {
         return gson.fromJson(
             FileReader(
-                Objects.requireNonNull(
-                    ServiceIdHelper::class.java.classLoader.getResource("localsid.json")
-                ).file
+                ServiceIdHelper::class.java.classLoader.getResource("localsid.json")
+                    ?.file ?: throw RuntimeException("error find sid file !")
             ), object : TypeToken<List<Host?>?>() {}.type
         )
     }
