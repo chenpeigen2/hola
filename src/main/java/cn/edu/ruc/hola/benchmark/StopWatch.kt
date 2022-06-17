@@ -5,6 +5,14 @@ import java.util.concurrent.TimeUnit
 
 object StopWatch {
     val stopwatch: Stopwatch = Stopwatch.createUnstarted()
+    fun start() {
+        stopwatch.start()
+    }
+
+    fun stop() {
+        stopwatch.stop()
+        print()
+    }
 
     fun print() {
         System.out.printf("执行时长：%d 秒. %n", stopwatch.elapsed().seconds)
