@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.utils;
 
-import cn.edu.ruc.hola.config.model.Host;
+import cn.edu.ruc.hola.config.Host;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;

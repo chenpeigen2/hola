@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.service.extension.couchdb
 
-import cn.edu.ruc.hola.config.model.Host
+import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
 import cn.edu.ruc.hola.utils.DbUtils

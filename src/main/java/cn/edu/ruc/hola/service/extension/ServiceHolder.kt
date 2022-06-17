@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.service.extension
 
-import cn.edu.ruc.hola.config.model.Host
+import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.utils.JsonUtils
 
 /**

@@ -1,4 +1,4 @@
-package cn.edu.ruc.hola.config.model
+package cn.edu.ruc.hola.config
 
 
 /**
@@ -7,7 +7,7 @@ package cn.edu.ruc.hola.config.model
  * * private double θ; // 可信度
  */
 
-data class Pair(
+data class QueryConfig(
     val m: Int,
     val λ: Float,
     val θ: Double

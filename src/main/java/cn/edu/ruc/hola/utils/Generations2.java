@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.utils;
 
-import cn.edu.ruc.hola.config.model.Pair;
+import cn.edu.ruc.hola.config.QueryConfig;
 
 import java.util.logging.Logger;
 
@@ -29,10 +29,10 @@ public final class Generations2 {
     /**
      * @return the pair holder
      */
-    public static Pair optimize(float threshHolder, int M, int H) {
+    public static QueryConfig optimize(float threshHolder, int M, int H) {
         logger.info("threshHolder: " + threshHolder + ",M:" + M + ",H:" + H);
         double holder = Double.MAX_VALUE;
-        Pair p = null;
+        QueryConfig p = null;
         for (int m = 1; m <= M; m++) {
             for (float λ = 1f; λ > 0.5f; λ -= 0.05) {
                 try {
@@ -41,7 +41,7 @@ public final class Generations2 {
                     if (top >= threshHolder * base) {
                         double v = min(m, λ, M, H);
                         if (v <= holder) {
-                            p = new Pair(m, λ, (double) top / (double) base);
+                            p = new QueryConfig(m, λ, (double) top / (double) base);
                         }
                     }
                 } catch (IllegalArgumentException ignored) {

@@ -1,7 +1,7 @@
 package cn.edu.ruc.hola.exec;
 
 import cn.edu.ruc.hola.config.Config;
-import cn.edu.ruc.hola.config.model.Pair;
+import cn.edu.ruc.hola.config.QueryConfig;
 import cn.edu.ruc.hola.entity.Node;
 import lombok.Getter;
 import cn.edu.ruc.hola.query.Query;
@@ -20,7 +20,7 @@ public class Exec implements Reachable {
     @Getter
     protected Query query;
 
-    protected Pair pair;
+    protected QueryConfig queryConfig;
 
     public Exec(Config config) {
         this.config = config;
@@ -31,8 +31,8 @@ public class Exec implements Reachable {
      * the core method
      */
     public Response partition(String condition) {
-        pair = Generations2.optimize(config.getThreshold(), config.getM(), config.getH());
-        List<String> cut_ids = ShuffleUtils.INSTANCE.randomChoose(sids(), pair.getM());
+        queryConfig = config.getQueryConfig();
+        List<String> cut_ids = ShuffleUtils.INSTANCE.randomChoose(sids(), queryConfig.getM());
         List<Node> queries = query.query(condition, cut_ids, "fake");
         return analyze(queries);
     }
@@ -62,11 +62,11 @@ public class Exec implements Reachable {
             return Response.ErrorCode();
         }
 
-        if (percent < pair.getλ()) {
+        if (percent < queryConfig.getλ()) {
             return Response.WeakErrorCode();
         }
 
-        logger.info(pair.toString());
+        logger.info(queryConfig.toString());
 
         Map<String, String> m = new HashMap<>();
         m.put(en, DATA); //  but why
