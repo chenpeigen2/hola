@@ -22,6 +22,15 @@ public final class Generations2 {
     }
 
     /**
+     * QueryConfig(m=6, λ=0.5499999, θ=0.9792561278105246)
+     * QueryConfig(m=7, λ=0.6999999, θ=0.9950992560798854)
+     * QueryConfig(m=7, λ=0.6499999, θ=0.9950992560798854)
+     * QueryConfig(m=7, λ=0.5999999, θ=0.9950992560798854)
+     * QueryConfig(m=7, λ=0.5999999, θ=0.9950992560798854)
+     * QueryConfig(m=7, λ=0.5499999, θ=0.9649156870972626)
+     * <p>
+     * for find to optimize query config
+     *
      * @return the QueryConfig holder
      */
     public static QueryConfig optimize(float threshHolder, int M, int H) {
@@ -41,6 +50,7 @@ public final class Generations2 {
                         double v = min(m, λ, M, H);
                         if (v <= holder) {
                             p = new QueryConfig(m, λ, (double) top / (double) base);
+                            System.out.println(p);
                         }
                     }
                 } catch (IllegalArgumentException ignored) {

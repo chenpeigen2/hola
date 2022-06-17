@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.utils
 
 import java.util.*
 
+//https://leetcode.cn/problems/combinations/solution/hui-su-suan-fa-jian-zhi-python-dai-ma-java-dai-ma-/
 object Combination {
     private var _cnt = 0
 
@@ -35,9 +36,4 @@ object Combination {
         // 深度优先遍历有回头的过程，因此需要撤销选择
         path.removeLast()
     }
-}
-
-fun main() {
-    var a = Combination.combine(80, 2)
-    println(a)
 }
