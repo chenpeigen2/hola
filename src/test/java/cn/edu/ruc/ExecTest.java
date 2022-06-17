@@ -1,7 +1,6 @@
 package cn.edu.ruc;
 
 import cn.edu.ruc.hola.config.Config;
-import cn.edu.ruc.hola.exec.Exec;
 import cn.edu.ruc.hola.utils.ShuffleUtils;
 import org.junit.jupiter.api.Test;
 import cn.edu.ruc.hola.utils.Generations2;
