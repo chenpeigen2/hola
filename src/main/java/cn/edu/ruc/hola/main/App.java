@@ -16,8 +16,7 @@ public class App {
                         }    
                 """;
 
-        QueryWithMulti queryWithMulti = new QueryWithMulti();
-        var ans = queryWithMulti.queryWithTry(config, query);
+        var ans = QueryWithMulti.INSTANCE.queryWithTry(config, query);
         if (ans != null) {
             System.out.println("============ result ============");
             System.out.println(ans);
