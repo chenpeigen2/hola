@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap
  * if you are trying to change to static ,make sure Thread-safe, use ThreadLocal instead [not recommend !!!]
  */
 
-class DbUtils(val host: String, private val port: Int) {
+data class DbUtils(val host: String, private val port: Int) {
 
     companion object {
         private val client = OkHttpClient.Builder().build()
