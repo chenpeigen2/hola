@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * if you are trying to change to static ,make sure Thread-safe, use ThreadLocal instead [not recommend !!!]
  */
 public final class DbUtils {
+    private DbUtils(){}
     private static final ConcurrentHashMap<String, DbUtils> m1 = new ConcurrentHashMap<>();
 
     public static DbUtils checkDbUtils(Host h) {
