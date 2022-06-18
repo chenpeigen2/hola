@@ -18,7 +18,7 @@ object Faken {
         val dbUtils = DbUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.createDb("fake$it").use { res ->
-                val ans = res?.body?.string() ?: "null"
+                val ans = res.body?.string() ?: "null"
                 logger.info(ans)
             }
         }
@@ -41,7 +41,7 @@ object Faken {
         repeat(cnt) {
             dbUtils.deleteDb("fake$it").use { res ->
                 logger.info("host at : $host")
-                val ans = res?.body?.string() ?: "null"
+                val ans = res.body?.string() ?: "null"
                 logger.info(ans)
             }
         }
@@ -78,7 +78,7 @@ object Faken {
             repeat(cnt) {
                 val data = fakeData[idx * cnt + it]
                 dbUtils.addDoc("fake$it", data).use { res ->
-                    val bos = res?.body?.string()
+                    val bos = res.body?.string()
                     logger.info("$host")
                     logger.info("data : $data")
                     logger.info(bos)
@@ -105,7 +105,7 @@ object Faken {
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) { cnt ->
                     dbUtils.createIndex("fake$cnt", info).use { res ->
-                        val bos = res?.body?.string()
+                        val bos = res.body?.string()
                         logger.info("$host")
                         logger.info(bos)
                     }
@@ -129,7 +129,7 @@ object Faken {
                 val dbUtils = DbUtils.checkDbUtils(host)
                 repeat(cnt) {
                     dbUtils.filterDocs("fake$it", query).use { res ->
-                        val result = res?.body?.string()
+                        val result = res.body?.string()
                         logger.info("$host fake$it $result")
                         val data = ServerHelper.gson
                             .fromJson(result, FilterDocs::class.java).docs[0]

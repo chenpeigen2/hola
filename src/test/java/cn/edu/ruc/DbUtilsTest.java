@@ -1,7 +1,6 @@
 package cn.edu.ruc;
 
 import org.junit.jupiter.api.Test;
-import cn.edu.ruc.hola.utils.DbUtils;
 
 import java.io.IOException;
 
