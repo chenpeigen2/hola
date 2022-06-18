@@ -65,7 +65,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun auth() {
+    private fun auth() {
         val body: RequestBody = FormBody.Builder()
             .add("name", "admin")
             .add("password", "123456").build()
