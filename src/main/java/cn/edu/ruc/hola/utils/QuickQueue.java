@@ -81,7 +81,7 @@ public final class QuickQueue {
         if (cnt == 1) {
             map.remove(key);
         } else {
-            Node prev = null;
+            Node prev;
             if (node.left.cnt == cnt - 1) {
                 prev = node.left;
             } else {
