@@ -3,7 +3,7 @@ package cn.edu.ruc.hola.fake
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
-import cn.edu.ruc.hola.utils.DbUtils
+import cn.edu.ruc.hola.utils.CouchDBUtils
 import cn.edu.ruc.hola.config.ServerHelper
 import java.util.logging.Logger
 
@@ -15,7 +15,7 @@ object Faken {
      * make cnt to repeat create
      */
     private fun createFakeDb(host: Host, cnt: Int) {
-        val dbUtils = DbUtils.checkDbUtils(host)
+        val dbUtils = CouchDBUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.createDb("fake$it").use { res ->
                 val ans = res.body?.string() ?: "null"
@@ -37,7 +37,7 @@ object Faken {
      * make cnt to repeat delete
      */
     private fun deleteFakeDb(host: Host, cnt: Int) {
-        val dbUtils = DbUtils.checkDbUtils(host)
+        val dbUtils = CouchDBUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.deleteDb("fake$it").use { res ->
                 logger.info("host at : $host")
@@ -74,7 +74,7 @@ object Faken {
         val fakeData: List<String> = generateFakeData(cnt)
         for (idx in props.indices) {
             val host: Host = props[idx]
-            val dbUtils = DbUtils.checkDbUtils(host)
+            val dbUtils = CouchDBUtils.checkDbUtils(host)
             repeat(cnt) {
                 val data = fakeData[idx * cnt + it]
                 dbUtils.addDoc("fake$it", data).use { res ->
@@ -102,7 +102,7 @@ object Faken {
 
         ServerHelper.hosts.forEach {
             it.let { host ->
-                val dbUtils = DbUtils.checkDbUtils(host)
+                val dbUtils = CouchDBUtils.checkDbUtils(host)
                 repeat(cnt) { cnt ->
                     dbUtils.createIndex("fake$cnt", info).use { res ->
                         val bos = res.body?.string()
@@ -126,7 +126,7 @@ object Faken {
         val l = mutableListOf<Node>()
         ServerHelper.hosts.forEach {
             it.let { host ->
-                val dbUtils = DbUtils.checkDbUtils(host)
+                val dbUtils = CouchDBUtils.checkDbUtils(host)
                 repeat(cnt) {
                     dbUtils.filterDocs("fake$it", query).use { res ->
                         val result = res.body?.string()

@@ -3,7 +3,7 @@ package cn.edu.ruc.hola.service.extension.couchdb
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
-import cn.edu.ruc.hola.utils.DbUtils
+import cn.edu.ruc.hola.utils.CouchDBUtils
 import cn.edu.ruc.hola.config.ServerHelper
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
@@ -17,10 +17,10 @@ import java.util.logging.Logger
  * for further optimize !
  */
 class CouchDbExtension(host: Host) {
-    private val dbUtils: DbUtils
+    private val dbUtils: CouchDBUtils
 
     init {
-        dbUtils = DbUtils.checkDbUtils(host)
+        dbUtils = CouchDBUtils.checkDbUtils(host)
     }
 
     private val logger = Logger.getLogger("CouchDbExtension")

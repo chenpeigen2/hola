@@ -16,16 +16,16 @@ import java.util.concurrent.ConcurrentHashMap
  * if you are trying to change to static ,make sure Thread-safe, use ThreadLocal instead [not recommend !!!]
  */
 
-data class DbUtils(val host: String, private val port: Int) {
+data class CouchDBUtils(val host: String, private val port: Int) {
 
     companion object {
         private val client = OkHttpClient.Builder().build()
 
-        private var m1 = ConcurrentHashMap<String, DbUtils>()
+        private var m1 = ConcurrentHashMap<String, CouchDBUtils>()
 
-        fun checkDbUtils(h: Host): DbUtils {
+        fun checkDbUtils(h: Host): CouchDBUtils {
             return m1.computeIfAbsent(h.sid) {
-                val u = DbUtils(h.host, h.port)
+                val u = CouchDBUtils(h.host, h.port)
                 u
             }
         }
