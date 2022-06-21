@@ -33,7 +33,6 @@ class CouchDbExtension(host: Host) {
         var node: Node? = null
         dbUtils.filterDocs(db_name, condition).use { res ->
             res.body?.let {
-                println(res)
                 val body = it.string()
                 val filterDocs: FilterDocs =
                     gson.fromJson(
