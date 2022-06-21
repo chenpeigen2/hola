@@ -58,6 +58,8 @@ open class Exec(protected val config: Config) : Reachable {
         if (percent < 0.5f) {
             return Response.ErrorCode()
         }
+        println("MAX_CNT = $MAX_CNT, len = $len , percent = $percent")
+        println(queryConfig)
         if (percent < queryConfig.λ) {
             return Response.WeakErrorCode()
         }
