@@ -35,14 +35,19 @@ open class Exec(protected val config: Config) : Reachable {
     /**
      * @param queries the given queries to analyze
      */
-    protected fun analyze(queries: List<Node?>?): Response {
+    protected fun analyze(queries: List<Node>): Response {
         val quickQueue = QuickQueue()
-        val len = queries!!.size
+        val len = queries.size
+
+        queries.forEach {
+            println(it.value)
+            println("=======")
+        }
 
         // data 数据
-        queries.forEach { query: Node? ->
+        queries.forEach { query: Node ->
             quickQueue.inc(
-                query!!.value
+                query.value
             )
         }
         val MAX_CNT = quickQueue.maxKeyCnt
