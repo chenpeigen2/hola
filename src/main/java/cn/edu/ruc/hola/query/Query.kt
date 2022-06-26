@@ -3,14 +3,12 @@ package cn.edu.ruc.hola.query
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.service.AbsService
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.Executors
-import java.util.function.Consumer
 import java.util.logging.Logger
 
 class Query(val config: Config) : Serviceable, Queryable {
@@ -20,13 +18,8 @@ class Query(val config: Config) : Serviceable, Queryable {
      * the service
      */
     companion object {
-        val service: ThreadLocal<Service> = ThreadLocal()
+        val service: MutableMap<String, Service> = mutableMapOf()
     }
-
-    /**
-     * temporary define the thread counts
-     */
-    private val nThreads = 12
 
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
         val query: MutableList<Node> = CopyOnWriteArrayList()
@@ -34,49 +27,28 @@ class Query(val config: Config) : Serviceable, Queryable {
         return query
     }
 
-    private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) {
-        val pool = Executors.newFixedThreadPool(nThreads)
-        val latch = CountDownLatch(serverNodes.size)
-        serverNodes.forEach(Consumer { (sid, databaseName): ServerNode ->
-            pool.submit {
-                loadService(sid)
-                val node = service.get().query(condition, databaseName)
+    private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
+        serverNodes.forEach {
+            launch {
+                val anService = loadService(it.sid)
+                val node = anService.query(condition, it.databaseName)
                 node?.let {
-                    logger.info(node.toString())
-                    query.add(node)
+                    logger.info(it.toString())
+                    query.add(it)
                 }
-                latch.countDown()
             }
-        })
-        latch.await()
-        if (!pool.isShutdown) pool.shutdown()
+        }
     }
 
     /**
      * load the service we are calling
      */
-    @Synchronized
-    fun loadService(sid: String) {
-        if (!isNull() && checkSid(sid)) return
-        service.set(createService(sid))
-    }
-
-    /**
-     * @return true if the service ,false service is not null
-     */
-    @Synchronized
-    private fun isNull(): Boolean {
-        return service.get() == null
-    }
-
-    /**
-     * @param sid service id
-     * @return if thread hold the same return true,else false
-     */
-    private fun checkSid(sid: String): Boolean {
-        if (service.get() == null) return false
-        val s = service.get() as AbsService
-        return s.sid == sid
+    private fun loadService(sid: String): Service {
+        return service[sid] ?: run {
+            val anService = createService(sid)
+            service[sid] = anService
+            anService
+        }
     }
 
     /**
@@ -85,7 +57,7 @@ class Query(val config: Config) : Serviceable, Queryable {
      * @param sid service id
      * @return the service
      */
-    override fun createService(sid: String): Service? {
+    override fun createService(sid: String): Service {
         return createService(sid, ServiceType.TYPE_COUCHDB)
     }
 }

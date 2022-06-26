@@ -19,6 +19,7 @@ dependencies {
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("net.bytebuddy:byte-buddy:1.12.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
 }
 
 tasks.test {
