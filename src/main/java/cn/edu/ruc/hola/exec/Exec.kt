@@ -35,7 +35,7 @@ open class Exec(protected val config: Config) : Reachable {
     /**
      * @param queries the given queries to analyze
      */
-    protected fun analyze(queries: List<Node>): Response {
+    private fun analyze(queries: List<Node>): Response {
         val quickQueue = QuickQueue()
         val len = queries.size
 

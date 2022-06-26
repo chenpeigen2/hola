@@ -22,7 +22,7 @@ internal class AppKtTest {
     }
 
 
-    @RepeatedTest(10)
+    @RepeatedTest(10000)
     fun test02() {
         println(1)
     }

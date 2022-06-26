@@ -15,8 +15,4 @@ class CouchService(sid: String) : AbsService(sid) {
     override fun query(condition: String, db_name: String): Node? {
         return dbExtension.query(condition, db_name)
     }
-
-    override fun queries(condition: String, db_names: List<String>): List<Node> {
-        return dbExtension.queries(condition, db_names)
-    }
 }
