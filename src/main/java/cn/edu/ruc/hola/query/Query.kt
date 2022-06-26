@@ -33,7 +33,6 @@ class Query(val config: Config) : Serviceable, Queryable {
                 val anService = loadService(it.sid)
                 val node = anService.query(condition, it.databaseName)
                 node?.let {
-                    logger.info(it.toString())
                     query.add(it)
                 }
             }
