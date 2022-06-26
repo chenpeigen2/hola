@@ -1,14 +1,10 @@
 package cn.edu.ruc.hola.service.extension.couchdb
 
 import cn.edu.ruc.hola.config.Host
+import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
 import cn.edu.ruc.hola.utils.CouchDBUtils
-import cn.edu.ruc.hola.config.ServerHelper
-import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.Executors
-import java.util.logging.Logger
 
 /**
  * extension for couch db , for add a default
@@ -23,11 +19,7 @@ class CouchDbExtension(host: Host) {
         dbUtils = CouchDBUtils.checkDbUtils(host)
     }
 
-    private val logger = Logger.getLogger("CouchDbExtension")
-
     private val gson = ServerHelper.gson
-
-    private val POOL_SIZE = 12
 
     fun query(condition: String, db_name: String): Node? {
         var node: Node? = null
