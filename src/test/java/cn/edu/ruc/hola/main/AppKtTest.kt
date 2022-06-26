@@ -20,7 +20,7 @@ internal class AppKtTest {
         println(222)
     }
 
-    @RepeatedTest(1)
+    @RepeatedTest(1000)
     fun testMain() {
         val config = Config(0.8f, 1000, 100, 80)
         val query = """

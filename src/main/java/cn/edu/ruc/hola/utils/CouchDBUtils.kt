@@ -36,7 +36,6 @@ data class CouchDBUtils(val host: String, private val port: Int) {
     private val m =
         hashMapOf(Pair("Accept", "application/json"), Pair("Content-Type", "application/json"))
 
-    @Volatile
     private var authed = false
 
     private fun getBaseUrlBuilder(): HttpUrl.Builder {
