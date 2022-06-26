@@ -24,10 +24,10 @@ object StopWatch {
     }
 
     private fun dump() {
-        appendFile("执行时长: ${stopwatch.elapsed(TimeUnit.MILLISECONDS)} 纳秒", "./output.txt")
+        appendFile("\n${stopwatch.elapsed(TimeUnit.MILLISECONDS)}")
     }
 
-    private fun appendFile(text: String, destFile: String) {
+    private fun appendFile(text: String, destFile: String = "./show/output.txt") {
         val f = File(destFile)
         if (!f.exists()) {
             f.createNewFile()
