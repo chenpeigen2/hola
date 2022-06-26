@@ -19,8 +19,8 @@ class BuddyUtils2Test {
     }
 
     @Test
-    HelloWorld.Call getInstance() {
-        var c = BuddyUtils2.getInstance(new HelloWorld.Call(), HelloWorld.Call.class);
+    Call getInstance() {
+        var c = BuddyUtils2.getInstance(new Call(), Call.class);
         assertNotNull(c);
         return c;
     }
