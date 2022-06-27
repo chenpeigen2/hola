@@ -6,6 +6,8 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.CopyOnWriteArrayList
@@ -27,9 +29,10 @@ class Query(val config: Config) : Serviceable, Queryable {
         return query
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
         serverNodes.forEach {
-            launch {
+            GlobalScope.launch {
                 val anService = loadService(it.sid)
                 val node = anService.query(condition, it.databaseName)
                 node?.let {
