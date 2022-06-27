@@ -29,10 +29,9 @@ class Query(val config: Config) : Serviceable, Queryable {
         return query
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
         serverNodes.forEach {
-            GlobalScope.launch {
+            launch {
                 val anService = loadService(it.sid)
                 val node = anService.query(condition, it.databaseName)
                 node?.let {
