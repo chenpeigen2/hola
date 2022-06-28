@@ -6,8 +6,6 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.CopyOnWriteArrayList
