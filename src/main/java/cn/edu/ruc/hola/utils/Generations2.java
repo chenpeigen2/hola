@@ -1,8 +1,6 @@
 package cn.edu.ruc.hola.utils;
 
-import cn.edu.ruc.hola.benchmark.StopWatch;
 import cn.edu.ruc.hola.config.QueryConfig;
-import org.apache.commons.math3.util.Combinations;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
 import java.util.logging.Logger;
@@ -20,8 +18,7 @@ public final class Generations2 {
      * @return the PBA
      */
     public static double infPBA(int m, float λ, int M, int H) {
-        logger.info("m: " + m + ",λ:" + λ + ",M:" + M + ",H:" + H);
-        return (double) getTop(m, λ, M, H) / (double) getBase(m, λ, M, H);
+        return getTop(m, λ, M, H) / getBase(m, λ, M, H);
     }
 
     /**
@@ -94,7 +91,6 @@ public final class Generations2 {
     }
 
     public static double C(int lower, int upper) {
-        System.out.println(lower + "    " + upper);
         return CombinatoricsUtils.binomialCoefficientDouble(lower, upper);
     }
 
