@@ -25,7 +25,7 @@ object StopWatch {
     }
 
     private fun dump() {
-        appendFile("\n${stopwatch.elapsed(TimeUnit.MILLISECONDS)}")
+        appendFile("${stopwatch.elapsed(TimeUnit.MILLISECONDS)}\n")
     }
 
     private fun appendFile(text: String, destFile: String = "./show/output.txt") {
