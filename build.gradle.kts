@@ -20,6 +20,7 @@ dependencies {
     implementation("com.google.guava:guava:31.1-jre")
     implementation("net.bytebuddy:byte-buddy:1.12.10")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+    implementation("org.apache.commons:commons-math3:3.6.1")
 }
 
 tasks.test {
