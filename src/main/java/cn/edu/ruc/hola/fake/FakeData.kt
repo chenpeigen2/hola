@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.fake
 
-import cn.edu.ruc.hola.service.extension.couchdb.models.Doc
+import cn.edu.ruc.hola.models.couchdb.Doc
 import java.util.*
 
 object FakeData {

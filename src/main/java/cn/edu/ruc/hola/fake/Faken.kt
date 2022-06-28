@@ -2,7 +2,7 @@ package cn.edu.ruc.hola.fake
 
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.service.extension.couchdb.models.FilterDocs
+import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import cn.edu.ruc.hola.utils.CouchDBUtils
 import cn.edu.ruc.hola.config.ServerHelper
 import java.util.logging.Logger

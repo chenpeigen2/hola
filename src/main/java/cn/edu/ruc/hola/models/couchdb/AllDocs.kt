@@ -1,4 +1,4 @@
-package cn.edu.ruc.hola.service.extension.couchdb.models
+package cn.edu.ruc.hola.models.couchdb
 
 
 class AllDocs {
