@@ -17,7 +17,7 @@ class Generations2Test {
 
     @Test
     void testC() {
-        long value = Generations2.C(80, 2);
+        double value = Generations2.C(80, 2);
         assertEquals(3160, value);
     }
 }

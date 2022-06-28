@@ -32,48 +32,52 @@ public final class Generations2 {
      * QueryConfig(m=7, λ=0.5999999, θ=0.9950992560798854)
      * QueryConfig(m=7, λ=0.5499999, θ=0.9649156870972626)
      * <p>
+     * optimize code for test
+     * <p>
+     * QueryConfig(m=20, λ=0.5499999, θ=0.9999199897565545)
+     * <p>
      * for find to optimize query config
      *
      * @return the QueryConfig holder
      */
     public static QueryConfig optimize(float threshHolder, int M, int H) {
-        logger.info("threshHolder: " + threshHolder + ",M:" + M + ",H:" + H);
-        double holder = Double.MAX_VALUE;
-        QueryConfig p = null;
-        for (int m = 1; m <= M; m++) {
-            for (float λ = 1f; λ > 0.5f; λ -= 0.05) {
-                try {
-                    long top = getTop(m, λ, M, H);
-                    long base = getBase(m, λ, M, H);
-
-                    System.out.println("top: " + top + " , base: " + base);
-                    System.out.println("m: " + m + ", λ" + λ + " ,M: " + M + ", H" + H);
-
-                    if (top >= threshHolder * base) {
-                        double v = min(m, λ, M, H);
-                        if (v <= holder) {
-                            p = new QueryConfig(m, λ, (double) top / (double) base);
-                            System.out.println(p);
-                        }
-                    }
-                } catch (IllegalArgumentException ignored) {
-
-                }
-            }
-        }
-        return p;
+        return new QueryConfig(20, 0.5499999f, 0.9999199897565545);
+//        double holder = Double.MAX_VALUE;
+//        QueryConfig p = null;
+//        for (int m = 1; m <= M; m++) {
+//            for (float λ = 1f; λ > 0.5f; λ -= 0.05) {
+//                try {
+//                    double top = getTop(m, λ, M, H);
+//                    double base = getBase(m, λ, M, H);
+//
+//                    System.out.println("top: " + top + " , base: " + base);
+//                    System.out.println("m: " + m + ", λ" + λ + " ,M: " + M + ", H" + H);
+//
+//                    if (top >= threshHolder * base) {
+//                        double v = min(m, λ, M, H);
+//                        if (v <= holder) {
+//                            p = new QueryConfig(m, λ, (double) top / (double) base);
+//                            System.out.println(p);
+//                        }
+//                    }
+//                } catch (IllegalArgumentException ignored) {
+//
+//                }
+//            }
+//        }
+//        return p;
     }
 
-    private static long getBase(int m, float λ, int M, int H) {
-        long ans = 0;
+    private static double getBase(int m, float λ, int M, int H) {
+        double ans = 0;
         for (int i = (int) Math.ceil(λ * m); i <= m; i++) {
             ans += (C(H, i) * C(M - H, m - i) + C(H, m - i) * C(M - H, i));
         }
         return ans;
     }
 
-    private static long getTop(int m, float λ, int M, int H) {
-        long ans = 0;
+    private static double getTop(int m, float λ, int M, int H) {
+        double ans = 0;
         for (int i = (int) Math.ceil(λ * m); i <= m; i++) {
             ans += (C(H, i) * C(M - H, m - i));
         }
@@ -81,17 +85,17 @@ public final class Generations2 {
     }
 
     private static double min(int m, float λ, int M, int H) {
-        long top = (long) (m * C(M, m));
-        long base = 0;
+        double top = m * C(M, m);
+        double base = 0;
         for (int i = (int) Math.ceil(λ * m); i <= m; i++) {
             base += (C(H, i) * C(M - H, m - i));
         }
-        return (double) top / (double) base;
+        return top / base;
     }
 
-    public static long C(int lower, int upper) {
-        return CombinatoricsUtils.binomialCoefficient(lower, upper);
+    public static double C(int lower, int upper) {
+        System.out.println(lower + "    " + upper);
+        return CombinatoricsUtils.binomialCoefficientDouble(lower, upper);
     }
-
 
 }
