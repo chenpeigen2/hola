@@ -18,7 +18,7 @@ class Query(val config: Config) : Serviceable, Queryable {
      * the service
      */
     companion object {
-        val service: MutableMap<String, Service> = mutableMapOf()
+        val service = hashMapOf<String, Service>()
     }
 
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
