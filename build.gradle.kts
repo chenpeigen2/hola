@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.21"
+    id("de.qualersoft.jmeter") version "2.3.0"
 }
 
 group = "cn.edu.ruc"
