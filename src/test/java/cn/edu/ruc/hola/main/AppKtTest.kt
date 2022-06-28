@@ -10,21 +10,18 @@ import org.junit.jupiter.api.Test
 
 internal class AppKtTest {
 
-    private fun beforeTest() {
+    @BeforeEach
+    fun beforeTest() {
         StopWatch.start()
     }
 
     @RepeatedTest(10000)
     fun test01() {
-        beforeTest()
         println(222)
-        afterTest()
     }
 
     @RepeatedTest(1000)
     fun testMain() {
-        beforeTest()
-
         val config = Config(0.8f, 1000, 100, 80)
         val query = """
      {
@@ -38,16 +35,10 @@ internal class AppKtTest {
         ans?.let {
             println(it)
         }
-        afterTest()
     }
 
-
-    @RepeatedTest(10000)
-    fun test02() {
-        println(1)
-    }
-
-    private fun afterTest() {
+    @AfterEach
+    fun afterTest() {
         StopWatch.stop()
     }
 }
