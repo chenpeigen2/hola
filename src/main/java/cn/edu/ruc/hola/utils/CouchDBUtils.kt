@@ -8,7 +8,6 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import java.io.File
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * every couch db instance should have its own dbutils ,
@@ -21,7 +20,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
     companion object {
         private val client = OkHttpClient.Builder().build()
 
-        private var m1 = ConcurrentHashMap<String, CouchDBUtils>()
+        private var m1 = hashMapOf<String, CouchDBUtils>()
 
         fun checkDbUtils(h: Host): CouchDBUtils {
             return m1.computeIfAbsent(h.sid) {

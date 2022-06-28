@@ -3,9 +3,9 @@ package cn.edu.ruc.hola.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 
-public final class Response extends ConcurrentHashMap<String, Object> {
+public final class Response extends HashMap<String, Object> {
 
     public static final int ERROR_CODE = 303;
 
