@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit
 object StopWatch {
     val stopwatch: Stopwatch = Stopwatch.createUnstarted()
     fun start() {
+        stopwatch.reset()
         stopwatch.start()
     }
 
