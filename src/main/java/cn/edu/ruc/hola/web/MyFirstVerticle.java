@@ -18,7 +18,7 @@ public class MyFirstVerticle extends AbstractVerticle {
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-        router.route().handler(BodyHandler.create());
+        router.route().handler(BodyHandler.create()); // ???
 
         router.get("/user").handler(this::addUser);
 
