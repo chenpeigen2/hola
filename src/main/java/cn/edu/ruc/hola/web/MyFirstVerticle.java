@@ -7,6 +7,7 @@ import io.vertx.core.json.Json;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,8 @@ public class MyFirstVerticle extends AbstractVerticle {
         HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);
-        router.route().handler(BodyHandler.create()); // ???
+        router.route().handler(BodyHandler.create());
+        router.route().handler(StaticHandler.create());
 
         router.get("/user").handler(this::addUser);
 
@@ -30,10 +32,15 @@ public class MyFirstVerticle extends AbstractVerticle {
         });
 
         server.requestHandler(router);
+
         server.listen(8080);
     }
 
     private void addUser(RoutingContext ctx) {
+        String username = ctx.request().getParam("username");
+
+        System.out.println(username);
+
         Map<String, Object> result = new HashMap<>();
         result.put("code", 0);
         result.put("msg", "success");
