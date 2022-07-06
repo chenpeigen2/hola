@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.benchmark
 
 import cn.edu.ruc.hola.config.Config
+import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.main.QueryWithMulti
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
@@ -8,7 +9,8 @@ import cn.edu.ruc.hola.utils.Response
 object Bench {
 
     private fun QuickQueue.saveResult(res: Response) {
-        inc(res["data"] as String)
+        val results = res["data"] as Results
+        inc(results.data)
     }
 
     private fun QuickQueue.readCredibility(len: Int): Float {

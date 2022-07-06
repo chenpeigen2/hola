@@ -9,11 +9,8 @@ import cn.edu.ruc.hola.service.ServiceType
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.logging.Logger
 
 class Query(val config: Config) : Serviceable, Queryable {
-    private val logger = Logger.getLogger("Query")
-
     /**
      * the service
      */
