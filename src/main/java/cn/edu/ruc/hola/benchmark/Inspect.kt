@@ -4,7 +4,8 @@ data class Inspect(
     val execTimes: List<Long>,
     val realCredibility: Float,
     val theoreticalCredibility: List<Float>,
-    val queryData: String
+    val queryData: String,
+    val sha256: String
 ) {
     val avgExecTimes: Long
         get() {
