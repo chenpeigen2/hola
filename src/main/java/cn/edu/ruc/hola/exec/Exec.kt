@@ -60,9 +60,8 @@ open class Exec(protected val config: Config) : Reachable {
             return Response.WeakErrorCode()
         }
         logger.info(queryConfig.toString())
-        val m: MutableMap<String, String> = HashMap()
-        Results(data, Generations2.infPBA(len, percent, config.M, config.H))
-        return Response.SuccessCode(m)
+        val results = Results(data, Generations2.infPBA(len, percent, config.M, config.H))
+        return Response.SuccessCode(results)
     }
 
     override fun serverNodes(): List<ServerNode> {
