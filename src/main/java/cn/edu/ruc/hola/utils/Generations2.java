@@ -15,6 +15,8 @@ public final class Generations2 {
     private static final Logger logger = Logger.getLogger("Generations2");
 
     /**
+     * use it when return the result and calculate the trust rate
+     *
      * @return the PBA
      */
     public static double infPBA(int m, float λ, int M, int H) {
@@ -38,31 +40,25 @@ public final class Generations2 {
      * @return the QueryConfig holder
      */
     public static QueryConfig optimize(float threshHolder, int M, int H) {
-        return new QueryConfig(20, 0.5499999f, 0.9999199897565545);
-//        double holder = Double.MAX_VALUE;
-//        QueryConfig p = null;
-//        for (int m = 1; m <= M; m++) {
-//            for (float λ = 1f; λ > 0.5f; λ -= 0.05) {
-//                try {
-//                    double top = getTop(m, λ, M, H);
-//                    double base = getBase(m, λ, M, H);
-//
-//                    System.out.println("top: " + top + " , base: " + base);
-//                    System.out.println("m: " + m + ", λ" + λ + " ,M: " + M + ", H" + H);
-//
-//                    if (top >= threshHolder * base) {
-//                        double v = min(m, λ, M, H);
-//                        if (v <= holder) {
-//                            p = new QueryConfig(m, λ, (double) top / (double) base);
-//                            System.out.println(p);
-//                        }
-//                    }
-//                } catch (IllegalArgumentException ignored) {
-//
-//                }
-//            }
-//        }
-//        return p;
+        double holder = Double.MAX_VALUE;
+        QueryConfig p = null;
+        for (int m = 1; m <= M; m++) {
+            for (float λ = 1f; λ > 0.5f; λ -= 0.05) {
+                try {
+                    double top = getTop(m, λ, M, H);
+                    double base = getBase(m, λ, M, H);
+                    if (top >= threshHolder * base) {
+                        double v = min(m, λ, M, H);
+                        if (v <= holder) {
+                            p = new QueryConfig(m, λ, top / base);
+                        }
+                    }
+                } catch (IllegalArgumentException ignored) {
+
+                }
+            }
+        }
+        return p;
     }
 
     private static double getBase(int m, float λ, int M, int H) {

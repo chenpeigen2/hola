@@ -6,7 +6,7 @@ import cn.edu.ruc.hola.main.QueryWithMulti.queryWithTry
 
 fun main() {
     StopWatch.start()
-    val config = Config(0.8f, 1000, 100, 80)
+    val config = Config(0.95f, 1000, 100, 80)
     // the condition we are using , and now is couchdb
     val query = """
      {

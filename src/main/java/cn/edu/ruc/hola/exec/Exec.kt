@@ -7,6 +7,7 @@ import cn.edu.ruc.hola.query.Query
 import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.config.ServerNode
+import cn.edu.ruc.hola.fake.FakeConfig
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
 import cn.edu.ruc.hola.utils.SHA256Utils.getSHA256Str
@@ -38,14 +39,9 @@ open class Exec(protected val config: Config) : Reachable {
     private fun analyze(queries: List<Node>): Response {
         val quickQueue = QuickQueue()
         val len = queries.size
-
-        queries.forEach {
-            println(it.value)
-            println("=======")
-        }
-
         // data 数据
         queries.forEach { query: Node ->
+            print(query)
             quickQueue.inc(
                 query.value
             )
@@ -73,7 +69,7 @@ open class Exec(protected val config: Config) : Reachable {
     override fun serverNodes(): List<ServerNode> {
         val snods = mutableListOf<ServerNode>()
         ServerHelper.sids.forEach {
-            snods.add(ServerNode(it, "fake"))
+            snods.add(ServerNode(it, FakeConfig.databaseName))
         }
         return snods
     }

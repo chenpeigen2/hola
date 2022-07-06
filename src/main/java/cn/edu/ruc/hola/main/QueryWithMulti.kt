@@ -9,6 +9,9 @@ object QueryWithMulti {
     private val logger = Logger.getLogger("MultiQuery")
     var RetryCnt = 5
 
+    /**
+     * the entry method , core method
+     */
     fun queryWithTry(config: Config, condition: String): Response? {
         for (i in 0 until RetryCnt) {
             val res = query(config, condition)
