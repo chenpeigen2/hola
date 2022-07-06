@@ -1,7 +1,6 @@
 package cn.edu.ruc.hola.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import cn.edu.ruc.hola.entity.Results;
 
 import java.util.HashMap;
 
@@ -19,15 +18,13 @@ public final class Response extends HashMap<String, Object> {
             excellent
             """;
 
-    private static final String DATA_NULL = "null";
-
-    private static final String DATA_WEAK_NULL = "weak null";
+    private static final Results default_results = new Results();
 
     public static Response ErrorCode() {
         Response response = new Response();
         response.put("code", ERROR_CODE);
         response.put("msg", ERROR_MSG);
-        response.put("data", DATA_NULL);
+        response.put("data", default_results);
         return response;
     }
 
@@ -35,23 +32,15 @@ public final class Response extends HashMap<String, Object> {
         Response response = new Response();
         response.put("code", ERROR_CODE);
         response.put("msg", ERROR_MSG);
-        response.put("data", DATA_WEAK_NULL);
+        response.put("data", default_results);
         return response;
     }
 
-    public static Response SuccessCode(Object data) {
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        return SuccessCode(gson.toJson(data));
-    }
-
-    public static Response SuccessCode(String data) {
+    public static Response SuccessCode(Results results) {
         Response response = new Response();
         response.put("code", SUCCESS_CODE);
         response.put("msg", SUCCESS_MSG);
-        response.put("data", data);
+        response.put("data", results);
         return response;
-    }
-
-    private Response() {
     }
 }

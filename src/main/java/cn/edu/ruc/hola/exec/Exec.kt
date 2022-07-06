@@ -7,10 +7,10 @@ import cn.edu.ruc.hola.query.Query
 import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.config.ServerNode
+import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.fake.FakeConfig
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
-import cn.edu.ruc.hola.utils.SHA256Utils.getSHA256Str
 import java.util.logging.Logger
 
 open class Exec(protected val config: Config) : Reachable {
@@ -46,23 +46,22 @@ open class Exec(protected val config: Config) : Reachable {
                 query.value
             )
         }
-        val MAX_CNT = quickQueue.maxKeyCnt
-        val DATA = quickQueue.maxKey
-        val en = getSHA256Str(DATA)
-        val percent = MAX_CNT.toFloat() / len
-        logger.info("MAX_CNT = $MAX_CNT, len = $len , percent = $percent")
+        val maxCnt = quickQueue.maxKeyCnt
+        val data = quickQueue.maxKey
+
+        val percent = maxCnt.toFloat() / len
+        logger.info("MAX_CNT = $maxCnt, len = $len , percent = $percent")
         if (percent < 0.5f) {
             return Response.ErrorCode()
         }
-        println("MAX_CNT = $MAX_CNT, len = $len , percent = $percent")
+        println("MAX_CNT = $maxCnt, len = $len , percent = $percent")
         println(queryConfig)
         if (percent < queryConfig.λ) {
             return Response.WeakErrorCode()
         }
         logger.info(queryConfig.toString())
         val m: MutableMap<String, String> = HashMap()
-        m[en] = DATA //  but why
-        m["θ"] = Generations2.infPBA(len, percent, config.M, config.H).toString()
+        Results(data, Generations2.infPBA(len, percent, config.M, config.H))
         return Response.SuccessCode(m)
     }
 
