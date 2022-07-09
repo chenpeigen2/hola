@@ -2,20 +2,20 @@ package cn.edu.ruc.hola.exec
 
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.config.QueryConfig
-import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.query.Query
-import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.config.ServerNode
+import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.entity.Response
 import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.fake.FakeConfig
+import cn.edu.ruc.hola.query.Query
+import cn.edu.ruc.hola.utils.Generations2
+import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
-import cn.edu.ruc.hola.entity.Response
-import java.util.logging.Logger
 
 open class Exec(protected val config: Config) : Reachable {
 
-    private val logger = Logger.getLogger("Exec")
+    private val logger = LoggingUtils.logger()
 
 
     protected val query: Query = Query(config)
@@ -48,18 +48,15 @@ open class Exec(protected val config: Config) : Reachable {
         }
         val maxCnt = quickQueue.maxKeyCnt
         val data = quickQueue.maxKey
-
         val percent = maxCnt.toFloat() / len
-        logger.info("MAX_CNT = $maxCnt, len = $len , percent = $percent")
         if (percent < 0.5f) {
             return Response.ErrorCode()
         }
-        println("MAX_CNT = $maxCnt, len = $len , percent = $percent")
-        println(queryConfig)
+        logger.info("maxCnt = $maxCnt, len = $len , percent = $percent")
+        logger.info(queryConfig.toString())
         if (percent < queryConfig.λ) {
             return Response.WeakErrorCode()
         }
-        logger.info(queryConfig.toString())
         val results = Results(data, Generations2.infPBA(len, percent, config.M, config.H))
         return Response.SuccessCode(results)
     }

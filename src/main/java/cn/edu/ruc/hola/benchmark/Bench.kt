@@ -60,6 +60,6 @@ object Bench {
 }
 
 fun main() {
-    val inspect = Bench.executeSync(3)
+    val inspect = Bench.executeSync(1000)
     print(inspect)
 }
