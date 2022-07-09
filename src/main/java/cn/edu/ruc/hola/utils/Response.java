@@ -2,8 +2,6 @@ package cn.edu.ruc.hola.utils;
 
 import cn.edu.ruc.hola.entity.Results;
 
-import java.util.HashMap;
-
 public final class Response {
 
     public final int code;
@@ -39,6 +37,6 @@ public final class Response {
     }
 
     public static Response SuccessCode(Results results) {
-        return new Response(ERROR_CODE, ERROR_MSG, results);
+        return new Response(SUCCESS_CODE, SUCCESS_MSG, results);
     }
 }
