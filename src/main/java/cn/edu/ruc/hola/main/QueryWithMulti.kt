@@ -2,11 +2,11 @@ package cn.edu.ruc.hola.main
 
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.exec.MultiExec
+import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.Response
-import java.util.logging.Logger
 
 object QueryWithMulti {
-    private val logger = Logger.getLogger("MultiQuery")
+    private val logger = LoggingUtils.logger("QueryWithMulti")
     var RetryCnt = 5
 
     /**

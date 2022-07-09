@@ -17,6 +17,8 @@ import java.io.File
 
 data class CouchDBUtils(val host: String, private val port: Int) {
 
+    private val logger = LoggingUtils.logger("CouchDBUtils")
+
     companion object {
         private val client = OkHttpClient.Builder().build()
 

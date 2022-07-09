@@ -15,7 +15,7 @@ object StopWatch {
     fun stop() {
         stopwatch.stop()
         print()
-        dump()
+//        dump()
     }
 
     fun print() {

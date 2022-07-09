@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.benchmark
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.main.QueryWithMulti
+import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
 
@@ -49,4 +50,10 @@ object Bench {
 }
 
 fun main() {
+   var l =  LoggingUtils.logger("sss")
+    l.info("xxxxx")
+
+    StopWatch.start()
+    Bench.executeSync(3)
+    StopWatch.stop()
 }
