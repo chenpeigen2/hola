@@ -41,7 +41,6 @@ open class Exec(protected val config: Config) : Reachable {
         val len = queries.size
         // data 数据
         queries.forEach { query: Node ->
-            print(query)
             quickQueue.inc(
                 query.value
             )

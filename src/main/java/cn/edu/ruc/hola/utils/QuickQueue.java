@@ -41,7 +41,7 @@ public final class QuickQueue {
             node.set.remove(key);
             // 我现在有多少
             int cnt = node.cnt;
-            Node next = null;
+            Node next;
             if (node.right.cnt == cnt + 1) {
                 next = node.right;
             } else {
