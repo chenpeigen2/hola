@@ -61,5 +61,7 @@ object Bench {
 
 fun main() {
     val inspect = Bench.executeSync(1000)
-    print(inspect)
+    println(inspect)
+    println(inspect.realCredibility)
+    println(inspect.avgExecTimes)
 }
