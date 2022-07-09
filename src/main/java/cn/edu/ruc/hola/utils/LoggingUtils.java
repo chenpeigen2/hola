@@ -1,5 +1,6 @@
 package cn.edu.ruc.hola.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,9 +9,15 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class LoggingUtils {
+    static {
+        File f = new File("./log");
+        if (!f.exists()) f.mkdir();
+    }
+
     private static void env(Logger logger) {
         StringBuilder logPath = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        logPath.append("./log/");
         logPath.append(sdf.format(new Date())).append(".log");
         try {
             FileHandler fileHandler = new FileHandler(logPath.toString(), true);
