@@ -6,7 +6,7 @@ import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.Response
 
 object QueryWithMulti {
-    private val logger = LoggingUtils.logger("QueryWithMulti")
+    private val logger = LoggingUtils.logger()
     var RetryCnt = 5
 
     /**

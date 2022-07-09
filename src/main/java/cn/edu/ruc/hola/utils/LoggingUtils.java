@@ -12,9 +12,11 @@ public class LoggingUtils {
     static {
         File f = new File("./log");
         if (!f.exists()) f.mkdir();
+        logger = Logger.getLogger("hola");
+        env();
     }
 
-    private static void env(Logger logger) {
+    private static void env() {
         StringBuilder logPath = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         logPath.append("./log/");
@@ -29,9 +31,9 @@ public class LoggingUtils {
         }
     }
 
-    public static Logger logger(String TAG) {
-        Logger logger = Logger.getLogger(TAG);
-        env(logger);
+    private static final Logger logger;
+
+    public static Logger logger() {
         return logger;
     }
 }

@@ -36,6 +36,8 @@ object Bench {
 
         val quickQueue = QuickQueue()
 
+        LoggingUtils.logger().info("fucking amazing")
+
         repeat(cnt) {
             val ans = QueryWithMulti.queryWithTry(config, query)
             ans?.let {
@@ -50,8 +52,11 @@ object Bench {
 }
 
 fun main() {
-   var l =  LoggingUtils.logger("sss")
-    l.info("xxxxx")
+    var l = LoggingUtils.logger()
+    l.info("xxxxx111")
+
+    var l1 = LoggingUtils.logger()
+    l1.info("vxzcvxcv")
 
     StopWatch.start()
     Bench.executeSync(3)
