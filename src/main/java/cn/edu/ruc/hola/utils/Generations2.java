@@ -3,8 +3,6 @@ package cn.edu.ruc.hola.utils;
 import cn.edu.ruc.hola.config.QueryConfig;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
-import java.util.logging.Logger;
-
 /**
  * private static final int M; // 区块链节点数量
  * private static final int H; // 区块链中诚实节点数据 >= 2/3 * M
@@ -12,7 +10,6 @@ import java.util.logging.Logger;
  * private float λ; // 本次查询partition percentage >= thresh-hold (fixed value)
  */
 public final class Generations2 {
-    private static final Logger logger = Logger.getLogger("Generations2");
 
     /**
      * use it when return the result and calculate the trust rate
