@@ -6,8 +6,11 @@ import cn.edu.ruc.hola.main.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.Response
+import java.util.logging.Logger
 
 object Bench {
+
+    private val logger: Logger = LoggingUtils.logger()
 
     private fun QuickQueue.saveResult(res: Response) {
         val results = res["data"] as Results
@@ -25,6 +28,7 @@ object Bench {
 
     fun executeSync(cnt: Int) {
         val config = Config(0.95f, 1000, 100, 80)
+        logger.info(config.toString())
         val query = """
      {
      "selector": {
@@ -33,10 +37,8 @@ object Bench {
        "execution_stats": true
       }    
     """.trimIndent()
-
+        logger.info(query)
         val quickQueue = QuickQueue()
-
-        LoggingUtils.logger().info("fucking amazing")
 
         repeat(cnt) {
             val ans = QueryWithMulti.queryWithTry(config, query)
@@ -52,12 +54,6 @@ object Bench {
 }
 
 fun main() {
-    var l = LoggingUtils.logger()
-    l.info("xxxxx111")
-
-    var l1 = LoggingUtils.logger()
-    l1.info("vxzcvxcv")
-
     StopWatch.start()
     Bench.executeSync(3)
     StopWatch.stop()
