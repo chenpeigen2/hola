@@ -1,10 +1,27 @@
-package cn.edu.ruc.hola.main
+package cn.edu.ruc.hola.exec
 
 import cn.edu.ruc.hola.config.Config
-import cn.edu.ruc.hola.exec.MultiExec
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.entity.Response
 
+/**
+ *
+ *
+val config = Config(0.95f, 1000, 100, 80)
+// the condition we are using , and now is couchdb
+val query = """
+{
+"selector": {
+"data.countryid": {"${'$'}gt": -1}
+},
+"execution_stats": true
+}
+""".trimIndent()
+val ans = queryWithTry(config, query)
+ans?.let {
+println(it)
+}
+ */
 object QueryWithMulti {
     private val logger = LoggingUtils.logger()
     var RetryCnt = 5
