@@ -1,6 +1,4 @@
-package cn.edu.ruc.hola.utils;
-
-import cn.edu.ruc.hola.entity.Results;
+package cn.edu.ruc.hola.entity;
 
 public final class Response {
 

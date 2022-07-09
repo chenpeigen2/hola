@@ -4,7 +4,7 @@ import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.main.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
-import cn.edu.ruc.hola.utils.Response
+import cn.edu.ruc.hola.entity.Response
 import java.util.logging.Logger
 
 object Bench {

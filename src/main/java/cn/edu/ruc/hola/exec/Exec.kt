@@ -10,7 +10,7 @@ import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.fake.FakeConfig
 import cn.edu.ruc.hola.utils.QuickQueue
-import cn.edu.ruc.hola.utils.Response
+import cn.edu.ruc.hola.entity.Response
 import java.util.logging.Logger
 
 open class Exec(protected val config: Config) : Reachable {
