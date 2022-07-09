@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.main
 
 import cn.edu.ruc.hola.benchmark.StopWatch
 import cn.edu.ruc.hola.config.Config
+import cn.edu.ruc.hola.exec.QueryWithMulti
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
