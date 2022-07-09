@@ -4,7 +4,17 @@ import cn.edu.ruc.hola.entity.Results;
 
 import java.util.HashMap;
 
-public final class Response extends HashMap<String, Object> {
+public final class Response {
+
+    public final int code;
+    public final String msg;
+    public final Results data;
+
+    private Response(int code, String msg, Results data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
 
     public static final int ERROR_CODE = 303;
 
@@ -21,26 +31,14 @@ public final class Response extends HashMap<String, Object> {
     private static final Results default_results = new Results();
 
     public static Response ErrorCode() {
-        Response response = new Response();
-        response.put("code", ERROR_CODE);
-        response.put("msg", ERROR_MSG);
-        response.put("data", default_results);
-        return response;
+        return new Response(ERROR_CODE, ERROR_MSG, default_results);
     }
 
     public static Response WeakErrorCode() {
-        Response response = new Response();
-        response.put("code", ERROR_CODE);
-        response.put("msg", ERROR_MSG);
-        response.put("data", default_results);
-        return response;
+        return new Response(ERROR_CODE, ERROR_MSG, default_results);
     }
 
     public static Response SuccessCode(Results results) {
-        Response response = new Response();
-        response.put("code", SUCCESS_CODE);
-        response.put("msg", SUCCESS_MSG);
-        response.put("data", results);
-        return response;
+        return new Response(ERROR_CODE, ERROR_MSG, results);
     }
 }

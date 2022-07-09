@@ -12,10 +12,9 @@ object StopWatch {
         stopwatch.start()
     }
 
-    fun stop() {
+    fun stop(): Long {
         stopwatch.stop()
-        print()
-//        dump()
+        return stopwatch.elapsed(TimeUnit.MILLISECONDS)
     }
 
     fun print() {
@@ -28,7 +27,7 @@ object StopWatch {
         appendFile("${stopwatch.elapsed(TimeUnit.MILLISECONDS)}\n")
     }
 
-    private fun appendFile(text: String, destFile: String = "./show/output.txt") {
+    private fun appendFile(text: String, destFile: String = "./log/output.txt") {
         val f = File(destFile)
         if (!f.exists()) {
             f.createNewFile()

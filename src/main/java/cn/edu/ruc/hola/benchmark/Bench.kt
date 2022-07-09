@@ -1,7 +1,6 @@
 package cn.edu.ruc.hola.benchmark
 
 import cn.edu.ruc.hola.config.Config
-import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.main.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
@@ -13,7 +12,7 @@ object Bench {
     private val logger: Logger = LoggingUtils.logger()
 
     private fun QuickQueue.saveResult(res: Response) {
-        val results = res["data"] as Results
+        val results = res.data
         inc(results.data)
     }
 
@@ -26,7 +25,11 @@ object Bench {
     }
 
 
-    fun executeSync(cnt: Int) {
+    fun executeSync(cnt: Int): Inspect {
+
+        val execTimes = mutableListOf<Long>()
+        val theoreticalCredibility = mutableListOf<Double>()
+
         val config = Config(0.95f, 1000, 100, 80)
         logger.info(config.toString())
         val query = """
@@ -41,20 +44,22 @@ object Bench {
         val quickQueue = QuickQueue()
 
         repeat(cnt) {
+            StopWatch.start()
             val ans = QueryWithMulti.queryWithTry(config, query)
+            execTimes.add(StopWatch.stop())
+            theoreticalCredibility.add(ans?.data?.θ ?: -1.0)
             ans?.let {
                 quickQueue.saveResult(it)
             }
         }
 
         val readCredibility = quickQueue.readCredibility(cnt)
-
-        println(readCredibility)
+        logger.info(readCredibility.toString())
+        return Inspect(execTimes, readCredibility, theoreticalCredibility, data(quickQueue))
     }
 }
 
 fun main() {
-    StopWatch.start()
-    Bench.executeSync(3)
-    StopWatch.stop()
+    val inspect = Bench.executeSync(3)
+    print(inspect)
 }

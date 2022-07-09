@@ -15,7 +15,7 @@ object QueryWithMulti {
     fun queryWithTry(config: Config, condition: String): Response? {
         for (i in 0 until RetryCnt) {
             val res = query(config, condition)
-            if (Response.SUCCESS_CODE == res["code"] as Int?) {
+            if (Response.SUCCESS_CODE == res.code) {
                 logger.info("=========$i=========")
                 return res
             }
