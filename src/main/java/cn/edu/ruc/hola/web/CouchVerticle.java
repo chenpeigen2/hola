@@ -2,6 +2,8 @@ package cn.edu.ruc.hola.web;
 
 import cn.edu.ruc.hola.benchmark.Bench;
 import cn.edu.ruc.hola.benchmark.Inspect;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
@@ -16,6 +18,9 @@ import java.util.Map;
 
 
 public class CouchVerticle extends AbstractVerticle {
+
+    private final Gson json = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+
     @Override
     public void start() {
         HttpServer server = vertx.createHttpServer();
@@ -56,7 +61,7 @@ public class CouchVerticle extends AbstractVerticle {
         } else {
             inspect = Bench.INSTANCE.executeSync(Integer.parseInt(cnt));
         }
-        out(ctx, Json.encodePrettily(inspect));
+        out(ctx, json.toJson(inspect));
     }
 
     private void out(RoutingContext ctx, String msg) {
