@@ -1,2 +1,5 @@
 ### get the database 获取有关指定数据库的信息。
 GET https://www.baidu.com/ HTTP/1.1
+
+### send the sync request
+GET http://localhost:8080/sync?cnt=100 HTTP/1.1

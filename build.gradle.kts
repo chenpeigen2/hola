@@ -3,10 +3,22 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.7.10"
     id("de.qualersoft.jmeter") version "2.3.0"
+    application
 }
 
 group = "cn.edu.ruc"
 version = "1.0-SNAPSHOT"
+
+
+application {
+    mainClass.set("cn.edu.ruc.hola.web.Entry")
+}
+
+tasks.jar {
+    archiveFileName.set("core.jar")
+    manifest.attributes["Main-Class"] = "cn.edu.ruc.hola.web.Entry"
+}
+
 
 repositories {
     mavenCentral()
