@@ -25,7 +25,7 @@ object Bench {
     }
 
 
-    fun executeSync(cnt: Int): Inspect {
+    fun executeSync(cnt: Int = 1): Inspect {
 
         val execTimes = mutableListOf<Long>()
         val theoreticalCredibility = mutableListOf<Double>()

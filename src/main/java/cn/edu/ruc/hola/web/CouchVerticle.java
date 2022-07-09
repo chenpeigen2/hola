@@ -1,5 +1,7 @@
 package cn.edu.ruc.hola.web;
 
+import cn.edu.ruc.hola.benchmark.Bench;
+import cn.edu.ruc.hola.benchmark.Inspect;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MyFirstVerticle extends AbstractVerticle {
+public class CouchVerticle extends AbstractVerticle {
     @Override
     public void start() {
         HttpServer server = vertx.createHttpServer();
@@ -31,9 +33,8 @@ public class MyFirstVerticle extends AbstractVerticle {
             response.end("Hello World!");
         });
 
-        server.requestHandler(router);
-
-        server.listen(8080);
+        router.get("/sync").handler(this::sync);
+        server.requestHandler(router).listen(8080);
     }
 
     private void addUser(RoutingContext ctx) {
@@ -45,6 +46,17 @@ public class MyFirstVerticle extends AbstractVerticle {
         result.put("code", 0);
         result.put("msg", "success");
         out(ctx, Json.encodePrettily(result));
+    }
+
+    private void sync(RoutingContext ctx) {
+        String cnt = ctx.request().getParam("cnt");
+        Inspect inspect = null;
+        if (cnt == null) {
+            inspect = Bench.INSTANCE.executeSync(1);
+        } else {
+            inspect = Bench.INSTANCE.executeSync(Integer.parseInt(cnt));
+        }
+        out(ctx, Json.encodePrettily(inspect));
     }
 
     private void out(RoutingContext ctx, String msg) {
