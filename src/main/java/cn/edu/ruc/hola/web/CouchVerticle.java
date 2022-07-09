@@ -50,7 +50,7 @@ public class CouchVerticle extends AbstractVerticle {
 
     private void sync(RoutingContext ctx) {
         String cnt = ctx.request().getParam("cnt");
-        Inspect inspect = null;
+        Inspect inspect;
         if (cnt == null) {
             inspect = Bench.INSTANCE.executeSync(1);
         } else {
