@@ -37,4 +37,13 @@ public final class Response {
     public static Response SuccessCode(Results results) {
         return new Response(SUCCESS_CODE, SUCCESS_MSG, results);
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }
