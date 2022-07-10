@@ -7,6 +7,8 @@
     <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
+<input type="number" id="CN_NAME" name="CN_NAME" class="CN_NAME">
+<button type="submit" id="btn_submit"> submit HERE !!!!!!!!!!!!</button>
 <p id="avgTime">avg execTimes</p>
 <p id="results">results</p>
 <p id="realCredibility">realCredibility</p>
@@ -43,16 +45,19 @@
     const realCredibility = document.getElementById('realCredibility');
     const theoreticalCredibility = document.getElementById('theoreticalCredibility');
 
-    const myChart = echarts.init(dom, null, {
+    document.getElementById('btn_submit').addEventListener("click", function(){
+        let size = document.getElementById("CN_NAME").value
+
+        const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false
     });
 
-    axios.get("./query?cnt=100").then(res => {
+    axios.get("./query?cnt=" + size).then(res => {
         console.log(res)
         
         let ind = []
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < size; i++) {
             ind[i] = "count" + i
         }
 
@@ -94,6 +99,7 @@
 
     })
 
+    }, false);
 
 
 </script>
