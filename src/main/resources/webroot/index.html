@@ -8,6 +8,11 @@
 </head>
 <body style="height: 100%; margin: 0">
 <p id="avgTime">avg execTimes</p>
+<p id="results">results</p>
+<p id="realCredibility">realCredibility</p>
+<p id="theoreticalCredibility">theoreticalCredibility</p>
+
+
 <div id="container" style="height: 100%;"></div>
 
 <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
@@ -34,6 +39,10 @@
 <script type="text/javascript">
     const dom = document.getElementById('container');
     const avg = document.getElementById('avgTime');
+    const results = document.getElementById('results');
+    const realCredibility = document.getElementById('realCredibility');
+    const theoreticalCredibility = document.getElementById('theoreticalCredibility');
+
     const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false
@@ -66,15 +75,16 @@
 
 
         function avgFn(arr){
-            //->2.给数组排序没去掉开头结尾，剩下球平均数
             arr.sort((a,b)=>{return a-b})
             arr.shift()
             arr.pop()
             return (eval(arr.join("+")) / arr.length).toFixed(2);
         }
 
-        avg.innerHTML = avgFn(res.data.execTimes);
-
+        avg.innerHTML = avgFn(res.data.execTimes)
+        results.innerHTML = res.data.queryData
+        realCredibility.innerHTML = res.data.realCredibility
+        theoreticalCredibility.innerHTML = res.data.theoreticalCredibility
 
         if (option && typeof option === 'object') {
             myChart.setOption(option);
