@@ -1,10 +1,10 @@
 package cn.edu.ruc.hola.benchmark
 
 import cn.edu.ruc.hola.config.Config
+import cn.edu.ruc.hola.entity.Response
 import cn.edu.ruc.hola.exec.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
-import cn.edu.ruc.hola.entity.Response
 import java.util.logging.Logger
 
 object Bench {
