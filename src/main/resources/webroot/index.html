@@ -7,8 +7,8 @@
     <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-<div id="container" style="height: 100%"></div>
-
+<p id="avgTime">avg execTimes</p>
+<div id="container" style="height: 100%;"></div>
 
 <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -33,18 +33,17 @@
 
 <script type="text/javascript">
     const dom = document.getElementById('container');
+    const avg = document.getElementById('avgTime');
     const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false
     });
 
-    axios.get("./output.txt").then(res => {
+    axios.get("./query?cnt=100").then(res => {
         console.log(res)
-        let str = res.data
-        let value = str.split("\n")
+        
         let ind = []
-        for (let i = 0; i < value.length; i++) {
-            value[i] = parseInt(value[i])
+        for (let i = 0; i < 100; i++) {
             ind[i] = "count" + i
         }
 
@@ -58,19 +57,33 @@
             },
             series: [
                 {
-                    data: value,
+                    data: res.data.execTimes,
                     type: 'line',
                     smooth: true
                 }
             ]
         };
 
+
+        function avgFn(arr){
+            //->2.给数组排序没去掉开头结尾，剩下球平均数
+            arr.sort((a,b)=>{return a-b})
+            arr.shift()
+            arr.pop()
+            return (eval(arr.join("+")) / arr.length).toFixed(2);
+        }
+
+        avg.innerHTML = avgFn(res.data.execTimes);
+
+
         if (option && typeof option === 'object') {
             myChart.setOption(option);
         }
 
-        window.addEventListener('resize', myChart.resize);
+         window.addEventListener('resize', myChart.resize);
+
     })
+
 
 
 </script>
