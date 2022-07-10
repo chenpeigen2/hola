@@ -46,7 +46,7 @@
     const theoreticalCredibility = document.getElementById('theoreticalCredibility');
 
     document.getElementById('btn_submit').addEventListener("click", function(){
-        document.getElementById("btn_submit").disabled=false;
+        document.getElementById("btn_submit").disabled=true;
         let size = document.getElementById("CN_NAME").value
 
         const myChart = echarts.init(dom, null, {
@@ -98,7 +98,7 @@
 
          window.addEventListener('resize', myChart.resize);
 
-         document.getElementById("btn_submit").disabled=true;
+         document.getElementById("btn_submit").disabled=false;
 
     })
 
