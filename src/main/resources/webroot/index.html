@@ -46,12 +46,13 @@
     const theoreticalCredibility = document.getElementById('theoreticalCredibility');
 
     document.getElementById('btn_submit').addEventListener("click", function(){
+        document.getElementById("btn_submit").disabled=false;
         let size = document.getElementById("CN_NAME").value
 
         const myChart = echarts.init(dom, null, {
         renderer: 'canvas',
         useDirtyRect: false
-    });
+        });
 
     axios.get("./query?cnt=" + size).then(res => {
         console.log(res)
@@ -96,6 +97,8 @@
         }
 
          window.addEventListener('resize', myChart.resize);
+
+         document.getElementById("btn_submit").disabled=true;
 
     })
 
