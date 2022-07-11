@@ -31,8 +31,8 @@ class CouchDbExtension(host: Host) {
                         body,
                         FilterDocs::class.java
                     )
-                val doc = filterDocs.docs[0]
-                val data = doc.data
+                val doc = filterDocs.docs?.get(0)
+                val data = doc?.data
                 node = Node(condition, data.toString())
             }
         }
