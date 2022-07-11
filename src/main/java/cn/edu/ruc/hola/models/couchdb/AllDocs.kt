@@ -1,6 +1,8 @@
 package cn.edu.ruc.hola.models.couchdb
 
-
+/**
+ * no usage temporary
+ */
 class AllDocs {
     var total_rows = -1
     var offset = -1

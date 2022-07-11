@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.models.couchdb
 
-class Doc : AbsDoc() {
+class Doc : BaseDoc() {
     var code = -1
     lateinit var message: String
     lateinit var data: Data

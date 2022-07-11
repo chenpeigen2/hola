@@ -1,7 +1,7 @@
 package cn.edu.ruc.hola.models.couchdb
 
 class FilterDocs {
-    var docs: List<Doc>? = null
+    var docs: List<BaseDoc>? = null
     lateinit var bookmark: String
 
     lateinit var execution_stats: State
