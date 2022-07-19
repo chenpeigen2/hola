@@ -10,6 +10,8 @@ import org.apache.commons.math3.util.CombinatoricsUtils;
  * private float λ; // 本次查询partition percentage >= thresh-hold (fixed value)
  */
 public final class Generations2 {
+    private Generations2() {
+    }
 
     /**
      * use it when return the result and calculate the trust rate
