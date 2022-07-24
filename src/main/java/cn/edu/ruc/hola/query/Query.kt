@@ -8,22 +8,25 @@ import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.ConcurrentHashMap
 
 class Query(val config: Config) : Serviceable, Queryable {
     /**
      * the service
      */
     companion object {
-        val service = hashMapOf<String, Service>()
+        val service = ConcurrentHashMap<String, Service>()
     }
 
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
-        val query: MutableList<Node> = CopyOnWriteArrayList()
+        val query: MutableList<Node> = mutableListOf()
         executeAsync(query, condition, serverNodes)
         return query
     }
 
+    /**
+     * execute multi with kotlin-Coroutine
+     */
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
         serverNodes.forEach {
             launch {
