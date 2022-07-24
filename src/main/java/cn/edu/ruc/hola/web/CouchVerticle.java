@@ -43,6 +43,9 @@ public class CouchVerticle extends AbstractVerticle {
      *       }
      *
      *        {"selector": {"data.countryid": {"$gt": -1}},"execution_stats": true}
+     *
+     *        the sample url:
+     *              http://localhost:8080/basic?th=0.95&M=100&H=80&query={%22selector%22:%20{%22data.countryid%22:%20{%22$gt%22:%20-1}},%22execution_stats%22:%20true}
      */
 
     private void basicQuery(RoutingContext ctx) {
