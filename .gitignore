@@ -47,3 +47,4 @@ bin/
 ### Mac OS ###
 .DS_Store
 /show/.idea/
+/jmeter/apache-jmeter-*/
