@@ -5,6 +5,9 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import java.io.FileReader
 
+/**
+ * it is thread-safe
+ */
 object ServerHelper {
     val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 

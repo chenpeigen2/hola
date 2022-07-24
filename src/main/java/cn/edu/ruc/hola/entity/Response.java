@@ -16,13 +16,9 @@ public final class Response {
 
     public static final int SUCCESS_CODE = 200;
 
-    private static final String ERROR_MSG = """
-            I am very sorry your answer is wrong
-            """;
+    private static final String ERROR_MSG = "I am very sorry your answer is wrong";
 
-    private static final String SUCCESS_MSG = """
-            excellent
-            """;
+    private static final String SUCCESS_MSG = "excellent";
 
     private static final Results default_results = new Results();
 

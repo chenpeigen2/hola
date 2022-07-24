@@ -21,19 +21,26 @@ class CouchDbExtension(host: Host) {
 
     private val gson = ServerHelper.gson
 
+    /**
+     * can be optimized in the future version
+     */
     fun query(condition: String, db_name: String): Node? {
         var node: Node? = null
         dbUtils.filterDocs(db_name, condition).use { res ->
             res.body?.let {
-                val body = it.string()
                 val filterDocs: FilterDocs =
                     gson.fromJson(
-                        body,
+                        it.string(),
                         FilterDocs::class.java
                     )
-                val doc = filterDocs.docs?.get(0)
-                val data = doc?.data
-                node = Node(condition, data.toString())
+
+                val data = buildString {
+                    filterDocs.docs?.forEach { doc ->
+                        append(doc.data.toString())
+                    }
+                }
+
+                node = Node(condition, data)
             }
         }
         return node
