@@ -8,6 +8,8 @@ import com.google.gson.GsonBuilder;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.RequestBody;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -27,25 +29,26 @@ public class CouchVerticle extends AbstractVerticle {
         router.route().handler(StaticHandler.create());
         router.get("/query").handler(this::query);
         router.get("/basic").handler(this::basicQuery);
+        router.post("/postQuery").handler(this::postQuery);
         server.requestHandler(router).listen(8080);
     }
 
     /**
      * sample parameters
      * 0.95 100 80
-     *
+     * <p>
      * condition:
-     *           {
-     *      "selector": {
-     *       "data.countryid": {"$gt": -1}
-     *                             },
-     *        "execution_stats": true
-     *       }
-     *
-     *        {"selector": {"data.countryid": {"$gt": -1}},"execution_stats": true}
-     *
-     *        the sample url:
-     *              http://localhost:8080/basic?th=0.95&M=100&H=80&query={%22selector%22:%20{%22data.countryid%22:%20{%22$gt%22:%20-1}},%22execution_stats%22:%20true}
+     * {
+     * "selector": {
+     * "data.countryid": {"$gt": -1}
+     * },
+     * "execution_stats": true
+     * }
+     * <p>
+     * {"selector": {"data.countryid": {"$gt": -1}},"execution_stats": true}
+     * <p>
+     * the sample url:
+     * http://localhost:8080/basic?th=0.95&M=100&H=80&query={%22selector%22:%20{%22data.countryid%22:%20{%22$gt%22:%20-1}},%22execution_stats%22:%20true}
      */
 
     private void basicQuery(RoutingContext ctx) {
@@ -60,6 +63,27 @@ public class CouchVerticle extends AbstractVerticle {
         out(ctx, json.toJson(response));
     }
 
+    private void postQuery(RoutingContext ctx) {
+        RequestBody requestBody = ctx.body();
+
+        JsonObject jsonObject = requestBody.asJsonObject();
+        float threshHold = jsonObject.getFloat("th");
+        int M = jsonObject.getInteger("M");
+        int H = jsonObject.getInteger("H");
+        var query = jsonObject.getJsonObject("query");
+
+        Response response = Bench.INSTANCE.basicExecute(threshHold, M, H, query.toString());
+        out(ctx, json.toJson(response));
+    }
+
+    /**
+     * {
+     * "th" : 0.95,
+     * "M" : 100,
+     * "H" : 80,
+     * "query" : {"selector":{"data.countryid":{"$gt":-1}},"execution_stats":true}
+     * }
+     */
     private void query(RoutingContext ctx) {
         String cnt = ctx.request().getParam("cnt");
         Inspect inspect;
