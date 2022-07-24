@@ -24,6 +24,13 @@ object Bench {
         return q.maxKey
     }
 
+    fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? {
+        val config = Config(threshHold, 1000, M, H)
+        logger.info(config.toString())
+        logger.info(query)
+        return QueryWithMulti.queryWithTry(config, query)
+    }
+
 
     fun executeSync(cnt: Int = 1): Inspect {
 
