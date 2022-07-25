@@ -1,6 +1,6 @@
 {
   "th" : 0.95,
   "M" : 100,
-  "H" : 80,
+  "H" : 67,
   "query" : {"selector":{"data.countryid":{"$gt":-1}},"execution_stats":true}
 }
