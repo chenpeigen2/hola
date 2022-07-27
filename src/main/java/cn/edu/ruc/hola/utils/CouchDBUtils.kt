@@ -1,6 +1,8 @@
 package cn.edu.ruc.hola.utils
 
 import cn.edu.ruc.hola.config.Host
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
@@ -46,27 +48,27 @@ data class CouchDBUtils(val host: String, private val port: Int) {
             .port(port)
     }
 
-    suspend fun up(): Response {
+    suspend fun up(): Response = withContext(Dispatchers.IO) {
         val url = getBaseUrlBuilder()
             .addPathSegment("_up")
             .build()
         val r: Request = Request.Builder().url(url)
             .get()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun uuids(cnt: Int): Response {
+    suspend fun uuids(cnt: Int): Response = withContext(Dispatchers.IO) {
         val url = getBaseUrlBuilder()
             .addPathSegment("_uuids")
             .addQueryParameter("count", cnt.toString()).build()
         val r: Request = Request.Builder().url(url)
             .get()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun auth() {
+    suspend fun auth() = withContext(Dispatchers.IO) {
         val body: RequestBody = FormBody.Builder()
             .add("name", "admin")
             .add("password", "123456").build()
@@ -87,7 +89,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         }
     }
 
-    suspend fun createDb(db_name: String): Response {
+    suspend fun createDb(db_name: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = FormBody.Builder().build()
@@ -97,10 +99,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("PUT", body)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun allDbs(): Response {
+    suspend fun allDbs(): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -109,10 +111,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .get()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun dbsInfo(data: String): Response {
+    suspend fun dbsInfo(data: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -121,20 +123,20 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .get()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun getDbInfo(db_name: String): Response {
+    suspend fun getDbInfo(db_name: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment(db_name)
             .build()
         val r: Request = Request.Builder().url(url).headers(headers).build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun deleteDb(db_name: String): Response {
+    suspend fun deleteDb(db_name: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -143,10 +145,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .delete()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun <T> addDoc(db_name: String, data: T): Response {
+    suspend fun <T> addDoc(db_name: String, data: T): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         var body: RequestBody? = null
@@ -163,10 +165,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun addBulkDoc(db_name: String, data: String): Response {
+    suspend fun addBulkDoc(db_name: String, data: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = data.toRequestBody("application/json".toMediaType())
@@ -177,10 +179,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun deleteDoc(db_name: String, docId: String): Response {
+    suspend fun deleteDoc(db_name: String, docId: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -190,10 +192,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .delete()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun allDocs(db_name: String): Response {
+    suspend fun allDocs(db_name: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -202,10 +204,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
             .build()
         val r: Request = Request.Builder().url(url).headers(headers)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun findSpecDoc(db_name: String, docId: String): Response {
+    suspend fun findSpecDoc(db_name: String, docId: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -215,10 +217,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .get()
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun findBulkDoc(db_name: String, data: String): Response {
+    suspend fun findBulkDoc(db_name: String, data: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = data.toRequestBody("application/json".toMediaType())
@@ -229,10 +231,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun filterDocs(db_name: String, filter: String): Response {
+    suspend fun filterDocs(db_name: String, filter: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = filter.toRequestBody("application/json".toMediaType())
@@ -243,10 +245,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
-    suspend fun createIndex(db_name: String, info: String): Response {
+    suspend fun createIndex(db_name: String, info: String): Response = withContext(Dispatchers.IO) {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = info.toRequestBody("application/json".toMediaType())
@@ -257,7 +259,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return client.newCall(r).execute()
+        return@withContext client.newCall(r).execute()
     }
 
 }
