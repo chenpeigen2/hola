@@ -16,7 +16,7 @@ public final class Generations2 {
     /**
      * use it when return the result and calculate the trust rate
      *
-     * @return the PBA
+     * @return to evaluate
      */
     public static double evaluate(int m, float λ, int M, int H) {
         return getTop(m, λ, M, H) / getBase(m, λ, M, H);
