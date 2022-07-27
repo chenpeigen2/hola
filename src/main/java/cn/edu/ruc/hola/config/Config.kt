@@ -11,6 +11,6 @@ data class Config(var threshold: Float = -1f, val time_interval: Int = 1000, val
 
     val queryConfig: QueryConfig
         get() {
-            return Generations2.optimize(threshold, M, H)
+            return Generations2.select(threshold, M, H)
         }
 }

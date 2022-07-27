@@ -56,7 +56,7 @@ open class Exec(protected val config: Config) : Reachable {
         if (percent < queryConfig.λ) {
             return Response.WeakErrorCode()
         }
-        val results = Results(data, Generations2.infPBA(len, percent, config.M, config.H))
+        val results = Results(data, Generations2.evaluate(len, percent, config.M, config.H))
         return Response.SuccessCode(results)
     }
 

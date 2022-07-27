@@ -18,7 +18,7 @@ public final class Generations2 {
      *
      * @return the PBA
      */
-    public static double infPBA(int m, float λ, int M, int H) {
+    public static double evaluate(int m, float λ, int M, int H) {
         return getTop(m, λ, M, H) / getBase(m, λ, M, H);
     }
 
@@ -38,22 +38,21 @@ public final class Generations2 {
      *
      * @return the QueryConfig holder
      */
-    public static QueryConfig optimize(float threshHolder, int M, int H) {
+    public static QueryConfig select(float threshHolder, int M, int H) {
         double holder = Double.MAX_VALUE;
         QueryConfig p = null;
-        for (int m = 1; m <= M; m++) {
-            for (float λ = 1f; λ > 0.5f; λ -= 0.05) {
-                try {
-                    double top = getTop(m, λ, M, H);
-                    double base = getBase(m, λ, M, H);
-                    if (top >= threshHolder * base) {
-                        double v = min(m, λ, M, H);
-                        if (v <= holder) {
-                            p = new QueryConfig(m, λ, top / base);
-                        }
+        // start node should >= 1 , and select node should less than M/3
+        // default set the λ start as 0.75 3/4
+        for (int m = 2; m <= M / 3; m++) {
+            for (float λ = 1f; λ > 0.5f; λ -= 0.01) {
+                double top = getTop(m, λ, M, H);
+                double base = getBase(m, λ, M, H);
+                if (top >= threshHolder * base) {
+                    double v = min(m, λ, M, H);
+                    if (v <= holder) {
+                        holder = v;
+                        p = new QueryConfig(m, λ, top / base);
                     }
-                } catch (IllegalArgumentException ignored) {
-
                 }
             }
         }
