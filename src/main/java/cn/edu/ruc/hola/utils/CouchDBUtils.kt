@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.utils
 
 import cn.edu.ruc.hola.config.Host
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
@@ -16,8 +17,10 @@ import java.util.concurrent.ConcurrentHashMap
  * every couch db instance should have its own dbutils ,
  * just for design ,do not change .
  * if you are trying to change to static ,make sure Thread-safe, use ThreadLocal instead [not recommend !!!]
+ *
+ *
+ * change the kotlin run time to IO thread , to finish the Job
  */
-
 data class CouchDBUtils(val host: String, private val port: Int) {
 
     private val logger = LoggingUtils.logger()
