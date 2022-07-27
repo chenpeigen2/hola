@@ -11,7 +11,7 @@ class CouchService(sid: String) : AbsService(sid) {
         dbExtension = CouchDbExtension(h)
     }
 
-    override fun query(condition: String, db_name: String): Node? {
+    override suspend fun query(condition: String, db_name: String): Node? {
         return dbExtension.query(condition, db_name)
     }
 }

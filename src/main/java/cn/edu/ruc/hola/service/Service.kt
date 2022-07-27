@@ -8,5 +8,5 @@ interface Service {
      * @param db_name   database name
      * @return the node-value
      */
-    fun query(condition: String, db_name: String): Node?
+    suspend fun query(condition: String, db_name: String): Node?
 }

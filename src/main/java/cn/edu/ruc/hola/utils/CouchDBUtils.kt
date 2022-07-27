@@ -46,7 +46,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
             .port(port)
     }
 
-    fun up(): Response {
+    suspend fun up(): Response {
         val url = getBaseUrlBuilder()
             .addPathSegment("_up")
             .build()
@@ -56,7 +56,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun uuids(cnt: Int): Response {
+    suspend fun uuids(cnt: Int): Response {
         val url = getBaseUrlBuilder()
             .addPathSegment("_uuids")
             .addQueryParameter("count", cnt.toString()).build()
@@ -66,7 +66,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    private fun auth() {
+    suspend fun auth() {
         val body: RequestBody = FormBody.Builder()
             .add("name", "admin")
             .add("password", "123456").build()
@@ -87,7 +87,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         }
     }
 
-    fun createDb(db_name: String): Response {
+    suspend fun createDb(db_name: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = FormBody.Builder().build()
@@ -100,7 +100,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun allDbs(): Response {
+    suspend fun allDbs(): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -112,7 +112,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun dbsInfo(data: String): Response {
+    suspend fun dbsInfo(data: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -124,7 +124,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun getDbInfo(db_name: String): Response {
+    suspend fun getDbInfo(db_name: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -134,7 +134,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun deleteDb(db_name: String): Response {
+    suspend fun deleteDb(db_name: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -146,7 +146,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun <T> addDoc(db_name: String, data: T): Response {
+    suspend fun <T> addDoc(db_name: String, data: T): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         var body: RequestBody? = null
@@ -166,7 +166,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun addBulkDoc(db_name: String, data: String): Response {
+    suspend fun addBulkDoc(db_name: String, data: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = data.toRequestBody("application/json".toMediaType())
@@ -180,7 +180,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun deleteDoc(db_name: String, docId: String): Response {
+    suspend fun deleteDoc(db_name: String, docId: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -193,7 +193,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun allDocs(db_name: String): Response {
+    suspend fun allDocs(db_name: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -205,7 +205,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun findSpecDoc(db_name: String, docId: String): Response {
+    suspend fun findSpecDoc(db_name: String, docId: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
@@ -218,7 +218,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun findBulkDoc(db_name: String, data: String): Response {
+    suspend fun findBulkDoc(db_name: String, data: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = data.toRequestBody("application/json".toMediaType())
@@ -232,7 +232,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun filterDocs(db_name: String, filter: String): Response {
+    suspend fun filterDocs(db_name: String, filter: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = filter.toRequestBody("application/json".toMediaType())
@@ -246,7 +246,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return client.newCall(r).execute()
     }
 
-    fun createIndex(db_name: String, info: String): Response {
+    suspend fun createIndex(db_name: String, info: String): Response {
         if (!authed) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = info.toRequestBody("application/json".toMediaType())

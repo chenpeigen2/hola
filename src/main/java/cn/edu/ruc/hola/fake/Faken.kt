@@ -5,6 +5,7 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import cn.edu.ruc.hola.utils.CouchDBUtils
 import cn.edu.ruc.hola.config.ServerHelper
+import kotlinx.coroutines.runBlocking
 import java.util.logging.Logger
 
 object Faken {
@@ -14,7 +15,7 @@ object Faken {
     /**
      * make cnt to repeat create
      */
-    private fun createFakeDb(host: Host, cnt: Int) {
+    private suspend fun createFakeDb(host: Host, cnt: Int) {
         val dbUtils = CouchDBUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.createDb("fake$it").use { res ->
@@ -27,7 +28,7 @@ object Faken {
     /**
      * with repeat count 10 by default
      */
-    fun createFakeDb(cnt: Int) {
+    suspend fun createFakeDb(cnt: Int) {
         ServerHelper.hosts.forEach {
             createFakeDb(it, cnt)
         }
@@ -36,7 +37,7 @@ object Faken {
     /**
      * make cnt to repeat delete
      */
-    private fun deleteFakeDb(host: Host, cnt: Int) {
+    private suspend fun deleteFakeDb(host: Host, cnt: Int) {
         val dbUtils = CouchDBUtils.checkDbUtils(host)
         repeat(cnt) {
             dbUtils.deleteDb("fake$it").use { res ->
@@ -50,7 +51,7 @@ object Faken {
     /**
      * with repeat count 10 by default
      */
-    fun deleteFakeDb(cnt: Int) {
+    suspend fun deleteFakeDb(cnt: Int) {
         ServerHelper.hosts.forEach {
             deleteFakeDb(it, cnt)
         }
@@ -69,7 +70,7 @@ object Faken {
     /**
      * very complex operation , do not change
      */
-    fun addFakeData(cnt: Int) {
+    suspend fun addFakeData(cnt: Int) {
         val props = ServerHelper.hosts
         val fakeData: List<String> = generateFakeData(cnt)
         for (idx in props.indices) {
@@ -87,7 +88,7 @@ object Faken {
         }
     }
 
-    fun createFakeIndex(cnt: Int) {
+    suspend fun createFakeIndex(cnt: Int) {
 
         val info: String = """
                         {
@@ -114,7 +115,7 @@ object Faken {
         }
     }
 
-    fun fakeComplexQuery(cnt: Int): List<Node> {
+    suspend fun fakeComplexQuery(cnt: Int): List<Node> {
         val query = """
                    {
                 "selector": {
@@ -146,7 +147,7 @@ object Faken {
 
 }
 
-fun main() {
+fun main() = runBlocking {
     val cnt = 10
 //    Faken.createFakeDb(cnt)
 

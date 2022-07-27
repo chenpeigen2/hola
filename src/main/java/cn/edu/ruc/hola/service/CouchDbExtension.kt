@@ -24,7 +24,7 @@ class CouchDbExtension(host: Host) {
     /**
      * can be optimized in the future version
      */
-    fun query(condition: String, db_name: String): Node? {
+    suspend fun query(condition: String, db_name: String): Node? {
         var node: Node? = null
         dbUtils.filterDocs(db_name, condition).use { res ->
             res.body?.let {
