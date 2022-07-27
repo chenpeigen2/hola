@@ -24,7 +24,7 @@ println(it)
  */
 object QueryWithMulti {
     private val logger = LoggingUtils.logger()
-    var RetryCnt = 5
+    private const val RetryCnt = 5
 
     /**
      * the entry method , core method
