@@ -25,16 +25,16 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.google.guava:guava:31.1-jre")
-    implementation("net.bytebuddy:byte-buddy:1.12.10")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+    implementation("net.bytebuddy:byte-buddy:1.12.12")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("io.vertx:vertx-web:4.3.1")
+    implementation("io.vertx:vertx-web:4.3.2")
 }
 
 tasks.test {
