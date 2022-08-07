@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.benchmark
 import cn.edu.ruc.hola.benchmark.Bench.readCredibility
 import cn.edu.ruc.hola.benchmark.Bench.saveResult
 import cn.edu.ruc.hola.entity.Response
+import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
 import com.google.gson.Gson
 import java.io.File
@@ -26,6 +27,7 @@ object Evaluate {
 
 fun main() {
     val real = Evaluate.readCredibility()
+    LoggingUtils.logger().info(real.toString())
     println(real)
 }
 
