@@ -11,16 +11,16 @@ object Bench {
 
     private val logger: Logger = LoggingUtils.logger()
 
-    private fun QuickQueue.saveResult(res: Response) {
+    fun QuickQueue.saveResult(res: Response) {
         val results = res.data
         inc(results.data)
     }
 
-    private fun QuickQueue.readCredibility(len: Int): Float {
+    fun QuickQueue.readCredibility(len: Int): Float {
         return maxKeyCnt.toFloat() / len
     }
 
-    private fun data(q: QuickQueue): String {
+    fun data(q: QuickQueue): String {
         return q.maxKey
     }
 

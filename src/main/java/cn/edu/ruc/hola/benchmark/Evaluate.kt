@@ -1,34 +1,31 @@
 package cn.edu.ruc.hola.benchmark
 
+import cn.edu.ruc.hola.benchmark.Bench.readCredibility
+import cn.edu.ruc.hola.benchmark.Bench.saveResult
+import cn.edu.ruc.hola.entity.Response
+import cn.edu.ruc.hola.utils.QuickQueue
 import com.google.gson.Gson
-import java.text.SimpleDateFormat
-import java.util.*
+import java.io.File
 
 
 object Evaluate {
+    private val gson = Gson()
+    private val f = File("./jmeter/jmx/data.txt")
+
+    fun readCredibility(): Float {
+        val q = QuickQueue()
+        var cnt = 0;
+        f.forEachLine {
+            cnt++
+            q.saveResult(gson.fromJson(it, Response::class.java))
+        }
+        return q.readCredibility(cnt)
+    }
+
 }
 
-//AuthSession=YWRtaW46NjJFRjFFMjU6T5-_o6UZTK7BxVBCxaKnJIoZaxs; Version=1; Expires=Sun, 07-Aug-2022 02:16:29 GMT; Max-Age=600; Path=/; HttpOnly
-//Sun, 07-Aug-2022 02:11:50 GMT;
-//Sun, 07-Aug-2022 02:18:05 GMT;
-//Sun, 07-Aug-2022 02:10:25 GMT
-//Sun, 7-Aug-2022 02:10:04 GMT
-//Sun, 7-Aug-2022 02:08:49 GMT
-
-//[AuthSession=YWRtaW46NjJFRjFFODU6l7BGi0e1GwJs4n69UBAyYocEcnk; Version=1; Expires=Sun, 07-Aug-2022 02:18:05 GMT; Max-Age=600; Path=/; HttpOnly]
 fun main() {
-
-
-    var str =
-        "AuthSession=YWRtaW46NjJFRjFFODU6zTFqkCWCD77WSjAN34arKjb2hP0; Version=1; Expires=Sun, 07-Aug-2022 02:18:05 GMT; Max-Age=600; Path=/; HttpOnly"
-
-    val aa = str.substringAfter("Expires=").substringBefore(";")
-    println(aa)
-
-//    val date = sdf.parse(aa) // 1659838685000
-//    println(date.time)
-
-    val gson = Gson();
-
+    val real = Evaluate.readCredibility()
+    println(real)
 }
 
