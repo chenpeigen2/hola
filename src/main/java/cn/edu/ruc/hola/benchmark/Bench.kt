@@ -8,6 +8,7 @@ import cn.edu.ruc.hola.utils.QuickQueue
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import java.util.logging.Logger
 
 object Bench {
@@ -27,15 +28,14 @@ object Bench {
         return q.maxKey
     }
 
-    suspend fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? = coroutineScope {
+    fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? = runBlocking(Dispatchers.IO) {
         val config = async { Config(threshHold, 1000, M, H) }
         logger.info(config.toString())
         logger.info(query)
-        return@coroutineScope QueryWithMulti.queryWithTry(config.await(), query)
+        return@runBlocking QueryWithMulti.queryWithTry(config.await(), query)
     }
 
-
-    suspend fun executeSync(cnt: Int = 1): Inspect {
+    fun executeSync(cnt: Int = 1): Inspect = runBlocking(Dispatchers.IO) {
 
         val execTimes = mutableListOf<Long>()
         val theoreticalCredibility = mutableListOf<Double>()
@@ -65,7 +65,7 @@ object Bench {
 
         val readCredibility = quickQueue.readCredibility(cnt)
         logger.info(readCredibility.toString())
-        return Inspect(execTimes, readCredibility, theoreticalCredibility, data(quickQueue))
+        return@runBlocking Inspect(execTimes, readCredibility, theoreticalCredibility, data(quickQueue))
     }
 }
 

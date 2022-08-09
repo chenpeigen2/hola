@@ -9,9 +9,7 @@ import io.vertx.ext.web.Router
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.ext.web.handler.StaticHandler
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 internal class CouchVerticle : AbstractVerticle() {
     private val json = GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create()
@@ -20,9 +18,8 @@ internal class CouchVerticle : AbstractVerticle() {
         val router = Router.router(vertx)
         router.route().handler(BodyHandler.create())
         router.route().handler(StaticHandler.create())
-        router["/hello"].handler { ctx: RoutingContext -> out(ctx, "helloworld11") }
-        router["/query"].handler { ctx: RoutingContext -> launch { query(ctx) } }
-        router["/basic"].handler { ctx: RoutingContext -> launch { basicQuery(ctx) } }
+        router["/query"].handler { ctx: RoutingContext -> query(ctx) }
+        router["/basic"].handler { ctx: RoutingContext -> basicQuery(ctx) }
         router.post("/postQuery").handler { ctx: RoutingContext -> postQuery(ctx) }
         server.requestHandler(router).listen(8080)
     }
@@ -47,7 +44,7 @@ internal class CouchVerticle : AbstractVerticle() {
      * the sample url:
      * http://localhost:8080/basic?th=0.95&M=100&H=80&query={%22selector%22:%20{%22data.countryid%22:%20{%22$gt%22:%20-1}},%22execution_stats%22:%20true}
      */
-    private suspend fun basicQuery(ctx: RoutingContext) {
+    private fun basicQuery(ctx: RoutingContext) {
         val request = ctx.request()
         val threshHold = request.getParam("th").toFloat()
         val M = request.getParam("M").toInt()
@@ -57,7 +54,7 @@ internal class CouchVerticle : AbstractVerticle() {
         out(ctx, json.toJson(response))
     }
 
-    private fun postQuery(ctx: RoutingContext) = runBlocking {
+    private fun postQuery(ctx: RoutingContext) {
         val requestBody = ctx.body()
         val jsonObject = requestBody.asJsonObject()
         val threshHold = jsonObject.getFloat("th")
@@ -76,7 +73,7 @@ internal class CouchVerticle : AbstractVerticle() {
      * "query" : {"selector":{"data.countryid":{"$gt":-1}},"execution_stats":true}
      * }
      */
-    private suspend fun query(ctx: RoutingContext) {
+    private fun query(ctx: RoutingContext) {
         val cnt = ctx.request().getParam("cnt")
         val inspect: Inspect
         inspect = if (cnt == null) {
