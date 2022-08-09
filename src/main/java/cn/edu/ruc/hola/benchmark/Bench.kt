@@ -5,12 +5,13 @@ import cn.edu.ruc.hola.entity.Response
 import cn.edu.ruc.hola.exec.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.util.logging.Logger
 
+/**
+ * in bench, we use the running block
+ */
 object Bench {
 
     private val logger: Logger = LoggingUtils.logger()
@@ -28,14 +29,14 @@ object Bench {
         return q.maxKey
     }
 
-    fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? = runBlocking(Dispatchers.IO) {
+    fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? = runBlocking {
         val config = async { Config(threshHold, 1000, M, H) }
         logger.info(config.toString())
         logger.info(query)
         return@runBlocking QueryWithMulti.queryWithTry(config.await(), query)
     }
 
-    fun executeSync(cnt: Int = 1): Inspect = runBlocking(Dispatchers.IO) {
+    fun executeSync(cnt: Int = 1): Inspect = runBlocking {
 
         val execTimes = mutableListOf<Long>()
         val theoreticalCredibility = mutableListOf<Double>()
@@ -69,7 +70,7 @@ object Bench {
     }
 }
 
-suspend fun main() {
+fun main() {
     val inspect = Bench.executeSync(1000)
     println(inspect)
     println(inspect.realCredibility)

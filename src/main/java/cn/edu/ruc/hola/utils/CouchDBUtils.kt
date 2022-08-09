@@ -91,7 +91,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
             cookie = cookieList[0]
             cookie?.let {
                 if (it == "") return@let
-                val timeString = it.substringAfter("Expires=").substringBefore(";")
+                val timeString = it.substringAfter("Expires=").substringBefore(";").trim()
                 expiresTime = sdf.parse(timeString).time
                 m["Cookie"] = it
             }
