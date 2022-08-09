@@ -29,7 +29,7 @@ object QueryWithMulti {
     /**
      * the entry method , core method
      */
-    fun queryWithTry(config: Config, condition: String): Response? {
+    suspend fun queryWithTry(config: Config, condition: String): Response? {
         for (i in 0 until RetryCnt) {
             val res = query(config, condition)
             if (Response.SUCCESS_CODE == res.code) {
@@ -40,7 +40,7 @@ object QueryWithMulti {
         return null
     }
 
-    fun query(config: Config, condition: String): Response {
+    suspend fun query(config: Config, condition: String): Response {
         val exec = MultiExec(config)
         return exec.partition(condition)!!
     }

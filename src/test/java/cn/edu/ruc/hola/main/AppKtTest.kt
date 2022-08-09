@@ -22,7 +22,7 @@ internal class AppKtTest {
     }
 
     @RepeatedTest(100)
-    fun testMain() {
+    suspend fun testMain() {
         val config = Config(0.8f, 1000, 100, 80)
         val query = """
      {

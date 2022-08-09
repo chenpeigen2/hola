@@ -7,5 +7,5 @@ import cn.edu.ruc.hola.entity.Node
  * we treat every
  */
 interface Queryable {
-    fun query(condition: String, serverNodes: List<ServerNode>): List<Node?>?
+    suspend fun query(condition: String, serverNodes: List<ServerNode>): List<Node>
 }
