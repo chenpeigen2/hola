@@ -4,11 +4,8 @@ import cn.edu.ruc.hola.config.QueryConfig;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * private static final int M; // 区块链节点数量
