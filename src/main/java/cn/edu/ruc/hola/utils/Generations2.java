@@ -89,6 +89,16 @@ public final class Generations2 {
         return getTop(m, λ, M, H) / getBase(m, λ, M, H);
     }
 
+
+    private static boolean shouldAccept(int m, float λ, int M, int H, double expected) {
+        double top = 0;
+        for (int i = (int) Math.ceil(λ * m); i <= m; i++) {
+            top += C(H, i) * C(M - H, m - i);
+        }
+        double base = C(M, m);
+        return top / base > expected;
+    }
+
     /**
      * QueryConfig(m=6, λ=0.5499999, θ=0.9792561278105246)
      * QueryConfig(m=7, λ=0.6999999, θ=0.9950992560798854)
@@ -105,17 +115,6 @@ public final class Generations2 {
      *
      * @return the QueryConfig holder
      */
-
-    private static boolean shouldAccept(int m, float λ, int M, int H, double expected) {
-        double top = 0;
-        for (int i = (int) Math.ceil(λ * m); i <= m; i++) {
-            top += C(H, i) * C(M - H, m - i);
-        }
-        double base = C(M, m);
-        if (top / base > expected) return true;
-        return false;
-    }
-
     public static QueryConfig select(float threshHolder, int M, int H, double expected) {
         ConfigCache configCache = getCacheConfig(threshHolder, M, H);
         if (configCache.getConfig() != null) return configCache.getConfig();
