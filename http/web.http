@@ -1,0 +1,21 @@
+### auth
+POST /_session HTTP/1.1
+Accept: application/json
+Content-Length: 37
+Content-Type: application/json
+Host: localhost:5984
+
+
+{
+    "name": "admin",
+    "password": "123456"
+}
+
+### send a request
+POST /fake/_find HTTP/1.1
+Accept: application/json
+Content-Length: 37
+Content-Type: application/json
+Host: localhost:5984
+
+{"selector":{"data.countryid":{"$gt":-1}},"execution_stats":true}
