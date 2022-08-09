@@ -3,6 +3,13 @@ package cn.edu.ruc.hola.utils;
 import cn.edu.ruc.hola.config.QueryConfig;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 /**
  * private static final int M; // 区块链节点数量
  * private static final int H; // 区块链中诚实节点数据 >= 2/3 * M
@@ -11,6 +18,69 @@ import org.apache.commons.math3.util.CombinatoricsUtils;
  */
 public final class Generations2 {
     private Generations2() {
+    }
+
+    private static final Map<Integer, ConfigCache> cacheMap = new HashMap<>();
+
+    private static int hash(float threshHolder, int M, int H) {
+        return Objects.hash(threshHolder, M, H);
+    }
+
+    private static ConfigCache getCacheConfig(float threshHolder, int M, int H) {
+        int mHashCode = hash(threshHolder, M, H);
+        return cacheMap.computeIfAbsent(mHashCode, k -> new ConfigCache(threshHolder, M, H));
+    }
+
+    private static class ConfigCache {
+        private final float threshHolder;
+        private final int M;
+        private final int H;
+
+        private QueryConfig config;
+
+        public ConfigCache(float threshHolder, int m, int h) {
+            this.threshHolder = threshHolder;
+            M = m;
+            H = h;
+        }
+
+        public QueryConfig getConfig() {
+            return config;
+        }
+
+        public void setConfig(QueryConfig config) {
+            this.config = config;
+        }
+
+        public float getThreshHolder() {
+            return threshHolder;
+        }
+
+        public int getM() {
+            return M;
+        }
+
+        public int getH() {
+            return H;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            ConfigCache that = (ConfigCache) o;
+            return Float.compare(that.threshHolder, threshHolder) == 0 && M == that.M && H == that.H;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(threshHolder, M, H);
+        }
+
+        @Override
+        public String toString() {
+            return "ConfigHolder{" + "threshHolder=" + threshHolder + ", M=" + M + ", H=" + H + '}';
+        }
     }
 
     /**
@@ -38,7 +108,10 @@ public final class Generations2 {
      *
      * @return the QueryConfig holder
      */
+
     public static QueryConfig select(float threshHolder, int M, int H) {
+        ConfigCache configCache = getCacheConfig(threshHolder, M, H);
+        if (configCache.getConfig() != null) return configCache.getConfig();
         double holder = Double.MAX_VALUE;
         QueryConfig p = null;
         // start node should >= 1 , and select node should less than M/3
@@ -56,6 +129,7 @@ public final class Generations2 {
                 }
             }
         }
+        configCache.setConfig(p);
         return p;
     }
 
