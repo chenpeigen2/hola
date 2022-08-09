@@ -13,7 +13,7 @@ public class Generations2Test {
 
     @Test
     public void testForBuildOptimize() {
-        var ans = Generations2.select(0.95f, 26, 20);
+        var ans = Generations2.select(0.95f, 100, 67, 0.9);
         System.out.println(ans);
     }
 }

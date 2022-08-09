@@ -7,10 +7,16 @@ import cn.edu.ruc.hola.utils.Generations2
  *  @param threshold     value 0 < x <= 1
  * @param time_interval time interval
  */
-data class Config(var threshold: Float = -1f, val time_interval: Int = 1000, val M: Int, val H: Int) {
+data class Config(
+    var threshold: Float = -1f,
+    val time_interval: Int = 1000,
+    val M: Int,
+    val H: Int,
+    val expected: Double = 0.9
+) {
 
     val queryConfig: QueryConfig
         get() {
-            return Generations2.select(threshold, M, H)
+            return Generations2.select(threshold, M, H, expected)
         }
 }
