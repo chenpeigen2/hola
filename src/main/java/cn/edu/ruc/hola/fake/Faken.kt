@@ -70,9 +70,9 @@ object Faken {
     /**
      * very complex operation , do not change
      */
-    suspend fun addFakeData(cnt: Int) {
+    suspend fun addFakeData(cnt: Int, threshold: Float = 0.8f, conspired: Boolean = true) {
         val props = ServerHelper.hosts
-        val fakeData: List<String> = generateFakeData(cnt)
+        val fakeData: List<String> = generateFakeData(cnt, threshold, conspired)
         for (idx in props.indices) {
             val host: Host = props[idx]
             val dbUtils = CouchDBUtils.checkDbUtils(host)
@@ -147,13 +147,29 @@ object Faken {
 
 }
 
+const val cnt = 10
+
+const val rate = 0.8f
+
+const val conspired = true
+
+suspend fun create() {
+    Faken.createFakeDb(cnt)
+    Faken.createFakeIndex(cnt)
+    Faken.addFakeData(cnt, rate, conspired)
+}
+
+suspend fun delete() {
+    Faken.deleteFakeDb(cnt)
+}
+
+suspend fun query() {
+    Faken.fakeComplexQuery(cnt)
+}
+
+
 fun main() = runBlocking {
-    val cnt = 10
-//    Faken.createFakeDb(cnt)
-
-//    Faken.createFakeIndex(cnt)
-
-//    Faken.addFakeData(cnt)
-    val ans = Faken.fakeComplexQuery(cnt)
-    print(ans.size)
+    delete()
+    create()
+    query()
 }
