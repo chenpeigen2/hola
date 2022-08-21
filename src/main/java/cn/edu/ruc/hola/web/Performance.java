@@ -14,7 +14,7 @@ public final class Performance extends AbstractVerticle {
     public void start() {
         HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
-        router.get("/performance").handler(this::performance);
+        router.post("/performance").handler(this::performance);
         server.requestHandler(router).listen(8081);
     }
 
@@ -29,7 +29,11 @@ public final class Performance extends AbstractVerticle {
 
         Bench.INSTANCE.performance(threshHold, M, H, query.toString());
 
-        ctx.response().putHeader("Content-Type", "text/plain; charset=utf-8")
-                .end("hello world !");
+        out(ctx, "hello world !");
+    }
+
+    private void out(RoutingContext ctx, String msg) {
+        ctx.response().putHeader("Content-Type", "application/json; charset=utf-8")
+                .end(msg);
     }
 }
