@@ -15,7 +15,7 @@ public final class Performance extends AbstractVerticle {
         HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
         router.get("/performance").handler(this::performance);
-        server.requestHandler(router).listen(8080);
+        server.requestHandler(router).listen(8081);
     }
 
     private void performance(RoutingContext ctx) {

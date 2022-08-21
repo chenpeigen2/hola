@@ -6,5 +6,6 @@ public final class Entry {
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
         vertx.deployVerticle(CouchVerticle.class.getName());
+        vertx.deployVerticle(Performance.class.getName());
     }
 }
