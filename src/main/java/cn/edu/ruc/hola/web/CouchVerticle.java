@@ -16,7 +16,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 
-public class CouchVerticle extends AbstractVerticle {
+public final class CouchVerticle extends AbstractVerticle {
 
     private final Gson json = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 

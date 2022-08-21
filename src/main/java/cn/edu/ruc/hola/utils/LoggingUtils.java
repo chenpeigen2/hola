@@ -8,7 +8,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class LoggingUtils {
+public final class LoggingUtils {
     static {
         File f = new File("./log");
         if (!f.exists()) f.mkdir();
