@@ -46,4 +46,9 @@ class CouchDbExtension(host: Host) {
         return node
     }
 
+    suspend fun performance(condition: String, db_name: String) {
+        dbUtils.filterDocs(db_name, condition).use { res ->
+        }
+    }
+
 }

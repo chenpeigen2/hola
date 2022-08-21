@@ -31,6 +31,11 @@ object Bench {
         return QueryWithMulti.queryWithTry(config, query)
     }
 
+    fun performance(threshHold: Float, M: Int, H: Int, query: String) {
+        val config = Config(threshHold, 1000, M, H)
+        QueryWithMulti.performance(config, query)
+    }
+
 
     fun executeSync(cnt: Int = 1): Inspect {
 

@@ -9,4 +9,9 @@ interface Service {
      * @return the node-value
      */
     suspend fun query(condition: String, db_name: String): Node?
+
+    /**
+     * performance test only
+     */
+    suspend fun performance(condition: String, db_name: String)
 }

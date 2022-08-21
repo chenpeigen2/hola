@@ -14,4 +14,8 @@ class CouchService(sid: String) : AbsService(sid) {
     override suspend fun query(condition: String, db_name: String): Node? {
         return dbExtension.query(condition, db_name)
     }
+
+    override suspend fun performance(condition: String, db_name: String) {
+        return dbExtension.performance(condition, db_name)
+    }
 }

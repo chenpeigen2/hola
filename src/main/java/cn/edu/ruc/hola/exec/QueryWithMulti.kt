@@ -44,4 +44,9 @@ object QueryWithMulti {
         val exec = MultiExec(config)
         return exec.partition(condition)!!
     }
+
+    fun performance(config: Config, condition: String) {
+        val exec = MultiExec(config)
+        exec.performance(condition)
+    }
 }
