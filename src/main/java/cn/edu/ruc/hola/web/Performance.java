@@ -7,6 +7,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.RequestBody;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 
 public final class Performance extends AbstractVerticle {
 
@@ -14,6 +16,8 @@ public final class Performance extends AbstractVerticle {
     public void start() {
         HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
+        router.route().handler(BodyHandler.create());
+        router.route().handler(StaticHandler.create());
         router.post("/performance").handler(this::performance);
         server.requestHandler(router).listen(8081);
     }
