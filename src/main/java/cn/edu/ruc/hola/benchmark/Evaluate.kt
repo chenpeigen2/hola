@@ -20,6 +20,7 @@ object Evaluate {
             cnt++
             q.saveResult(gson.fromJson(it, Response::class.java))
         }
+        LoggingUtils.logger().info("cnt: $cnt")
         return q.readCredibility(cnt)
     }
 
