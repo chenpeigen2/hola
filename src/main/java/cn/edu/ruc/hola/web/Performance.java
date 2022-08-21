@@ -29,7 +29,7 @@ public final class Performance extends AbstractVerticle {
 
         Bench.INSTANCE.performance(threshHold, M, H, query.toString());
 
-        ctx.response().putHeader("Content-Type", "application/json; charset=utf-8")
+        ctx.response().putHeader("Content-Type", "text/plain; charset=utf-8")
                 .end("hello world !");
     }
 }
