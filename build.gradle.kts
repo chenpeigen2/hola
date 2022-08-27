@@ -31,10 +31,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.google.guava:guava:31.1-jre")
-    implementation("net.bytebuddy:byte-buddy:1.12.12")
+    implementation("net.bytebuddy:byte-buddy:1.12.13")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("io.vertx:vertx-web:4.3.2")
+    implementation("io.vertx:vertx-web:4.3.3")
 }
 
 tasks.test {
