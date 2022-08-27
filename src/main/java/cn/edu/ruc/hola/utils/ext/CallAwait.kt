@@ -34,6 +34,7 @@ suspend fun Call.await(recordStack: Boolean = isRecordStack): Response {
     return suspendCancellableCoroutine { continuation ->
         enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
+                if (continuation.isCancelled) return
                 continuation.resume(response)
             }
 
