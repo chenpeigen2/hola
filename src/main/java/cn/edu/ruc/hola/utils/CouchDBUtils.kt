@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.utils
 
 import cn.edu.ruc.hola.config.Host
+import cn.edu.ruc.hola.utils.ext.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
@@ -262,7 +263,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return@withContext client.newCall(r).execute()
+        return@withContext client.newCall(r).await()
     }
 
     suspend fun createIndex(db_name: String, info: String): Response = withContext(Dispatchers.IO) {
