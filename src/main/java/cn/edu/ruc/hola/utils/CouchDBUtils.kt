@@ -263,7 +263,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        client.newCall(r).await(true)
+        return@withContext client.newCall(r).execute()
     }
 
     suspend fun createIndex(db_name: String, info: String): Response = withContext(Dispatchers.IO) {
