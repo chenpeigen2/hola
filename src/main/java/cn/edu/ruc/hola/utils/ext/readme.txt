@@ -1,4 +1,4 @@
-the dir only for explore only , do not use
+the dir only for explore only
 /**
 * https://github.com/gildor/kotlin-coroutines-okhttp
 **/
