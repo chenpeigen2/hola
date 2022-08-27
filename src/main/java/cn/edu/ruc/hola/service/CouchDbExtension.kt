@@ -5,6 +5,8 @@ import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import cn.edu.ruc.hola.utils.CouchDBUtils
+import cn.edu.ruc.hola.utils.OkHttpCallBack
+import cn.edu.ruc.hola.utils.OkHttpCallBackImpl
 import kotlin.math.log
 
 /**
@@ -16,8 +18,11 @@ import kotlin.math.log
 class CouchDbExtension(host: Host) {
     private val dbUtils: CouchDBUtils
 
+    private val callback = OkHttpCallBackImpl()
+
     init {
         dbUtils = CouchDBUtils.checkDbUtils(host)
+        dbUtils.callback = callback
     }
 
     private val gson = ServerHelper.gson
@@ -26,31 +31,14 @@ class CouchDbExtension(host: Host) {
      * can be optimized in the future version
      */
     suspend fun query(condition: String, db_name: String): Node? {
-        var node: Node? = null
-        dbUtils.filterDocs(db_name, condition).use { res ->
-            res.body?.let {
-                val filterDocs: FilterDocs =
-                    gson.fromJson(
-                        it.string(),
-                        FilterDocs::class.java
-                    )
-
-                val data = buildString {
-                    filterDocs.docs?.forEach { doc ->
-                        append(doc.data.toString())
-                    }
-                }
-
-                node = Node(condition, data)
-            }
-        }
-        return node
+        dbUtils.filterDocs(db_name, condition)
+        callback.condition = condition
+        println(callback.node)
+        return callback.node
     }
 
     suspend fun performance(condition: String, db_name: String) {
-        dbUtils.filterDocs(db_name, condition).use { res ->
-            println("performance $db_name !!!")
-        }
+        dbUtils.filterDocs(db_name, condition)
     }
 
 }

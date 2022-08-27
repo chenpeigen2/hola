@@ -44,6 +44,11 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         }
     }
 
+    /**
+     * callback for okhttp async
+     */
+    lateinit var callback: OkHttpCallBack
+
     private var cookie: String? = null
 
     private val m =
@@ -251,7 +256,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         return@withContext client.newCall(r).execute()
     }
 
-    suspend fun filterDocs(db_name: String, filter: String): Response = withContext(Dispatchers.IO) {
+    suspend fun filterDocs(db_name: String, filter: String) = withContext(Dispatchers.IO) {
         if (isExpired()) auth()
         val headers: Headers = m.toHeaders()
         val body: RequestBody = filter.toRequestBody("application/json".toMediaType())
@@ -262,7 +267,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        return@withContext client.newCall(r).execute()
+        client.newCall(r).enqueue(callback)
     }
 
     suspend fun createIndex(db_name: String, info: String): Response = withContext(Dispatchers.IO) {

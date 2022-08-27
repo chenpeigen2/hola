@@ -129,15 +129,7 @@ object Faken {
             it.let { host ->
                 val dbUtils = CouchDBUtils.checkDbUtils(host)
                 repeat(cnt) {
-                    dbUtils.filterDocs("fake$it", query).use { res ->
-                        val result = res.body?.string()
-                        logger.info("$host fake$it $result")
-                        val data: String = ServerHelper.gson
-                            .fromJson(result, FilterDocs::class.java)?.docs?.get(0)
-                            ?.data.toString()
-                        val n = Node(query, data)
-                        l.add(n)
-                    }
+                    dbUtils.filterDocs("fake$it", query)
                 }
             }
         }
