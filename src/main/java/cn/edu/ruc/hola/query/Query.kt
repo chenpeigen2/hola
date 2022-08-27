@@ -6,6 +6,7 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
+import cn.edu.ruc.hola.utils.channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.ConcurrentHashMap
@@ -31,10 +32,12 @@ class Query(val config: Config) : Serviceable, Queryable {
         serverNodes.forEach {
             launch {
                 val anService = loadService(it.sid)
-                val node = anService.query(condition, it.databaseName)
-                node?.let {
-                    query.add(it)
-                }
+                anService.query(condition, it.databaseName)
+            }
+        }
+        for (node in channel) {
+            node.let {
+                query.add(it)
             }
         }
     }

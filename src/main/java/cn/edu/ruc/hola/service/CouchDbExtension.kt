@@ -30,11 +30,9 @@ class CouchDbExtension(host: Host) {
     /**
      * can be optimized in the future version
      */
-    suspend fun query(condition: String, db_name: String): Node? {
+    suspend fun query(condition: String, db_name: String) {
         dbUtils.filterDocs(db_name, condition)
         callback.condition = condition
-        println(callback.node)
-        return callback.node
     }
 
     suspend fun performance(condition: String, db_name: String) {

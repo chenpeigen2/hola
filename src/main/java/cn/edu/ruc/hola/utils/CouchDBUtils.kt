@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.utils
 
 import cn.edu.ruc.hola.config.Host
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
@@ -122,6 +123,12 @@ data class CouchDBUtils(val host: String, private val port: Int) {
             .method("PUT", body)
             .build()
         return@withContext client.newCall(r).execute()
+    }
+
+    private suspend inline fun Call.await(): Response {
+        return suspendCancellableCoroutine {
+            enqueue(callback)
+        }
     }
 
     suspend fun allDbs(): Response = withContext(Dispatchers.IO) {
@@ -267,7 +274,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
         val r: Request = Request.Builder().url(url).headers(headers)
             .method("POST", body)
             .build()
-        client.newCall(r).enqueue(callback)
+        client.newCall(r).await()
     }
 
     suspend fun createIndex(db_name: String, info: String): Response = withContext(Dispatchers.IO) {
