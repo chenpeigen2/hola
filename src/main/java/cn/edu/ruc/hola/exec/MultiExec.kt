@@ -3,7 +3,6 @@ package cn.edu.ruc.hola.exec
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.config.ServerNode
-import cn.edu.ruc.hola.fake.COUNT
 import cn.edu.ruc.hola.fake.FakeConfig
 
 /**
@@ -12,7 +11,7 @@ import cn.edu.ruc.hola.fake.FakeConfig
  */
 class MultiExec(config: Config) : Exec(config) {
 
-    private val cnt = COUNT
+    private val cnt = FakeConfig.count
 
     override fun serverNodes(): List<ServerNode> {
         val snods = mutableListOf<ServerNode>()
