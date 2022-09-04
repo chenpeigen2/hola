@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.benchmark
 
 import cn.edu.ruc.hola.utils.SHA256Utils
 
+@NoCurrentUsage
 data class Inspect(
     val execTimes: List<Long>,
     val realCredibility: Float,

@@ -36,7 +36,7 @@ object Bench {
         QueryWithMulti.performance(config, query)
     }
 
-
+    @NoCurrentUsage
     fun executeSync(cnt: Int = 1): Inspect {
 
         val execTimes = mutableListOf<Long>()

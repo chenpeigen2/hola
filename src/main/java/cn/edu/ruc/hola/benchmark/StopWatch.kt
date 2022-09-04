@@ -5,6 +5,7 @@ import java.io.File
 import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
 
+@NoCurrentUsage
 object StopWatch {
     val stopwatch: Stopwatch = Stopwatch.createUnstarted()
     fun start() {
