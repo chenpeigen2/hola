@@ -6,6 +6,7 @@ import cn.edu.ruc.hola.exec.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.anno.NoCurrentUsage
 import cn.edu.ruc.hola.utils.QuickQueue
+import cn.edu.ruc.hola.utils.anno.Core
 import java.util.logging.Logger
 
 object Bench {
@@ -25,6 +26,7 @@ object Bench {
         return q.maxKey
     }
 
+    @Core
     fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? {
         val config = Config(threshHold, 1000, M, H)
         logger.info(config.toString())

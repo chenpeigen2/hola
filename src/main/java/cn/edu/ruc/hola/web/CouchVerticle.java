@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.web;
 import cn.edu.ruc.hola.benchmark.Bench;
 import cn.edu.ruc.hola.benchmark.Inspect;
 import cn.edu.ruc.hola.entity.Response;
+import cn.edu.ruc.hola.utils.anno.Core;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.vertx.core.AbstractVerticle;
@@ -50,7 +51,6 @@ public final class CouchVerticle extends AbstractVerticle {
      * the sample url:
      * http://localhost:8080/basic?th=0.95&M=100&H=80&query={%22selector%22:%20{%22data.countryid%22:%20{%22$gt%22:%20-1}},%22execution_stats%22:%20true}
      */
-
     private void basicQuery(RoutingContext ctx) {
         HttpServerRequest request = ctx.request();
 
@@ -63,6 +63,7 @@ public final class CouchVerticle extends AbstractVerticle {
         out(ctx, json.toJson(response));
     }
 
+    @Core
     private void postQuery(RoutingContext ctx) {
         RequestBody requestBody = ctx.body();
 
