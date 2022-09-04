@@ -1,5 +1,6 @@
 package cn.edu.ruc.hola.benchmark
 
+import cn.edu.ruc.hola.utils.anno.NoCurrentUsage
 import com.google.common.base.Stopwatch
 import java.io.File
 import java.nio.charset.Charset

@@ -1,5 +1,6 @@
 package cn.edu.ruc.hola.benchmark
 
+import cn.edu.ruc.hola.utils.anno.NoCurrentUsage
 import cn.edu.ruc.hola.utils.SHA256Utils
 
 @NoCurrentUsage

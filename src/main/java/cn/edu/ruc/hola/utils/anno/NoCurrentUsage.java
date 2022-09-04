@@ -1,4 +1,4 @@
-package cn.edu.ruc.hola.benchmark;
+package cn.edu.ruc.hola.utils.anno;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

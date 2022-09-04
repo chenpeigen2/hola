@@ -4,6 +4,7 @@ import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.entity.Response
 import cn.edu.ruc.hola.exec.QueryWithMulti
 import cn.edu.ruc.hola.utils.LoggingUtils
+import cn.edu.ruc.hola.utils.anno.NoCurrentUsage
 import cn.edu.ruc.hola.utils.QuickQueue
 import java.util.logging.Logger
 
