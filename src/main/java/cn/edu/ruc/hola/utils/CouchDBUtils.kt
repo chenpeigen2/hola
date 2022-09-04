@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.utils
 
 import cn.edu.ruc.hola.config.Host
+import cn.edu.ruc.hola.fake.FakeConfig
 import cn.edu.ruc.hola.utils.ext.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -78,8 +79,8 @@ data class CouchDBUtils(val host: String, private val port: Int) {
 
     private fun auth() {
         val body: RequestBody = FormBody.Builder()
-            .add("name", "admin")
-            .add("password", "123456").build()
+            .add("name", FakeConfig.name)
+            .add("password", FakeConfig.password).build()
         val url = getBaseUrlBuilder()
             .addPathSegment("_session")
             .build()

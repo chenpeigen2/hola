@@ -20,4 +20,15 @@ object FakeConfig {
      * is conspired or not
      */
     const val conspired = true
+
+    /**
+     * database user name
+     */
+
+    const val name = "admin"
+
+    /**
+     * database password
+     */
+    const val password = "123456"
 }
