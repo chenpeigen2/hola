@@ -2,7 +2,6 @@ package cn.edu.ruc.hola.utils
 
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.fake.FakeConfig
-import cn.edu.ruc.hola.utils.ext.await
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.*
