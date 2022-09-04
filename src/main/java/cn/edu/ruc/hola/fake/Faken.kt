@@ -147,24 +147,27 @@ object Faken {
 
 }
 
-const val cnt = 10
+/**
+ * default multi-count simulation
+ */
+const val COUNT = 10
 
 const val rate = 0.8f
 
 const val conspired = true
 
 suspend fun create() {
-    Faken.createFakeDb(cnt)
-    Faken.createFakeIndex(cnt)
-    Faken.addFakeData(cnt, rate, conspired)
+    Faken.createFakeDb(COUNT)
+    Faken.createFakeIndex(COUNT)
+    Faken.addFakeData(COUNT, rate, conspired)
 }
 
 suspend fun delete() {
-    Faken.deleteFakeDb(cnt)
+    Faken.deleteFakeDb(COUNT)
 }
 
 suspend fun query() {
-    Faken.fakeComplexQuery(cnt)
+    Faken.fakeComplexQuery(COUNT)
 }
 
 
