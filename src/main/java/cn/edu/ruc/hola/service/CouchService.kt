@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 class CouchService(sid: String) : AbsService(sid) {
 
@@ -15,6 +16,7 @@ class CouchService(sid: String) : AbsService(sid) {
         return dbExtension.query(condition, db_name)
     }
 
+    @PerformanceOnly
     override suspend fun performance(condition: String, db_name: String) {
         return dbExtension.performance(condition, db_name)
     }

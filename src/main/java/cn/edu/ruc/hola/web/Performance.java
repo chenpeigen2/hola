@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.web;
 
 import cn.edu.ruc.hola.benchmark.Bench;
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
@@ -10,6 +11,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
+@PerformanceOnly
 public final class Performance extends AbstractVerticle {
 
     @Override

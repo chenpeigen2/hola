@@ -12,6 +12,7 @@ import cn.edu.ruc.hola.query.Query
 import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 open class Exec(protected val config: Config) : Reachable {
 
@@ -33,6 +34,7 @@ open class Exec(protected val config: Config) : Reachable {
         return analyze(queries)
     }
 
+    @PerformanceOnly
     open fun performance(condition: String) {
         val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
         query.performance(condition, cutIds)

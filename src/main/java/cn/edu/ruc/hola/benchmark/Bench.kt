@@ -7,6 +7,7 @@ import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.anno.NoCurrentUsage
 import cn.edu.ruc.hola.utils.QuickQueue
 import cn.edu.ruc.hola.utils.anno.Core
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import java.util.logging.Logger
 
 object Bench {
@@ -34,6 +35,7 @@ object Bench {
         return QueryWithMulti.queryWithTry(config, query)
     }
 
+    @PerformanceOnly
     fun performance(threshHold: Float, M: Int, H: Int, query: String) {
         val config = Config(threshHold, 1000, M, H)
         QueryWithMulti.performance(config, query)

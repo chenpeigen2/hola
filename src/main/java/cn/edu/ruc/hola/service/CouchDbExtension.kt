@@ -5,6 +5,7 @@ import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import cn.edu.ruc.hola.utils.CouchDBUtils
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import kotlin.math.log
 
 /**
@@ -47,6 +48,7 @@ class CouchDbExtension(host: Host) {
         return node
     }
 
+    @PerformanceOnly
     suspend fun performance(condition: String, db_name: String) {
         dbUtils.filterDocs(db_name, condition).use { res ->
             println("performance $db_name !!!")

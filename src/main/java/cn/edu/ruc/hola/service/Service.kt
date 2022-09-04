@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 interface Service {
     /**
@@ -13,5 +14,6 @@ interface Service {
     /**
      * performance test only
      */
+    @PerformanceOnly
     suspend fun performance(condition: String, db_name: String)
 }

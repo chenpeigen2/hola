@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.exec
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.entity.Response
+import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 /**
  *
@@ -45,6 +46,7 @@ object QueryWithMulti {
         return exec.partition(condition)!!
     }
 
+    @PerformanceOnly
     fun performance(config: Config, condition: String) {
         val exec = MultiExec(config)
         exec.performance(condition)
