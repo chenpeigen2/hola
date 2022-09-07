@@ -1,6 +1,9 @@
 package cn.deu.ruc.sample
 
 object Query {
+
+    private val dao = Dao("127.0.0.1", 5985)
+
     fun query() {
         val query = """
                    {
@@ -11,7 +14,6 @@ object Query {
                 }         
         """.trimIndent()
 
-        val dao = Dao("127.0.0.1", 5985)
 
         dao.filterDocs("fake0", query).use { res ->
             val result = res.body?.string()
