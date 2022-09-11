@@ -7,6 +7,7 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
+import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,6 +21,7 @@ class Query(val config: Config) : Serviceable, Queryable {
         val service = ConcurrentHashMap<String, Service>()
     }
 
+    @Core
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
         val query: MutableList<Node> = mutableListOf()
         executeAsync(query, condition, serverNodes)
@@ -29,6 +31,7 @@ class Query(val config: Config) : Serviceable, Queryable {
     /**
      * execute multi with kotlin-Coroutine
      */
+    @Core
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
         serverNodes.forEach {
             launch {
@@ -42,7 +45,7 @@ class Query(val config: Config) : Serviceable, Queryable {
     }
 
     @PerformanceOnly
-    fun performance(condition: String ?= null, serverNodes: List<ServerNode>? = null) = runBlocking {
+    fun performance(condition: String? = null, serverNodes: List<ServerNode>? = null) = runBlocking {
 //        serverNodes.forEach {
 //            launch {
 //

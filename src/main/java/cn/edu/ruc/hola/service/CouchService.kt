@@ -5,6 +5,7 @@ import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
+import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import cn.edu.ruc.hola.utils.perform.QuertSq1
 
@@ -19,6 +20,7 @@ class CouchService(sid: String) : AbsService(sid) {
         dbExtension = CouchDbExtension(h)
     }
 
+    @Core
     override suspend fun query(condition: String, db_name: String): Node? {
         return dbExtension.query(condition, db_name)
     }
