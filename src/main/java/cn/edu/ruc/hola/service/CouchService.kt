@@ -18,7 +18,7 @@ class CouchService(sid: String) : AbsService(sid) {
     }
 
     @PerformanceOnly
-    override suspend fun performance(condition: String, db_name: String) {
+    override fun performance(condition: String, db_name: String) {
         val str = QuerySq.query()
         // here
         println(str)

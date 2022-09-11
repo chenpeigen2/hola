@@ -15,5 +15,5 @@ interface Service {
      * performance test only
      */
     @PerformanceOnly
-    suspend fun performance(condition: String, db_name: String)
+    fun performance(condition: String, db_name: String)
 }

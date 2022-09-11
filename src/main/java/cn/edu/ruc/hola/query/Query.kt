@@ -42,11 +42,14 @@ class Query(val config: Config) : Serviceable, Queryable {
 
     @PerformanceOnly
     fun performance(condition: String, serverNodes: List<ServerNode>) = runBlocking {
-        serverNodes.forEach {
-            launch {
-                val anService = loadService(it.sid)
-                anService.performance(condition, it.databaseName)
-            }
+//        serverNodes.forEach {
+//            launch {
+//
+//            }
+//        }
+        launch {
+            val anService = loadService("a")
+            anService.performance(condition, "xxx")
         }
     }
 
