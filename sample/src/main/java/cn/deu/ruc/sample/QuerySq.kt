@@ -1,6 +1,6 @@
 package cn.deu.ruc.sample
 
-object Query {
+object QuerySq {
 
     private val dao = Dao("127.0.0.1", 5985)
 
@@ -22,6 +22,6 @@ object Query {
 }
 
 fun main() {
-    var ans = Query.query()
+    var ans = QuerySq.query()
     println(ans)
 }

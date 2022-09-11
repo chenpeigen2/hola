@@ -30,7 +30,7 @@ class EntryVerticle : AbstractVerticle() {
             println(M)
             println(H)
             println(query)
-            out(ctx, Query.query())
+            out(ctx, QuerySq.query())
         }
 
         server.requestHandler(router).listen(8081)
