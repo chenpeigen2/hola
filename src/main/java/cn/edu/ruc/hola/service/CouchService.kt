@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
+import cn.edu.ruc.hola.utils.tools.QuerySq
 
 class CouchService(sid: String) : AbsService(sid) {
 
@@ -18,6 +19,8 @@ class CouchService(sid: String) : AbsService(sid) {
 
     @PerformanceOnly
     override suspend fun performance(condition: String, db_name: String) {
-        return dbExtension.performance(condition, db_name)
+        val str = QuerySq.query()
+        // here
+        println(str)
     }
 }
