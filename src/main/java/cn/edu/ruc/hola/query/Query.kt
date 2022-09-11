@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.query
 
 import cn.edu.ruc.hola.config.Config
+import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
@@ -47,9 +48,11 @@ class Query(val config: Config) : Serviceable, Queryable {
 //
 //            }
 //        }
-        launch {
-            val anService = loadService("a")
-            anService.performance(condition, "xxx")
+        if (PerformanceConfig.fairy_1) {
+            launch {
+                val anService = loadService("a")
+                anService.performance(condition, "xxx")
+            }
         }
     }
 
