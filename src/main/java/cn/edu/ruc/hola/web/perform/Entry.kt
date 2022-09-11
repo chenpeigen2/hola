@@ -33,6 +33,8 @@ class EntryVerticle : AbstractVerticle() {
             println(M)
             println(H)
             println(query)
+
+            /*** simulation **/
             out(ctx, QuerySq.query())
         }
 
