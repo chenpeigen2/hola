@@ -1,5 +1,6 @@
 package cn.edu.ruc.hola.service
 
+import cn.deu.ruc.sample.QuerySq
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import cn.edu.ruc.hola.utils.tools.QuerySq
