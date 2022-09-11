@@ -37,7 +37,7 @@ open class Exec(protected val config: Config) : Reachable {
     @PerformanceOnly
     open fun performance(condition: String? = null) {
 //        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
-        query.performance(condition)
+        query.performance(condition, null)
     }
 
     /**

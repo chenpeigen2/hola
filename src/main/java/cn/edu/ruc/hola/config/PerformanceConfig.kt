@@ -19,4 +19,7 @@ object PerformanceConfig {
     /** one test only launch one**/
     const val fairy_1 = true
 
+    /** indicate whether we use the sample-method or not */
+    const val useSample = false
+
 }

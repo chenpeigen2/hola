@@ -6,6 +6,7 @@ import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
+import cn.edu.ruc.hola.utils.perform.QuertSq1
 
 class CouchService(sid: String) : AbsService(sid) {
 
@@ -23,8 +24,12 @@ class CouchService(sid: String) : AbsService(sid) {
     }
 
     @PerformanceOnly
-    override fun performance(condition: String?, db_name: String) {
-        val str = QuerySq.query()
+    override suspend fun performance(condition: String?, db_name: String) {
+        val str = if (PerformanceConfig.useSample) {
+            QuerySq.query()
+        } else {
+            QuertSq1.query()
+        }
 
 //        if (PerformanceConfig.STEP == PerformanceConfig.STEP_1) {
         println(str)

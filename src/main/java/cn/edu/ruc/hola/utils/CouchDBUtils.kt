@@ -26,8 +26,10 @@ data class CouchDBUtils(val host: String, private val port: Int) {
 
     private val logger = LoggingUtils.logger()
 
+    /** split from companion object**/
+    private val client = OkHttpClient.Builder().build()
+
     companion object {
-        private val client = OkHttpClient.Builder().build()
 
         private var dbs = ConcurrentHashMap<String, CouchDBUtils>()
 
@@ -44,6 +46,7 @@ data class CouchDBUtils(val host: String, private val port: Int) {
             sdf.timeZone = TimeZone.getTimeZone("GMT") // 设置时区为GMT
         }
     }
+
 
     private var cookie: String? = null
 
