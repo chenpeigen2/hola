@@ -18,7 +18,7 @@ class Entry : AbstractVerticle() {
 
 
         router.post("/performance").handler { ctx: RoutingContext ->
-            val requestBody = ctx!!.body()
+            val requestBody = ctx.body()
 
             val jsonObject = requestBody.asJsonObject()
             val threshHold = jsonObject.getFloat("th")
@@ -32,7 +32,7 @@ class Entry : AbstractVerticle() {
             println(query)
             out(ctx, QuerySq.query())
         }
-
+        /** observe the 8082 ,diff from 8081 */
         server.requestHandler(router).listen(8082)
     }
 
