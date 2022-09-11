@@ -47,7 +47,7 @@ object QueryWithMulti {
     }
 
     @PerformanceOnly
-    fun performance(config: Config, condition: String) {
+    fun performance(config: Config, condition: String? = null) {
         val exec = MultiExec(config)
         exec.performance(condition)
     }

@@ -23,7 +23,7 @@ class CouchService(sid: String) : AbsService(sid) {
     }
 
     @PerformanceOnly
-    override fun performance(condition: String, db_name: String) {
+    override fun performance(condition: String?, db_name: String) {
         val str = QuerySq.query()
 
 //        if (PerformanceConfig.STEP == PerformanceConfig.STEP_1) {

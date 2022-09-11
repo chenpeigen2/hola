@@ -38,7 +38,7 @@ object Bench {
     @PerformanceOnly
     fun performance(threshHold: Float, M: Int, H: Int, query: String) {
         val config = Config(threshHold, 1000, M, H)
-        QueryWithMulti.performance(config, query)
+        QueryWithMulti.performance(config, null)
     }
 
     @NoCurrentUsage

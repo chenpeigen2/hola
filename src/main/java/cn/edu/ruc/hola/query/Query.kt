@@ -42,17 +42,16 @@ class Query(val config: Config) : Serviceable, Queryable {
     }
 
     @PerformanceOnly
-    fun performance(condition: String, serverNodes: List<ServerNode>) = runBlocking {
+    fun performance(condition: String ?= null, serverNodes: List<ServerNode>? = null) = runBlocking {
 //        serverNodes.forEach {
 //            launch {
 //
 //            }
 //        }
-        if (PerformanceConfig.fairy_1) {
-            launch {
-                val anService = loadService("a")
-                anService.performance(condition, "xxx")
-            }
+
+        launch {
+            val anService = loadService("a")
+            anService.performance(condition, "xxx")
         }
     }
 

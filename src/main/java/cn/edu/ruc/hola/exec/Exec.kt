@@ -35,9 +35,9 @@ open class Exec(protected val config: Config) : Reachable {
     }
 
     @PerformanceOnly
-    open fun performance(condition: String) {
-        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
-        query.performance(condition, cutIds)
+    open fun performance(condition: String? = null) {
+//        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
+        query.performance(condition)
     }
 
     /**
@@ -66,7 +66,7 @@ open class Exec(protected val config: Config) : Reachable {
         val results = Results(data, Generations2.evaluate(len, percent, config.M, config.H))
         return Response.SuccessCode(results)
     }
-    
+
     override fun serverNodes(): List<ServerNode> {
         val snods = mutableListOf<ServerNode>()
         ServerHelper.sids.forEach {
