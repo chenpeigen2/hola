@@ -14,12 +14,13 @@ class MultiExec(config: Config) : Exec(config) {
     private val cnt = FakeConfig.count
 
     override fun serverNodes(): List<ServerNode> {
-        val snods = mutableListOf<ServerNode>()
+        if (snodes != null) return snodes as MutableList<ServerNode>
+        snodes = mutableListOf()
         ServerHelper.sids.forEach { sid ->
             repeat(cnt) {
-                snods.add(ServerNode(sid, "${FakeConfig.databaseName}$it"))
+                snodes!!.add(ServerNode(sid, "${FakeConfig.databaseName}$it"))
             }
         }
-        return snods
+        return snodes as MutableList<ServerNode>
     }
 }

@@ -67,7 +67,8 @@ open class Exec(protected val config: Config) : Reachable {
         return Response.SuccessCode(results)
     }
 
-    private var snodes: MutableList<ServerNode>? = null
+    /** make cache for snodes */
+    var snodes: MutableList<ServerNode>? = null
 
     override fun serverNodes(): List<ServerNode> {
         if (snodes != null) return snodes as MutableList<ServerNode>
