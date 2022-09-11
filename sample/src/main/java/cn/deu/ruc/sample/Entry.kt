@@ -17,18 +17,20 @@ class EntryVerticle : AbstractVerticle() {
         router.route().handler(StaticHandler.create())
 
 
-        router.get("/performance").handler { ctx: RoutingContext ->
-//            val requestBody = ctx!!.body()
+        router.post("/performance").handler { ctx: RoutingContext ->
+            val requestBody = ctx!!.body()
 
-//            val jsonObject = requestBody.asJsonObject()
-//            val threshHold = jsonObject.getFloat("th")
-//            val M = jsonObject.getInteger("M")
-//            val H = jsonObject.getInteger("H")
-//            val query = jsonObject.getJsonObject("query")
-//
-//            Bench.performance(threshHold, M, H, query.toString())
-
-            out(ctx, "hello world !!!")
+            val jsonObject = requestBody.asJsonObject()
+            val threshHold = jsonObject.getFloat("th")
+            val M = jsonObject.getInteger("M")
+            val H = jsonObject.getInteger("H")
+            val query = jsonObject.getJsonObject("query")
+            println(jsonObject)
+            println(threshHold)
+            println(M)
+            println(H)
+            println(query)
+            out(ctx, Query.query())
         }
 
         server.requestHandler(router).listen(8081)

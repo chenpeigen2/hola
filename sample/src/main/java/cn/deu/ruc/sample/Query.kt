@@ -4,7 +4,7 @@ object Query {
 
     private val dao = Dao("127.0.0.1", 5985)
 
-    fun query() {
+    fun query(): String {
         val query = """
                    {
                 "selector": {
@@ -14,14 +14,14 @@ object Query {
                 }         
         """.trimIndent()
 
-
         dao.filterDocs("fake0", query).use { res ->
             val result = res.body?.string()
-            println(result)
+            return result!!
         }
     }
 }
 
 fun main() {
-    Query.query()
+    var ans = Query.query()
+    println(ans)
 }
