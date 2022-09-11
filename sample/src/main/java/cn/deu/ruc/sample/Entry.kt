@@ -7,7 +7,7 @@ import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.BodyHandler
 import io.vertx.ext.web.handler.StaticHandler
 
-class EntryVerticle : AbstractVerticle() {
+class Entry : AbstractVerticle() {
     override fun start() {
         super.start()
         val server = vertx.createHttpServer()
@@ -33,7 +33,7 @@ class EntryVerticle : AbstractVerticle() {
             out(ctx, QuerySq.query())
         }
 
-        server.requestHandler(router).listen(8081)
+        server.requestHandler(router).listen(8082)
     }
 
     private fun out(ctx: RoutingContext, msg: String) {
@@ -44,5 +44,5 @@ class EntryVerticle : AbstractVerticle() {
 
 fun main() {
     val vertx = Vertx.vertx()
-    vertx.deployVerticle(EntryVerticle::class.java.name)
+    vertx.deployVerticle(Entry::class.java.name)
 }

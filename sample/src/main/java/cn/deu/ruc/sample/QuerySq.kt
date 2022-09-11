@@ -22,6 +22,6 @@ object QuerySq {
 }
 
 fun main() {
-    var ans = QuerySq.query()
+    val ans = QuerySq.query()
     println(ans)
 }
