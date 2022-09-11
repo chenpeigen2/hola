@@ -36,8 +36,8 @@ open class Exec(protected val config: Config) : Reachable {
 
     @PerformanceOnly
     open fun performance(condition: String? = null) {
-//        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
-        query.performance(condition, null)
+        val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
+        query.performance(condition, cutIds)
     }
 
     /**
@@ -67,12 +67,15 @@ open class Exec(protected val config: Config) : Reachable {
         return Response.SuccessCode(results)
     }
 
+    private var snodes: MutableList<ServerNode>? = null
+
     override fun serverNodes(): List<ServerNode> {
-        val snods = mutableListOf<ServerNode>()
+        if (snodes != null) return snodes as MutableList<ServerNode>
+        snodes = mutableListOf()
         ServerHelper.sids.forEach {
-            snods.add(ServerNode(it, FakeConfig.databaseName))
+            snodes!!.add(ServerNode(it, FakeConfig.databaseName))
         }
-        return snods
+        return snodes as MutableList<ServerNode>
     }
 
     private fun randomChoose(nodes: List<ServerNode>, cnt: Int): List<ServerNode> {
