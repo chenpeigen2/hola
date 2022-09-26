@@ -9,14 +9,20 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public final class LoggingUtils {
+
+    private final static boolean DEBUG = false;
+
     static {
-        File f = new File("./log");
-        if (!f.exists()) f.mkdir();
         logger = Logger.getLogger("hola");
-        env();
+        if (DEBUG) {
+            File f = new File("./log");
+            if (!f.exists()) f.mkdir();
+            env();
+        }
     }
 
     private static void env() {
+        if (DEBUG) return;
         StringBuilder logPath = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         logPath.append("./log/");
@@ -31,7 +37,7 @@ public final class LoggingUtils {
         }
     }
 
-    private static final Logger logger;
+    private final static Logger logger;
 
     public static Logger logger() {
         return logger;
