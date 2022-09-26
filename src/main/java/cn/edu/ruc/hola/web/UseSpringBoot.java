@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * indicate
  */
+@Deprecated
 @Retention(RetentionPolicy.SOURCE)
 public @interface UseSpringBoot {
 }
