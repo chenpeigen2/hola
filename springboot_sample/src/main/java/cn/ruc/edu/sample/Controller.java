@@ -29,6 +29,6 @@ public class Controller {
     @RequestMapping(value = "/performance", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String performance() throws IOException, InterruptedException, ExecutionException {
-        return Query.queryOkhttp();
+        return QuerySq.INSTANCE.query();
     }
 }
