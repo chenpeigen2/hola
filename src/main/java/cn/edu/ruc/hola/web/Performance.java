@@ -11,6 +11,7 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
+@UseSpringBoot
 @PerformanceOnly
 public final class Performance extends AbstractVerticle {
 

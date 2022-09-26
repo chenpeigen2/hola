@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.web;
 import cn.edu.ruc.hola.utils.anno.Core;
 import io.vertx.core.Vertx;
 
+@UseSpringBoot
 public final class Entry {
 
     @Core
