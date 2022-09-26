@@ -4,7 +4,7 @@ import cn.edu.ruc.hola.utils.CouchDBUtils
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 @PerformanceOnly
-object QuertSq1 {
+object SuspendQuertSq {
     private val dao = CouchDBUtils("127.0.0.1", 5985)
 
     suspend fun query(): String {

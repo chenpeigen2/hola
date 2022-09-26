@@ -4,10 +4,9 @@ import cn.deu.ruc.sample.QuerySq
 import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
-import cn.edu.ruc.hola.utils.perform.QuertSq1
+import cn.edu.ruc.hola.utils.perform.SuspendQuertSq
 
 class CouchService(sid: String) : AbsService(sid) {
 
@@ -30,7 +29,7 @@ class CouchService(sid: String) : AbsService(sid) {
         val str = if (PerformanceConfig.useSample) {
             QuerySq.query()
         } else {
-            QuertSq1.query()
+            SuspendQuertSq.query()
         }
 
 //        if (PerformanceConfig.STEP == PerformanceConfig.STEP_1) {
