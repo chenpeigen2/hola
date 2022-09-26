@@ -3,9 +3,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.7.10"
     id("de.qualersoft.jmeter") version "2.3.0"
+    application
     id("org.springframework.boot") version "2.7.4"
     id("io.spring.dependency-management") version "1.0.14.RELEASE"
-    application
+    kotlin("plugin.spring") version "1.6.21"
 }
 
 group = "cn.edu.ruc"
@@ -38,6 +39,11 @@ dependencies {
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("io.vertx:vertx-web:4.3.3")
     implementation(project("sample")) // add sub-sample-project
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.test {
@@ -52,5 +58,10 @@ tasks.withType<JavaCompile> {
 }
 
 tasks.withType<KotlinCompile> {
+    kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
     kotlinOptions.jvmTarget = "17"
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
