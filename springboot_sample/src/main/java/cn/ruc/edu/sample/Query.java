@@ -2,6 +2,7 @@ package cn.ruc.edu.sample;
 
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,5 +30,24 @@ public class Query {
             if (!responses.get(i).getBodyText().equals(responses.get(i + 1).getBodyText())) return "false";
         }
         return responses.get(0).getBodyText();
+    }
+
+    /*** begin what I start **/
+    private final static Dao dao = new Dao("127.0.0.1", 5985);
+
+    public static String queryOkhttp() throws IOException {
+        var query = """
+                           {
+                        "selector": {
+                                "data.countryid": {"${'$'}gt": -1}
+                            },
+                            "execution_stats": true
+                        }
+                """.trim();
+
+        try (var res = dao.filterDocs("fake0", query)) {
+            return res.body().string();
+        }
+
     }
 }

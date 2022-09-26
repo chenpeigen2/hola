@@ -25,4 +25,10 @@ public class Controller {
     public String test1() throws IOException, InterruptedException, ExecutionException {
         return Query.query();
     }
+
+    @RequestMapping(value = "/performance", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    public String performance() throws IOException, InterruptedException, ExecutionException {
+        return Query.queryOkhttp();
+    }
 }
