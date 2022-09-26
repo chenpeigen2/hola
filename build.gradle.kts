@@ -3,6 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.7.10"
     id("de.qualersoft.jmeter") version "2.3.0"
+    id("org.springframework.boot") version "2.7.4"
+    id("io.spring.dependency-management") version "1.0.14.RELEASE"
     application
 }
 
@@ -31,7 +33,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("commons-codec:commons-codec:1.15")
     implementation("com.google.guava:guava:31.1-jre")
-    implementation("net.bytebuddy:byte-buddy:1.12.14")
+    implementation("net.bytebuddy:byte-buddy:1.12.16")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("io.vertx:vertx-web:4.3.3")
