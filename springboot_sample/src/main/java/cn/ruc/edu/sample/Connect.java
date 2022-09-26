@@ -1,4 +1,4 @@
-package cn.ruc.edu;
+package cn.ruc.edu.sample;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

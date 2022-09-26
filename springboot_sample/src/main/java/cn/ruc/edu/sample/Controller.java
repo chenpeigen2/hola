@@ -1,4 +1,4 @@
-package cn.ruc.edu;
+package cn.ruc.edu.sample;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
