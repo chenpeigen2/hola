@@ -23,6 +23,6 @@ public class Controller {
     @RequestMapping(value = "/test1", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String test1() throws IOException, InterruptedException, ExecutionException {
-        return function.query();
+        return Query.query();
     }
 }
