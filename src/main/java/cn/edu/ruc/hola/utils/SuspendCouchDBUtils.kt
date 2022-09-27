@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * change the kotlin run time to IO thread , to finish the Job
  */
-data class CouchDBUtils(val host: String, private val port: Int) {
+data class SuspendCouchDBUtils(val host: String, private val port: Int) {
 
     private val logger = LoggingUtils.logger()
 
@@ -31,11 +31,11 @@ data class CouchDBUtils(val host: String, private val port: Int) {
 
     companion object {
 
-        private var dbs = ConcurrentHashMap<String, CouchDBUtils>()
+        private var dbs = ConcurrentHashMap<String, SuspendCouchDBUtils>()
 
-        fun checkDbUtils(h: Host): CouchDBUtils {
+        fun checkDbUtils(h: Host): SuspendCouchDBUtils {
             return dbs.computeIfAbsent(h.sid) {
-                val u = CouchDBUtils(h.host, h.port)
+                val u = SuspendCouchDBUtils(h.host, h.port)
                 u
             }
         }

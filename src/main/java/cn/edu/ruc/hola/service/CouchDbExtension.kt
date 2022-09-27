@@ -4,10 +4,9 @@ import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
-import cn.edu.ruc.hola.utils.CouchDBUtils
+import cn.edu.ruc.hola.utils.SuspendCouchDBUtils
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
-import kotlin.math.log
 
 /**
  * extension for couch db , for add a default
@@ -16,10 +15,10 @@ import kotlin.math.log
  * for further optimize !
  */
 class CouchDbExtension(host: Host) {
-    private val dbUtils: CouchDBUtils
+    private val dbUtils: SuspendCouchDBUtils
 
     init {
-        dbUtils = CouchDBUtils.checkDbUtils(host)
+        dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
     }
 
     private val gson = ServerHelper.gson
