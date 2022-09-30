@@ -44,6 +44,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("com.google.dagger:dagger:2.43.2")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.43.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
