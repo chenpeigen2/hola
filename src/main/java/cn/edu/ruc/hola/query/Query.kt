@@ -21,7 +21,7 @@ class Query(val config: Config) : Serviceable, Queryable {
         val service = ConcurrentHashMap<String, Service>()
     }
 
-    private val shouldUseFuture = true
+    private val shouldUseFuture = false
 
     @Core
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
