@@ -12,6 +12,7 @@ import cn.edu.ruc.hola.query.Query
 import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
+import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 open class Exec(protected val config: Config) : Reachable {
@@ -28,6 +29,7 @@ open class Exec(protected val config: Config) : Reachable {
     /**
      * the core method
      */
+    @Core
     open fun partition(condition: String): Response? {
         val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
         val queries = query.query(condition, cutIds)

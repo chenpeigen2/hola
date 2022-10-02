@@ -10,11 +10,11 @@ import java.util.logging.SimpleFormatter;
 
 public final class LoggingUtils {
 
-    private final static boolean DEBUG = false;
+    private final static boolean enabled = Debug.enabled;
 
     static {
         logger = Logger.getLogger("hola");
-        if (DEBUG) {
+        if (enabled) {
             File f = new File("./log");
             if (!f.exists()) f.mkdir();
             env();
@@ -22,7 +22,6 @@ public final class LoggingUtils {
     }
 
     private static void env() {
-        if (DEBUG) return;
         StringBuilder logPath = new StringBuilder();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         logPath.append("./log/");

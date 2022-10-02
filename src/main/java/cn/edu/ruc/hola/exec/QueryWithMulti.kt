@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.exec
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.entity.Response
+import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 /**
@@ -30,6 +31,7 @@ object QueryWithMulti {
     /**
      * the entry method , core method
      */
+    @Core
     fun queryWithTry(config: Config, condition: String): Response? {
         for (i in 0 until RetryCnt) {
             val res = query(config, condition)
@@ -41,6 +43,7 @@ object QueryWithMulti {
         return null
     }
 
+    @Core
     fun query(config: Config, condition: String): Response {
         val exec = MultiExec(config)
         return exec.partition(condition)!!

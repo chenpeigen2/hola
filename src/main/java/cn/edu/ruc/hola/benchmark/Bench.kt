@@ -29,7 +29,7 @@ object Bench {
     }
 
     @Core
-    fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? {
+    fun execute(threshHold: Float, M: Int, H: Int, query: String): Response? {
         val config = Config(threshHold, 1000, M, H)
         if (Debug.enabled) {
             logger.info(config.toString())
@@ -44,6 +44,7 @@ object Bench {
         QueryWithMulti.performance(config, null)
     }
 
+    @Deprecated("deprecate")
     @NoCurrentUsage
     fun executeSync(cnt: Int = 1): Inspect {
 

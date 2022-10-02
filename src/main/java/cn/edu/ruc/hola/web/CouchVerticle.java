@@ -59,7 +59,7 @@ public final class CouchVerticle extends AbstractVerticle {
         int H = Integer.parseInt(request.getParam("H"));
         String query = request.getParam("query");
 
-        Response response = Bench.INSTANCE.basicExecute(threshHold, M, H, query);
+        Response response = Bench.INSTANCE.execute(threshHold, M, H, query);
         out(ctx, json.toJson(response));
     }
 
@@ -73,7 +73,7 @@ public final class CouchVerticle extends AbstractVerticle {
         int H = jsonObject.getInteger("H");
         var query = jsonObject.getJsonObject("query");
 
-        Response response = Bench.INSTANCE.basicExecute(threshHold, M, H, query.toString());
+        Response response = Bench.INSTANCE.execute(threshHold, M, H, query.toString());
         out(ctx, json.toJson(response));
     }
 
