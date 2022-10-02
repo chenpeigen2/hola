@@ -31,7 +31,7 @@ open class Exec(protected val config: Config) : Reachable {
      * the core method
      */
     @Core
-    open fun partition(condition: String): Response? {
+    open fun exe(condition: String): Response? {
         val cutIds: List<ServerNode> = randomChoose(serverNodes(), queryConfig.m)
         val queries = query.query(condition, cutIds)
         return analyze(queries)
