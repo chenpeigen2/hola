@@ -6,14 +6,19 @@ import okhttp3.Response;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * callback that implements the future
  */
 public final class OkHttpResponseFuture implements Callback {
 
-    public final CompletableFuture<Response> future = new CompletableFuture<>();
+    private final String condition;
+    public final ExecutableFuture future;
+
+    public OkHttpResponseFuture(String condition) {
+        this.condition = condition;
+        future = new ExecutableFuture(condition);
+    }
 
     @Override
     public void onFailure(@NotNull Call call, @NotNull IOException e) {

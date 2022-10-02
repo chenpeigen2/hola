@@ -1,12 +1,12 @@
 package cn.edu.ruc.hola.query
 
 import cn.edu.ruc.hola.config.Config
-import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.config.ServerNode
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
+import cn.edu.ruc.hola.utils.ExecutableFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import kotlinx.coroutines.launch
@@ -21,10 +21,16 @@ class Query(val config: Config) : Serviceable, Queryable {
         val service = ConcurrentHashMap<String, Service>()
     }
 
+    private val shouldUseFuture = true
+
     @Core
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
-        val query: MutableList<Node> = mutableListOf()
-        executeAsync(query, condition, serverNodes)
+        val query: MutableList<Node> = mutableListOf() // make sure it is thread safe ???
+        if (shouldUseFuture) {
+            executeFutureAsync(query, condition, serverNodes)
+        } else {
+            executeAsync(query, condition, serverNodes)
+        }
         return query
     }
 
@@ -46,10 +52,14 @@ class Query(val config: Config) : Serviceable, Queryable {
 
     @Core
     private fun executeFutureAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) {
+        val list = ArrayList<ExecutableFuture>()
         serverNodes.forEach {
             val anService = loadService(it.sid)
             val okHttpResponseFuture = anService.queryAsync(condition, it.databaseName)
-
+            list.add(okHttpResponseFuture.future)
+        }
+        list.forEach {
+            query.add(it.getNode())
         }
     }
 
