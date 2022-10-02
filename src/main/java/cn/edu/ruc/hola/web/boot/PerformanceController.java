@@ -1,7 +1,6 @@
 package cn.edu.ruc.hola.web.boot;
 
 import cn.edu.ruc.hola.benchmark.Bench;
-import cn.edu.ruc.hola.entity.Response;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
