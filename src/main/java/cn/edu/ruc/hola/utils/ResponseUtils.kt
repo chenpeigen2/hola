@@ -9,7 +9,7 @@ object ResponseUtils {
     private val gson = ServerHelper.gson
 
     fun toNode(condition: String, res: Response): Node? {
-        res.body?.let {
+        res.body?.use {
             val filterDocs: FilterDocs =
                 gson.fromJson(
                     it.string(),
