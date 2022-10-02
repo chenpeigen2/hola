@@ -4,6 +4,8 @@ import cn.deu.ruc.sample.QuerySq
 import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.utils.Debug
+import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
@@ -14,6 +16,10 @@ class CouchService(sid: String) : AbsService(sid) {
     private val dbExtension: CouchDbExtension
 
     private val gson = ServerHelper.gson
+
+    companion object {
+        private val logger = LoggingUtils.logger()
+    }
 
     init {
         val h = getHost(sid) ?: throw RuntimeException("host is null")
@@ -37,9 +43,12 @@ class CouchService(sid: String) : AbsService(sid) {
         } else {
             SuspendQuertSq.query()
         }
+        if (Debug.enabled) {
+            logger.info(str)
+        }
 
 //        if (PerformanceConfig.STEP == PerformanceConfig.STEP_1) {
-        println(str)
+
 //        }
 
 //        if (PerformanceConfig.STEP == PerformanceConfig.STEP_2) {
