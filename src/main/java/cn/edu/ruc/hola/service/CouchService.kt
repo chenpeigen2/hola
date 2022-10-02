@@ -4,6 +4,7 @@ import cn.deu.ruc.sample.QuerySq
 import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.utils.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import cn.edu.ruc.hola.utils.perform.SuspendQuertSq
@@ -22,6 +23,11 @@ class CouchService(sid: String) : AbsService(sid) {
     @Core
     override suspend fun query(condition: String, db_name: String): Node? {
         return dbExtension.query(condition, db_name)
+    }
+
+    @Core
+    override fun queryAsync(condition: String, db_name: String): OkHttpResponseFuture {
+        return dbExtension.queryAsync(condition, db_name)
     }
 
     @PerformanceOnly

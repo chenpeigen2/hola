@@ -4,6 +4,8 @@ import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
+import cn.edu.ruc.hola.utils.AsyncCouchDBUtils
+import cn.edu.ruc.hola.utils.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.SuspendCouchDBUtils
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
@@ -16,9 +18,11 @@ import cn.edu.ruc.hola.utils.anno.PerformanceOnly
  */
 class CouchDbExtension(host: Host) {
     private val dbUtils: SuspendCouchDBUtils
+    private val asyncDbUtils: AsyncCouchDBUtils
 
     init {
         dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+        asyncDbUtils = AsyncCouchDBUtils.checkDbUtils(host)
     }
 
     private val gson = ServerHelper.gson
@@ -47,6 +51,13 @@ class CouchDbExtension(host: Host) {
             }
         }
         return node
+    }
+
+    @Core
+    fun queryAsync(condition: String, db_name: String): OkHttpResponseFuture {
+        val responseFuture = OkHttpResponseFuture()
+        asyncDbUtils.filterDocs(db_name, condition, responseFuture)
+        return responseFuture
     }
 
     @PerformanceOnly

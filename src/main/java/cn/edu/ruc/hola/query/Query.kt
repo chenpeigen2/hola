@@ -44,6 +44,15 @@ class Query(val config: Config) : Serviceable, Queryable {
         }
     }
 
+    @Core
+    private fun executeFutureAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) {
+        serverNodes.forEach {
+            val anService = loadService(it.sid)
+            val okHttpResponseFuture = anService.queryAsync(condition, it.databaseName)
+
+        }
+    }
+
     @PerformanceOnly
     fun performance(condition: String? = null, serverNodes: List<ServerNode>? = null) = runBlocking {
 //        serverNodes.forEach {
