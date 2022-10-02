@@ -23,6 +23,8 @@ class Query(val config: Config) : Serviceable, Queryable {
 
     private val shouldUseFuture = false
 
+    private val replaceWithPerformance = false
+
     @Core
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
         val query: MutableList<Node> = mutableListOf() // make sure it is thread safe ???
@@ -39,12 +41,16 @@ class Query(val config: Config) : Serviceable, Queryable {
      */
     @Core
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
-        serverNodes.forEach {
-            launch {
-                val anService = loadService(it.sid)
-                val node = anService.query(condition, it.databaseName)
-                node?.let {
-                    query.add(it)
+        if (replaceWithPerformance) {
+            performance()
+        } else {
+            serverNodes.forEach {
+                launch {
+                    val anService = loadService(it.sid)
+                    val node = anService.query(condition, it.databaseName)
+                    node?.let {
+                        query.add(it)
+                    }
                 }
             }
         }
