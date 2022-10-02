@@ -3,6 +3,7 @@ package cn.edu.ruc.hola.benchmark
 import cn.edu.ruc.hola.config.Config
 import cn.edu.ruc.hola.entity.Response
 import cn.edu.ruc.hola.exec.QueryWithMulti
+import cn.edu.ruc.hola.utils.Debug
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.anno.NoCurrentUsage
 import cn.edu.ruc.hola.utils.QuickQueue
@@ -30,9 +31,11 @@ object Bench {
     @Core
     fun basicExecute(threshHold: Float, M: Int, H: Int, query: String): Response? {
         val config = Config(threshHold, 1000, M, H)
-        logger.info(config.toString())
-        logger.info(query)
-        return QueryWithMulti.queryWithTry(config, query)
+        if (Debug.enabled) {
+            logger.info(config.toString())
+            logger.info(query)
+        }
+        return QueryWithMulti.query(config, query)
     }
 
     @PerformanceOnly
