@@ -65,15 +65,12 @@ public final class CouchVerticle extends AbstractVerticle {
 
     @Core
     private void postQuery(RoutingContext ctx) {
-        RequestBody requestBody = ctx.body();
+        float threshHold = 0.95f;
+        int M = 100;
+        int H = 67;
+        var query = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}},\"execution_stats\":true}";
 
-        JsonObject jsonObject = requestBody.asJsonObject();
-        float threshHold = jsonObject.getFloat("th");
-        int M = jsonObject.getInteger("M");
-        int H = jsonObject.getInteger("H");
-        var query = jsonObject.getJsonObject("query");
-
-        Response response = Bench.INSTANCE.execute(threshHold, M, H, query.toString());
+        Response response = Bench.INSTANCE.execute(threshHold, M, H, query);
         out(ctx, json.toJson(response));
     }
 
