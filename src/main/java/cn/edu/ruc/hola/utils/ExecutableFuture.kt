@@ -5,7 +5,7 @@ import okhttp3.Response
 import java.util.concurrent.CompletableFuture
 
 class ExecutableFuture(private val condition: String) : CompletableFuture<Response>() {
-    fun getNode(): Node {
+    fun getNode(): Node? {
         val response = get()
         return ResponseUtils.toNode(condition, response)
     }

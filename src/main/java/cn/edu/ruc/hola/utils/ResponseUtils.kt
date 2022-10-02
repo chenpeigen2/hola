@@ -8,8 +8,8 @@ import okhttp3.Response
 object ResponseUtils {
     private val gson = ServerHelper.gson
 
-    fun toNode(condition: String, res: Response): Node {
-        res.body!!.let {
+    fun toNode(condition: String, res: Response): Node? {
+        res.body?.let {
             val filterDocs: FilterDocs =
                 gson.fromJson(
                     it.string(),
@@ -24,5 +24,6 @@ object ResponseUtils {
 
             return Node(condition, data)
         }
+        return null
     }
 }

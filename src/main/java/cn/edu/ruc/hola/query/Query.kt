@@ -59,7 +59,10 @@ class Query(val config: Config) : Serviceable, Queryable {
             list.add(okHttpResponseFuture.future)
         }
         list.forEach {
-            query.add(it.getNode())
+            val node = it.getNode()
+            if (node != null) {
+                query.add(node)
+            }
         }
     }
 
