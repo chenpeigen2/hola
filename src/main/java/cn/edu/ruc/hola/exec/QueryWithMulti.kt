@@ -35,7 +35,7 @@ object QueryWithMulti {
     fun queryWithTry(config: Config, condition: String): Response? {
         for (i in 0 until RetryCnt) {
             val res = query(config, condition)
-            if (Response.SUCCESS_CODE == res.code) {
+            if (res != null && Response.SUCCESS_CODE == res.code) {
                 logger.info("=========$i=========")
                 return res
             }
@@ -44,9 +44,9 @@ object QueryWithMulti {
     }
 
     @Core
-    fun query(config: Config, condition: String): Response {
+    fun query(config: Config, condition: String): Response? {
         val exec = MultiExec(config)
-        return exec.partition(condition)!!
+        return exec.partition(condition)
     }
 
     @PerformanceOnly
