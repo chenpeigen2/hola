@@ -9,6 +9,7 @@ import cn.edu.ruc.hola.entity.Response
 import cn.edu.ruc.hola.entity.Results
 import cn.edu.ruc.hola.fake.FakeConfig
 import cn.edu.ruc.hola.query.Query
+import cn.edu.ruc.hola.utils.Debug
 import cn.edu.ruc.hola.utils.Generations2
 import cn.edu.ruc.hola.utils.LoggingUtils
 import cn.edu.ruc.hola.utils.QuickQueue
@@ -60,8 +61,10 @@ open class Exec(protected val config: Config) : Reachable {
         if (percent < 0.5f) {
             return Response.ErrorCode()
         }
-        logger.info("maxCnt = $maxCnt, len = $len , percent = $percent")
-        logger.info(queryConfig.toString())
+        if (Debug.enabled) {
+            logger.info("maxCnt = $maxCnt, len = $len , percent = $percent")
+            logger.info(queryConfig.toString())
+        }
         if (percent < queryConfig.λ) {
             return Response.WeakErrorCode()
         }

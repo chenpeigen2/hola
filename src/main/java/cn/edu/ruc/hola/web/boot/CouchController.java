@@ -34,6 +34,6 @@ public class CouchController {
         int M = 100;
         int H = 67;
         var query = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}},\"execution_stats\":true}";
-        return Bench.INSTANCE.basicExecute(threshHold, M, H, query);
+        return Bench.INSTANCE.execute(threshHold, M, H, query);
     }
 }
