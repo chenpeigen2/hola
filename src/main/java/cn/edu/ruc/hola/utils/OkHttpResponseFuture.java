@@ -23,10 +23,15 @@ public final class OkHttpResponseFuture implements Callback {
     @Override
     public void onFailure(@NotNull Call call, @NotNull IOException e) {
         future.completeExceptionally(e);
+        call.cancel();
     }
 
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        future.complete(response);
+        try {
+            future.complete(response);
+        } finally {
+            response.close();
+        }
     }
 }
