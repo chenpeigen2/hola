@@ -6,7 +6,7 @@ import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.Debug
 import cn.edu.ruc.hola.utils.LoggingUtils
-import cn.edu.ruc.hola.utils.OkHttpResponseFuture
+import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import cn.edu.ruc.hola.utils.perform.SuspendQuertSq

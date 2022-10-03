@@ -1,7 +1,8 @@
-package cn.edu.ruc.hola.utils
+package cn.edu.ruc.hola.utils.okhttp
 
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.fake.FakeConfig
+import cn.edu.ruc.hola.utils.LoggingUtils
 import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType

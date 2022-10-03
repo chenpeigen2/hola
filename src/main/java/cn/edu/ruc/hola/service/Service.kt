@@ -1,7 +1,7 @@
 package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.utils.OkHttpResponseFuture
+import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 interface Service {

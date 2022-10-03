@@ -6,7 +6,7 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
-import cn.edu.ruc.hola.utils.ExecutableFuture
+import cn.edu.ruc.hola.utils.okhttp.ExecutableFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 import kotlinx.coroutines.launch

@@ -2,10 +2,10 @@ package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.utils.AsyncCouchDBUtils
-import cn.edu.ruc.hola.utils.OkHttpResponseFuture
-import cn.edu.ruc.hola.utils.ResponseUtils
-import cn.edu.ruc.hola.utils.SuspendCouchDBUtils
+import cn.edu.ruc.hola.utils.okhttp.AsyncCouchDBUtils
+import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
+import cn.edu.ruc.hola.utils.okhttp.ResponseUtils
+import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 

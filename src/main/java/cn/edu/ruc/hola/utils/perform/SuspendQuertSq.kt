@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.utils.perform
 
-import cn.edu.ruc.hola.utils.SuspendCouchDBUtils
+import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
 
 @PerformanceOnly

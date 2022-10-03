@@ -1,4 +1,4 @@
-package cn.edu.ruc.hola.utils
+package cn.edu.ruc.hola.utils.okhttp
 
 import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node

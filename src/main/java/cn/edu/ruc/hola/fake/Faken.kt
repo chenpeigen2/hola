@@ -3,7 +3,7 @@ package cn.edu.ruc.hola.fake
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
-import cn.edu.ruc.hola.utils.SuspendCouchDBUtils
+import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
 import cn.edu.ruc.hola.config.ServerHelper
 import kotlinx.coroutines.runBlocking
 import java.util.logging.Logger
