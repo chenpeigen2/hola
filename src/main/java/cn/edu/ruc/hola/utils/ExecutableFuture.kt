@@ -7,6 +7,9 @@ import java.util.concurrent.CompletableFuture
 class ExecutableFuture(private val condition: String) : CompletableFuture<Response>() {
     fun getNode(): Node? {
         val response = get()
-        return ResponseUtils.toNode(condition, response)
+        response?.use {
+            return ResponseUtils.toNode(condition, response)
+        }
+        return null
     }
 }
