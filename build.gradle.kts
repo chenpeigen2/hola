@@ -47,6 +47,7 @@ dependencies {
     implementation("com.google.dagger:dagger:2.43.2")
     annotationProcessor("com.google.dagger:dagger-compiler:2.43.2")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.1.3")
 }
 
 tasks.test {
