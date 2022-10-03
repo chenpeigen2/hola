@@ -6,6 +6,7 @@ import okhttp3.*
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -24,7 +25,9 @@ data class AsyncCouchDBUtils(val host: String, private val port: Int) {
 
     companion object {
 
-        private val client = OkHttpClient.Builder().build()
+        private val client = OkHttpClient.Builder()
+            .cache(Cache(File("./cachedir"), 10 * 1024 * 1024))
+            .build()
 
         private var dbs = ConcurrentHashMap<String, AsyncCouchDBUtils>()
 

@@ -29,7 +29,9 @@ data class SuspendCouchDBUtils(val host: String, private val port: Int) {
 
         private var dbs = ConcurrentHashMap<String, SuspendCouchDBUtils>()
 
-        private val client = OkHttpClient.Builder().build()
+        private val client = OkHttpClient.Builder()
+            .cache(Cache(File("./cachedir"), 10 * 1024 * 1024))
+            .build()
 
         fun checkDbUtils(h: Host): SuspendCouchDBUtils {
             return dbs.computeIfAbsent(h.sid) {
