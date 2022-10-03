@@ -28,10 +28,8 @@ public final class OkHttpResponseFuture implements Callback {
 
     @Override
     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-        try {
+        try (response) {
             future.complete(response);
-        } finally {
-            response.close();
         }
     }
 }
