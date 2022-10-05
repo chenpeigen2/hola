@@ -19,12 +19,12 @@ import cn.edu.ruc.hola.utils.httpcient.CouchDbUtils
 class CouchDbExtension(host: Host) {
     private val dbUtils: SuspendCouchDBUtils
     private val asyncDbUtils: AsyncCouchDBUtils
-    private val dbUtilsClient: CouchDbUtils
+//    private val dbUtilsClient: CouchDbUtils
 
     init {
         dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
         asyncDbUtils = AsyncCouchDBUtils.checkDbUtils(host)
-        dbUtilsClient = CouchDbUtils.checkDbUtils(host)
+//        dbUtilsClient = CouchDbUtils.checkDbUtils(host)
     }
 
     /**
@@ -48,7 +48,7 @@ class CouchDbExtension(host: Host) {
 
     @Core
     fun queryWithClient(condition: String, db_name: String) {
-        val responseFuture = dbUtilsClient.filterDocs(db_name, condition)
+//        val responseFuture = dbUtilsClient.filterDocs(db_name, condition)
     }
 
     @PerformanceOnly
