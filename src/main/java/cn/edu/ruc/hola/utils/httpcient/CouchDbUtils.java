@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.utils.httpcient;
 
 import cn.edu.ruc.hola.config.Host;
 import cn.edu.ruc.hola.fake.FakeConfig;
+import com.google.gson.JsonObject;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.async.methods.SimpleRequestBuilder;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -15,6 +16,7 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.Header;
 import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.reactor.IOReactorConfig;
@@ -32,7 +34,10 @@ import java.util.concurrent.Future;
 
 /**
  * impl for okhttp client5
+ *
+ * https://www.wdbyte.com/tool/httpclient5.html#httpclient-5-post-%E8%AF%B7%E6%B1%82
  */
+@Deprecated
 public final class CouchDbUtils {
 
     private final String host;
@@ -92,9 +97,13 @@ public final class CouchDbUtils {
             URI uri = getBseURI().appendPath("_session").build();
             HttpPost httpPost = new HttpPost(uri);
             List<NameValuePair> parms = new ArrayList<>();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("name", FakeConfig.name);
+            jsonObject.addProperty("password", FakeConfig.password);
+            StringEntity entity = new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON);
             parms.add(new BasicNameValuePair("name", FakeConfig.name));
             parms.add(new BasicNameValuePair("password", FakeConfig.password));
-            httpPost.setEntity(new UrlEncodedFormEntity(parms));
+            httpPost.setEntity(entity);
 
             Future<SimpleHttpResponse> auth = client.execute(SimpleRequestBuilder.copy(httpPost).build(), new FutureCallback<SimpleHttpResponse>() {
                 @Override
