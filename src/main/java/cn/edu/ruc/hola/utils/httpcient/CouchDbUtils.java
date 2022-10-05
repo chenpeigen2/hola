@@ -6,38 +6,44 @@ import com.google.gson.JsonObject;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.async.methods.SimpleRequestBuilder;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.cookie.BasicCookieStore;
+import org.apache.hc.client5.http.cookie.Cookie;
+import org.apache.hc.client5.http.cookie.CookieStore;
 import org.apache.hc.client5.http.impl.DefaultConnectionKeepAliveStrategy;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
 import org.apache.hc.client5.http.impl.async.HttpAsyncClients;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
-import org.apache.hc.core5.concurrent.FutureCallback;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
 import org.apache.hc.core5.http.ContentType;
-import org.apache.hc.core5.http.Header;
-import org.apache.hc.core5.http.NameValuePair;
-import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
-import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.reactor.IOReactorConfig;
 import org.apache.hc.core5.util.Timeout;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
  * impl for okhttp client5
- *
+ * <p>
  * https://www.wdbyte.com/tool/httpclient5.html#httpclient-5-post-%E8%AF%B7%E6%B1%82
  */
-@Deprecated
 public final class CouchDbUtils {
 
     private final String host;
@@ -71,106 +77,111 @@ public final class CouchDbUtils {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 
-    /**
-     * init the cookie
-     **/
-    private String mCookie = null;
-
-    private Map<String, String> m = new HashMap<>();
-
-    {
-        m.put("Accept", "application/json");
-        m.put("Content-Type", "application/json");
-    }
-
     private URIBuilder getBseURI() {
         return new URIBuilder().setScheme("http").setHost(host)
                 .setPort(port);
     }
 
-    private volatile boolean isAuthed = false;
-
-
-    private void auth() {
-        client.start();
-        try {
-            URI uri = getBseURI().appendPath("_session").build();
-            HttpPost httpPost = new HttpPost(uri);
-            List<NameValuePair> parms = new ArrayList<>();
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("name", FakeConfig.name);
-            jsonObject.addProperty("password", FakeConfig.password);
-            StringEntity entity = new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON);
-            parms.add(new BasicNameValuePair("name", FakeConfig.name));
-            parms.add(new BasicNameValuePair("password", FakeConfig.password));
-            httpPost.setEntity(entity);
-
-            Future<SimpleHttpResponse> auth = client.execute(SimpleRequestBuilder.copy(httpPost).build(), new FutureCallback<SimpleHttpResponse>() {
-                @Override
-                public void completed(SimpleHttpResponse result) {
-
-                }
-
-                @Override
-                public void failed(Exception ex) {
-
-                }
-
-                @Override
-                public void cancelled() {
-
-                }
-            });
-
-            SimpleHttpResponse response = auth.get();
-
-            Header[] cookieList = response.getHeaders("Set-Cookie");
-            Header cookie = cookieList[0];
-            if (cookie != null) {
-                String str = cookie.toString();
-                mCookie = str;
-                m.put("Cookie", str);
-            }
-
-        } catch (URISyntaxException | ExecutionException | InterruptedException e) {
+    public Future<SimpleHttpResponse> filterDocAsync(String db_name, String filter) {
+        if (isExpired()) auth();
+        try (CloseableHttpAsyncClient httpclient = client) {
+            httpclient.start();
+            URI uri = getBseURI()
+                    .appendPath(db_name)
+                    .appendPath("_find")
+                    .build();
+            var simpleHttpRequest = SimpleRequestBuilder.post(uri).build();
+            simpleHttpRequest.setBody(filter, ContentType.APPLICATION_JSON);
+            return httpclient.execute(simpleHttpRequest, localContext, null);
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private boolean isExpired() {
-        return false;
-    }
 
     public Future<SimpleHttpResponse> filterDocs(String db_name, String filter) {
         client.start();
-        if (!isAuthed) auth();
+        if (isExpired()) auth();
         try {
             URI uri = getBseURI()
                     .appendPath(db_name)
                     .appendPath("_find")
                     .build();
             HttpPost httpPost = new HttpPost(uri);
-            m.forEach(httpPost::setHeader);
-            ByteArrayEntity entity;
-            entity = new ByteArrayEntity(filter.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_JSON);
-            httpPost.setEntity(entity);
-            return client.execute(SimpleRequestBuilder.copy(httpPost).build(), new FutureCallback<SimpleHttpResponse>() {
-                @Override
-                public void completed(SimpleHttpResponse result) {
-
+            httpPost.setEntity(new StringEntity(filter
+                    , ContentType.APPLICATION_JSON));
+            try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+                try (CloseableHttpResponse response = httpclient.execute(httpPost, localContext)) {
+                    HttpEntity entity = response.getEntity();
+                    // 获取响应信息
+                    var resultContent = EntityUtils.toString(entity);
+                    System.out.println(resultContent);
+                } catch (org.apache.hc.core5.http.ParseException e) {
+                    throw new RuntimeException(e);
                 }
-
-                @Override
-                public void failed(Exception ex) {
-                }
-
-                @Override
-                public void cancelled() {
-
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    final HttpClientContext localContext = HttpClientContext.create();
+
+    private long expiresTime = -1L;
+
+    private boolean isExpired() {
+        if (expiresTime == -1) return true;
+        return expiresTime <= new Date().getTime();
+    }
+
+    public void auth() {
+        HttpPost httpPost;
+        final CookieStore cookieStore = new BasicCookieStore();
+        localContext.setCookieStore(cookieStore);
+        try {
+            httpPost = new HttpPost(getBseURI().appendPath("_session").build());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("name", FakeConfig.name);
+            jsonObject.addProperty("password", FakeConfig.password);
+            httpPost.setEntity(new StringEntity(jsonObject.toString()
+                    , ContentType.APPLICATION_JSON));
+            try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
+                try (CloseableHttpResponse response = httpclient.execute(httpPost, localContext)) {
+                    final List<Cookie> cookies = cookieStore.getCookies();
+                    Cookie cookie = cookies.get(0);
+                    expiresTime = sdf.parse(cookie.getAttribute("expires")).getTime();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * test impl for httpclient5
+     */
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        var couchDbUtils = new CouchDbUtils("127.0.0.1", 5985);
+        var query = """
+                {
+                  "selector": {
+                    "data.countryid": {
+                      "$gt": -1
+                    }
+                  },
+                  "execution_stats": true
+                }
+                """;
+        var ccc = couchDbUtils.filterDocAsync("fake0", query);
+        System.out.println(ccc.get().getBodyText());
     }
 }
