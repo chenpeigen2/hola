@@ -69,7 +69,7 @@ public final class CouchDbUtils {
     /**
      * init the cookie
      **/
-    private String cookie = null;
+    private String mCookie = null;
 
     private Map<String, String> m = new HashMap<>();
 
@@ -119,6 +119,7 @@ public final class CouchDbUtils {
             Header cookie = cookieList[0];
             if (cookie != null) {
                 String str = cookie.toString();
+                mCookie = str;
                 m.put("Cookie", str);
             }
 
@@ -140,6 +141,7 @@ public final class CouchDbUtils {
                     .appendPath("_find")
                     .build();
             HttpPost httpPost = new HttpPost(uri);
+            m.forEach(httpPost::setHeader);
             ByteArrayEntity entity;
             entity = new ByteArrayEntity(filter.getBytes(StandardCharsets.UTF_8), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
