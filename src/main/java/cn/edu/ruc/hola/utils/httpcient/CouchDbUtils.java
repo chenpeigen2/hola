@@ -99,7 +99,7 @@ public final class CouchDbUtils {
     }
 
 
-    public Future<SimpleHttpResponse> filterDocs(String db_name, String filter) {
+    public String filterDocs(String db_name, String filter) {
         client.start();
         if (isExpired()) auth();
         try {
@@ -114,8 +114,7 @@ public final class CouchDbUtils {
                 try (CloseableHttpResponse response = httpclient.execute(httpPost, localContext)) {
                     HttpEntity entity = response.getEntity();
                     // 获取响应信息
-                    var resultContent = EntityUtils.toString(entity);
-                    System.out.println(resultContent);
+                    return EntityUtils.toString(entity);
                 } catch (org.apache.hc.core5.http.ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -181,7 +180,7 @@ public final class CouchDbUtils {
                   "execution_stats": true
                 }
                 """;
-        var ccc = couchDbUtils.filterDocAsync("fake0", query);
-        System.out.println(ccc.get().getBodyText());
+        var ccc = couchDbUtils.filterDocs("fake0", query);
+        System.out.println(ccc);
     }
 }
