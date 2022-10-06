@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.20"
 }
 
 group = "cn.edu.ruc"
@@ -12,7 +12,7 @@ repositories {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
-    implementation("io.vertx:vertx-web:4.3.3")
+    implementation("io.vertx:vertx-web:4.3.4")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 

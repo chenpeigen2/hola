@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.7.20"
     id("de.qualersoft.jmeter") version "2.3.0"
     application
     id("org.springframework.boot") version "2.7.4"
@@ -38,7 +38,7 @@ dependencies {
     implementation("net.bytebuddy:byte-buddy:1.12.16")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("io.vertx:vertx-web:4.3.3")
+    implementation("io.vertx:vertx-web:4.3.4")
     implementation(project("sample")) // add sub-sample-project
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
