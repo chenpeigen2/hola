@@ -28,6 +28,9 @@ object Bench {
         return q.maxKey
     }
 
+    /**
+     * entry
+     */
     @Core
     fun execute(threshHold: Float, M: Int, H: Int, query: String): Response? {
         val config = Config(threshHold, 1000, M, H)
