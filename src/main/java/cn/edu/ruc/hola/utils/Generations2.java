@@ -3,9 +3,9 @@ package cn.edu.ruc.hola.utils;
 import cn.edu.ruc.hola.config.QueryConfig;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * private static final int M; // 区块链节点数量
@@ -17,7 +17,7 @@ public final class Generations2 {
     private Generations2() {
     }
 
-    private static final Map<Integer, ConfigCache> cacheMap = new HashMap<>();
+    private static final Map<Integer, ConfigCache> cacheMap = new ConcurrentHashMap<>();
 
     private static int hash(float threshHolder, int M, int H) {
         return Objects.hash(threshHolder, M, H);

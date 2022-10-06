@@ -25,7 +25,7 @@ class Query(val config: Config) : Serviceable, Queryable {
         val service = ConcurrentHashMap<String, Service>()
     }
 
-    private val shouldUseFuture = false
+    private val shouldUseFuture = true
 
     private val replaceWithPerformance = false
 

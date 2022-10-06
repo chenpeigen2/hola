@@ -84,8 +84,9 @@ public final class CouchDbUtils {
 
     public Future<SimpleHttpResponse> filterDocAsync(String db_name, String filter) {
         if (isExpired()) auth();
-        try (CloseableHttpAsyncClient httpclient = client) {
-            httpclient.start();
+        CloseableHttpAsyncClient httpclient = client;
+        httpclient.start();
+        try {
             URI uri = getBseURI()
                     .appendPath(db_name)
                     .appendPath("_find")
@@ -93,11 +94,11 @@ public final class CouchDbUtils {
             var simpleHttpRequest = SimpleRequestBuilder.post(uri).build();
             simpleHttpRequest.setBody(filter, ContentType.APPLICATION_JSON);
             return httpclient.execute(simpleHttpRequest, localContext, null);
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
+        return null;
     }
-
 
     public String filterDocs(String db_name, String filter) {
         client.start();
@@ -116,28 +117,33 @@ public final class CouchDbUtils {
                     // 获取响应信息
                     return EntityUtils.toString(entity);
                 } catch (org.apache.hc.core5.http.ParseException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return null;
     }
 
 
     final HttpClientContext localContext = HttpClientContext.create();
 
-    private long expiresTime = -1L;
+    private volatile long expiresTime = -1L;
 
-    private boolean isExpired() {
+    private synchronized boolean isExpired() {
         if (expiresTime == -1) return true;
         return expiresTime <= new Date().getTime();
     }
 
-    public void auth() {
+    /**
+     * auth should be thread safe
+     */
+    public synchronized void auth() {
+        if (!isExpired()) return;
         HttpPost httpPost;
         final CookieStore cookieStore = new BasicCookieStore();
         localContext.setCookieStore(cookieStore);
@@ -153,14 +159,14 @@ public final class CouchDbUtils {
                     final List<Cookie> cookies = cookieStore.getCookies();
                     Cookie cookie = cookies.get(0);
                     expiresTime = sdf.parse(cookie.getAttribute("expires")).getTime();
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
+                } catch (ParseException | NumberFormatException e) {
+                    e.printStackTrace();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
