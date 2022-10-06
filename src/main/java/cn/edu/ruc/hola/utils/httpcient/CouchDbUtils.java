@@ -40,9 +40,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 /**
- * impl for okhttp client5
+ * impl for http client5
  * <p>
- * https://www.wdbyte.com/tool/httpclient5.html#httpclient-5-post-%E8%AF%B7%E6%B1%82
+ * <a href="https://www.wdbyte.com/tool/httpclient5.html#httpclient-5-post-%E8%AF%B7%E6%B1%82">...</a>
  */
 public final class CouchDbUtils {
 
