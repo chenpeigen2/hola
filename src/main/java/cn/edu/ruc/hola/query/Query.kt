@@ -29,6 +29,9 @@ class Query(val config: Config) : Serviceable, Queryable {
 
     private val replaceWithPerformance = false
 
+    /**
+     * the entry query method
+     */
     @Core
     override fun query(condition: String, serverNodes: List<ServerNode>): List<Node> {
         val query: MutableList<Node> = mutableListOf() // make sure it is thread safe ???
@@ -42,6 +45,8 @@ class Query(val config: Config) : Serviceable, Queryable {
 
     /**
      * execute multi with kotlin-Coroutine
+     * with kotlin Coroutine for important
+     * with sync execute method
      */
     @Core
     private fun executeAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) = runBlocking {
