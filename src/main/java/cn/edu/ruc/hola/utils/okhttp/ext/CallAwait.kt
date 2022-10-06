@@ -1,4 +1,4 @@
-package cn.edu.ruc.hola.utils.ext
+package cn.edu.ruc.hola.utils.okhttp.ext
 
 import kotlinx.coroutines.suspendCancellableCoroutine
 import okhttp3.Call

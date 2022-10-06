@@ -1,4 +1,4 @@
-package cn.edu.ruc.hola.utils.ext
+package cn.edu.ruc.hola.utils.okhttp.ext
 
 const val OKHTTP_STACK_RECORDER_PROPERTY = "ru.gildor.coroutines.okhttp.stackrecorder"
 
