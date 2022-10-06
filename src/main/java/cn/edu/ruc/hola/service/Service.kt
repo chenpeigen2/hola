@@ -3,6 +3,8 @@ package cn.edu.ruc.hola.service
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
+import org.apache.hc.client5.http.async.methods.SimpleHttpResponse
+import java.util.concurrent.Future
 
 interface Service {
     /**
@@ -13,6 +15,9 @@ interface Service {
     suspend fun query(condition: String, db_name: String): Node?
 
     fun queryAsync(condition: String, db_name: String): OkHttpResponseFuture
+
+
+    fun queryAsyncClient(condition: String, db_name: String): Future<SimpleHttpResponse>
 
     /**
      * performance test only

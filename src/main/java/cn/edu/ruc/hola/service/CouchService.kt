@@ -2,20 +2,19 @@ package cn.edu.ruc.hola.service
 
 import cn.deu.ruc.sample.QuerySq
 import cn.edu.ruc.hola.config.PerformanceConfig
-import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.Debug
 import cn.edu.ruc.hola.utils.LoggingUtils
-import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
+import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.perform.SuspendQuertSq
+import org.apache.hc.client5.http.async.methods.SimpleHttpResponse
+import java.util.concurrent.Future
 
 class CouchService(sid: String) : AbsService(sid) {
 
     private val dbExtension: CouchDbExtension
-
-    private val gson = ServerHelper.gson
 
     companion object {
         private val logger = LoggingUtils.logger()
@@ -34,6 +33,10 @@ class CouchService(sid: String) : AbsService(sid) {
     @Core
     override fun queryAsync(condition: String, db_name: String): OkHttpResponseFuture {
         return dbExtension.queryAsync(condition, db_name)
+    }
+
+    override fun queryAsyncClient(condition: String, db_name: String): Future<SimpleHttpResponse> {
+        return dbExtension.queryAsyncClient(condition, db_name)
     }
 
     @PerformanceOnly
