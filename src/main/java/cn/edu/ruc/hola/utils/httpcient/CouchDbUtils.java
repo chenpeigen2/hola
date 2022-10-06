@@ -180,7 +180,7 @@ public final class CouchDbUtils {
                   "execution_stats": true
                 }
                 """;
-        var ccc = couchDbUtils.filterDocs("fake0", query);
-        System.out.println(ccc);
+        var ccc = couchDbUtils.filterDocAsync("fake0", query);
+        System.out.println(ccc.get().getBodyText());
     }
 }

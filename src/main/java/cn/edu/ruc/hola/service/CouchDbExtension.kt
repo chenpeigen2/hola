@@ -2,6 +2,7 @@ package cn.edu.ruc.hola.service
 
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.utils.HttpConfig
 import cn.edu.ruc.hola.utils.okhttp.AsyncCouchDBUtils
 import cn.edu.ruc.hola.utils.okhttp.OkHttpResponseFuture
 import cn.edu.ruc.hola.utils.okhttp.ResponseUtils
@@ -18,13 +19,6 @@ import java.util.concurrent.Future
  * <p>
  * for further optimize !
  */
-
-const val OKHTTP = 1
-
-const val HTTPCLIENT = 2
-
-// default choose the Http-client5
-const val CHOOSE = HTTPCLIENT
 
 class CouchDbExtension(host: Host) {
     private val dbUtils: SuspendCouchDBUtils
@@ -45,7 +39,7 @@ class CouchDbExtension(host: Host) {
     @Core
     suspend fun query(condition: String, db_name: String): Node? {
         var node: Node?
-        if (CHOOSE == HTTPCLIENT) {
+        if (HttpConfig.CHOOSE == HttpConfig.HTTPCLIENT) {
             node = ResponseUtils.toNode(
                 condition, dbUtilsClient.filterDocs(db_name, condition)
             )

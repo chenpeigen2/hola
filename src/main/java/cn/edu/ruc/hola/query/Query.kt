@@ -6,12 +6,16 @@ import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.service.Service
 import cn.edu.ruc.hola.service.ServiceHelper.createService
 import cn.edu.ruc.hola.service.ServiceType
+import cn.edu.ruc.hola.utils.HttpConfig
 import cn.edu.ruc.hola.utils.okhttp.ExecutableFuture
 import cn.edu.ruc.hola.utils.anno.Core
 import cn.edu.ruc.hola.utils.anno.PerformanceOnly
+import cn.edu.ruc.hola.utils.okhttp.ResponseUtils.getNode
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.apache.hc.client5.http.async.methods.SimpleHttpResponse
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.Future
 
 class Query(val config: Config) : Serviceable, Queryable {
     /**
@@ -58,16 +62,29 @@ class Query(val config: Config) : Serviceable, Queryable {
 
     @Core
     private fun executeFutureAsync(query: MutableList<Node>, condition: String, serverNodes: List<ServerNode>) {
-        val list = ArrayList<ExecutableFuture>()
-        serverNodes.forEach {
-            val anService = loadService(it.sid)
-            val okHttpResponseFuture = anService.queryAsync(condition, it.databaseName)
-            list.add(okHttpResponseFuture.future)
-        }
-        list.forEach {
-            val node = it.getNode()
-            if (node != null) {
+        if (HttpConfig.CHOOSE == HttpConfig.HTTPCLIENT) {
+            val list = ArrayList<Future<SimpleHttpResponse>>()
+            serverNodes.forEach {
+                val anService = loadService(it.sid)
+                val responseFuture = anService.queryAsyncClient(condition, it.databaseName)
+                list.add(responseFuture)
+            }
+            list.forEach {
+                val node = it.getNode(condition)
                 query.add(node)
+            }
+        } else {
+            val list = ArrayList<ExecutableFuture>()
+            serverNodes.forEach {
+                val anService = loadService(it.sid)
+                val okHttpResponseFuture = anService.queryAsync(condition, it.databaseName)
+                list.add(okHttpResponseFuture.future)
+            }
+            list.forEach {
+                val node = it.getNode()
+                if (node != null) {
+                    query.add(node)
+                }
             }
         }
     }

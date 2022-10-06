@@ -4,7 +4,12 @@ import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.models.couchdb.FilterDocs
 import okhttp3.Response
+import org.apache.hc.client5.http.async.methods.SimpleHttpResponse
+import java.util.concurrent.Future
 
+/**
+ * http response utils for handle the response for http-client or okhttp
+ */
 object ResponseUtils {
 
     private val gson = ServerHelper.gson
@@ -30,5 +35,9 @@ object ResponseUtils {
             }
             return Node(condition, data)
         }
+    }
+
+    fun Future<SimpleHttpResponse>.getNode(condition: String): Node {
+        return toNode(condition, get().bodyText)
     }
 }
