@@ -52,5 +52,5 @@ int printf(const char* fmt, ...)
 
 void printf_helloworld()
 {
-    printf("Hello World SGX !, We fucking did it !!!!@#$%^&* !\n");
+    printf("Hello World SGX !\n");
 }
