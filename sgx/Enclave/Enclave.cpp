@@ -2,6 +2,9 @@
 #include "Enclave_t.h" /* print_string */
 #include <string.h>
 
+// https://en.cppreference.com/w/c/header
+// https://en.cppreference.com/w/cpp/header
+
 void ecall_hello_from_enclave(char *buf, size_t len)
 {
     const char *hello = "Hello world";
