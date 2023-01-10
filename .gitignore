@@ -48,3 +48,12 @@ bin/
 .DS_Store
 /show/.idea/
 /jmeter/apache-jmeter-*/
+/sgx/Enclave/Enclave.o
+/sgx/Enclave/Enclave_private_test.pem
+/sgx/Enclave/Enclave_t.c
+/sgx/Enclave/Enclave_t.h
+/sgx/Enclave/Enclave_t.o
+/sgx/.config_SIM_DEBUG_x64
+/sgx/enclave.signed.so
+/sgx/enclave.so
+/sgx/app
