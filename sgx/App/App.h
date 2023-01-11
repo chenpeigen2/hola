@@ -26,6 +26,7 @@ extern sgx_enclave_id_t global_eid;    /* global enclave id */
 extern "C" {
 #endif
 
+int maxSearch(int a, int b);
 
 #if defined(__cplusplus)
 }

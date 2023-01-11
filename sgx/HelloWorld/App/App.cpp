@@ -188,7 +188,7 @@ int SGX_CDECL main(int argc, char *argv[])
     (void)(argc);
     (void)(argv);
 
-
+    maxSearch(1,2);
     /* Initialize the enclave */
     if(initialize_enclave() < 0){
         printf("Enter a character before exit ...\n");
@@ -206,6 +206,10 @@ int SGX_CDECL main(int argc, char *argv[])
 //    ecall_libc_functions();
 //    ecall_libcxx_functions();
 //    ecall_thread_functions();
+
+
+
+
     printf_helloworld(global_eid);
 
     /* Destroy the enclave */

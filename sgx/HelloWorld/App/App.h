@@ -67,6 +67,8 @@ void ecall_libc_functions(void);
 void ecall_libcxx_functions(void);
 void ecall_thread_functions(void);
 
+int maxSearch(int a, int b);
+
 #if defined(__cplusplus)
 }
 #endif

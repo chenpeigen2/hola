@@ -47,6 +47,7 @@ int SGX_CDECL main(int argc, char *argv[])
 
     /* ECALL 调用 */
     ecall_hello_from_enclave(global_eid, buffer, max_buf_len);
+    maxSearch(12,10);
     printf("%s\n", buffer);
 
     /* 销毁 Enclave */
