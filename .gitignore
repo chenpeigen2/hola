@@ -57,3 +57,4 @@ bin/
 /sgx/enclave.signed.so
 /sgx/enclave.so
 /sgx/app
+*.o
