@@ -4,6 +4,7 @@
 
 # include <unistd.h>
 # include <pwd.h>
+
 # define MAX_PATH FILENAME_MAX
 
 #include "sgx_urts.h"
@@ -15,6 +16,7 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 #include "openssl/rsa.h"
+#include "curl/curl.h"
 
 #define KEY_LENGTH  2048             // 密钥长度
 #define PUB_KEY_FILE "pubkey.pem"    // 公钥路径
@@ -23,8 +25,7 @@
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
 
-int initialize_enclave(void)
-{
+int initialize_enclave(void) {
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
 
     /* 调用 sgx_create_enclave 创建一个 Enclave 实例 */
@@ -297,17 +298,18 @@ std::string RsaPriDecrypt(const std::string &cipher_text, const std::string &pri
 }
 
 /* 应用程序入口 */
-int SGX_CDECL main(int argc, char *argv[])
-{
-    (void)(argc);
-    (void)(argv);
+int SGX_CDECL
+
+main(int argc, char *argv[]) {
+    (void) (argc);
+    (void) (argv);
 
     const size_t max_buf_len = 100;
     char buffer[max_buf_len] = {0};
 
 
     /* 创建并初始化 Enclave */
-    if(initialize_enclave() < 0){
+    if (initialize_enclave() < 0) {
         printf("Enter a character before exit ...\n");
         getchar();
         return -1;
@@ -343,9 +345,23 @@ int SGX_CDECL main(int argc, char *argv[])
     printf("decrypt: len=%d\n", decrypt_text.length());
     printf("decrypt: %s\n", decrypt_text.c_str());
 
+    // cur test
+    CURL *curl;
+    CURLcode res;
+    curl = curl_easy_init();
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, "https://www.baidu.com");
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+    }
+
+    printf("%d \n", curl);
+
+    system("pause");
+
     /* ECALL 调用 */
     ecall_hello_from_enclave(global_eid, buffer, max_buf_len);
-    maxSearch(12,10);
+    maxSearch(12, 10);
     printf("%s\n", buffer);
 
     /* 销毁 Enclave */
