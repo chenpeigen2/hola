@@ -297,6 +297,19 @@ std::string RsaPriDecrypt(const std::string &cipher_text, const std::string &pri
     return decrypt_text;
 }
 
+/* OCall functions */
+void ocall_print_string(const char *str) {
+    /* Proxy/Bridge will check the length and null-terminate
+     * the input string to prevent buffer overflow.
+     */
+    printf("hello world from call out\n");
+    printf("===========================================================\n");
+    printf("===========================================================\n");
+    printf("===========================================================\n");
+    printf("===========================================================\n");
+    printf("%s", str);
+}
+
 /* 应用程序入口 */
 int SGX_CDECL
 

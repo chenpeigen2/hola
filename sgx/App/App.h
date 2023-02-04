@@ -27,6 +27,7 @@ extern "C" {
 #endif
 
 int maxSearch(int a, int b);
+void get_data();
 
 #if defined(__cplusplus)
 }
