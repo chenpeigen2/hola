@@ -108,6 +108,10 @@
 //    return s;
 //}
 
+void ecall_hello_world_string() {
+    printf("ecall_hello_world_string\n");
+}
+
 void ecall_start_tls_server(void) {
 //    int sock;
 //    SSL_CTX *ctx;
