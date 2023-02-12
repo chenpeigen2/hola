@@ -42,6 +42,10 @@
 #include "App.h"
 #include "Enclave_u.h"
 
+#include "Proxy.h"
+#include "Router.h"
+#include "Curl.h"
+
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
 
@@ -234,9 +238,11 @@ int SGX_CDECL main(int argc, char *argv[])
  
     /* Start TLS Server in Enclave */
 //    ecall_start_tls_server(global_eid);
-    printf("we are now preparing the app side data\n");
-    
-    
+    printf("we are now preparing the app side data ====================== \n");
+    proxy.makeRouter(); // make a router
+    proxy.start(); // start the server
+
+
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
     
