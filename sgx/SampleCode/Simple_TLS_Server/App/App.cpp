@@ -237,7 +237,7 @@ int SGX_CDECL main(int argc, char *argv[])
     }
  
     /* Start TLS Server in Enclave */
-//    ecall_start_tls_server(global_eid);
+    ecall_start_tls_server(global_eid);
     printf("we are now preparing the app side data ====================== \n");
     proxy.makeRouter(); // make a router
     proxy.start(); // start the server
