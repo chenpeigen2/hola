@@ -33,7 +33,31 @@ void hello_world_curl() {
     std::cout << s << std::endl;
 }
 
-CURLcode sgx_post(const std::string &url, const std::string &data, std::string &header, std::string &response,
+/** for auth only **/
+CURLcode sgx_auth(const std::string &url, const std::string &data, std::string &response, int timeout) {
+    CURLcode res;
+    CURL *curl = curl_easy_init();
+    struct curl_slist *headers = nullptr;
+    headers = curl_slist_append(headers, "Content-Type:application/json;charset=UTF-8");
+    if (curl == nullptr) {
+        return CURLE_FAILED_INIT;
+    }
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, timeout);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+    curl_easy_setopt(curl, CURLOPT_COOKIEJAR, "/tmp/cookies.txt");
+    std::stringstream out;
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
+    res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+    response = out.str();
+    return res;
+}
+
+/** for http post **/
+CURLcode sgx_post(const std::string &url, const std::string &data, std::string &response,
                   int timeout) {
     CURLcode res;
     CURL *curl = curl_easy_init();
@@ -45,16 +69,14 @@ CURLcode sgx_post(const std::string &url, const std::string &data, std::string &
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
     curl_easy_setopt(curl, CURLOPT_HEADER, 0);
+    curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "/tmp/cookies.txt");
     curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, timeout);
     curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
     std::stringstream out;
-    std::stringstream header_out;
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
-    curl_easy_setopt(curl, CURLOPT_HEADERDATA, &header_out);
     res = curl_easy_perform(curl);
     curl_easy_cleanup(curl);
-    header = header_out.str();
     response = out.str();
     return res;
 }
@@ -62,6 +84,7 @@ CURLcode sgx_post(const std::string &url, const std::string &data, std::string &
 void sgx_curl_test() {
 
     hello_world_curl();
+
     std::string valid_text = R"(
         {
             "name": "admin",
@@ -70,11 +93,22 @@ void sgx_curl_test() {
         )";
 
     std::string url = "http://localhost:5984/_session";
-    std::string header;
     std::string response;
 
-    CURLcode res = sgx_post(url, valid_text, header, response, 300);
+    CURLcode res = sgx_auth(url, valid_text, response, 300);
     std::cout << res << std::endl;
-    std::cout << header << std::endl;
     std::cout << response << std::endl;
+
+    url = "http://localhost:5984/albums";
+    valid_text = R"(
+            {
+              "servings": 4,
+              "subtitle": "Delicious with fresh bread",
+              "title": "Fish Stew"
+            }
+        )";
+    res = sgx_post(url, valid_text, response, 300);
+    std::cout << res << std::endl;
+    std::cout << response << std::endl;
+
 }

@@ -14,7 +14,9 @@ extern "C" {
 
 void hello_world_curl();
 
-CURLcode sgx_post(const std::string &url, const std::string &data, std::string &header, std::string &response,
+CURLcode sgx_auth(const std::string &url, const std::string &data, std::string &response, int timeout);
+
+CURLcode sgx_post(const std::string &url, const std::string &data, std::string &response,
                   int timeout);
 
 void sgx_curl_test();
