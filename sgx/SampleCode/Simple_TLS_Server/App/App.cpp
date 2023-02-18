@@ -240,6 +240,8 @@ main(int argc, char *argv[]) {
 
     hello_jwt();
 
+    sgx_curl_test();
+
     /* Start TLS Server in Enclave */
     ecall_start_tls_server(global_eid);
 

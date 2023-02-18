@@ -6,7 +6,7 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 #include <string>
-
+//#include <sys/uio.h>
 
 //static void init_openssl() {
 //    OpenSSL_add_ssl_algorithms();

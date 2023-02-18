@@ -5,9 +5,19 @@
 #ifndef SGX_CURL_H
 #define SGX_CURL_H
 
+#include "curl/curl.h"
+#include <string>
+
 #if defined(__cplusplus)
 extern "C" {
 #endif
+
+void hello_world_curl();
+
+CURLcode sgx_post(const std::string &url, const std::string &data, std::string &header, std::string &response,
+                  int timeout);
+
+void sgx_curl_test();
 
 #if defined(__cplusplus)
 }
