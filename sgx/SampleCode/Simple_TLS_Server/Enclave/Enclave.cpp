@@ -6,6 +6,7 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 #include <string>
+#include "Utils.h"
 //#include <sys/uio.h>
 
 //static void init_openssl() {
@@ -118,6 +119,13 @@ void ecall_hello_world_string() {
  */
 void ecall_pointer_string(char *str) {
     strncpy(str, "0987654321", strlen(str));
+}
+
+void ecall_generate_rsa() {
+    std::string pub_key;
+    std::string pri_key;
+    GenerateRSAKey(pub_key, pri_key);
+    sgx_save_rsa(pub_key.c_str(), pri_key.c_str());
 }
 
 void ecall_start_tls_server(void) {

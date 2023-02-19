@@ -249,6 +249,9 @@ main(int argc, char *argv[]) {
     /* start the hello world */
     ecall_hello_world_string(global_eid);
 
+    /* generate the rsa */
+    ecall_generate_rsa(global_eid);
+
     {
         std::string s1 = "1234567890";
         int len = s1.length();

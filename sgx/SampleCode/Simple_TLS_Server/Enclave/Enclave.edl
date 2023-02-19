@@ -9,6 +9,7 @@ enclave {
 		public void ecall_start_tls_server(void);
 		public void ecall_hello_world_string(void);
 		public void ecall_pointer_string([in, out, string] char *str);
+		public void ecall_generate_rsa();
 	};
 
 	untrusted {
@@ -29,7 +30,8 @@ enclave {
 		int ocall_sgx_write(int fd, [in, size=n]const void *buf, int n);
 		int ocall_sgx_close(int fd);
 		int ocall_sgx_getenv([in,size=envlen]const char *env, int envlen, [out,size=ret_len]char *ret_str,int ret_len);
-		void ocall_print_string([in, string] const char *str);        
+		void ocall_print_string([in, string] const char *str);
+		void ocall_save_rsa([in, string] const char *pub, [in, string] const char *prv);
 	};
 
 };

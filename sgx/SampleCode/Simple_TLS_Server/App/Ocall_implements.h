@@ -31,7 +31,7 @@ int ocall_sgx_write(int fd, const void *buf, int n);
 int ocall_sgx_close(int fd);
 int ocall_sgx_getenv(const char *env, int envlen, char *ret_str,int ret_len);
 void ocall_print_string(const char *str);
-
+void ocall_save_rsa(const char *publickey, const char *privatekey);
 #if defined(__cplusplus)
 }
 #endif
