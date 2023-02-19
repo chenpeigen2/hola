@@ -112,6 +112,14 @@ void ecall_hello_world_string() {
     printf("ecall_hello_world_string\n");
 }
 
+
+/* ecall_pointer_string:
+ *   [string] defines a string.
+ */
+void ecall_pointer_string(char *str) {
+    strncpy(str, "0987654321", strlen(str));
+}
+
 void ecall_start_tls_server(void) {
 //    int sock;
 //    SSL_CTX *ctx;

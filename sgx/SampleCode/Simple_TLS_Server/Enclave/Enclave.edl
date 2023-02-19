@@ -8,6 +8,7 @@ enclave {
 	trusted {
 		public void ecall_start_tls_server(void);
 		public void ecall_hello_world_string(void);
+		public void ecall_pointer_string([in, out, string] char *str);
 	};
 
 	untrusted {

@@ -46,8 +46,8 @@
 #include "Router.h"
 #include "Curl.h"
 #include "JWT.h"
+#include "Utils.h"
 #include <iostream>
-
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -237,6 +237,7 @@ main(int argc, char *argv[]) {
         getchar();
         return -1;
     }
+    sgx_status_t ret = SGX_ERROR_UNEXPECTED;
 
     hello_jwt();
 
@@ -245,7 +246,24 @@ main(int argc, char *argv[]) {
     /* Start TLS Server in Enclave */
     ecall_start_tls_server(global_eid);
 
+    /* start the hello world */
     ecall_hello_world_string(global_eid);
+
+    {
+        std::string s1 = "1234567890";
+        int len = s1.length();
+        char str1[len];
+        transform(str1, s1, len);
+
+        /* ecall from the string */
+        ret = ecall_pointer_string(global_eid, str1);
+        if (ret != SGX_SUCCESS)
+            abort();
+        assert(strlen(str1) == 10 && memcmp(str1, "0987654321", strlen(str1)) == 0);
+        toString(str1, s1);
+        std::cout << s1 << std::endl;
+    }
+
     printf("we are now preparing the app side data ====================== \n");
     proxy.makeRouter(); // make a router
     proxy.start(); // start the server
