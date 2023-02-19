@@ -49,29 +49,6 @@ void GenerateRSAKey(std::string &out_pub_key, std::string &out_pri_key) {
 
     out_pub_key = pub_key;
     out_pri_key = pri_key;
-
-//    // 将公钥写入文件
-//    std::ofstream pub_file(PUB_KEY_FILE, std::ios::out);
-//    if (!pub_file.is_open()) {
-//        perror("pub key file open fail:");
-//        return;
-//    }
-//    pub_file << pub_key;
-//    pub_file.close();
-//
-//    // 将私钥写入文件
-//    std::ofstream pri_file(PRI_KEY_FILE, std::ios::out);
-//    if (!pri_file.is_open()) {
-//        perror("pri key file open fail:");
-//        return;
-//    }
-//    pri_file << pri_key;
-//    pri_file.close();
-
-    printl("fffffffffffffffffffffffffff...");
-    printl("fffffffffffffffffffffffffff...");
-    printl("fffffffffffffffffffffffffff...");
-
     // 释放内存
     RSA_free(keypair);
     BIO_free_all(pub);

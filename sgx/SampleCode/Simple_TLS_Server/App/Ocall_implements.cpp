@@ -1,5 +1,10 @@
 #include "Ocall_implements.h"
 #include "Enclave_u.h"
+#include <fstream>
+#include <cstring>
+
+#define PUB_KEY_FILE "pubkey.pem"
+#define PRI_KEY_FILE "prikey.pem"
 
 long ocall_sgx_clock(void) {
     struct timespec tstart = {0, 0};
@@ -84,10 +89,20 @@ void ocall_print_string(const char *str) {
 }
 
 void ocall_save_rsa(const char *publickey, const char *privatekey) {
-    printf("wuwuwuwuwuwuuwuwuwuwuwuuwuwuwuwuwuwuuwuwuwuw\n");
-    printf("%s\n", publickey);
-    printf("%s\n", privatekey);
-    printf("wuwuwuwuwuwuuwuwuwuwuwuuwuwuwuwuwuwuuwuwuwuw\n");
+    std::ofstream pub_file(PUB_KEY_FILE, std::ios::out);
+    if (!pub_file.is_open()) {
+        perror("pub key file open fail:");
+        return;
+    }
+    pub_file << publickey;
+    pub_file.close();
+    std::ofstream pri_file(PRI_KEY_FILE, std::ios::out);
+    if (!pri_file.is_open()) {
+        perror("pri key file open fail:");
+        return;
+    }
+    pri_file << privatekey;
+    pri_file.close();
 }
 
 void ocall_sgx_exit(int e) {
