@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10")
     implementation("io.vertx:vertx-web:4.3.6")
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.google.guava:guava:31.1-jre")
