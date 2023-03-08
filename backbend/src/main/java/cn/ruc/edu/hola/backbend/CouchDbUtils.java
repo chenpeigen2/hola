@@ -1,6 +1,8 @@
 package cn.ruc.edu.hola.backbend;
 
 import com.google.gson.JsonObject;
+import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
+import org.apache.hc.client5.http.async.methods.SimpleHttpRequests;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.async.methods.SimpleRequestBuilder;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -88,6 +90,7 @@ public final class CouchDbUtils {
                     .appendPath(db_name)
                     .appendPath("_find")
                     .build();
+            SimpleHttpRequests.get("");
             var simpleHttpRequest = SimpleRequestBuilder.post(uri).build();
             simpleHttpRequest.setBody(filter, ContentType.APPLICATION_JSON);
             return httpclient.execute(simpleHttpRequest, localContext, null);
@@ -97,7 +100,9 @@ public final class CouchDbUtils {
         return null;
     }
 
-    /** create the database **/
+    /**
+     * create the database
+     **/
     public Future<SimpleHttpResponse> createDatabase(String databaseName) {
         if (isExpired()) auth();
         CloseableHttpAsyncClient httpclient = client;
@@ -114,7 +119,9 @@ public final class CouchDbUtils {
         return null;
     }
 
-    /** delete the database **/
+    /**
+     * delete the database
+     **/
     public Future<SimpleHttpResponse> deleteDatabase(String databaseName) {
         if (isExpired()) auth();
         CloseableHttpAsyncClient httpclient = client;
@@ -131,7 +138,9 @@ public final class CouchDbUtils {
         return null;
     }
 
-    /** add the doc **/
+    /**
+     * add the doc
+     **/
     public Future<SimpleHttpResponse> addDoc(String db_name, String data) {
         if (isExpired()) auth();
         CloseableHttpAsyncClient httpclient = client;
@@ -149,7 +158,9 @@ public final class CouchDbUtils {
         return null;
     }
 
-    /** create the index **/
+    /**
+     * create the index
+     **/
     public Future<SimpleHttpResponse> createIndex(String db_name, String info) {
         if (isExpired()) auth();
         CloseableHttpAsyncClient httpclient = client;
@@ -218,8 +229,8 @@ public final class CouchDbUtils {
         try {
             httpPost = new HttpPost(getBseURI().appendPath("_session").build());
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("name", "name");
-            jsonObject.addProperty("password", "FakeConfig.password");
+            jsonObject.addProperty("name", "admin");
+            jsonObject.addProperty("password", "password");
             httpPost.setEntity(new StringEntity(jsonObject.toString()
                     , ContentType.APPLICATION_JSON));
             try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
@@ -243,18 +254,33 @@ public final class CouchDbUtils {
      * test impl for httpclient5
      */
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        var couchDbUtils = new CouchDbUtils("127.0.0.1", 5985);
-        var query = """
+        var couchDbUtils = new CouchDbUtils("127.0.0.1", 5984);
+        var ccc = couchDbUtils.createDatabase("fa1");
+        System.out.println(ccc.get().getBodyText());
+        var text = """
                 {
-                  "selector": {
-                    "data.countryid": {
-                      "$gt": -1
-                    }
-                  },
-                  "execution_stats": true
+                    "servings": 4,
+                    "subtitle": "Delicious with fresh bread",
+                    "title": "Fish Stew"
                 }
                 """;
-        var ccc = couchDbUtils.filterDocAsync("fake0", query);
+
+        ccc = couchDbUtils.addDoc("fa1", text);
         System.out.println(ccc.get().getBodyText());
+
+        ccc = couchDbUtils.deleteDatabase("fa1");
+        System.out.println(ccc.get().getBodyText());
+//        var query = """
+//                {
+//                  "selector": {
+//                    "data.countryid": {
+//                      "$gt": -1
+//                    }
+//                  },
+//                  "execution_stats": true
+//                }
+//                """;
+//        var ccc = couchDbUtils.filterDocAsync("fake0", query);
+//        System.out.println(ccc.get().getBodyText());
     }
 }
