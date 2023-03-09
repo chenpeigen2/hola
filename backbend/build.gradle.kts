@@ -13,7 +13,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.10")
     implementation("io.vertx:vertx-web:4.3.6")
-    implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.google.guava:guava:31.1-jre")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")

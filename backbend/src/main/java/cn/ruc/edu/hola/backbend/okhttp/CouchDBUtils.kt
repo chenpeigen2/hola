@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.backbend.okhttp
 
 import okhttp3.*
-import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -26,9 +25,12 @@ data class CouchDBUtils(
 
     private val cookieJar = CookieJarImpl(MemoryCookieStore())
 
+    private val basicParamsInterceptor = BasicParamsInterceptor.Builder().addHeaderParamsMap(m).build()
+
     /** split from companion object **/
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
+        .addInterceptor(basicParamsInterceptor)
         .cache(Cache(File("./cachedir"), 10 * 1024 * 1024))
         .build()
 
@@ -77,7 +79,6 @@ data class CouchDBUtils(
             .addPathSegment("_session")
             .build()
         val r: Request = Request.Builder().url(url)
-            .headers(m.toHeaders())
             .method("POST", body)
             .build()
         client.newCall(r).execute()
@@ -88,66 +89,60 @@ data class CouchDBUtils(
     }
 
     fun createDb(databaseName: String): Response {
-        val headers: Headers = m.toHeaders()
         val body: RequestBody = FormBody.Builder().build()
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .method("PUT", body)
             .build()
         return client.newCall(r).execute()
     }
 
     fun allDbs(): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment("_all_dbs")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .get()
             .build()
         return client.newCall(r).execute()
     }
 
     fun dbsInfo(data: String): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment("_dbs_info")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .get()
             .build()
         return client.newCall(r).execute()
     }
 
     fun getDbInfo(databaseName: String): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers).build()
+        val r: Request = Request.Builder().url(url).build()
         return client.newCall(r).execute()
     }
 
     fun deleteDb(databaseName: String): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .delete()
             .build()
         return client.newCall(r).execute()
     }
 
     fun <T> addDoc(databaseName: String, data: T): Response {
-        val headers: Headers = m.toHeaders()
         var body: RequestBody? = null
         if (data is String) {
             body = data.toRequestBody("application/json".toMediaType())
@@ -160,101 +155,94 @@ data class CouchDBUtils(
             .addPathSegment(databaseName)
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .method("POST", body)
             .build()
         return client.newCall(r).execute()
     }
 
     fun addBulkDoc(databaseName: String, data: String): Response {
-        val headers: Headers = m.toHeaders()
         val body: RequestBody = data.toRequestBody("application/json".toMediaType())
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment("_bulk_docs")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .method("POST", body)
             .build()
         return client.newCall(r).execute()
     }
 
     fun deleteDoc(databaseName: String, docId: String): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment(docId)
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .delete()
             .build()
         return client.newCall(r).execute()
     }
 
     fun allDocs(databaseName: String): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment("_all_docs")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .build()
         return client.newCall(r).execute()
     }
 
     fun findSpecDoc(databaseName: String, docId: String): Response {
-        val headers: Headers = m.toHeaders()
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment(docId)
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .get()
             .build()
         return client.newCall(r).execute()
     }
 
     fun findBulkDoc(databaseName: String, data: String): Response {
-        val headers: Headers = m.toHeaders()
         val body: RequestBody = data.toRequestBody("application/json".toMediaType())
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment("_bulk_get")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .method("POST", body)
             .build()
         return client.newCall(r).execute()
     }
 
     fun filterDocs(databaseName: String, filter: String): Response {
-        val headers: Headers = m.toHeaders()
         val body: RequestBody = filter.toRequestBody("application/json".toMediaType())
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment("_find")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .method("POST", body)
             .build()
         return client.newCall(r).execute()
     }
 
     fun createIndex(databaseName: String, info: String): Response {
-        val headers: Headers = m.toHeaders()
         val body: RequestBody = info.toRequestBody("application/json".toMediaType())
         val url = getBaseUrlBuilder()
             .addPathSegment(databaseName)
             .addPathSegment("_index")
             .build()
         if (isExpired(url)) auth()
-        val r: Request = Request.Builder().url(url).headers(headers)
+        val r: Request = Request.Builder().url(url)
             .method("POST", body)
             .build()
         return client.newCall(r).execute()
