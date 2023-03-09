@@ -1,6 +1,6 @@
 package cn.ruc.edu.hola.backbend;
 
-import cn.ruc.edu.hola.backbend.okhttp.CouchDBUtils;
+import cn.ruc.edu.hola.backbend.db.CouchDBUtils;
 
 import java.io.IOException;
 
