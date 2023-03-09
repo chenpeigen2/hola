@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    kotlin("jvm") version "1.8.0"
 }
 
 group = "cn.ruc.edu.hola.backbend"
@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.10")
     implementation("io.vertx:vertx-web:4.3.6")
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
