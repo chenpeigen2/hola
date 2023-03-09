@@ -4,6 +4,7 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +32,7 @@ data class CouchDBUtils(
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
         .addInterceptor(basicParamsInterceptor)
-        .addInterceptor(LoggingInterceptor())
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
         .cache(Cache(File("./cachedir"), 10 * 1024 * 1024))
         .build()
 
