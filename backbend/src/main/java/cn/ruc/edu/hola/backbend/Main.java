@@ -9,6 +9,14 @@ public class Main {
         System.out.println("Hello world!");
         CouchDBUtils couchDBUtils = new CouchDBUtils("127.0.0.1", 5984, "admin", "password");
         System.out.println(couchDBUtils.createDb("d1").body().string());
+        var text = """
+                {
+                    "servings": 4,
+                    "subtitle": "Delicious with fresh bread",
+                    "title": "Fish Stew"
+                }
+                """;
+        System.out.println(couchDBUtils.addDoc("d1", text).body().string());
         System.out.println(couchDBUtils.deleteDb("d1").body().string());
     }
 }
