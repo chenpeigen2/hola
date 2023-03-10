@@ -1,8 +1,10 @@
 package cn.ruc.edu.hola.backbend.rsa;
 
-/** hold for simple usage **/
+/**
+ * hold for simple usage
+ **/
 public interface Keys {
-    String PUBLIC = """
+    String SELF_PUBLIC = """
             MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtgnFb8T+AQXf//dYESqHKJJG/XlI4n3B
             Q+s5MsYMd/zQoWxjyY4Rv0KsRbySeq5o20TJHn+Nzs1er8tbSd00YrwLfshEQS8IoWsNlOpvNJJ3
             QFYOQpD02owY5vI4vZ2E05bLnoE240fxSHIIihRAJ3qwVgZ3xLZ+khD8q7InEouKPAfyl/Sq+kwz
@@ -10,7 +12,7 @@ public interface Keys {
             jHimn7B2Apgd6DOpOwP8S1i5ktmwRPu3Z45+mkHr9e1esrRGFK4RV6w1L5clVD0Cghxc61pe5PRa
             xc/AHQIDAQAB""";
 
-    String PRIVATE = """
+    String SELF_PRIVATE = """
             MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC2CcVvxP4BBd//91gRKocokkb9
             eUjifcFD6zkyxgx3/NChbGPJjhG/QqxFvJJ6rmjbRMkef43OzV6vy1tJ3TRivAt+yERBLwihaw2U
             6m80kndAVg5CkPTajBjm8ji9nYTTlsuegTbjR/FIcgiKFEAnerBWBnfEtn6SEPyrsicSi4o8B/KX
