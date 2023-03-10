@@ -8,6 +8,9 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 public class CouchVerticle extends AbstractVerticle {
+
+    final static int PORT = 8080;
+
     @Override
     public void start() {
         HttpServer server = vertx.createHttpServer();
@@ -17,7 +20,7 @@ public class CouchVerticle extends AbstractVerticle {
 
         router.get("/hello_world").handler(this::hello_world);
 
-        server.requestHandler(router).listen(8080);
+        server.requestHandler(router).listen(PORT);
     }
 
     private void hello_world(RoutingContext ctx) {
