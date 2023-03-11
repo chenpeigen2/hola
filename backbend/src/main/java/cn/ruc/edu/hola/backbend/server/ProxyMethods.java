@@ -1,31 +1,33 @@
 package cn.ruc.edu.hola.backbend.server;
 
-public interface ProxyMethods {
-    String uuids();
+import java.io.IOException;
 
-    String createDb();
+public interface ProxyMethods {
+    String uuids(int cnt);
+
+    String createDb(String db);
 
     String allDbs();
 
-    String dbsInfo();
+    String dbsInfo(String data);
 
-    String getDbInfo();
+    String getDbInfo(String databaseName);
 
-    String deleteDb();
+    String deleteDb(String databaseName);
 
-    String addDoc();
+    <T> String addDoc(String databaseName, T data);
 
-    String addBulkDoc();
+    String addBulkDoc(String databaseName, String data);
 
-    String deleteDoc();
+    String deleteDoc(String databaseName, String docId);
 
-    String allDocs();
+    String allDocs(String databaseName);
 
-    String findSpecDoc();
+    String findSpecDoc(String databaseName, String docId);
 
-    String findBulkDoc();
+    String findBulkDoc(String databaseName,String data);
 
-    String filterDocs();
+    String filterDocs(String databaseName, String filter);
 
-    String createIndex();
+    String createIndex(String databaseName, String info);
 }
