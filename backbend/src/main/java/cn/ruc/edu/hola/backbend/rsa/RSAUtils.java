@@ -13,7 +13,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RSAUtil {
+public class RSAUtils {
     /**
      * 密钥类实例化入参
      */

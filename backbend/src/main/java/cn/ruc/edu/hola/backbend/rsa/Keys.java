@@ -35,4 +35,6 @@ public interface Keys {
             f3Yz6QKBgFXJOgXLMuGmrjVAA8ZDepPtZeCAHiKCk3ZFrJ0ngCSPmLBBGIR0FkUmJQExhRSukPGV
             0fT5sAAMvErOOf1K3E2fzScB1fjH7+7bzBQFiFGqCU6cyP58lnhW1q59L4J/agTrz3To11VzwwC2
             E3DSk+Sw0x5zySf2aVPep5YsojU0""";
+
+    String PUBLIC = SELF_PUBLIC;
 }

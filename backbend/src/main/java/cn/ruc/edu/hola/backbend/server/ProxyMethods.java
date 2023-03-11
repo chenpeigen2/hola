@@ -5,7 +5,7 @@ import java.io.IOException;
 public interface ProxyMethods {
     String uuids(int cnt);
 
-    String createDb(String db);
+    String createDb(String databaseName);
 
     String allDbs();
 
@@ -15,7 +15,7 @@ public interface ProxyMethods {
 
     String deleteDb(String databaseName);
 
-    <T> String addDoc(String databaseName, T data);
+    String addDoc(String databaseName, String data);
 
     String addBulkDoc(String databaseName, String data);
 
@@ -25,7 +25,7 @@ public interface ProxyMethods {
 
     String findSpecDoc(String databaseName, String docId);
 
-    String findBulkDoc(String databaseName,String data);
+    String findBulkDoc(String databaseName, String data);
 
     String filterDocs(String databaseName, String filter);
 

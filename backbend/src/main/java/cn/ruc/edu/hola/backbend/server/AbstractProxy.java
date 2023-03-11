@@ -22,8 +22,8 @@ public abstract class AbstractProxy implements ProxyMethods {
     }
 
     @Override
-    public String createDb(String db) {
-        Response res = couchDBUtils.createDb(db);
+    public String createDb(String databaseName) {
+        Response res = couchDBUtils.createDb(databaseName);
         if (res.isSuccessful() && res.body() != null) {
             try (res) {
                 return res.body().string();
@@ -82,7 +82,7 @@ public abstract class AbstractProxy implements ProxyMethods {
     }
 
     @Override
-    public <T> String addDoc(String databaseName, T data) {
+    public String addDoc(String databaseName, String data) {
         Response res = couchDBUtils.addDoc(databaseName, data);
         if (res.isSuccessful() && res.body() != null) {
             try (res) {
