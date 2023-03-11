@@ -1,7 +1,5 @@
 package cn.ruc.edu.hola.backbend.server;
 
-import java.io.IOException;
-
 public interface ProxyMethods {
     String uuids(int cnt);
 
