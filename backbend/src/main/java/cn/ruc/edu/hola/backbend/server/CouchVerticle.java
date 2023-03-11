@@ -11,6 +11,8 @@ public class CouchVerticle extends AbstractVerticle {
 
     final static int PORT = 8080;
 
+    final ProxyMethods proxyMethods = new AbstractProxy() {};
+
     @Override
     public void start() {
         HttpServer server = vertx.createHttpServer();
@@ -18,17 +20,119 @@ public class CouchVerticle extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
-        router.get("/hello_world").handler(this::hello_world);
+        router.get("/_uuids").handler(this::uuids);
+        router.get("/create_db").handler(this::createDb);
+        router.get("/delete_db").handler(this::deleteDb);
+        router.get("/add_doc").handler(this::addDoc);
+        router.get("/delete_doc").handler(this::deleteDoc);
+        router.get("/_find").handler(this::filterDocs);
+        router.get("/_index").handler(this::createIndex);
 
         server.requestHandler(router).listen(PORT);
     }
 
-    private void hello_world(RoutingContext ctx) {
-        out(ctx, "hello world");
-    }
-
     private void out(RoutingContext ctx, String msg) {
+        if (msg == null) {
+            ctx.fail(400);
+            return;
+        }
         ctx.response().putHeader("Content-Type", "application/json; charset=utf-8")
                 .end(msg);
+    }
+
+    public void uuids(RoutingContext ctx) {
+        String count = ctx.request().getParam("count");
+        try {
+            int cnt = Integer.parseInt(count);
+            out(ctx, proxyMethods.uuids(cnt));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    public void createDb(RoutingContext ctx) {
+        String dataBaseName = ctx.request().getParam("name");
+        try {
+            out(ctx, proxyMethods.createDb(dataBaseName));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    public String allDbs(RoutingContext ctx) {
+        return null;
+    }
+
+    public String dbsInfo(RoutingContext ctx) {
+        return null;
+    }
+
+    public String getDbInfo(RoutingContext ctx) {
+        return null;
+    }
+
+    public void deleteDb(RoutingContext ctx) {
+        String dataBaseName = ctx.request().getParam("name");
+        try {
+            out(ctx, proxyMethods.deleteDb(dataBaseName));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    public void addDoc(RoutingContext ctx) {
+        String dataBaseName = ctx.request().getParam("name");
+        String data = ctx.request().getParam("data");
+        try {
+            out(ctx, proxyMethods.addDoc(dataBaseName, data));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    public String addBulkDoc(RoutingContext ctx) {
+        return null;
+    }
+
+    public void deleteDoc(RoutingContext ctx) {
+        String dataBaseName = ctx.request().getParam("name");
+        String data = ctx.request().getParam("docId");
+        try {
+            out(ctx, proxyMethods.deleteDoc(dataBaseName, data));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    public String allDocs(RoutingContext ctx) {
+        return null;
+    }
+
+    public String findSpecDoc(RoutingContext ctx) {
+        return null;
+    }
+
+    public String findBulkDoc(RoutingContext ctx) {
+        return null;
+    }
+
+    public void filterDocs(RoutingContext ctx) {
+        String dataBaseName = ctx.request().getParam("db_name");
+        String filter = ctx.request().getParam("filter");
+        try {
+            out(ctx, proxyMethods.filterDocs(dataBaseName, filter));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    public void createIndex(RoutingContext ctx) {
+        String dataBaseName = ctx.request().getParam("db_name");
+        String info = ctx.request().getParam("info");
+        try {
+            out(ctx, proxyMethods.createIndex(dataBaseName, info));
+        } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
     }
 }
