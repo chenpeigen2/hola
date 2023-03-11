@@ -66,10 +66,7 @@ public class RSAProxy extends AbstractProxy {
     @Override
     public String addDoc(String databaseName, String data) {
         try {
-            String result = super.addDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(data, Keys.SELF_PRIVATE));
-            if (result != null) {
-                return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
-            }
+            return super.addDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(data, Keys.SELF_PRIVATE));
         } catch (Exception ignored) {
 
         }
@@ -92,10 +89,7 @@ public class RSAProxy extends AbstractProxy {
     @Override
     public String deleteDoc(String databaseName, String docId) {
         try {
-            String result = super.deleteDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(docId, Keys.SELF_PRIVATE));
-            if (result != null) {
-                return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
-            }
+            return super.deleteDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(docId, Keys.SELF_PRIVATE));
         } catch (Exception ignored) {
 
         }
