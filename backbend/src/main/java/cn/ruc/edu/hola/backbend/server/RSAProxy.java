@@ -19,6 +19,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.allDbs();
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -32,6 +33,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.dbsInfo(RSAUtils.decrypt(data, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -45,6 +47,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.getDbInfo(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -78,6 +81,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.addBulkDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(data, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -101,6 +105,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.allDocs(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -114,6 +119,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.findSpecDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(docId, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -127,6 +133,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.findBulkDoc(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(data, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
@@ -137,15 +144,20 @@ public class RSAProxy extends AbstractProxy {
 
     @Override
     public String filterDocs(String databaseName, String filter) {
+        String result = null;
         try {
-            String result = super.filterDocs(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(filter, Keys.SELF_PRIVATE));
+            String de_databaseName = RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE);
+            String de_filter = RSAUtils.decrypt(filter, Keys.SELF_PRIVATE);
+            result = super.filterDocs(de_databaseName, de_filter);
             if (result != null) {
-                return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
+                result = result.trim();
+                result = RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
+                return result;
             }
         } catch (Exception ignored) {
-
+            System.out.println(ignored.toString());
         }
-        return null;
+        return result;
     }
 
     @Override
@@ -153,6 +165,7 @@ public class RSAProxy extends AbstractProxy {
         try {
             String result = super.createIndex(RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE), RSAUtils.decrypt(info, Keys.SELF_PRIVATE));
             if (result != null) {
+                result = result.trim();
                 return RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
             }
         } catch (Exception ignored) {
