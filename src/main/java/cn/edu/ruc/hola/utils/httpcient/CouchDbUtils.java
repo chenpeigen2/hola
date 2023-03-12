@@ -44,6 +44,7 @@ import java.util.concurrent.Future;
  * <p>
  * <a href="https://www.wdbyte.com/tool/httpclient5.html#httpclient-5-post-%E8%AF%B7%E6%B1%82">...</a>
  */
+@Deprecated
 public final class CouchDbUtils {
 
     private final String host;
