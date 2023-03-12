@@ -30,5 +30,5 @@ object FakeConfig {
     /**
      * database password
      */
-    const val password = "123456"
+    const val password = "password"
 }

@@ -148,7 +148,6 @@ object Faken {
 }
 
 
-
 suspend fun create() {
     Faken.createFakeDb(FakeConfig.count)
     Faken.createFakeIndex(FakeConfig.count)
