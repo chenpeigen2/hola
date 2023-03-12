@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.8.0"
+    kotlin("jvm") version "1.8.10"
 }
 
 group = "cn.ruc.edu.hola.backbend"
@@ -17,10 +17,17 @@ dependencies {
     implementation("io.vertx:vertx-web-validation:4.4.0")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+    options.isIncremental = true
+    options.isFork = true
+    options.isFailOnError = true
 }
