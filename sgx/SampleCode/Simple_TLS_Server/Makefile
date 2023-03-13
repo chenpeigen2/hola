@@ -215,7 +215,7 @@ else
 endif
 endif
 
-
+# modified
 .PHONY: all run
 
 ifeq ($(Build_Mode), HW_RELEASE)
@@ -248,19 +248,19 @@ ifneq ($(Build_Mode), HW_RELEASE)
 endif
 
 ######## App Objects ########
-
+# stay  the same
 App/Enclave_u.c: $(SGX_EDGER8R) Enclave/Enclave.edl
 	@cd App && $(SGX_EDGER8R) --untrusted ../Enclave/Enclave.edl --search-path ../Enclave --search-path $(SGX_SDK)/include
 	@echo "GEN  =>  $@"
-
+# modified
 App/Enclave_u.o: App/Enclave_u.c
 	@$(CC) $(App_C_Flags) -c $< -o $@
 	@echo "CC   <=  $<"
-
+# modified
 App/%.o: App/%.cpp App/Enclave_u.c
 	@$(CXX) $(App_Cpp_Flags) -c $< -o $@
 	@echo "CXX  <=  $<"
-
+# stay the same
 $(App_Name): App/Enclave_u.o $(App_Cpp_Objects)
 	@$(CXX) $^ -o $@ $(App_Link_Flags)
 	@echo "LINK =>  $@"
@@ -283,12 +283,12 @@ Enclave/%.o: Enclave/%.cpp Enclave/Enclave_t.c
 $(Enclave_Name): Enclave/Enclave_t.o $(Enclave_Cpp_Objects)
 	@$(CXX) $^ -o $@ $(Enclave_Link_Flags)
 	@echo "LINK =>  $@"
-
+# modified
 $(Signed_Enclave_Name): $(Enclave_Name)
 	@$(SGX_ENCLAVE_SIGNER) sign -ignore-init-sec-error -key Enclave/Enclave_private.pem -enclave $(Enclave_Name) -out $@ -config $(Enclave_Config_File)
 	@echo "SIGN =>  $@"
-
+# stay the same
 .PHONY: clean
-
+# modified
 clean:
 	@rm -f $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
