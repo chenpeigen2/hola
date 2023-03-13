@@ -267,28 +267,34 @@ $(App_Name): App/Enclave_u.o $(App_Cpp_Objects)
 
 
 ######## Enclave Objects ########
-
-Enclave/Enclave_t.c: $(SGX_EDGER8R) Enclave/Enclave.edl
+# stay the same
+Enclave/Enclave_t.h: $(SGX_EDGER8R) Enclave/Enclave.edl
 	@cd Enclave && $(SGX_EDGER8R) --trusted ../Enclave/Enclave.edl --search-path ../Enclave --search-path $(SGX_SDK)/include
 	@echo "GEN  =>  $@"
-
+# stay the same
+Enclave/Enclave_t.c: Enclave/Enclave_t.h
+# stay the same
 Enclave/Enclave_t.o: Enclave/Enclave_t.c
-	@$(CC) $(Enclave_C_Flags) -c $< -o $@
+	@$(CC) $(SGX_COMMON_CFLAGS) $(Enclave_C_Flags) -c $< -o $@
 	@echo "CC   <=  $<"
-
-Enclave/%.o: Enclave/%.cpp Enclave/Enclave_t.c
-	@$(CXX) $(Enclave_Cpp_Flags) -c $< -o $@
+# stay the same
+Enclave/%.o: Enclave/%.cpp
+	@$(CXX) $(SGX_COMMON_CXXFLAGS) $(Enclave_Cpp_Flags) -c $< -o $@
 	@echo "CXX  <=  $<"
+# stay the same
+$(Enclave_Cpp_Objects): Enclave/Enclave_t.h
 
+#stay the same
 $(Enclave_Name): Enclave/Enclave_t.o $(Enclave_Cpp_Objects)
 	@$(CXX) $^ -o $@ $(Enclave_Link_Flags)
 	@echo "LINK =>  $@"
+
 # modified
 $(Signed_Enclave_Name): $(Enclave_Name)
 	@$(SGX_ENCLAVE_SIGNER) sign -ignore-init-sec-error -key Enclave/Enclave_private.pem -enclave $(Enclave_Name) -out $@ -config $(Enclave_Config_File)
 	@echo "SIGN =>  $@"
 # stay the same
 .PHONY: clean
-# modified
+# stay the same
 clean:
-	@rm -f $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
+	@rm -f .config_* $(App_Name) $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
