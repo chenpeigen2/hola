@@ -89,21 +89,25 @@ endif
 
 ######## App Settings ########
 
+# stay the same
 ifneq ($(SGX_MODE), HW)
 	Urts_Library_Name := sgx_urts_sim
 else
 	Urts_Library_Name := sgx_urts
 endif
 
+# added
 App_Cpp_Files := $(wildcard App/*.cpp)
 App_Include_Paths := -IInclude -IApp -I$(SGX_SDK)/include
 
+# added
 App_C_Flags := $(SGX_COMMON_CFLAGS) -fPIC -Wno-attributes $(App_Include_Paths)
 
 # Three configuration modes - Debug, prerelease, release
 #   Debug - Macro DEBUG enabled.
 #   Prerelease - Macro NDEBUG and EDEBUG enabled.
 #   Release - Macro NDEBUG enabled.
+# stay the same
 ifeq ($(SGX_DEBUG), 1)
         App_C_Flags += -DDEBUG -UNDEBUG -UEDEBUG
 else ifeq ($(SGX_PRERELEASE), 1)
@@ -112,21 +116,37 @@ else
         App_C_Flags += -DNDEBUG -UEDEBUG -UDEBUG
 endif
 
+# added
 App_Cpp_Flags := $(App_C_Flags) -std=c++11
 App_Link_Flags := $(SGX_COMMON_CFLAGS) -L$(SGX_LIBRARY_PATH) -l$(Urts_Library_Name) -lpthread -lcrypto -lcurl -lwfrest
 
+# stay the same
 ifneq ($(SGX_MODE), HW)
 	App_Link_Flags += -lsgx_uae_service_sim
 else
 	App_Link_Flags += -lsgx_uae_service
 endif
 
+# stay the same
 App_Cpp_Objects := $(App_Cpp_Files:.cpp=.o)
 
+# stay the same
 App_Name := app
 
 ######## Enclave Settings ########
 
+# stay the same
+Enclave_Version_Script := Enclave/Enclave_debug.lds
+ifeq ($(SGX_MODE), HW)
+ifneq ($(SGX_DEBUG), 1)
+ifneq ($(SGX_PRERELEASE), 1)
+	# Choose to use 'Enclave.lds' for HW release mode
+	Enclave_Version_Script = Enclave/Enclave.lds
+endif
+endif
+endif
+
+# stay the same
 ifneq ($(SGX_MODE), HW)
 	Trts_Library_Name := sgx_trts_sim
 	Service_Library_Name := sgx_tservice_sim
