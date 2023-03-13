@@ -218,6 +218,8 @@ endif
 # modified
 .PHONY: all run
 
+# modified
+# make: *** 没有规则可制作目标“.config_HW_DEBUG_x64”，由“all” 需求。 停止。
 ifeq ($(Build_Mode), HW_RELEASE)
 all: $(App_Name) $(Enclave_Name)
 	@echo "The project has been built in release hardware mode."
@@ -241,6 +243,7 @@ else
 endif
 endif
 
+# stay the same
 run: all
 ifneq ($(Build_Mode), HW_RELEASE)
 	@$(CURDIR)/$(App_Name)
