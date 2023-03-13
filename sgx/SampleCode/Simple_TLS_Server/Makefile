@@ -156,11 +156,17 @@ else
 endif
 Crypto_Library_Name := sgx_tcrypto
 
+# added
 Enclave_Cpp_Files := $(wildcard Enclave/*.cpp)
 Enclave_Include_Paths := -IInclude -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/libcxx -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/stlport $(OPENSSL_SGX_INC) $(CURL_SGX_INC)
 
-Enclave_C_Flags := $(SGX_COMMON_CFLAGS) -nostdinc -fvisibility=hidden -fpie -fstack-protector $(Enclave_Include_Paths)
+# added
+Enclave_C_Flags := $(SGX_COMMON_CFLAGS) -nostdinc -fvisibility=hidden -fpie -fstack-protector -fno-builtin-printf $(Enclave_Include_Paths)
 Enclave_Cpp_Flags := $(Enclave_C_Flags) -std=c++11 -nostdinc++
+
+# stay the same
+# Enable the security flags
+Enclave_Security_Link_Flags := -Wl,-z,relro,-z,now,-z,noexecstack
 
 # To generate a proper enclave, it is recommended to follow below guideline to link the trusted libraries:
 #    1. Link sgx_trts with the `--whole-archive' and `--no-whole-archive' options,
