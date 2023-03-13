@@ -175,7 +175,9 @@ Enclave_Security_Link_Flags := -Wl,-z,relro,-z,now,-z,noexecstack
 #       Use `--start-group' and `--end-group' to link these libraries.
 # Do NOT move the libraries linked with `--start-group' and `--end-group' within `--whole-archive' and `--no-whole-archive' options.
 # Otherwise, you may get some undesirable errors.
-Enclave_Link_Flags := $(SGX_COMMON_CFLAGS) -Wl,--no-undefined -nostdlib -nodefaultlibs -nostartfiles -L$(SGX_LIBRARY_PATH) \
+# added
+Enclave_Link_Flags := $(Enclave_Security_Link_Flags) \
+	-Wl,--no-undefined -nostdlib -nodefaultlibs -nostartfiles -L$(SGX_LIBRARY_PATH) \
 	-Wl,--whole-archive -l$(Trts_Library_Name) -Wl,--no-whole-archive \
 	-L$(OPENSSL_SGX_PATH) $(OPENSSL_LIBS) \
 	-L$(CURL_SGX_PATH) $(CURL_LIBS)\
@@ -183,14 +185,18 @@ Enclave_Link_Flags := $(SGX_COMMON_CFLAGS) -Wl,--no-undefined -nostdlib -nodefau
 	-Wl,-Bstatic -Wl,-Bsymbolic -Wl,--no-undefined \
 	-Wl,-pie,-eenclave_entry -Wl,--export-dynamic  \
 	-Wl,--defsym,__ImageBase=0 \
-	-Wl,--version-script=Enclave/Enclave.lds
+	-Wl,--version-script=$(Enclave_Version_Script)
 
+# stay the same
 Enclave_Cpp_Objects := $(Enclave_Cpp_Files:.cpp=.o)
 
+# stay the same
 Enclave_Name := enclave.so
 Signed_Enclave_Name := enclave.signed.so
 Enclave_Config_File := Enclave/Enclave.config.xml
+Enclave_Test_Key := Enclave/Enclave_private_test.pem
 
+# stay the same
 ifeq ($(SGX_MODE), HW)
 ifeq ($(SGX_DEBUG), 1)
 	Build_Mode = HW_DEBUG
