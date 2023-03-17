@@ -155,6 +155,12 @@ public class DHCoder {
         return cipher.doFinal(data);
     }
 
+    private static volatile SecretKey secretKey;
+
+    public static void resetSecretKey() {
+        secretKey = null;
+    }
+
     /**
      * 构建密钥
      *
@@ -163,8 +169,9 @@ public class DHCoder {
      * @return
      * @throws Exception
      */
-    private static SecretKey getSecretKey(String publicKey, String privateKey)
+    private static synchronized SecretKey getSecretKey(String publicKey, String privateKey)
             throws Exception {
+        if (secretKey != null) return secretKey;
         // 初始化公钥
         byte[] pubKeyBytes = decryptBASE64(publicKey);
 
@@ -183,7 +190,8 @@ public class DHCoder {
         keyAgree.init(priKey);
         keyAgree.doPhase(pubKey, true);
         // 生成本地密钥
-        return keyAgree.generateSecret(SECRET_ALGORITHM);
+        secretKey = keyAgree.generateSecret(SECRET_ALGORITHM);
+        return secretKey;
     }
 
     /**
