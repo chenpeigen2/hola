@@ -11,7 +11,7 @@ public class CouchVerticle extends AbstractVerticle {
 
     final static int PORT = 8080;
 
-    final ProxyMethods proxyMethods = new RSAProxy();
+    final ProxyMethods proxyMethods = new DHProxy();
 
     @Override
     public void start() {

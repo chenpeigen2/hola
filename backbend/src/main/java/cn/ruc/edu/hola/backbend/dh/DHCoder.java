@@ -115,7 +115,7 @@ public class DHCoder {
      * @return
      * @throws Exception
      */
-    public static byte[] encrypt(byte[] data, String publicKey,
+    public static String encrypt(String data, String publicKey,
                                  String privateKey) throws Exception {
 
         // 生成本地密钥
@@ -125,7 +125,7 @@ public class DHCoder {
         Cipher cipher = Cipher.getInstance(secretKey.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-        return cipher.doFinal(data);
+        return encryptBASE64(cipher.doFinal(data.getBytes()));
     }
 
     /**
@@ -137,7 +137,7 @@ public class DHCoder {
      * @return
      * @throws Exception
      */
-    public static byte[] decrypt(byte[] data, String publicKey,
+    public static String decrypt(String data, String publicKey,
                                  String privateKey) throws Exception {
 
         // 生成本地密钥
@@ -145,8 +145,7 @@ public class DHCoder {
         // 数据解密
         Cipher cipher = Cipher.getInstance(secretKey.getAlgorithm());
         cipher.init(Cipher.DECRYPT_MODE, secretKey);
-
-        return cipher.doFinal(data);
+        return new String(cipher.doFinal(decryptBASE64(data)));
     }
 
     private static volatile SecretKey secretKey;
@@ -266,12 +265,11 @@ public class DHCoder {
         System.err.println("原文: " + aInput);
 
         // 由甲方公钥，乙方私钥构建密文
-        byte[] aCode = DHCoder.encrypt(aInput.getBytes(), aPublicKey,
+        var aCode = DHCoder.encrypt(aInput, aPublicKey,
                 bPrivateKey);
 
         // 由乙方公钥，甲方私钥解密
-        byte[] aDecode = DHCoder.decrypt(aCode, bPublicKey, aPrivateKey);
-        String aOutput = (new String(aDecode));
+        String aOutput = (DHCoder.decrypt(aCode, bPublicKey, aPrivateKey));
 
         System.err.println("解密: " + aOutput);
 
@@ -281,13 +279,12 @@ public class DHCoder {
         System.err.println("原文: " + bInput);
 
         // 由乙方公钥，甲方私钥构建密文
-        byte[] bCode = DHCoder.encrypt(bInput.getBytes(), bPublicKey,
+        var bCode = DHCoder.encrypt(bInput, bPublicKey,
                 aPrivateKey);
 
         // 由甲方公钥，乙方私钥解密
-        byte[] bDecode = DHCoder.decrypt(bCode, aPublicKey, bPrivateKey);
-        String bOutput = (new String(bDecode));
+        var bDecode = DHCoder.decrypt(bCode, aPublicKey, bPrivateKey);
 
-        System.err.println("解密: " + bOutput);
+        System.err.println("解密: " + (bDecode));
     }
 }

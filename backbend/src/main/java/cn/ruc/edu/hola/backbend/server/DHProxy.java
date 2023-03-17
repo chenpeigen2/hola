@@ -3,7 +3,7 @@ package cn.ruc.edu.hola.backbend.server;
 import cn.ruc.edu.hola.backbend.rsa.Keys;
 import cn.ruc.edu.hola.backbend.rsa.RSAUtils;
 
-public class RSAProxy extends AbstractProxy {
+public class DHProxy extends AbstractProxy {
     @Override
     public String createDb(String databaseName) {
         try {
