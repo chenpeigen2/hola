@@ -18,13 +18,7 @@ import javax.crypto.interfaces.DHPrivateKey;
 import javax.crypto.interfaces.DHPublicKey;
 import javax.crypto.spec.DHParameterSpec;
 
-/**
- * DH安全编码组件
- *
- * @author 梁栋
- * @version 1.0
- * @since 1.0
- */
+
 public class DHCoder {
     public static final String ALGORITHM = "DH";
 
