@@ -31,3 +31,8 @@ tasks.withType<JavaCompile> {
     options.isFork = true
     options.isFailOnError = true
 }
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
+    kotlinOptions.jvmTarget = "17"
+}
