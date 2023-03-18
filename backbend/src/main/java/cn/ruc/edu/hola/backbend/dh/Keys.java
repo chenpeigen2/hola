@@ -28,4 +28,6 @@ public interface Keys {
             zHQCC76mOxObIlFKCHmONATd75UZs806QxswKwpt8l8UN0/hNW1tUcJF5IW1dmJefsb0TELppjft
             awv/XLb0Brft7jhr+1qJn6WunyQRfEsf5kkoZlHs5lOB//////////8CAQICAgCgBBcCFQDM3OMK
             dIJ+Cbk0tn8iOKLHDbAzPA==""";
+
+    String AES_KEY = "4dffffffcd5afffffff93c2bffffffe0705e23ffffffdefffffff868ffffff805ffffffffeffffffcbfffffff1ffffffcf664374717ffffff82ffffffb0ffffffd9ffffffc2ffffffaaffffff8f2c52ffffffbeffffffa221496dffffff8affffffa7ffffffd11cfffffffeffffff904bffffffa4ffffffc610246effffffb7ffffffd2184effffffa5ffffffb779fffffffbffffffdcaffffffb0ffffff9fffffffb93bffffffe2";
 }
