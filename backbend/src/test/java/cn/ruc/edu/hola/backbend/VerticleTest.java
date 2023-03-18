@@ -1,11 +1,13 @@
 package cn.ruc.edu.hola.backbend;
 
+import cn.ruc.edu.hola.backbend.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.rsa.Keys;
 import cn.ruc.edu.hola.backbend.rsa.RSAUtils;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -62,6 +64,11 @@ public class VerticleTest {
         }
     }
 
+    @BeforeAll
+    public static void before() {
+        System.getProperties().setProperty("jdk.crypto.KeyAgreement.legacyKDF", "true");
+    }
+
     @Test
     public void testDeleteDB() {
         var url = getBaseUrlBuilder().addPathSegment("delete_db")
@@ -86,7 +93,7 @@ public class VerticleTest {
 
     {
         try {
-            complexQuery = RSAUtils.encrypt(complexQuery.getBytes(), Keys.SELF_PUBLIC);
+            complexQuery = DHCoder.encrypt(complexQuery, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -96,7 +103,7 @@ public class VerticleTest {
 
     {
         try {
-            complex_db_name = RSAUtils.encrypt(complex_db_name.getBytes(), Keys.SELF_PUBLIC);
+            complex_db_name = DHCoder.encrypt(complex_db_name, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +122,10 @@ public class VerticleTest {
             System.out.println("query start");
             System.out.println(str);
             System.out.println("query end");
-        } catch (IOException e) {
+            System.out.println("query decrypt start");
+            System.out.println(DHCoder.decrypt(str, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV));
+            System.out.println("query decrypt end");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

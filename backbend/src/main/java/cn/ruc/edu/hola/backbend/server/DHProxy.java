@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.server;
 
+import cn.ruc.edu.hola.backbend.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.rsa.Keys;
 import cn.ruc.edu.hola.backbend.rsa.RSAUtils;
 
@@ -146,12 +147,12 @@ public class DHProxy extends AbstractProxy {
     public String filterDocs(String databaseName, String filter) {
         String result = null;
         try {
-            String de_databaseName = RSAUtils.decrypt(databaseName, Keys.SELF_PRIVATE);
-            String de_filter = RSAUtils.decrypt(filter, Keys.SELF_PRIVATE);
+            String de_databaseName = DHCoder.decrypt(databaseName, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
+            String de_filter = DHCoder.decrypt(filter, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
             result = super.filterDocs(de_databaseName, de_filter);
             if (result != null) {
                 result = result.trim();
-                result = RSAUtils.encrypt(result.getBytes(), Keys.PUBLIC);
+                result = DHCoder.encrypt(result, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
                 return result;
             }
         } catch (Exception ignored) {
