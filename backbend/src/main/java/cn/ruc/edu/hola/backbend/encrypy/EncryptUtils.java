@@ -22,7 +22,6 @@ public class EncryptUtils {
      *
      * @param source  加密的数据为AES key
      * @param pub_key 公钥
-     * @return
      */
     public static String rsaEncrypt(String source, String pub_key) {
         try {
@@ -44,9 +43,7 @@ public class EncryptUtils {
      * 如果需要在后台使用将Base64换成后台的Base64即可
      * rsa解密
      *
-     * @param rsa
      * @param pri_key 私钥
-     * @return
      */
     public static String rsaDecrypt(String rsa, String pri_key) {
         try {
@@ -67,9 +64,7 @@ public class EncryptUtils {
     /**
      * 对称AES加密 ECB方式
      *
-     * @param content
      * @param key     128 192 256位  即Key长度为 16, 24， 32
-     * @return
      */
     public static String encryptAES(String content, String key) {
         try {
@@ -90,9 +85,7 @@ public class EncryptUtils {
     /**
      * 对称AES解密  ECB方式
      *
-     * @param content
      * @param key     128 192 256位  即Key长度为 16, 24， 32
-     * @return
      */
     public static String decryptAES(String content, String key) {
         try {
