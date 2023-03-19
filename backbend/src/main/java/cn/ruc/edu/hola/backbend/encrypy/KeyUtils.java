@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.backbend.rsa;
+package cn.ruc.edu.hola.backbend.encrypy;
 
 import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;

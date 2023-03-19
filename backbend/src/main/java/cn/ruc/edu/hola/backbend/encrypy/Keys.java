@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.backbend.rsa;
+package cn.ruc.edu.hola.backbend.encrypy;
 
 /**
  * hold for simple usage

@@ -1,8 +1,8 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.dh.DHCoder;
-import cn.ruc.edu.hola.backbend.rsa.Keys;
-import cn.ruc.edu.hola.backbend.rsa.RSAUtils;
+import cn.ruc.edu.hola.backbend.encrypy.Keys;
+import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
 
 public class DHProxy extends AbstractProxy {
     @Override
