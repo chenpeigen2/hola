@@ -17,6 +17,8 @@ dependencies {
     implementation("io.vertx:vertx-web-validation:4.4.0")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+    // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
+    implementation("cn.hutool:hutool-crypto:5.8.15")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
 }
