@@ -11,7 +11,7 @@ public class CouchVerticle extends AbstractVerticle {
 
     final static int PORT = 8080;
 
-    final ProxyMethods proxyMethods = new DHProxy();
+    final Proxy proxyMethods = new EncryptProxy();
 
     @Override
     public void start() {
@@ -27,6 +27,7 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/delete_doc").handler(this::deleteDoc);
         router.get("/_find").handler(this::filterDocs);
         router.get("/_index").handler(this::createIndex);
+        router.get("/_auth").handler(this::auth);
 
         server.requestHandler(router).listen(PORT);
     }
@@ -55,6 +56,30 @@ public class CouchVerticle extends AbstractVerticle {
         try {
             out(ctx, proxyMethods.createDb(dataBaseName));
         } catch (NumberFormatException e) {
+            ctx.fail(400);
+        }
+    }
+
+    private void auth(RoutingContext ctx) {
+        String key = ctx.request().getParam("key");
+        try {
+            boolean acquired = proxyMethods.acquireAESKey(key);
+            if (acquired) {
+                out(ctx, """
+                        {
+                            "ok": true
+                        }
+                        """);
+
+            } else {
+                out(ctx, """
+                        {
+                            "ok": false
+                        }
+                        """);
+
+            }
+        } catch (Exception e) {
             ctx.fail(400);
         }
     }

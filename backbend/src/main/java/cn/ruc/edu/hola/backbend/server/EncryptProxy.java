@@ -1,10 +1,11 @@
 package cn.ruc.edu.hola.backbend.server;
 
+import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.backbend.encrypy.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
 
-public class DHProxy extends AbstractProxy {
+public class EncryptProxy extends AbstractProxy {
     @Override
     public String createDb(String databaseName) {
         try {
@@ -173,5 +174,15 @@ public class DHProxy extends AbstractProxy {
 
         }
         return null;
+    }
+
+    private String mAesKey;
+
+    @Override
+    public boolean acquireAESKey(String encryptedRSAText) {
+        String aesKey = EncryptUtils.rsaDecrypt(encryptedRSAText, EncryptUtils.RSA_PRIVATE_KEY);
+        if (aesKey == null) return false;
+        this.mAesKey = aesKey;
+        return true;
     }
 }

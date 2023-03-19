@@ -1,6 +1,6 @@
 package cn.ruc.edu.hola.backbend.server;
 
-public interface ProxyMethods {
+public interface Proxy {
     String uuids(int cnt);
 
     String createDb(String databaseName);
@@ -28,4 +28,7 @@ public interface ProxyMethods {
     String filterDocs(String databaseName, String filter);
 
     String createIndex(String databaseName, String info);
+
+    /** auth for get the aes key **/
+    boolean acquireAESKey(String encryptedRSAText);
 }

@@ -5,7 +5,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public abstract class AbstractProxy implements ProxyMethods {
+public abstract class AbstractProxy implements Proxy {
 
     CouchDBUtils couchDBUtils = new CouchDBUtils("127.0.0.1", 5984, "admin", "password");
 
@@ -178,8 +178,12 @@ public abstract class AbstractProxy implements ProxyMethods {
     }
 
     public static void main(String[] args) {
-        ProxyMethods methods = new AbstractProxy() {
+        Proxy methods = new AbstractProxy() {
 
+            @Override
+            public boolean acquireAESKey(String encryptedRSAText) {
+                return false;
+            }
         };
         var xx = methods.createDb("xxxx1");
         System.out.println("================");
