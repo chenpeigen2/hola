@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.backbend.encrypy;
 
 import java.io.UnsupportedEncodingException;
 
+@Deprecated
 public class Base64 {
     /**
      * Chunk size per RFC 2045 section 6.8.
