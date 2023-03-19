@@ -51,6 +51,18 @@ std::string RsaPubEncrypt(const std::string &clear_text, const std::string &pub_
 
 std::string RsaPriDecrypt(const std::string &cipher_text, const std::string &pri_key);
 
+std::string decrypt(const unsigned char *src, size_t src_len,
+                    const unsigned char *pri_key, size_t key_len);
+
+std::string encrypt(const unsigned char *src, size_t src_len,
+                    const unsigned char *pub_key, size_t key_len);
+
+void createRSAKey(std::string &pub_key_str, std::string &pri_key_str);
+
+std::string decode(const char *src, size_t src_len);
+
+std::string encode(const char *src, size_t src_len);
+
 #if defined(__cplusplus)
 }
 #endif
