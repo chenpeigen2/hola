@@ -40,6 +40,13 @@
 extern "C" {
 #endif
 
+/**
+* 填充模式
+*/
+enum PaddingModel {
+    ZERO,  //ZERO pading
+    PKCS5OR7 //pkcs5 pkcs7 padding
+};
 
 void GenerateRSAKey(std::string &out_pub_key, std::string &out_pri_key);
 
@@ -62,6 +69,13 @@ void createRSAKey(std::string &pub_key_str, std::string &pri_key_str);
 std::string decode(const char *src, size_t src_len);
 
 std::string encode(const char *src, size_t src_len);
+
+std::string ecb_encrypt(const char *src,
+                        const unsigned char *key, size_t key_len,
+                        PaddingModel mode);
+
+std::string ecb_decrypt(const char *src, size_t src_len,
+                        const unsigned char *key, size_t key_len);
 
 #if defined(__cplusplus)
 }

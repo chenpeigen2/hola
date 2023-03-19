@@ -177,14 +177,19 @@ void ecall_start_tls_server(void) {
     printf("decrypt: len=%d\n", decrypt_text.length());
     printf("decrypt: %s\n", decrypt_text.c_str());
 
-
+    // test RSA
     char *data = "ABCDEFGHIJ123456";
-
     auto abc = encrypt((unsigned char *) data, strlen(data),
                        (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
-
-
     printf("encoded string: %s\n", encode(abc.c_str(), abc.length()).c_str());
+
+    // test AES
+    std::string src = "123ABC";
+    std::string aesKey = "0123456789abcdefghijklmn";
+    std::string ecb_aes = ecb_encrypt(src.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                                      strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
+    printf("encoded aes string: %s\n", encode(ecb_aes.c_str(), ecb_aes.length()).c_str());
+
 
 //    std::cout << encode(abc.c_str(), abc.length()) << std::endl;
 
