@@ -1,6 +1,6 @@
 package cn.ruc.edu.hola.backbend;
 
-import cn.ruc.edu.hola.backbend.dh.DHCoder;
+import cn.ruc.edu.hola.backbend.encrypy.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
 import okhttp3.HttpUrl;
@@ -93,7 +93,7 @@ public class VerticleTest {
 
     {
         try {
-            complexQuery = DHCoder.encrypt(complexQuery, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
+            complexQuery = DHCoder.encrypt(complexQuery, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -103,7 +103,7 @@ public class VerticleTest {
 
     {
         try {
-            complex_db_name = DHCoder.encrypt(complex_db_name, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV);
+            complex_db_name = DHCoder.encrypt(complex_db_name, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -123,7 +123,7 @@ public class VerticleTest {
             System.out.println(str);
             System.out.println("query end");
             System.out.println("query decrypt start");
-            System.out.println(DHCoder.decrypt(str, cn.ruc.edu.hola.backbend.dh.Keys.PUB, cn.ruc.edu.hola.backbend.dh.Keys.SELF_PRIV));
+            System.out.println(DHCoder.decrypt(str, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV));
             System.out.println("query decrypt end");
         } catch (Exception e) {
             throw new RuntimeException(e);
