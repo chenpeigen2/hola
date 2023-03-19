@@ -183,6 +183,7 @@ public class EncryptProxy extends AbstractProxy {
         String aesKey = EncryptUtils.rsaDecrypt(encryptedRSAText, EncryptUtils.RSA_PRIVATE_KEY);
         if (aesKey == null) return false;
         this.mAesKey = aesKey;
+        System.err.println(mAesKey);
         return true;
     }
 }

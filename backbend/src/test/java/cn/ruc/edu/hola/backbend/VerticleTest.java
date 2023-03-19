@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend;
 
+import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.backbend.encrypy.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
@@ -73,6 +74,20 @@ public class VerticleTest {
     public void testDeleteDB() {
         var url = getBaseUrlBuilder().addPathSegment("delete_db")
                 .addQueryParameter("name", db_name).build();
+        var r = new Request.Builder().url(url).get().build();
+        try {
+            var res = client.newCall(r).execute();
+            System.out.println(res.body().string());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void testAuth() {
+        var url = getBaseUrlBuilder().addPathSegment("_auth")
+                .addQueryParameter("key", EncryptUtils.rsaEncrypt("0123456789abcdefghijklmn", EncryptUtils.RSA_PUBLIC_KEY))
+                .build();
         var r = new Request.Builder().url(url).get().build();
         try {
             var res = client.newCall(r).execute();
