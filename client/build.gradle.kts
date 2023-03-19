@@ -1,8 +1,8 @@
 plugins {
-    id("java")
+    kotlin("jvm") version "1.8.10"
 }
 
-group = "cn.ruc.edu.client"
+group = "cn.ruc.edu.hola.client"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -16,4 +16,16 @@ dependencies {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+    options.isIncremental = true
+    options.isFork = true
+    options.isFailOnError = true
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
+    kotlinOptions.jvmTarget = "17"
 }
