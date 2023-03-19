@@ -12,36 +12,6 @@
 
 #define KEY_LENGTH  2048             // 密钥长度
 
-std::string encode(const char *src, size_t src_len) {
-    BIO *bmem, *b64;
-    BUF_MEM *bptr;
-    b64 = BIO_new(BIO_f_base64());
-    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);//不换行
-    bmem = BIO_new(BIO_s_mem());
-    b64 = BIO_push(b64, bmem);
-    BIO_write(b64, src, src_len);
-    BIO_flush(b64);
-    BIO_get_mem_ptr(b64, &bptr);
-    std::string str_result(bptr->data, bptr->length);
-
-    BIO_free_all(b64);
-    return str_result;
-}
-
-std::string decode(const char *src, size_t src_len) {
-    BIO *b64, *bmem;
-    b64 = BIO_new(BIO_f_base64());
-    BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);//不换行
-    bmem = BIO_new_mem_buf(src, src_len);
-    bmem = BIO_push(b64, bmem);
-
-    size_t decode_len = src_len * 3 / 4; //解码出的数据长度 <= 原长度 3/4
-    std::string str_result(decode_len, 0);
-    BIO_read(b64, (void *) str_result.c_str(), decode_len);
-    BIO_free_all(bmem);
-    return str_result;
-}
-
 std::string encrypt(const unsigned char *src, size_t src_len,
                     const unsigned char *pub_key, size_t key_len) {
     BIO *keybio = nullptr;
@@ -124,7 +94,6 @@ void createRSAKey(std::string &pub_key_str, std::string &pri_key_str) {
     pub_key_str.assign(pub_key, pub_len);
     pri_key_str.assign(pri_key, pri_len);
 }
-
 
 
 /*
