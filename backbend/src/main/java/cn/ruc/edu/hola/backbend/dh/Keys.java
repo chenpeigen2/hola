@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.dh;
 
+@Deprecated
 public interface Keys {
     String SELF_PUB = """
             MIIBJDCBmQYJKoZIhvcNAQMBMIGLAoGBAP//////////yQ/aoiFowjTExmKLgNwc0SkCTgiKZ8x0

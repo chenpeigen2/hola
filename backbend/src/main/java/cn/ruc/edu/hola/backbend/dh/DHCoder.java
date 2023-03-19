@@ -18,7 +18,7 @@ import javax.crypto.interfaces.DHPrivateKey;
 import javax.crypto.interfaces.DHPublicKey;
 import javax.crypto.spec.DHParameterSpec;
 
-
+@Deprecated
 public class DHCoder {
     public static final String ALGORITHM = "DH";
 
