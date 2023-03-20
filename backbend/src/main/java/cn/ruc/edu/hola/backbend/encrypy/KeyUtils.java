@@ -4,10 +4,14 @@ import org.bouncycastle.asn1.ASN1InputStream;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;
 import org.bouncycastle.asn1.x509.RSAPublicKeyStructure;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.util.io.pem.PemReader;
 
+import java.io.StringReader;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Security;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.RSAPublicKeySpec;
@@ -54,12 +58,11 @@ public final class KeyUtils {
 
     public static void main(String[] args) {
         pemKey2DerKey();
-        try {
-            var str = readPublicKey();
-            System.out.println(str);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            readPublicKey();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     /**
@@ -122,15 +125,24 @@ public final class KeyUtils {
         }
     }
 
-    public static String readPublicKey() throws Exception {
-        String key = PUBLICKEY.replaceAll("\\s", "");
+    public static void readPublicKey() throws Exception {
+        Security.addProvider(new BouncyCastleProvider());
+        String pemKey = """
+                -----BEGIN RSA PUBLIC KEY-----
+                MIGHAoGBAOO43lW9f/hemHfYaI1yaNb+rFv1R322dICohQxtszLu4NmgA5/W39k0
+                cFBLdmkUcnXiVfL0pe9ySdFMWWFvC2M3+cpsx7LKFTTN3+zc+1bIBU4/22g5JfEy
+                O4QOlhZ1bb8jn6+qCKMsbzJZR2IKdwGmHJ5YorNzx8bv9uxQVPkLAgED
+                -----END RSA PUBLIC KEY-----
+                """;
+        PemReader pemReader = new PemReader(new StringReader(pemKey));
+        var rsaPubKey = pemReader.readPemObject();
 
-        byte[] encoded =
-                java.util.Base64.getMimeDecoder().decode(PUBLICKEY.getBytes());
 
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
-        var key1 = (RSAPublicKey) keyFactory.generatePublic(keySpec);
-        return java.util.Base64.getEncoder().encodeToString(key1.getEncoded());
+
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(rsaPubKey.getContent());
+        PublicKey publicKey = KeyFactory.getInstance("RSA").generatePublic(keySpec);
+
+//        System.out.println("Public key: " + publicKey.getEncoded());
     }
 }
+
