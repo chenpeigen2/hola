@@ -15,6 +15,10 @@ public class EncryptUtils {
     public static String RSA_PUBLIC_KEY = "MIGdMA0GCSqGSIb3DQEBAQUAA4GLADCBhwKBgQC2a7bm+na9YhCfiWYZU7x+99MktMW9el8sjd+v0AEtth95Nh/6f7Wzc9ydwsuOJSu8OKDWnTsEYCE4wyJ4Zmw6nCpRYiO1zwgt+dRLm7IIhdcjsI1SjLLyptToJJ1ab2E3dq6Ck1ifMpJ36lj8cLAFLKRqW8edSbf87mFyxYZY/wIBAw==";
     public static String RSA_PRIVATE_KEY = "MIIBNgIBADANBgkqhkiG9w0BAQEFAASCASAwggEcAgEAAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgEAAoGAeZ0kmfxPKOwLFQZEEOJ9qfqMwyMuflGUyF6VH+AAySQU+3lqpv/Od6KTE9cyXsNyfXsV5GjSAurA0IIW+u7y0Jy+0IJuCTCt7vZwa4v+CA3Qy8sVBkbCve0KaFZIAYmdLKDfPOrKJRrLUVOoEM2oaaVfIvAhwLOqpBUmVwGa/zsCAQACAQACAQACAQACAQA=";
 
+    static {
+        RSA_PUBLIC_KEY = "MIGdMA0GCSqGSIb3DQEBAQUAA4GLADCBhwKBgQDjuN5VvX/4Xph32GiNcmjW/qxb9Ud9tnSAqIUMbbMy7uDZoAOf1t/ZNHBQS3ZpFHJ14lXy9KXvcknRTFlhbwtjN/nKbMeyyhU0zd/s3PtWyAVOP9toOSXxMjuEDpYWdW2/I5+vqgijLG8yWUdiCncBphyeWKKzc8fG7/bsUFT5CwIBAw==";
+        RSA_PRIVATE_KEY = "MIIBNwIBADANBgkqhkiG9w0BAQEFAASCASEwggEdAgEAAoGBAOO43lW9f/hemHfYaI1yaNb+rFv1R322dICohQxtszLu4NmgA5/W39k0cFBLdmkUcnXiVfL0pe9ySdFMWWFvC2M3+cpsx7LKFTTN3+zc+1bIBU4/22g5JfEyO4QOlhZ1bb8jn6+qCKMsbzJZR2IKdwGmHJ5YorNzx8bv9uxQVPkLAgEAAoGBAJfQlDko//rpuvqQRbOhmzn/HZKjhP55owBwWLLzzMyfQJEVV7/klTt4SuAyTvC4TE6W4/dNw/T22+DdkOufXOuOBTa+Ra6M6VHuuy11Kn2y3JLOWMC7jIiFvdC8JiBfJXvCySTIM49krIUEK8wmC5rGSCkjoKKCD1OQFAZdHwtrAgEAAgEAAgEAAgEAAgEA";
+    }
 
     /**
      * 如果需要在后台使用将Base64换成后台的Base64即可
@@ -64,7 +68,7 @@ public class EncryptUtils {
     /**
      * 对称AES加密 ECB方式
      *
-     * @param key     128 192 256位  即Key长度为 16, 24， 32
+     * @param key 128 192 256位  即Key长度为 16, 24， 32
      */
     public static String encryptAES(String content, String key) {
         try {
@@ -85,7 +89,7 @@ public class EncryptUtils {
     /**
      * 对称AES解密  ECB方式
      *
-     * @param key     128 192 256位  即Key长度为 16, 24， 32
+     * @param key 128 192 256位  即Key长度为 16, 24， 32
      */
     public static String decryptAES(String content, String key) {
         try {
@@ -104,14 +108,14 @@ public class EncryptUtils {
 
     public static void testRsa() {
         //实际开发中RSA是加密AES的KEY使用, 注意1024生成的KEY加密长度限制
-        String data = "ABCDEFGHIJ123456";
+        String data = "helloABCDEFGHIJ123456";
         try {
 //            String jniRsa = Encrypts.rsaEncrypt(data);
 //            String jniData = Encrypts.rsaDecrypt(jniRsa);
             String javaRsa = EncryptUtils.rsaEncrypt(data, RSA_PUBLIC_KEY);
             String javaData = EncryptUtils.rsaDecrypt(javaRsa, RSA_PRIVATE_KEY);
 
-            var zzz = EncryptUtils.rsaDecrypt("E050BoSpU6ZTiv4XwrSUdAqk4wCdWKAhqflcbPbt1/QELAJeWX+p754OVTQA7r0M6aNW1Cj24/Ca7tDZHhbtFjbfavxVQlo/iFGhR8HG4OEFx5O5hROHo8IgmY827YtebEa6fbcSQIu+biHwkfhXhJ+a2eBVGPbkzAdUm6C5RlI=", RSA_PRIVATE_KEY);
+            var zzz = EncryptUtils.rsaDecrypt("h6wNHjcPK+jFEDCJqCgjiuyyB0fBM4hFFxWvqV5mPI1InAmNJl+Jad7YGl+2GAZBMy2s7rvm8zkLRqWCNJ5zLQEdh+hnSeIRZFhRix7woEQKnpa/qVq8YF5xuq/NFTM6w1omZEODxbIA59qS6SMehloqMrfIqg4O0orROHXOdjQ=", RSA_PRIVATE_KEY);
 
             System.out.println(zzz);
             System.out.println("zoooooo");

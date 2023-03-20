@@ -24,24 +24,42 @@ public final class KeyUtils {
     /**
      * 下面的key是 C端生成的openssl的KEY, 是PEM需要转换成der
      */
-    private static final String PUBLICKEY = "MIGHAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz\n3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm\n1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgED";
-    private static final String PRIVATE_KEY = "MIICWwIBAAKBgQC2a7bm+na9YhCfiWYZU7x+99MktMW9el8sjd+v0AEtth95Nh/6\nf7Wzc9ydwsuOJSu8OKDWnTsEYCE4wyJ4Zmw6nCpRYiO1zwgt+dRLm7IIhdcjsI1S\njLLyptToJJ1ab2E3dq6Ck1ifMpJ36lj8cLAFLKRqW8edSbf87mFyxYZY/wIBAwKB\ngHmdJJn8TyjsCxUGRBDifan6jMMjLn5RlMhelR/gAMkkFPt5aqb/zneikxPXMl7D\ncn17FeRo0gLqwNCCFvru8tCcvtCCbgkwre72cGuL/ggN0MvLFQZGwr3tCmhWSAGJ\nnSyg3zzqyiUay1FTqBDNqGmlXyLwIcCzqqQVJlcBmv87AkEA5grvj0F75uSHzzOn\n90FSim17VXWNVzr7iSerg6nAFnrTqk/dOe0/KYQ1O9gi1ZWvPPFdpI+YRbCfZaOi\nBpI6PQJBAMsBKQ89LB8ev7j4AlJzqeawdqp4O8tT2jodoB+HmAp6oNsPyfk8KGDd\nSLEEwGadt3ekWE8FY/aHZ2kETjyLn+sCQQCZXJ+01lKZ7a/fd8VPgOGxnlI4+Qjk\n0f0GGnJXxoAO/I0cNT4mniobrXjSkBc5DnTTS5PDCmWDyxTubRavDCbTAkEAh1Yb\nX34dahR/0KVW4aJxRHWkcaV9Mjfm0WkValplXFHAkgqGpiga6z4wdgMq7xPPpRg6\n31jtTwTvm1g0KF0VRwJAY0rj3NWey/4apiEdrNV143w83iQtFTDliKXB8voAxk6y\npZkunO7IzRcbnC2+132e0/G9LdLGbVqgHO4i2leMYw==";
+    private static String PUBLICKEY = "MIGHAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz\n3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm\n1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgED";
+    private static String PRIVATE_KEY = "MIICWwIBAAKBgQC2a7bm+na9YhCfiWYZU7x+99MktMW9el8sjd+v0AEtth95Nh/6\nf7Wzc9ydwsuOJSu8OKDWnTsEYCE4wyJ4Zmw6nCpRYiO1zwgt+dRLm7IIhdcjsI1S\njLLyptToJJ1ab2E3dq6Ck1ifMpJ36lj8cLAFLKRqW8edSbf87mFyxYZY/wIBAwKB\ngHmdJJn8TyjsCxUGRBDifan6jMMjLn5RlMhelR/gAMkkFPt5aqb/zneikxPXMl7D\ncn17FeRo0gLqwNCCFvru8tCcvtCCbgkwre72cGuL/ggN0MvLFQZGwr3tCmhWSAGJ\nnSyg3zzqyiUay1FTqBDNqGmlXyLwIcCzqqQVJlcBmv87AkEA5grvj0F75uSHzzOn\n90FSim17VXWNVzr7iSerg6nAFnrTqk/dOe0/KYQ1O9gi1ZWvPPFdpI+YRbCfZaOi\nBpI6PQJBAMsBKQ89LB8ev7j4AlJzqeawdqp4O8tT2jodoB+HmAp6oNsPyfk8KGDd\nSLEEwGadt3ekWE8FY/aHZ2kETjyLn+sCQQCZXJ+01lKZ7a/fd8VPgOGxnlI4+Qjk\n0f0GGnJXxoAO/I0cNT4mniobrXjSkBc5DnTTS5PDCmWDyxTubRavDCbTAkEAh1Yb\nX34dahR/0KVW4aJxRHWkcaV9Mjfm0WkValplXFHAkgqGpiga6z4wdgMq7xPPpRg6\n31jtTwTvm1g0KF0VRwJAY0rj3NWey/4apiEdrNV143w83iQtFTDliKXB8voAxk6y\npZkunO7IzRcbnC2+132e0/G9LdLGbVqgHO4i2leMYw==";
 
-
-    static final String test_key = """
-            MIIBCAKCAQEAu4wnXhSe1bJueEaXkt6Pjp9vLuotCLa3RXUkiHA9lzSu9RB5ES75
-            n2cz4o/CQXmi6Mfpyk499p9J/b9SGx3cqdhHcmwocc/RyhpROBaAlF4b1aSIriL/
-            SB3LSkIkdZnfBlNPdOmSrq7ESg13/NH4g5wHwDsDRHTL9OzOr72408g5m6LOv4q9
-            nTQxKUxPa6O8c7gIDR9Yh7zRcdc/nibwYhqICzKQJaSBqnMs/WRVAuSo6OhOZBzM
-            u7qCWfNWJSw0Db9X3roS1lfWp/WfK6iTHrPj70NP+vUgEcLdXAORdYcC5jkiAqmf
-            dYBp9wSfoqoIW1duxdMaBcqYOaqgtscIlQIBAw==
-            """;
+    //    https://stackoverflow.com/questions/4032985/how-do-we-convert-a-string-from-pem-to-der-format
+    static {
+        PRIVATE_KEY = """
+                MIICXAIBAAKBgQDjuN5VvX/4Xph32GiNcmjW/qxb9Ud9tnSAqIUMbbMy7uDZoAOf
+                1t/ZNHBQS3ZpFHJ14lXy9KXvcknRTFlhbwtjN/nKbMeyyhU0zd/s3PtWyAVOP9to
+                OSXxMjuEDpYWdW2/I5+vqgijLG8yWUdiCncBphyeWKKzc8fG7/bsUFT5CwIBAwKB
+                gQCX0JQ5KP/66br6kEWzoZs5/x2So4T+eaMAcFiy88zMn0CRFVe/5JU7eErgMk7w
+                uExOluP3TcP09tvg3ZDrn1zrjgU2vkWujOlR7rstdSp9stySzljAu4yIhb3QvCYg
+                XyV7wskkyDOPZKyFBCvMJguaxkgpI6Cigg9TkBQGXR8LawJBAPT1NLxfn0wiJErw
+                CxgQes7rT2X/zjPI+gkI38B1F7xST14xB0DyG539gST3TunJUo4EkWfd8AhYjEHR
+                SNeOeRsCQQDt/MOS/42qlRWc1x2VKx9szyKkVnjsCipglesz584qYzYhQPE8yTB3
+                bumuDmDnnEbuq887U8+oWD1WB5ntF+7RAkEAo04jKD+/iBbC3KAHZWBR30eKQ//e
+                zTCmsLCVKvi6fYw06XYE1fa9E/5WGKTfRoY3CVhg7+lKsDsIK+DbOl77ZwJBAJ6o
+                gmH/s8cODmiPaQ4cv53fbG2O+0gGxusOnM1FNBxCJBYrS33bdaT0m8le60US2fRy
+                iieNNRrlfjlaZp4P9IsCQEfZSWrOMZD5vb/RRbPYvmhF2o7MadSAQaF61p+iRNhe
+                X72GPqov8VL7zxwi5h3J4/m+0zTGIRMIsiw86VONZpU=""";
+        PUBLICKEY = """
+                MIGHAoGBAOO43lW9f/hemHfYaI1yaNb+rFv1R322dICohQxtszLu4NmgA5/W39k0
+                cFBLdmkUcnXiVfL0pe9ySdFMWWFvC2M3+cpsx7LKFTTN3+zc+1bIBU4/22g5JfEy
+                O4QOlhZ1bb8jn6+qCKMsbzJZR2IKdwGmHJ5YorNzx8bv9uxQVPkLAgED""";
+    }
 
     private KeyUtils() {
     }
 
     public static void main(String[] args) {
         pemKey2DerKey();
+        try {
+            var str = readPublicKey();
+            System.out.println(str);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -54,7 +72,9 @@ public final class KeyUtils {
             System.out.println(der_publicKey.equals(EncryptUtils.RSA_PUBLIC_KEY));
             System.out.println(der_privateKey.equals(EncryptUtils.RSA_PRIVATE_KEY));
             //这就是JAVA端的DER公钥与私钥
-            System.out.println(pemPublicKey2derPublicKey(test_key));
+            System.out.println(der_publicKey);
+//            System.out.println(pemPublicKey2derPublicKey(test_key));
+            System.out.println(der_privateKey);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,16 +123,14 @@ public final class KeyUtils {
     }
 
     public static String readPublicKey() throws Exception {
-        // TODO
-        String publicKeyPEM = PUBLICKEY;
+        String key = PUBLICKEY.replaceAll("\\s", "");
 
         byte[] encoded =
-                java.util.Base64.getMimeDecoder().decode(publicKeyPEM.getBytes());
+                java.util.Base64.getMimeDecoder().decode(PUBLICKEY.getBytes());
 
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(encoded);
-        var key = (RSAPublicKey) keyFactory.generatePublic(keySpec);
-        return java.util.Base64.getEncoder().encodeToString(key.getEncoded());
-
+        var key1 = (RSAPublicKey) keyFactory.generatePublic(keySpec);
+        return java.util.Base64.getEncoder().encodeToString(key1.getEncoded());
     }
 }
