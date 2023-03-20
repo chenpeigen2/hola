@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
-import cn.ruc.edu.hola.backbend.encrypy.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
 
@@ -148,16 +147,16 @@ public class EncryptProxy extends AbstractProxy {
     public String filterDocs(String databaseName, String filter) {
         String result = null;
         try {
-            String de_databaseName = DHCoder.decrypt(databaseName, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
-            String de_filter = DHCoder.decrypt(filter, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
+            String de_databaseName = EncryptUtils.decryptAES(databaseName, mAesKey);
+            String de_filter = EncryptUtils.decryptAES(filter, mAesKey);
             result = super.filterDocs(de_databaseName, de_filter);
             if (result != null) {
                 result = result.trim();
-                result = DHCoder.encrypt(result, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
+                result = EncryptUtils.encryptAES(result, mAesKey);
                 return result;
             }
         } catch (Exception ignored) {
-            System.out.println(ignored.toString());
+
         }
         return result;
     }
