@@ -83,10 +83,12 @@ public class VerticleTest {
         }
     }
 
+    final static String AES_KEY = "0123456789abcdefghijklmn";
+
     @Test
     public void testAuth() {
         var url = getBaseUrlBuilder().addPathSegment("_auth")
-                .addQueryParameter("key", EncryptUtils.rsaEncrypt("0123456789abcdefghijklmn", EncryptUtils.RSA_PUBLIC_KEY))
+                .addQueryParameter("key", EncryptUtils.rsaEncrypt(AES_KEY, EncryptUtils.RSA_PUBLIC_KEY))
                 .build();
         var r = new Request.Builder().url(url).get().build();
         try {
@@ -108,7 +110,7 @@ public class VerticleTest {
 
     {
         try {
-            complexQuery = DHCoder.encrypt(complexQuery, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
+            complexQuery = EncryptUtils.encryptAES(complexQuery, AES_KEY);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -118,7 +120,7 @@ public class VerticleTest {
 
     {
         try {
-            complex_db_name = DHCoder.encrypt(complex_db_name, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV);
+            complex_db_name = EncryptUtils.encryptAES(complex_db_name, AES_KEY);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -138,15 +140,17 @@ public class VerticleTest {
             System.out.println(str);
             System.out.println("query end");
             System.out.println("query decrypt start");
-            System.out.println(DHCoder.decrypt(str, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.PUB, cn.ruc.edu.hola.backbend.encrypy.dh.Keys.SELF_PRIV));
+            System.out.println(EncryptUtils.decryptAES(str, AES_KEY));
             System.out.println("query decrypt end");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-
-    public static void main(String[] args) {
-        System.out.println("hello world");
+    @Test
+    public void testAuthAndComplexQuery() {
+        testAuth();
+        testComplexQuery();
     }
+
 }
