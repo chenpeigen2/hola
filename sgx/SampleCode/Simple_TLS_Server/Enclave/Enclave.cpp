@@ -195,7 +195,7 @@ void ecall_start_tls_server(void) {
     printf("test for curl get begin ---------\n");
     std::string params = "9876543";
 //    std::string response = "5674";
-    char response[] = "1234567890";
+    char response[2000] = "1234567890";
     printf("response before: %s\n", response);
     sgx_curl_get(params.c_str(), response);
     printf("response after: %s\n", response);

@@ -108,7 +108,8 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
 void ocall_curl_get(const char *params, char *response) {
     printf("%s    %s \n", params, response);
 //    memcpy(response, params, strlen(response));
-    strncpy(response, "0987654321", strlen(response));
+    std::string text = "If we continue to fucking someone";
+    strncpy(response, text.c_str(), strlen(text.c_str()));
 }
 
 void ocall_sgx_exit(int e) {
