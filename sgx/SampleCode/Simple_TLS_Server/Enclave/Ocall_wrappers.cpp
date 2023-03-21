@@ -174,6 +174,10 @@ void sgx_save_rsa(const char *publickey, const char *privatekey) {
     ocall_save_rsa(publickey, privatekey);
 }
 
+void sgx_curl_get(const char *params, char *response) {
+    ocall_curl_get(params, response);
+}
+
 void sgx_printe(const char *fname, const char *fmt, ...) {
     char ebuf[BUFSIZ] = {'\0'};
     char buf[BUFSIZ] = {'\0'};

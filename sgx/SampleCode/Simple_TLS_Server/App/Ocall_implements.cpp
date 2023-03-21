@@ -105,6 +105,12 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
     pri_file.close();
 }
 
+void ocall_curl_get(const char *params, char *response) {
+    printf("%s    %s \n", params, response);
+//    memcpy(response, params, strlen(response));
+    strncpy(response, "0987654321", strlen(response));
+}
+
 void ocall_sgx_exit(int e) {
     exit(e);
 }

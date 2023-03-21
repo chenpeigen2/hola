@@ -8,6 +8,7 @@
 #include <string>
 //#include "Utils.h"
 #include <ostream>
+#include <iostream>
 //#include <sys/uio.h>
 
 //static void init_openssl() {
@@ -190,9 +191,15 @@ void ecall_start_tls_server(void) {
                                       strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
     printf("encoded aes string: %s\n", encode(ecb_aes.c_str(), ecb_aes.length()).c_str());
 
-
-//    std::cout << encode(abc.c_str(), abc.length()) << std::endl;
-
+    /** test for curl get **/
+    printf("test for curl get begin ---------\n");
+    std::string params = "9876543";
+//    std::string response = "5674";
+    char response[] = "1234567890";
+    printf("response before: %s\n", response);
+    sgx_curl_get(params.c_str(), response);
+    printf("response after: %s\n", response);
+    printf("test for curl get end ---------\n");
 
 
 //    while (1) {
