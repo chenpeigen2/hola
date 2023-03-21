@@ -33,6 +33,28 @@ void hello_world_curl() {
     std::cout << s << std::endl;
 }
 
+/** auth for the backbend **/
+CURLcode sgx_get(const std::string &url, std::string &response, int timeout) {
+    CURLcode res;
+    CURL *curl;
+    curl = curl_easy_init();
+    struct curl_slist *headers = nullptr;
+    headers = curl_slist_append(headers, "Content-Type:application/json;charset=UTF-8");
+    if (curl == nullptr) {
+        return CURLE_FAILED_INIT;
+    }
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT_MS, timeout);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);//设置回调函数
+    std::stringstream out;
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
+    res = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+    response = out.str();
+    return res;
+}
+
 /** for auth only **/
 CURLcode sgx_auth(const std::string &url, const std::string &data, std::string &response, int timeout) {
     CURLcode res;
@@ -111,4 +133,14 @@ void sgx_curl_test() {
     std::cout << res << std::endl;
     std::cout << response << std::endl;
 
+
+    /** test for get the curl data from the backbend **/
+    std::cout << "begin test for Auth" << std::endl;
+    url = "http://127.0.0.1:8080/_auth?key=dYZSucg1Yt0ZZ8ZC9UFA0463r06pGLzNCBTnrXw%2F5bi59I23d%2FXJqttBNnuSHXE8rQTBLjAHoI%2BRffRDDhLhHBL1OYse1eLlqDiRG8qCM34ObJZb6c1MZzGgwU2Ek6jXpAzfXpqr%2BbMQJ2UPfYL0vOMPyfgYLj0o5f5oXII9II8%3D";
+    sgx_get(url, response, 300);
+    std::cout << response << std::endl;
+    url = "http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs%2BbrYw%3D%3D&filter=mMksrdiK%2Ba2gsXr7zZoMRPT06wcXxHhQ6OyXLzsVVBQYCvY9k9sElFXtPphQHH1rYnvIpPk7jIVZY9fUQJPoZyRYz%2FF3B7PvyzBv6IEHVfJjCxeiTcd%2F14DO%2BcW%2B3WiC";
+    sgx_get(url, response, 300);
+    std::cout << response << std::endl;
+    std::cout << "end test for Auth" << std::endl;
 }
