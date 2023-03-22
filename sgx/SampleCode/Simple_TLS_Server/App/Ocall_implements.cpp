@@ -2,6 +2,9 @@
 #include "Enclave_u.h"
 #include <fstream>
 #include <cstring>
+#include <string>
+#include <iostream>
+#include "App.h"
 
 #define PUB_KEY_FILE "pubkey.pem"
 #define PRI_KEY_FILE "prikey.pem"
@@ -110,6 +113,11 @@ void ocall_curl_get(const char *params, char *response) {
 //    memcpy(response, params, strlen(response));
     std::string text = "If we continue to fucking someone";
     strncpy(response, text.c_str(), strlen(text.c_str()));
+    /** test for curl get **/
+    std::cout << "wtffffffffffffffffffff start" << std::endl;
+    std::string get_response = "WWWWWWWWWWWWWWWWWWWWwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuWWWWWWWWWWWWWWWWWWWW";
+    ecall_curl_get_response(global_eid, get_response.c_str());
+    std::cout << "wtffffffffffffffffffff end" << std::endl;
 }
 
 void ocall_sgx_exit(int e) {

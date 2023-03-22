@@ -254,7 +254,7 @@ main(int argc, char *argv[]) {
     ecall_generate_rsa(global_eid);
 
     /** test for curl get **/
-    std::string get_response = "wuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
+    std::string get_response = "Wwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
     ecall_curl_get_response(global_eid, get_response.c_str());
 
     {
