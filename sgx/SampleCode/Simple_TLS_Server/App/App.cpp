@@ -48,6 +48,7 @@
 #include "JWT.h"
 #include "Utils.h"
 #include <iostream>
+#include <string>
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -251,6 +252,10 @@ main(int argc, char *argv[]) {
 
     /* generate the rsa */
     ecall_generate_rsa(global_eid);
+
+    /** test for curl get **/
+    std::string get_response = "wuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
+    ecall_curl_get_response(global_eid, get_response.c_str());
 
     {
         std::string s1 = "1234567890";
