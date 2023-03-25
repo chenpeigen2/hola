@@ -10,6 +10,7 @@ enclave {
 		public void ecall_hello_world_string(void);
 		public void ecall_pointer_string([in, out, string] char *str);
 		public void ecall_generate_rsa();
+		public void ecall_curl_get([in, string] const char *request, [out] char *response);
 		public void ecall_curl_get_response([in, string] const char *response);
 	};
 

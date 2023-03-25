@@ -1,6 +1,8 @@
 #include "Enclave_t.h"
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
+#include "string.h"
+#include <cstring>
 #include <openssl/ssl.h>
 #include <openssl/x509.h>
 #include <openssl/pem.h>
@@ -113,6 +115,13 @@
 
 void ecall_hello_world_string() {
     printf("ecall_hello_world_string\n");
+}
+
+void ecall_curl_get(const char *request, char *response) {
+//    char res[] = "0987654321";
+    std::string res = "we are preparing the data from the usage of curl";
+    strncpy(response, res.c_str(), 100);
+//    strcat(response, res.c_str(), strlen(res.c_str()));
 }
 
 

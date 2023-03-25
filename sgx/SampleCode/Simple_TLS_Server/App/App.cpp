@@ -257,6 +257,15 @@ main(int argc, char *argv[]) {
     std::string get_response = "Wwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
     ecall_curl_get_response(global_eid, get_response.c_str());
 
+    std::string request = "wtffffffffffffffffff";
+//    char response[] = "abcdefghijklmnopqrstuvwxyz";
+    char response[1000];
+    ecall_curl_get(global_eid, request.c_str(), response);
+    std::cout << "========response start =======" << std::endl;
+    std::cout << response << std::endl;
+    std::cout << "========response end   =======" << std::endl;
+
+
     {
         std::string s1 = "1234567890";
         int len = s1.length();
