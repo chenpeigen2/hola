@@ -12,6 +12,7 @@ enclave {
 		public void ecall_generate_rsa();
 		public void ecall_curl_get([in, string] const char *request, [out] char *response);
 		public void ecall_curl_get_response([in, string] const char *response);
+		public char *ecall_test();
 	};
 
 	untrusted {

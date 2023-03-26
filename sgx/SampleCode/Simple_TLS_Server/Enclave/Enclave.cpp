@@ -136,6 +136,19 @@ void ecall_curl_get_response(const char *response) {
     printf("response return the data from the APP side: %s\n", response);
 }
 
+char *ecall_test() {
+    std::string str = "we are now prepare the data from the usage of the encalve side,"
+                      ""
+                      "and it fucking worked all right , we are so excited to annouce"
+                      "that we fucking did it";
+    int len = str.length();
+    char *p = new char[len];
+    for (int i = 0; i < len; ++i) {
+        p[i] = str.at(i);
+    }
+    return p;
+}
+
 void ecall_generate_rsa() {
     std::string pub_key;
     std::string pri_key;

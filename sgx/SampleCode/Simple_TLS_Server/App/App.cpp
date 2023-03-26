@@ -267,6 +267,13 @@ main(int argc, char *argv[]) {
 
 
     {
+        char *response;
+        ecall_test(global_eid, &response);
+        printf("the response %s\n", response);
+    }
+
+
+    {
         std::string s1 = "1234567890";
         int len = s1.length();
         char str1[len];
