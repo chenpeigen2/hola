@@ -247,9 +247,6 @@ main(int argc, char *argv[]) {
     /* Start TLS Server in Enclave */
     ecall_start_tls_server(global_eid);
 
-    /* start the hello world */
-    ecall_hello_world_string(global_eid);
-
     /* generate the rsa */
     ecall_generate_rsa(global_eid);
 

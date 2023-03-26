@@ -11,10 +11,6 @@
 #include <ostream>
 #include <iostream>
 
-void ecall_hello_world_string() {
-    printf("ecall_hello_world_string\n");
-}
-
 void ecall_curl_get(const char *request, char *response) {
 }
 
