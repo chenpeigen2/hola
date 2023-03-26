@@ -49,6 +49,7 @@
 #include "Utils.h"
 #include <iostream>
 #include <string>
+#include "Utils.h"
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -257,11 +258,14 @@ main(int argc, char *argv[]) {
     {
         /** test for curl get API **/
         char *response;
+        std::string res;
         std::string url = "url";
         std::string request = "wtffffffffffffffffff";
         ecall_curl_get(global_eid, &response, url.c_str(), request.c_str());
         std::cout << "========response start =======" << std::endl;
         printf("the response %s\n", response);
+        toString(response, res);
+        std::cout << res << std::endl;
         std::cout << "========response end   =======" << std::endl;
     }
 
