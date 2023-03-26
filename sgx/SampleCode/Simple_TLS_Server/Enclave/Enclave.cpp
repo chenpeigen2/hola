@@ -119,8 +119,8 @@ void ecall_hello_world_string() {
 
 void ecall_curl_get(const char *request, char *response) {
 //    char res[] = "0987654321";
-    std::string res = "we are preparing the data from the usage of curl";
-    strncpy(response, res.c_str(), 100);
+//    std::string res = "we are preparing the data from the usage of curl";
+//    strncpy(response, res.c_str(), 100);
 //    strcat(response, res.c_str(), strlen(res.c_str()));
 }
 
