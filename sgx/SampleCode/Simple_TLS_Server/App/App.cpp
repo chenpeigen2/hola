@@ -272,22 +272,6 @@ main(int argc, char *argv[]) {
         printf("the response %s\n", response);
     }
 
-
-    {
-        std::string s1 = "1234567890";
-        int len = s1.length();
-        char str1[len];
-        transform(str1, s1, len);
-
-        /* ecall from the string */
-        ret = ecall_pointer_string(global_eid, str1);
-        if (ret != SGX_SUCCESS)
-            abort();
-        assert(strlen(str1) == 10 && memcmp(str1, "0987654321", strlen(str1)) == 0);
-        toString(str1, s1);
-        std::cout << s1 << std::endl;
-    }
-
     printf("we are now preparing the app side data ====================== \n");
     proxy.makeRouter(); // make a router
     proxy.start(); // start the server

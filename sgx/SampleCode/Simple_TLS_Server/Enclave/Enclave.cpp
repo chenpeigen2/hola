@@ -8,7 +8,6 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 #include <string>
-//#include "Utils.h"
 #include <ostream>
 #include <iostream>
 
@@ -17,14 +16,6 @@ void ecall_hello_world_string() {
 }
 
 void ecall_curl_get(const char *request, char *response) {
-}
-
-
-/* ecall_pointer_string:
- *   [string] defines a string.
- */
-void ecall_pointer_string(char *str) {
-    strncpy(str, "0987654321", strlen(str));
 }
 
 void ecall_curl_get_response(const char *response) {
