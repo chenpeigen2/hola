@@ -4,11 +4,12 @@
 #include "string.h"
 
 char *ecall_curl_get(const char *url, const char *request) {
-    std::string str = "ecall from the curl_get usage";
+    std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
     int len = str.length();
-    printf("the length %s %s %d \n", url, request, len);
-    char *p = new char[len];
+    printf("the length %d \n", len);
+    char *p = new char[len + 1];
     strncpy(p, str.c_str(), len);
+    p[len] = '\0';
     return p;
 }
 

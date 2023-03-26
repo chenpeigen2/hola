@@ -261,20 +261,8 @@ main(int argc, char *argv[]) {
         std::string request = "wtffffffffffffffffff";
         ecall_curl_get(global_eid, &response, url.c_str(), request.c_str());
         std::cout << "========response start =======" << std::endl;
-        std::cout << response << std::endl;
-        std::cout << "========response end   =======" << std::endl;
-    }
-
-
-    {
-        char *response;
-        ecall_test(global_eid, &response);
         printf("the response %s\n", response);
-//
-//        std::string request = "we are fine";
-//        ecall_test_params(global_eid, &response, request.c_str());
-//        printf("the response %s\n", response);
-
+        std::cout << "========response end   =======" << std::endl;
     }
 
     printf("we are now preparing the app side data ====================== \n");
