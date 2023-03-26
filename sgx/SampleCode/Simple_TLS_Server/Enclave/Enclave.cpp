@@ -2,16 +2,14 @@
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
 #include "string.h"
-#include <cstring>
-#include <openssl/ssl.h>
-#include <openssl/x509.h>
-#include <openssl/pem.h>
-#include <openssl/err.h>
-#include <string>
-#include <ostream>
-#include <iostream>
 
-void ecall_curl_get(const char *request, char *response) {
+char *ecall_curl_get(const char *url, const char *request) {
+    std::string str = "ecall from the curl_get usage";
+    int len = str.length();
+    printf("the length %s %s %d \n", url, request, len);
+    char *p = new char[len];
+    strncpy(p, str.c_str(), len);
+    return p;
 }
 
 void ecall_curl_get_response(const char *response) {
@@ -20,6 +18,15 @@ void ecall_curl_get_response(const char *response) {
 
 char *ecall_test() {
     std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
+    int len = str.length();
+    printf("the length %d \n", len);
+    char *p = new char[len];
+    strncpy(p, str.c_str(), len);
+    return p;
+}
+
+char *ecall_test_params(const char *request) {
+    std::string str = "Trust the ecall_test_params";
     int len = str.length();
     printf("the length %d \n", len);
     char *p = new char[len];

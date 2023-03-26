@@ -8,9 +8,10 @@ enclave {
 	trusted {
 		public void ecall_start_tls_server(void);
 		public void ecall_generate_rsa();
-		public void ecall_curl_get([in, string] const char *request, [out] char *response);
+		public char *ecall_curl_get([in, string] const char *url, [in, string] const char *request);
 		public void ecall_curl_get_response([in, string] const char *response);
 		public char *ecall_test();
+		public char *ecall_test_params([in, string] const char *request);
 	};
 
 	untrusted {
