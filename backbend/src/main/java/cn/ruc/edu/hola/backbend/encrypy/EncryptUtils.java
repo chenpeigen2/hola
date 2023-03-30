@@ -142,7 +142,8 @@ public class EncryptUtils {
 //            String jniData = Encrypts.aesEcbDecrypt(jniRes, key);
 //            LogUtils.i("ECB模式 JniAesEnc = %s, JniAesDec = %s", jniRes, jniData);
 
-            var abc = "123ABC";
+            var abc = "fake1";
+            abc = "{\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
 
             String javaRes = EncryptUtils.encryptAES(abc, key);
             String javaData = EncryptUtils.decryptAES(javaRes, key);
@@ -152,13 +153,16 @@ public class EncryptUtils {
 
             System.out.println(javaData);
 
+            System.out.println(decryptAES("MHWAz7lun/x9nQDf64ncsRN0Wp1EJ1v6sPqkSlMF43/jYyz4++ZOX/J0QfIR/WwvGE/roh12tcff6KvPrCf08ZFXb52pwMOQHM/YkeX0EIEPS6+PGGApU/h3QBO9g5+i4Tar9tZRhkVKE0oBqOoB5fPjF5PETPxRsrPyfNRSj0GQLfCcqslyDy6UPCrHQHZtUJjZzpc9EIcYqdhFNM5MCMI+1t7l4UDXRWE1m8xmc7QguCLHNaLRCOWkee7M/lhKeWqRbJTAOTx6EAnvlkb1BbKlGQC/c/MsUJJFcJ6Aa7DJAq6P6j1BTbckA2FwP7vwkr6pAAICFpvykmgUUpVvqDZd8xn/Dc8fLiAjcvlE516ty8yrofG/Buq3CSeS7Yl5NGrKCjNwgQCSfs+YvsKh1RqG/GPkjHG/CRGAfkYkIi9aCbzhybe58tO8qJGbhLBDX8OEbaZATnqZ5HDWKXRiUFkdnDZMzhJogb7Dv50rRT8RKaQTmUMJNuSmwgBy4u4E9IE+uL89qWZlxWZf9cXeG/5g54wvL4AGyt7zXGc35CLsLCUzoEAvn5b/t2nABy/XraMJYiMvh8Q7dMNm9SWj8DU2VUxuBeTx8HWOB6syCoSBOrheV8ZuRgEy1mSJHvd0TSxJfPMO0cedZSpkW+TLGA==",
+                    "0123456789abcdefghijklmn"));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        testRsa();
+//        testRsa();
         testEcbAES();
     }
 }

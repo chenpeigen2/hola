@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.server;
 
+import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
@@ -144,6 +145,10 @@ public class CouchVerticle extends AbstractVerticle {
     public void filterDocs(RoutingContext ctx) {
         String dataBaseName = ctx.request().getParam("db_name");
         String filter = ctx.request().getParam("filter");
+        dataBaseName = dataBaseName.replaceAll(" ", "+");
+        filter = filter.replaceAll(" ", "+");
+        System.out.println(dataBaseName);
+        System.out.println(filter);
         try {
             out(ctx, proxyMethods.filterDocs(dataBaseName, filter));
         } catch (NumberFormatException e) {
