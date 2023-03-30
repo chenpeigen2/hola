@@ -2,6 +2,7 @@
 #include "Enclave_t.h"
 #include "sgx_trts.h"
 #include <cstring>
+#include "string"
 
 long sgx_clock(void) {
     long retv;
@@ -174,8 +175,11 @@ void sgx_save_rsa(const char *publickey, const char *privatekey) {
     ocall_save_rsa(publickey, privatekey);
 }
 
-void sgx_curl_get(const char *params, char *response) {
-    ocall_curl_get(params, response);
+char *sgx_curl_get(const char *params) {
+    char *retrival;
+    ocall_curl_get(&retrival, params);
+    printf("the retrival: %s", retrival);
+    return retrival;
 }
 
 void sgx_printe(const char *fname, const char *fmt, ...) {

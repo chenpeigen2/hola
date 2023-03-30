@@ -34,7 +34,7 @@ enclave {
 		int ocall_sgx_getenv([in,size=envlen]const char *env, int envlen, [out,size=ret_len]char *ret_str,int ret_len);
 		void ocall_print_string([in, string] const char *str);
 		void ocall_save_rsa([in, string] const char *pub, [in, string] const char *prv);
-		void ocall_curl_get([in, string] const char *params, [in, out, string] char *response) allow(ecall_curl_get_response);
+		char *ocall_curl_get([in, string] const char *params) allow(ecall_curl_get_response);
 	};
 
 };

@@ -68,6 +68,14 @@ char *ecall_curl_get(const char *url, const char *request) {
 
     printf("the final url: %s", final_url.c_str());
 
+
+    /** test for curl get **/
+    printf("\ntest for curl get begin ---------\n");
+    std::string params = "9876543";
+
+
+    char *response = sgx_curl_get(params.c_str());
+
     printf("\nwe are done!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
     std::string test1 = "we are ok\"selector\"";
     printf("%s\n", test1.c_str());
@@ -162,13 +170,4 @@ void ecall_start_tls_server(void) {
     std::string ecb_aes = ecb_encrypt(src.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                                       strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
     printf("encoded aes string: %s\n", encode(ecb_aes.c_str(), ecb_aes.length()).c_str());
-
-    /** test for curl get **/
-    printf("test for curl get begin ---------\n");
-    std::string params = "9876543";
-    char response[2000] = {};
-    printf("response before: %s\n", response);
-    sgx_curl_get(params.c_str(), response);
-    printf("response after: %s\n", response);
-    printf("test for curl get end ---------\n");
 }

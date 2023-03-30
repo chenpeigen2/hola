@@ -108,16 +108,25 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
     pri_file.close();
 }
 
-void ocall_curl_get(const char *params, char *response) {
-    printf("%s    %s \n", params, response);
+char *ocall_curl_get(const char *params) {
+    printf("%s\n", params);
 //    memcpy(response, params, strlen(response));
-    std::string text = "If we continue to fucking someone";
-    strncpy(response, text.c_str(), strlen(text.c_str()));
-    /** test for curl get **/
-    std::cout << "wtffffffffffffffffffff start" << std::endl;
-    std::string get_response = "WWWWWWWWWWWWWWWWWWWWwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuWWWWWWWWWWWWWWWWWWWW";
-    ecall_curl_get_response(global_eid, get_response.c_str());
-    std::cout << "wtffffffffffffffffffff end" << std::endl;
+//    std::string text = "If we continue to fucking someone";
+//    strncpy(response, text.c_str(), strlen(text.c_str()));
+//    /** test for curl get **/
+//    std::cout << "wtffffffffffffffffffff start" << std::endl;
+//    std::string get_response = "WWWWWWWWWWWWWWWWWWWWwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuWWWWWWWWWWWWWWWWWWWW";
+//    ecall_curl_get_response(global_eid, get_response.c_str());
+//    std::cout << "wtffffffffffffffffffff end" << std::endl;
+    printf("\nwe assuming we are fucking ok\n");
+
+    std::string str = "tetrival from the ocall_curl_get";
+    int len = str.length();
+    printf("the length %d \n", len);
+    char *p = new char[len + 1];
+    strncpy(p, str.c_str(), len);
+    p[len] = '\0';
+    return p;
 }
 
 void ocall_sgx_exit(int e) {
