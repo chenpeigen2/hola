@@ -2,8 +2,54 @@
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
 #include "string.h"
+#include "vector"
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector <string> split(const string &str, const string &pattern) {
+    vector <string> res;
+    if (pattern.empty()) return res;
+    size_t start = 0, end = 0;
+    while ((end = str.find(pattern, start)) != string::npos) {
+        if (end > start) res.push_back(str.substr(start, end - start));
+        start = end + pattern.size();
+    }
+    if (start < str.size()) res.push_back(str.substr(start));
+    return res;
+}
+
+vector <string> params(const string &params) {
+    vector <string> res;
+    vector <string> p1 = split(params, "&");
+    for (const auto &re1: p1) {
+        vector <string> p2 = split(re1, "=");
+        for (const auto &re2: p2) {
+            res.push_back(re2);
+        }
+    }
+    return res;
+}
 
 char *ecall_curl_get(const char *url, const char *request) {
+
+    std::string request1 = "db_name=fake1&filter={\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
+//    cout << "we are done before " << endl;
+    vector <string> param = params(request1);
+    for (int i = 0; i < param.size(); ++i) {
+//        cout << param[i] << endl;
+        printf("%s\n", param[i].c_str());
+    }
+    printf("we are done!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    std::string test1 = "we are ok\"selector\"";
+    printf("%s\n", test1.c_str());
+    printf("we are done!!!!!!!!!!!!!!!!!!!!!!!!!!! enddddd\n");
+//    cout << "we are done !!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+
+
     std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
     int len = str.length();
     printf("the length %d \n", len);

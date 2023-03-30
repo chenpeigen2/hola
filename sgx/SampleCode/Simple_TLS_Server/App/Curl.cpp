@@ -135,12 +135,12 @@ void sgx_curl_test() {
 
 
     /** test for get the curl data from the backbend **/
-    std::cout << "begin test for Auth" << std::endl;
+    std::cout << "begin test for Auth ===================================" << std::endl;
     url = "http://127.0.0.1:8080/_auth?key=dYZSucg1Yt0ZZ8ZC9UFA0463r06pGLzNCBTnrXw%2F5bi59I23d%2FXJqttBNnuSHXE8rQTBLjAHoI%2BRffRDDhLhHBL1OYse1eLlqDiRG8qCM34ObJZb6c1MZzGgwU2Ek6jXpAzfXpqr%2BbMQJ2UPfYL0vOMPyfgYLj0o5f5oXII9II8%3D";
     sgx_get(url, response, 300);
     std::cout << response << std::endl;
     url = "http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs%2BbrYw%3D%3D&filter=mMksrdiK%2Ba2gsXr7zZoMRPT06wcXxHhQ6OyXLzsVVBQYCvY9k9sElFXtPphQHH1rYnvIpPk7jIVZY9fUQJPoZyRYz%2FF3B7PvyzBv6IEHVfJjCxeiTcd%2F14DO%2BcW%2B3WiC";
     sgx_get(url, response, 300);
     std::cout << response << std::endl;
-    std::cout << "end test for Auth" << std::endl;
+    std::cout << "end test for Auth ====================================" << std::endl;
 }

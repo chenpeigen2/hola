@@ -15,6 +15,10 @@ public class EncryptProxy extends AbstractProxy {
         return null;
     }
 
+    // encalve -> backbend(查询couchdb)
+    // encalve backbend 的公钥 -> backbend 解密
+    //
+
     @Override
     public String allDbs() {
         try {
