@@ -110,17 +110,24 @@ public class VerticleTest {
 
     {
         try {
+            complexQuery = "{\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
             complexQuery = EncryptUtils.encryptAES(complexQuery, AES_KEY);
+            System.out.println("filter=" + complexQuery);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+    //                                         P9kMC8Zp/s 917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb XxtsztatwIzPJJk=
+    // db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=
+    // db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=
+    // http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=
     String complex_db_name = "fake1";
 
     {
         try {
             complex_db_name = EncryptUtils.encryptAES(complex_db_name, AES_KEY);
+            System.out.println("db_name=" + complex_db_name);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -128,6 +135,10 @@ public class VerticleTest {
 
     @Test
     public void testComplexQuery() {
+        System.out.println("bbbbbbbbbbbbbbbb");
+        System.out.println(complex_db_name);
+        System.out.println(complexQuery);
+        System.out.println("bbbbbbbbbbbbbbbbb");
         var url = getBaseUrlBuilder().addPathSegment("_find")
                 .addQueryParameter("db_name", complex_db_name)
                 .addQueryParameter("filter", complexQuery)

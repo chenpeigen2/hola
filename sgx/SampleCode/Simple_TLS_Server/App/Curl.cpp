@@ -140,6 +140,7 @@ void sgx_curl_test() {
     sgx_get(url, response, 300);
     std::cout << response << std::endl;
     url = "http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs%2BbrYw%3D%3D&filter=mMksrdiK%2Ba2gsXr7zZoMRPT06wcXxHhQ6OyXLzsVVBQYCvY9k9sElFXtPphQHH1rYnvIpPk7jIVZY9fUQJPoZyRYz%2FF3B7PvyzBv6IEHVfJjCxeiTcd%2F14DO%2BcW%2B3WiC";
+    url = "http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=";
     sgx_get(url, response, 300);
     std::cout << response << std::endl;
     std::cout << "end test for Auth ====================================" << std::endl;

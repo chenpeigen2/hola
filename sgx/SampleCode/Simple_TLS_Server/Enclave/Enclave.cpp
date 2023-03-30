@@ -35,20 +35,43 @@ vector <string> params(const string &params) {
 }
 
 char *ecall_curl_get(const char *url, const char *request) {
-
-    std::string request1 = "db_name=fake1&filter={\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
-//    cout << "we are done before " << endl;
-    vector <string> param = params(request1);
+    vector <string> param = params(request);
     for (int i = 0; i < param.size(); ++i) {
-//        cout << param[i] << endl;
         printf("%s\n", param[i].c_str());
     }
-    printf("we are done!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+
+    std::string base_url(url);
+
+    printf("the base url: %s\n", base_url.c_str());
+
+    std::string aesKey = "0123456789abcdefghijklmn";
+    // db_name=MjRpTSD5v4iCxUTzs%2BbrYw%3D%3D&filter=mMksrdiK%2Ba2gsXr7zZoMRPT06wcXxHhQ6OyXLzsVVBQYCvY9k9sElFXtPphQHH1rYnvIpPk7jIVZY9fUQJPoZyRYz%2FF3B7PvyzBv6IEHVfJjCxeiTcd%2F14DO%2BcW%2B3WiC
+    // db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=
+    std::string res;
+    for (int i = 0; i < param.size(); ++i) {
+        std::string p = param[i];
+        if (i != 0 && i % 2 == 0) {
+            res += "&";
+        }
+        if (i % 2 != 0) {
+            res += "=";
+            p = ecb_encrypt(p.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                            strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
+            p = encode(p.c_str(), p.length());
+        }
+        res += p;
+    }
+    printf("res:  %s", res.c_str());
+
+    std::string final_url = base_url + "?" + res;
+
+
+    printf("the final url: %s", final_url.c_str());
+
+    printf("\nwe are done!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
     std::string test1 = "we are ok\"selector\"";
     printf("%s\n", test1.c_str());
     printf("we are done!!!!!!!!!!!!!!!!!!!!!!!!!!! enddddd\n");
-//    cout << "we are done !!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-
 
     std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
     int len = str.length();
