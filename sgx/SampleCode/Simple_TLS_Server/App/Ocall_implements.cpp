@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include "App.h"
+#include "Curl.h"
 
 #define PUB_KEY_FILE "pubkey.pem"
 #define PRI_KEY_FILE "prikey.pem"
@@ -110,22 +111,11 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
 
 /** may not be prepare to localization **/
 char *ocall_curl_get(const char *url) {
-    printf("\n ocall final url: %s", url);
-//    memcpy(response, params, strlen(response));
-//    std::string text = "If we continue to fucking someone";
-//    strncpy(response, text.c_str(), strlen(text.c_str()));
-//    /** test for curl get **/
-//    std::cout << "wtffffffffffffffffffff start" << std::endl;
-//    std::string get_response = "WWWWWWWWWWWWWWWWWWWWwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuWWWWWWWWWWWWWWWWWWWW";
-//    ecall_curl_get_response(global_eid, get_response.c_str());
-//    std::cout << "wtffffffffffffffffffff end" << std::endl;
-    printf("\nwe assuming we are fucking ok\n");
-
-    std::string str = "The trival from the ocall_curl_get";
-    int len = str.length();
-    printf("the length %d \n", len);
+    std::string response;
+    sgx_get(url, response, 300);
+    int len = response.length();
     char *p = new char[len + 1];
-    strncpy(p, str.c_str(), len);
+    strncpy(p, response.c_str(), len);
     p[len] = '\0';
     return p;
 }

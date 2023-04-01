@@ -241,16 +241,6 @@ main(int argc, char *argv[]) {
     }
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
 
-    hello_jwt();
-
-    sgx_curl_test();
-
-    /* Start TLS Server in Enclave */
-    ecall_start_tls_server(global_eid);
-
-    /* generate the rsa */
-    ecall_generate_rsa(global_eid);
-
     /** test for curl get **/
     std::string get_response = "Wwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
     ecall_curl_get_response(global_eid, get_response.c_str());

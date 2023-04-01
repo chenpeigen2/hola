@@ -56,6 +56,7 @@ char *ecall_curl_get(const char *url, const char *request) {
     }
     std::string final_url = base_url + "?" + res;
     /** test for curl get **/
+    printf("Encalve final url: %s \n", final_url.c_str());
     std::string response = sgx_curl_get(final_url.c_str());
     printf("\nThe RESPONSE: %s\n", response.c_str());
     std::string test1 = "we are ok\"selector\"";
