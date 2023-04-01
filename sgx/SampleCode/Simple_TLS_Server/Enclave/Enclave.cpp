@@ -59,8 +59,36 @@ char *ecall_curl_get(const char *url, const char *request) {
     printf("Encalve final url: %s \n", final_url.c_str());
     std::string response = sgx_curl_get(final_url.c_str());
     printf("\nThe RESPONSE: %s\n", response.c_str());
+    // decrypt
+    std::string dede = ecb_decrypt(response.c_str(), strlen(response.c_str()),
+                                   reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                                   strlen(aesKey.c_str()));
+    dede = encode(dede.c_str(), dede.length());
+    printf("\ndede %s", dede.c_str());
+
+
+    {
+        std::string p1 = "we are fucking okkkkkkkk";
+        p1 = ecb_encrypt(p1.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                         strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
+        printf("\n%s", p1.c_str());
+        p1 = encode(p1.c_str(), p1.length());
+        printf("\n%s", p1.c_str());
+
+        std::string ree11 = "W12EPeq+s0pZXlyNBOvMAyeBFwIcjVe/cv0he21xtio=";
+
+        ree11 = decode(ree11.c_str(), strlen(ree11.c_str()));
+
+        std::string text = ecb_decrypt(ree11.c_str(), strlen(ree11.c_str()),
+                                       reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                                       strlen(aesKey.c_str()));
+//        text = decode(text.c_str(), text.length());
+        printf("\nthe text: %s\n", text.c_str());
+    }
+
+
     std::string test1 = "we are ok\"selector\"";
-    printf("%s\n", test1.c_str());
+    printf("\n%s\n", test1.c_str());
     std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
     int len = str.length();
     printf("the length %d \n", len);
