@@ -36,14 +36,7 @@ vector <string> params(const string &params) {
 
 char *ecall_curl_get(const char *url, const char *request) {
     vector <string> param = params(request);
-    for (int i = 0; i < param.size(); ++i) {
-        printf("%s\n", param[i].c_str());
-    }
-
     std::string base_url(url);
-
-    printf("the base url: %s\n", base_url.c_str());
-
     std::string aesKey = "0123456789abcdefghijklmn";
     // db_name=MjRpTSD5v4iCxUTzs%2BbrYw%3D%3D&filter=mMksrdiK%2Ba2gsXr7zZoMRPT06wcXxHhQ6OyXLzsVVBQYCvY9k9sElFXtPphQHH1rYnvIpPk7jIVZY9fUQJPoZyRYz%2FF3B7PvyzBv6IEHVfJjCxeiTcd%2F14DO%2BcW%2B3WiC
     // db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=
@@ -61,26 +54,12 @@ char *ecall_curl_get(const char *url, const char *request) {
         }
         res += p;
     }
-    printf("res:  %s", res.c_str());
-
     std::string final_url = base_url + "?" + res;
-
-
-    printf("the final url: %s", final_url.c_str());
-
-
     /** test for curl get **/
-    printf("\ntest for curl get begin ---------\n");
-    std::string params = "9876543";
-
-
-    char *response = sgx_curl_get(params.c_str());
-
-    printf("\nwe are done!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+    std::string response = sgx_curl_get(final_url.c_str());
+    printf("\nThe RESPONSE: %s\n", response.c_str());
     std::string test1 = "we are ok\"selector\"";
     printf("%s\n", test1.c_str());
-    printf("we are done!!!!!!!!!!!!!!!!!!!!!!!!!!! enddddd\n");
-
     std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
     int len = str.length();
     printf("the length %d \n", len);

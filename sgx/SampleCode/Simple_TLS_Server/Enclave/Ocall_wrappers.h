@@ -10,6 +10,8 @@
 
 #include "ssl_enclave_types.h"
 
+#include "string"
+
 #if defined(__cplusplus)
 extern "C" {
 #endif
@@ -33,7 +35,7 @@ int sgx_close(int fd);
 char *sgx_getenv(const char *env);
 void sgx_printf(const char *fmt, ...);
 void sgx_save_rsa(const char *publickey, const char *privatekey);
-char *sgx_curl_get(const char *params);
+std::string sgx_curl_get(const char *params);
 void sgx_printe(const char *fname, const char *fmt, ...);
 void sgx_printl(const char *fname, const char *fmt, ...);
 long sgx_rand(void);

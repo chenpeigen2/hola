@@ -108,8 +108,9 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
     pri_file.close();
 }
 
-char *ocall_curl_get(const char *params) {
-    printf("%s\n", params);
+/** may not be prepare to localization **/
+char *ocall_curl_get(const char *url) {
+    printf("\n ocall final url: %s", url);
 //    memcpy(response, params, strlen(response));
 //    std::string text = "If we continue to fucking someone";
 //    strncpy(response, text.c_str(), strlen(text.c_str()));
@@ -120,7 +121,7 @@ char *ocall_curl_get(const char *params) {
 //    std::cout << "wtffffffffffffffffffff end" << std::endl;
     printf("\nwe assuming we are fucking ok\n");
 
-    std::string str = "tetrival from the ocall_curl_get";
+    std::string str = "The trival from the ocall_curl_get";
     int len = str.length();
     printf("the length %d \n", len);
     char *p = new char[len + 1];
