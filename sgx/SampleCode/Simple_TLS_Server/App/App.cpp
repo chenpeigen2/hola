@@ -241,10 +241,6 @@ main(int argc, char *argv[]) {
     }
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
 
-    /** test for curl get **/
-    std::string get_response = "Wwuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu";
-    ecall_curl_get_response(global_eid, get_response.c_str());
-
     {
         /** test for curl get API **/
         char *response;
@@ -252,7 +248,6 @@ main(int argc, char *argv[]) {
         std::string url = "http://127.0.0.1:8080/_find";
         std::string request = "db_name=fake1&filter={\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
         ecall_curl_get(global_eid, &response, url.c_str(), request.c_str());
-        std::cout << "========response start =======" << std::endl;
         printf("APP side response: %s\n", response);
         toString(response, res);
         std::cout << res << std::endl;

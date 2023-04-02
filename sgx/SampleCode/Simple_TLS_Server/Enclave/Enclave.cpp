@@ -49,18 +49,16 @@ char *ecall_curl_get(const char *url, const char *request) {
         res += p;
     }
     std::string final_url = base_url + "?" + res;
-    /** test for curl get **/
+    /** curl get **/
     printf("Encalve final url: %s \n", final_url.c_str());
     std::string response = sgx_curl_get(final_url.c_str());
-    printf("\nThe RESPONSE: %s\n", response.c_str());
+    printf("The RESPONSE: %s\n", response.c_str());
     // decrypt
     response = decode(response.c_str(), response.length());
     response = ecb_decrypt(response.c_str(), response.length(),
                            reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length());
-    printf("\nthe response: %s\n", response.c_str());
     int len = response.length();
-    printf("the length %d \n", len);
     char *p = new char[len + 1];
     strncpy(p, response.c_str(), len);
     p[len] = '\0';
