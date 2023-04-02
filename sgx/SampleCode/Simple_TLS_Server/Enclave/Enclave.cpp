@@ -60,39 +60,11 @@ char *ecall_curl_get(const char *url, const char *request) {
     std::string response = sgx_curl_get(final_url.c_str());
     printf("\nThe RESPONSE: %s\n", response.c_str());
     // decrypt
-    std::string dede = ecb_decrypt(response.c_str(), strlen(response.c_str()),
-                                   reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                                   strlen(aesKey.c_str()));
-    dede = encode(dede.c_str(), dede.length());
-    printf("\ndede %s", dede.c_str());
-
-
-    {
-        printf("\n=======================test begin================\n");
-
-        std::string p1 = "{\"docs\":[\n"
-                         "{\"_id\":\"2dde7d6ea7123c896632ea08a942a990\",\"_rev\":\"1-cf08c88c2f5405bd72fa7c064fb7a597\",\"code\":0,\"message\":\"success\",\"data\":{\"id\":1,\"name\":\"\",\"bfirstletter\":\"\",\"logo\":\"\",\"country\":\"China\",\"countryid\":0}}\n"
-                         "],\n"
-                         "\"bookmark\": \"g2wAAAACaAJkAA5zdGFydGtleV9kb2NpZG0AAAAgMmRkZTdkNmVhNzEyM2M4OTY2MzJlYTA4YTk0MmE5OTBoAmQACHN0YXJ0a2V5awABAGo\",\n"
-                         "\"execution_stats\": {\"total_keys_examined\":0,\"total_docs_examined\":1,\"total_quorum_docs_examined\":0,\"results_returned\":1,\"execution_time_ms\":0.73}}";
-        printf("the soruce : %s", p1.c_str());
-        p1 = ecb_encrypt(p1.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                         strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
-        p1 = encode(p1.c_str(), p1.length());
-        printf("\n%s", p1.c_str());
-
-        std::string ree11 = response;
-
-        ree11 = decode(ree11.c_str(), strlen(ree11.c_str()));
-
-        std::string text = ecb_decrypt(ree11.c_str(), ree11.length(),
-                                       reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                                       aesKey.length());
-//        text = decode(text.c_str(), text.length());
-        printf("\nthe text: %s\n", text.c_str());
-        printf("\n=======================test end ================\n");
-    }
-
+    response = decode(response.c_str(), response.length());
+    response = ecb_decrypt(response.c_str(), response.length(),
+                           reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                           aesKey.length());
+    printf("\nthe response: %s\n", response.c_str());
 
     std::string test1 = "we are ok\"selector\"";
     printf("\n%s\n", test1.c_str());
