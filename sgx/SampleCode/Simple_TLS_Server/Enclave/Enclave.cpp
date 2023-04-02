@@ -49,7 +49,7 @@ char *ecall_curl_get(const char *url, const char *request) {
         if (i % 2 != 0) {
             res += "=";
             p = ecb_encrypt(p.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                            strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
+                            aesKey.length(), PaddingModel::PKCS5OR7);
             p = encode(p.c_str(), p.length());
         }
         res += p;
