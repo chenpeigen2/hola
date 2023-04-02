@@ -4,10 +4,6 @@
 #include "string.h"
 #include "vector"
 
-#include <iostream>
-#include <string>
-#include <vector>
-
 using namespace std;
 
 vector <string> split(const string &str, const string &pattern) {
@@ -38,8 +34,6 @@ char *ecall_curl_get(const char *url, const char *request) {
     vector <string> param = params(request);
     std::string base_url(url);
     std::string aesKey = "0123456789abcdefghijklmn";
-    // db_name=MjRpTSD5v4iCxUTzs%2BbrYw%3D%3D&filter=mMksrdiK%2Ba2gsXr7zZoMRPT06wcXxHhQ6OyXLzsVVBQYCvY9k9sElFXtPphQHH1rYnvIpPk7jIVZY9fUQJPoZyRYz%2FF3B7PvyzBv6IEHVfJjCxeiTcd%2F14DO%2BcW%2B3WiC
-    // db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=P9kMC8Zp/s+917GG7P0LCl1wlBMMmFFzqa2CNQeYsxsp/8xWCL6zkZlNVwB+oZHClEt9wWFQ7TF8sOJCOM1tlX1BjYb+XxtsztatwIzPJJk=
     std::string res;
     for (int i = 0; i < param.size(); ++i) {
         std::string p = param[i];
@@ -65,14 +59,10 @@ char *ecall_curl_get(const char *url, const char *request) {
                            reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length());
     printf("\nthe response: %s\n", response.c_str());
-
-    std::string test1 = "we are ok\"selector\"";
-    printf("\n%s\n", test1.c_str());
-    std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
-    int len = str.length();
+    int len = response.length();
     printf("the length %d \n", len);
     char *p = new char[len + 1];
-    strncpy(p, str.c_str(), len);
+    strncpy(p, response.c_str(), len);
     p[len] = '\0';
     return p;
 }
