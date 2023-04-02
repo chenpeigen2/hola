@@ -249,25 +249,20 @@ main(int argc, char *argv[]) {
         /** test for curl get API **/
         char *response;
         std::string res;
-        std::string url = "http://127.0.0.1:8080/_find"; // the find method
+        std::string url = "http://127.0.0.1:8080/_find";
         std::string request = "db_name=fake1&filter={\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
-        cout << "we are done before " << endl;
-        vector <string> param = params(request);
-        for (int i = 0; i < param.size(); ++i) {
-            cout << param[i] << endl;
-        }
-        cout << "we are done !!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
         ecall_curl_get(global_eid, &response, url.c_str(), request.c_str());
         std::cout << "========response start =======" << std::endl;
-        printf("the response %s\n", response);
+        printf("APP side response: %s\n", response);
         toString(response, res);
         std::cout << res << std::endl;
-        std::cout << "========response end   =======" << std::endl;
     }
 
-    printf("we are now preparing the app side data ====================== \n");
-    proxy.makeRouter(); // make a router
-    proxy.start(); // start the server
+    {
+        /** test for Http Server API **/
+        proxy.makeRouter(); // make a router
+        proxy.start(); // start the server
+    }
 
 
     /* Destroy the enclave */
