@@ -5,7 +5,11 @@
 
 #include <wfrest/json.hpp>
 
+#include "HttpClient.h"
+#include <iostream>
+
 using namespace wfrest;
+using namespace std;
 using Json = nlohmann::json;
 
 void router(wfrest::HttpServer &server) {
@@ -14,6 +18,11 @@ void router(wfrest::HttpServer &server) {
         json["test"] = 123;
         json["json"] = "test json";
         resp->Json(json);
+    });
+    /** filter find for **/
+    server.GET("/_find", [](const HttpReq *req, HttpResp *resp) {
+        std::string result = filter_find();
+        resp->Json(result);
     });
 
     // curl -v http://ip:port/json2
