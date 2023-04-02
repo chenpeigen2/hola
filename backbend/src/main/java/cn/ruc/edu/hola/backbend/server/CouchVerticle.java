@@ -38,6 +38,7 @@ public class CouchVerticle extends AbstractVerticle {
             ctx.fail(400);
             return;
         }
+        System.out.println(msg);
         ctx.response().putHeader("Content-Type", "application/json; charset=utf-8")
                 .end(msg);
     }

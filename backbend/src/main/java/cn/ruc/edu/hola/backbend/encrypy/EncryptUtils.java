@@ -161,8 +161,55 @@ public class EncryptUtils {
         }
     }
 
+    static String key1 = "MHWAz7lun/x9nQDf64ncsRN0Wp1EJ1v6sPqkSlMF43/jYyz4++ZOX/J0QfIR/WwvGE/roh12tcff6KvPrCf08ZFXb52pwMOQHM/YkeX0EIEPS6+PGGApU/h3QBO9g5+i4Tar9tZRhkVKE0oBqOoB5fPjF5PETPxRsrPyfNRSj0GQLfCcqslyDy6UPCrHQHZtUJjZzpc9EIcYqdhFNM5MCMI+1t7l4UDXRWE1m8xmc7QguCLHNaLRCOWkee7M/lhKeWqRbJTAOTx6EAnvlkb1BbKlGQC/c/MsUJJFcJ6Aa7DJAq6P6j1BTbckA2FwP7vwkr6pAAICFpvykmgUUpVvqDZd8xn/Dc8fLiAjcvlE516ty8yrofG/Buq3CSeS7Yl5NGrKCjNwgQCSfs+YvsKh1RqG/GPkjHG/CRGAfkYkIi9aCbzhybe58tO8qJGbhLBDX8OEbaZATnqZ5HDWKXRiUFkdnDZMzhJogb7Dv50rRT8RKaQTmUMJNuSmwgBy4u4E9IE+uL89qWZlxWZf9cXeG/5g54wvL4AGyt7zXGc35CLsLCUzoEAvn5b/t2nABy/XraMJYiMvh8Q7dMNm9SWj8DU2VUxuBeTx8HWOB6syCoSBOrheV8ZuRgEy1mSJHvd0LK5sDOj4PGcvQFGZFoe/Sw==";
+
+    static String soruce = "{\"docs\":[\n" +
+            "{\"_id\":\"2dde7d6ea7123c896632ea08a942a990\",\"_rev\":\"1-cf08c88c2f5405bd72fa7c064fb7a597\",\"code\":0,\"message\":\"success\",\"data\":{\"id\":1,\"name\":\"\",\"bfirstletter\":\"\",\"logo\":\"\",\"country\":\"China\",\"countryid\":0}}\n" +
+            "],\n" +
+            "\"bookmark\": \"g2wAAAACaAJkAA5zdGFydGtleV9kb2NpZG0AAAAgMmRkZTdkNmVhNzEyM2M4OTY2MzJlYTA4YTk0MmE5OTBoAmQACHN0YXJ0a2V5awABAGo\",\n" +
+            "\"execution_stats\": {\"total_keys_examined\":0,\"total_docs_examined\":1,\"total_quorum_docs_examined\":0,\"results_returned\":1,\"execution_time_ms\":0.73}}\n";
+
+    static {
+        soruce = "aesdkjfkwkaefkmksdfmksdl;afm;erkmgkmsdafdsaf";
+    }
+
+    static String key3 = """
+            {
+              "docs": [
+                {
+                  "_id": "2dde7d6ea7123c896632ea08a942a990",
+                  "_rev": "1-cf08c88c2f5405bd72fa7c064fb7a597",
+                  "code": 0,
+                  "message": "success",
+                  "data": {
+                    "id": 1,
+                    "name": "",
+                    "bfirstletter": "",
+                    "logo": "",
+                    "country": "China",
+                    "countryid": 0
+                  }
+                }
+              ],
+              "bookmark": "g2wAAAACaAJkAA5zdGFydGtleV9kb2NpZG0AAAAgMmRkZTdkNmVhNzEyM2M4OTY2MzJlYTA4YTk0MmE5OTBoAmQACHN0YXJ0a2V5awABAGo",
+              "execution_stats": {
+                "total_keys_examined": 0,
+                "total_docs_examined": 1,
+                "total_quorum_docs_examined": 0,
+                "results_returned": 1,
+                "execution_time_ms": 0.73
+              }
+            }""";
+
     public static void main(String[] args) {
+        var text = encryptAES(soruce, "0123456789abcdefghijklmn");
+//        text = key1;
+        System.out.println(text);
+
+        System.out.println(key3.replaceAll(" ", ""));
+
+        System.out.println(decryptAES(text, "0123456789abcdefghijklmn"));
 //        testRsa();
-        testEcbAES();
+//        testEcbAES();
     }
 }

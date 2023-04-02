@@ -1,1 +1,21 @@
-{"selector": {"data.countryid": {"$gt": -1}},"execution_stats": true}
+{
+  "docs":[
+    {
+      "_id":"2dde7d6ea7123c896632ea08a942a990",
+      "_rev":"1-cf08c88c2f5405bd72fa7c064fb7a597",
+      "code":0,
+      "message":"success",
+      "data":{
+        "id":1,
+        "name":"",
+        "bfirstletter":"",
+        "logo":"",
+        "country":"China",
+        "countryid":0
+      }
+    }
+  ],
+  "bookmark":"g2wAAAACaAJkAA5zdGFydGtleV9kb2NpZG0AAAAgMmRkZTdkNmVhNzEyM2M4OTY2MzJlYTA4YTk0MmE5OTBoAmQACHN0YXJ0a2V5awABAGo",
+  "execution_stats":{
+    "total_keys_examined":0,
+    "total_docs_examined":1,"total_quorum_docs_examined":0,"results_returned":1,"execution_time_ms":0.73}}
