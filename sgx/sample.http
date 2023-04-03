@@ -1,0 +1,29 @@
+POST /json6 HTTP/1.1
+Accept: application/json
+Host: localhost:8888
+Content-Type: application/json
+
+{
+  "index": {
+    "fields": [
+      "age"
+    ]
+  },
+  "name": "age-index",
+  "type": "json"
+}
+
+### post for _find
+POST /_find?db_name=fake1 HTTP/1.1
+Accept: application/json
+Host: localhost:8888
+Content-Type: application/json
+
+{
+  "selector": {
+    "data.countryid": {
+      "$gt": -1
+    }
+  },
+  "execution_stats": true
+}

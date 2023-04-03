@@ -20,9 +20,18 @@ void router(wfrest::HttpServer &server) {
         resp->Json(json);
     });
     /** filter find for **/
-    server.GET("/_find", [](const HttpReq *req, HttpResp *resp) {
-        std::string result = filter_find();
-        resp->Json(result);
+    server.POST("/_find", [](const HttpReq *req, HttpResp *resp) {
+        if (req->content_type() != APPLICATION_JSON) {
+            resp->String("NOT APPLICATION_JSON");
+        }
+        if (req->has_query("db_name")) {
+            const std::string &db_name = req->query("db_name");
+            auto filter = req->json().dump(4);
+            std::string result = filter_find(db_name, filter);
+            resp->Json(result);
+        } else {
+            resp->String("the query has no db_name or filter");
+        }
     });
 
     // curl -v http://ip:port/json2
@@ -62,5 +71,14 @@ void router(wfrest::HttpServer &server) {
             return;
         }
         fprintf(stderr, "Json : %s", req->json().dump(4).c_str());
+    });
+
+    server.POST("/json6", [](const HttpReq *req, HttpResp *resp) {
+        if (req->content_type() != APPLICATION_JSON) {
+            resp->String("NOT APPLICATION_JSON");
+            return;
+        }
+        auto item = req->json().dump(4);
+        cout << item << endl;
     });
 }

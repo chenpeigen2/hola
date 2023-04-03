@@ -16,18 +16,19 @@
 #include <iostream>
 #include <string>
 #include "Utils.h"
+#include <iostream>
 
 std::string hello_world() {
     std::string hello_world = "hello world";
     return hello_world;
 }
 
-std::string filter_find() {
+std::string filter_find(const std::string &db_name, const std::string &filter) {
     /** test for curl get API **/
     char *response;
     std::string res;
-    std::string url = "http://127.0.0.1:8080/_find";
-    std::string request = "db_name=fake1&filter={\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
+    const std::string url = "http://127.0.0.1:8080/_find";
+    std::string request = "db_name=" + db_name + "&filter=" + filter;
     ecall_curl_get(global_eid, &response, url.c_str(), request.c_str());
     printf("APP side response: %s\n", response);
     toString(response, res);
