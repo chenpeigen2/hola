@@ -25,18 +25,15 @@ std::string getAESKey() {
 bool authed = false;
 
 void auth_if_needed() {
-    if (authed) return;
-
+    if (getAESKey().compare("") != 0 && authed) return;
     std::string aesKey = generateAESKey();
-
     std::string encryptKey = encrypt(reinterpret_cast<const unsigned char *>(aesKey.c_str()), aesKey.length(),
                                      (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
     encryptKey = encode(encryptKey.c_str(), encryptKey.length());
-    printf("encoded AES KEY string: %s\n", encryptKey.c_str());
     std::string url = "http://127.0.0.1:8080/_auth";
-    std::string body = "{\n"
-                       "  \"key\": \"bnNHNvULrbrDRmmy76LqV4zhHf245HNZjt/x5NPa+ImaNQkdUGwV0mUHucY2xhunIBFs0MOlEWydurmhpmNxvRtZ3Fmxd0qfuElLrbP4ahxnXhLiMPpZRB/neOlPlTMdFEURHgwpq9zEOoJFdYfLZGtU6sfEtQX1g+E/berspVE=\"\n"
-                       "}";
+    std::string body = "{\"key\":\"" +
+                       encryptKey +
+                       "\"}";
     sgx_curl_post(url.c_str(), body.c_str());
     authed = true;
 }
