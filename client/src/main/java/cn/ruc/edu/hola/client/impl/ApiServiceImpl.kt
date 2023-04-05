@@ -11,10 +11,11 @@ internal class ApiServiceImpl : ApiService() {
 
     /** client side treat as opacity execution **/
     override fun filterDocs(databaseName: String, filter: String): Response {
-
         val body = filter.toRequestBody("application/json".toMediaType())
-        val url = baseUrl.addPathSegment(databaseName)
-            .addPathSegment("_find").build()
+        val url = baseUrl
+            .addPathSegment("_find")
+            .addQueryParameter("db_name", databaseName)
+            .build()
         val request = Request.Builder()
             .url(url)
             .method("POST", body)

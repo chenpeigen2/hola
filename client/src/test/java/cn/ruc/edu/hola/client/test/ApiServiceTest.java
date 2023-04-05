@@ -9,10 +9,18 @@ public class ApiServiceTest {
     public void testFilterFind() {
         ApiService apiService = ApiService.getInstance();
         apiService.update("http", "127.0.0.1", 8888);
-        String dataBaseName = "";
-        String filter = "";
+        String dataBaseName = "fake1";
+        String filter = """
+                {
+                  "selector": {
+                    "data.countryid": {
+                      "$gt": -1
+                    }
+                  },
+                  "execution_stats": true
+                }""";
         try (var res = apiService.filterDocs(dataBaseName, filter)) {
-            System.out.println("555");
+            System.out.println(res.body().string());
         } catch (Exception ignored) {
 
         }
