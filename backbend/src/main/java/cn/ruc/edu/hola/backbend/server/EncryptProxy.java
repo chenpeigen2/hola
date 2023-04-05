@@ -180,14 +180,14 @@ public class EncryptProxy extends AbstractProxy {
     }
 
     // default set
-    private String mAesKey = "0123456789abcdefghijklmn";
+    private String mAesKey;
 
     @Override
     public boolean acquireAESKey(String encryptedRSAText) {
         String aesKey = EncryptUtils.rsaDecrypt(encryptedRSAText, EncryptUtils.RSA_PRIVATE_KEY);
         if (aesKey == null) return false;
         this.mAesKey = aesKey;
-        System.err.println(mAesKey);
+        System.err.println("acquired aes key: " + mAesKey);
         return true;
     }
 }

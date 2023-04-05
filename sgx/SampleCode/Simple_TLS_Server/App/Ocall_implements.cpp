@@ -128,6 +128,44 @@ char *ocall_curl_post(const char *url, const char *body) {
     char *p = new char[len + 1];
     strncpy(p, response.c_str(), len);
     p[len] = '\0';
+
+    {
+        std::cout << "testing dddddddddddddddd " << std::endl;
+        CURLcode res = sgx_post(url, body, response, 300);
+        std::cout << res << std::endl;
+        std::cout << response << std::endl;
+    }
+
+    {
+        std::cout << "testing beginggggggggggggggggg" << std::endl;
+        std::string valid_text = R"(
+        {
+            "name": "admin",
+            "password": "password"
+        }
+        )";
+
+        std::string url = "http://localhost:5984/_session";
+//        std::string response;
+
+        CURLcode res = sgx_auth(url, valid_text, response, 300);
+        std::cout << res << std::endl;
+        std::cout << response << std::endl;
+
+        url = "http://localhost:5984/albums";
+        valid_text = R"(
+            {
+              "servings": 4,
+              "subtitle": "Delicious with fresh bread",
+              "title": "Fish Stew"
+            }
+        )";
+        res = sgx_post(url, valid_text, response, 300);
+        std::cout << res << std::endl;
+        std::cout << response << std::endl;
+        std::cout << "testing endinggggggggggggggggggggggggggggg" << std::endl;
+    }
+
     return p;
 }
 

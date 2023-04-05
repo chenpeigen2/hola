@@ -66,6 +66,7 @@ public class CouchVerticle extends AbstractVerticle {
 
     private void auth(RoutingContext ctx) {
         try {
+            System.err.println("auth !!!");
             Auth auth = JsonUtils.INSTANCE.toAuth(ctx.body().asString());
             boolean acquired = proxyMethods.acquireAESKey(auth.getKey());
             if (acquired) {
