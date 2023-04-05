@@ -120,6 +120,16 @@ char *ocall_curl_get(const char *url) {
     return p;
 }
 
+char *ocall_curl_post(const char *url, const char *body) {
+    std::cout << "hello we are posting !!!!!!!" << std::endl;
+    std::string response = "we are testing";
+    int len = response.length();
+    char *p = new char[len + 1];
+    strncpy(p, response.c_str(), len);
+    p[len] = '\0';
+    return p;
+}
+
 void ocall_sgx_exit(int e) {
     exit(e);
 }

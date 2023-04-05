@@ -182,6 +182,13 @@ std::string sgx_curl_get(const char *params) {
     return res;
 }
 
+std::string sgx_curl_post(const char *url, const char *body) {
+    char *retrival;
+    ocall_curl_post(&retrival, url, body);
+    std::string res(retrival);
+    return res;
+}
+
 void sgx_printe(const char *fname, const char *fmt, ...) {
     char ebuf[BUFSIZ] = {'\0'};
     char buf[BUFSIZ] = {'\0'};

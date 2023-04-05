@@ -61,6 +61,10 @@ char *ecall_curl_get(const char *url, const char *request) {
         res += p;
     }
     std::string final_url = base_url + "?" + res;
+
+
+    sgx_curl_post(final_url.c_str(), "we are testing from the encalve");
+
     /** curl get **/
     printf("Encalve final url: %s \n", final_url.c_str());
     std::string response = sgx_curl_get(final_url.c_str());

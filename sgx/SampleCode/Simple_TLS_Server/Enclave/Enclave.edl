@@ -35,6 +35,7 @@ enclave {
 		void ocall_print_string([in, string] const char *str);
 		void ocall_save_rsa([in, string] const char *pub, [in, string] const char *prv);
 		char *ocall_curl_get([in, string] const char *params) allow(ecall_curl_get_response);
+		char *ocall_curl_post([in, string] const char *url, [in, string] const char *body);
 	};
 
 };
