@@ -1,6 +1,8 @@
 package cn.ruc.edu.hola.backbend.server;
 
-import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
+import cn.ruc.edu.hola.backbend.entity.Auth;
+import cn.ruc.edu.hola.backbend.json.JsonUtils;
+import com.google.gson.JsonSyntaxException;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
@@ -28,7 +30,7 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/delete_doc").handler(this::deleteDoc);
         router.get("/_find").handler(this::filterDocs);
         router.get("/_index").handler(this::createIndex);
-        router.get("/_auth").handler(this::auth);
+        router.post("/_auth").handler(this::auth); // shoule change to post
 
         server.requestHandler(router).listen(PORT);
     }
@@ -63,9 +65,9 @@ public class CouchVerticle extends AbstractVerticle {
     }
 
     private void auth(RoutingContext ctx) {
-        String key = ctx.request().getParam("key");
         try {
-            boolean acquired = proxyMethods.acquireAESKey(key);
+            Auth auth = JsonUtils.INSTANCE.toAuth(ctx.body().asString());
+            boolean acquired = proxyMethods.acquireAESKey(auth.getKey());
             if (acquired) {
                 out(ctx, """
                         {
@@ -81,7 +83,7 @@ public class CouchVerticle extends AbstractVerticle {
                         """);
 
             }
-        } catch (Exception e) {
+        } catch (JsonSyntaxException ignored) {
             ctx.fail(400);
         }
     }

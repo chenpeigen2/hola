@@ -4,9 +4,7 @@ import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.backbend.encrypy.dh.DHCoder;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -85,12 +83,18 @@ public class VerticleTest {
 
     final static String AES_KEY = "0123456789abcdefghijklmn";
 
+
+    final static String jsonKey = """
+            {
+              "key": "bnNHNvULrbrDRmmy76LqV4zhHf245HNZjt/x5NPa+ImaNQkdUGwV0mUHucY2xhunIBFs0MOlEWydurmhpmNxvRtZ3Fmxd0qfuElLrbP4ahxnXhLiMPpZRB/neOlPlTMdFEURHgwpq9zEOoJFdYfLZGtU6sfEtQX1g+E/berspVE="
+            }""";
+
     @Test
     public void testAuth() {
+        var body = RequestBody.create(jsonKey, MediaType.get("application/json"));
         var url = getBaseUrlBuilder().addPathSegment("_auth")
-                .addQueryParameter("key", EncryptUtils.rsaEncrypt(AES_KEY, EncryptUtils.RSA_PUBLIC_KEY))
                 .build();
-        var r = new Request.Builder().url(url).get().build();
+        var r = new Request.Builder().url(url).post(body).build();
         try {
             var res = client.newCall(r).execute();
             System.out.println(res.body().string());

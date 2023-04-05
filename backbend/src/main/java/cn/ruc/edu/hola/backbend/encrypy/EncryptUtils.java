@@ -112,17 +112,17 @@ public class EncryptUtils {
         try {
 //            String jniRsa = Encrypts.rsaEncrypt(data);
 //            String jniData = Encrypts.rsaDecrypt(jniRsa);
-            String javaRsa = EncryptUtils.rsaEncrypt(data, RSA_PUBLIC_KEY);
-            String javaData = EncryptUtils.rsaDecrypt(javaRsa, RSA_PRIVATE_KEY);
+//            String javaRsa = EncryptUtils.rsaEncrypt(data, RSA_PUBLIC_KEY);
+//            String javaData = EncryptUtils.rsaDecrypt(javaRsa, RSA_PRIVATE_KEY);
 
-            var zzz = EncryptUtils.rsaDecrypt("h6wNHjcPK+jFEDCJqCgjiuyyB0fBM4hFFxWvqV5mPI1InAmNJl+Jad7YGl+2GAZBMy2s7rvm8zkLRqWCNJ5zLQEdh+hnSeIRZFhRix7woEQKnpa/qVq8YF5xuq/NFTM6w1omZEODxbIA59qS6SMehloqMrfIqg4O0orROHXOdjQ=", RSA_PRIVATE_KEY);
+            var zzz = EncryptUtils.rsaDecrypt("bnNHNvULrbrDRmmy76LqV4zhHf245HNZjt/x5NPa+ImaNQkdUGwV0mUHucY2xhunIBFs0MOlEWydurmhpmNxvRtZ3Fmxd0qfuElLrbP4ahxnXhLiMPpZRB/neOlPlTMdFEURHgwpq9zEOoJFdYfLZGtU6sfEtQX1g+E/berspVE=", RSA_PRIVATE_KEY);
 
             System.out.println(zzz);
-            System.out.println("zoooooo");
 
-            System.out.println(javaRsa);
 
-            System.out.println(javaData);
+//            System.out.println(javaRsa);
+//
+//            System.out.println(javaData);
 
 //            LogUtils.i("Jni rsa = %s , Java rsa =  %s ", jniData, javaData);
 
@@ -202,14 +202,14 @@ public class EncryptUtils {
             }""";
 
     public static void main(String[] args) {
-        var text = encryptAES(soruce, "0123456789abcdefghijklmn");
-//        text = key1;
-        System.out.println(text);
-
-        System.out.println(key3.replaceAll(" ", ""));
-
-        System.out.println(decryptAES(text, "0123456789abcdefghijklmn"));
-//        testRsa();
+//        var text = encryptAES(soruce, "0123456789abcdefghijklmn");
+////        text = key1;
+//        System.out.println(text);
+//
+//        System.out.println(key3.replaceAll(" ", ""));
+//
+//        System.out.println(decryptAES(text, "0123456789abcdefghijklmn"));
+        testRsa();
 //        testEcbAES();
     }
 }

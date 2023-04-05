@@ -27,3 +27,13 @@ Content-Type: application/json
   },
   "execution_stats": true
 }
+
+### post for auth
+POST /_auth HTTP/1.1
+Accept: application/json
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "key": "bnNHNvULrbrDRmmy76LqV4zhHf245HNZjt/x5NPa+ImaNQkdUGwV0mUHucY2xhunIBFs0MOlEWydurmhpmNxvRtZ3Fmxd0qfuElLrbP4ahxnXhLiMPpZRB/neOlPlTMdFEURHgwpq9zEOoJFdYfLZGtU6sfEtQX1g+E/berspVE="
+}
