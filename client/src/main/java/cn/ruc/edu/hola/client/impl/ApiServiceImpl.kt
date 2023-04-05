@@ -7,7 +7,7 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
-class ApiServiceImpl : ApiService() {
+internal class ApiServiceImpl : ApiService() {
 
     /** client side treat as opacity execution **/
     override fun filterDocs(databaseName: String, filter: String): Response {

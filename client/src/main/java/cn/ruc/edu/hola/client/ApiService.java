@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client;
 
 
+import cn.ruc.edu.hola.client.impl.ApiServiceImpl;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
@@ -19,8 +20,8 @@ public abstract class ApiService {
     protected int port;
 
     protected Map<String, String> headers = new HashMap<>() {{
-        headers.put("Accept", "application/json");
-        headers.put("Content-Type", "application/json");
+        put("Accept", "application/json");
+        put("Content-Type", "application/json");
     }};
 
 
@@ -39,5 +40,9 @@ public abstract class ApiService {
         this.host = host;
         this.port = port;
         this.scheme = scheme;
+    }
+
+    public static ApiService getInstance() {
+        return new ApiServiceImpl();
     }
 }
