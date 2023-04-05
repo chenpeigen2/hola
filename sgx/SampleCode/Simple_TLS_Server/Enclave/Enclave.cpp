@@ -10,6 +10,11 @@
 
 using namespace std;
 
+
+std::string aesKey = "0123456789abcdefghijklmn";
+
+bool authed = false;
+
 void test_rsa() {
     char *data = "WUWUABCDEFGHIJ123456890";
     auto abc = encrypt((unsigned char *) data, strlen(data),
@@ -17,8 +22,17 @@ void test_rsa() {
     printf("encoded rrrsa string: %s\n", encode(abc.c_str(), abc.length()).c_str());
 }
 
+void auth_if_needed() {
+    if (authed) return;
+    std::string url = "http://127.0.0.1:8080/_auth";
+    std::string body = "{\n"
+                       "  \"key\": \"bnNHNvULrbrDRmmy76LqV4zhHf245HNZjt/x5NPa+ImaNQkdUGwV0mUHucY2xhunIBFs0MOlEWydurmhpmNxvRtZ3Fmxd0qfuElLrbP4ahxnXhLiMPpZRB/neOlPlTMdFEURHgwpq9zEOoJFdYfLZGtU6sfEtQX1g+E/berspVE=\"\n"
+                       "}";
+    sgx_curl_post(url.c_str(), body.c_str());
+    authed = true;
+}
+
 vector <string> split(const string &str, const string &pattern) {
-    test_rsa();
     vector <string> res;
     if (pattern.empty()) return res;
     size_t start = 0, end = 0;
@@ -43,9 +57,9 @@ vector <string> params(const string &params) {
 }
 
 char *ecall_curl_get(const char *url, const char *request) {
+    auth_if_needed();
     vector <string> param = params(request);
     std::string base_url(url);
-    std::string aesKey = "0123456789abcdefghijklmn";
     std::string res;
     for (int i = 0; i < param.size(); ++i) {
         std::string p = param[i];
@@ -61,10 +75,6 @@ char *ecall_curl_get(const char *url, const char *request) {
         res += p;
     }
     std::string final_url = base_url + "?" + res;
-
-
-    sgx_curl_post(final_url.c_str(), "we are testing from the encalve");
-
     /** curl get **/
     printf("Encalve final url: %s \n", final_url.c_str());
     std::string response = sgx_curl_get(final_url.c_str());
