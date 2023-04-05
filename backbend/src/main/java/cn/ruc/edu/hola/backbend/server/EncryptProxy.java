@@ -179,7 +179,8 @@ public class EncryptProxy extends AbstractProxy {
         return null;
     }
 
-    private String mAesKey;
+    // default set
+    private String mAesKey = "0123456789abcdefghijklmn";
 
     @Override
     public boolean acquireAESKey(String encryptedRSAText) {
