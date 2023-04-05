@@ -6,6 +6,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class ApiService {
 
     protected String scheme;
@@ -14,6 +17,11 @@ public abstract class ApiService {
     protected String host;
 
     protected int port;
+
+    protected Map<String, String> headers = new HashMap<>() {{
+        headers.put("Accept", "application/json");
+        headers.put("Content-Type", "application/json");
+    }};
 
 
     protected static OkHttpClient client = new OkHttpClient.Builder()
