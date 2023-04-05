@@ -10,20 +10,29 @@
 
 using namespace std;
 
+std::string sk;
 
-std::string aesKey = "0123456789abcdefghijklmn";
+std::string generateAESKey() {
+    std::string aesKey = "0123456789abcdefghijklmn";
+    sk = aesKey;
+    return aesKey;
+}
+
+std::string getAESKey() {
+    return sk;
+}
 
 bool authed = false;
 
-void test_rsa() {
-    char *data = "WUWUABCDEFGHIJ123456890";
-    auto abc = encrypt((unsigned char *) data, strlen(data),
-                       (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
-    printf("encoded rrrsa string: %s\n", encode(abc.c_str(), abc.length()).c_str());
-}
-
 void auth_if_needed() {
     if (authed) return;
+
+    std::string aesKey = generateAESKey();
+
+    std::string encryptKey = encrypt(reinterpret_cast<const unsigned char *>(aesKey.c_str()), aesKey.length(),
+                                     (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
+    encryptKey = encode(encryptKey.c_str(), encryptKey.length());
+    printf("encoded AES KEY string: %s\n", encryptKey.c_str());
     std::string url = "http://127.0.0.1:8080/_auth";
     std::string body = "{\n"
                        "  \"key\": \"bnNHNvULrbrDRmmy76LqV4zhHf245HNZjt/x5NPa+ImaNQkdUGwV0mUHucY2xhunIBFs0MOlEWydurmhpmNxvRtZ3Fmxd0qfuElLrbP4ahxnXhLiMPpZRB/neOlPlTMdFEURHgwpq9zEOoJFdYfLZGtU6sfEtQX1g+E/berspVE=\"\n"
@@ -58,6 +67,7 @@ vector <string> params(const string &params) {
 
 char *ecall_curl_get(const char *url, const char *request) {
     auth_if_needed();
+    std::string aesKey = getAESKey();
     vector <string> param = params(request);
     std::string base_url(url);
     std::string res;
