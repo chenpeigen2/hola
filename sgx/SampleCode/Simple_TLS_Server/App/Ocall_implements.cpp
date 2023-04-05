@@ -122,6 +122,7 @@ char *ocall_curl_get(const char *url) {
 
 char *ocall_curl_post(const char *url, const char *body) {
     std::cout << "hello we are posting !!!!!!!" << std::endl;
+    std::cout << "url:" << url << ",body:" << body << std::endl;
     std::string response = "we are testing";
     int len = response.length();
     char *p = new char[len + 1];
