@@ -5,10 +5,13 @@ import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import com.google.gson.JsonSyntaxException;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.http.ServerWebSocket;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
+
+import javax.naming.directory.SearchResult;
 
 public class CouchVerticle extends AbstractVerticle {
 
@@ -32,6 +35,10 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/_index").handler(this::createIndex);
         router.post("/_auth").handler(this::auth); // shoule change to post
 
+        listen(server, router);
+    }
+
+    public void listen(HttpServer server, Router router) {
         server.requestHandler(router).listen(PORT);
     }
 
