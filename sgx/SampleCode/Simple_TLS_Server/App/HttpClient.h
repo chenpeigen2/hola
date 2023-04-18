@@ -11,4 +11,6 @@ std::string hello_world();
 
 std::string filter_find(const std::string &db_name, const std::string &filter);
 
+std::string complex_filter(const std::string &data);
+
 #endif //SGX_HTTPCLIENT_H

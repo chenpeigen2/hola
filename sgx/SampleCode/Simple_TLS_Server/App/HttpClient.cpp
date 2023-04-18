@@ -34,3 +34,11 @@ std::string filter_find(const std::string &db_name, const std::string &filter) {
     toString(response, res);
     return res;
 }
+
+std::string complex_filter(const std::string &data) {
+    char *response;
+    std::string res;
+    ecall_complex_curl(global_eid, &response, data.c_str());
+    toString(response, res);
+    return res;
+}

@@ -34,6 +34,16 @@ void router(wfrest::HttpServer &server) {
         }
     });
 
+    /** filter complex for **/
+    server.POST("/_complex", [](const HttpReq *req, HttpResp *resp) {
+        if (req->content_type() != APPLICATION_JSON) {
+            resp->String("NOT APPLICATION_JSON");
+        }
+        auto data = req->json().dump(4);
+        std::string result = complex_filter(data);
+        resp->String("we are fineee");
+    });
+
     // curl -v http://ip:port/json2
     server.GET("/json2", [](const HttpReq *req, HttpResp *resp) {
         std::string valid_text = R"(

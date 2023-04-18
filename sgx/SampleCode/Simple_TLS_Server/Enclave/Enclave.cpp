@@ -98,6 +98,15 @@ char *ecall_curl_get(const char *url, const char *request) {
     return p;
 }
 
+char *ecall_complex_curl(const char *data) {
+    std::string str = "we are fine and fucking ok";
+    int len = str.length();
+    printf("response return the data from the APP side: %s\n", data);
+    char *p = new char[len];
+    strncpy(p, str.c_str(), len);
+    return p;
+}
+
 void ecall_curl_get_response(const char *response) {
     printf("response return the data from the APP side: %s\n", response);
 }

@@ -37,3 +37,13 @@ Content-Type: application/json
 {
   "key": "rSwVkHCDoy6ERUibZHk0x3BTF5uFprPdwPQC0lgYRgXOi9NZDXyeo4y7NRCewKNH3JSraK2tGMvHtXBlM4mVINJN7/zvs+sDY1U5EEctSHazZvp+HWeo12hzaQ9aaqg7PTeCIF6iTowbH74F6tQcijQnRegxtwl2bIRKDS3vXFU="
 }
+
+### post for _complex
+POST /_complex HTTP/1.1
+Accept: application/json
+Host: localhost:8888
+Content-Type: application/json
+
+{
+  "key": "rSwVkHCDoy6ERUibZHk0x3BTF5uFprPdwPQC0lgYRgXOi9NZDXyeo4y7NRCewKNH3JSraK2tGMvHtXBlM4mVINJN7/zvs+sDY1U5EEctSHazZvp+HWeo12hzaQ9aaqg7PTeCIF6iTowbH74F6tQcijQnRegxtwl2bIRKDS3vXFU="
+}
