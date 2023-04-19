@@ -39,7 +39,8 @@ void router(wfrest::HttpServer &server) {
         if (req->content_type() != APPLICATION_JSON) {
             resp->String("NOT APPLICATION_JSON");
         }
-        auto data = req->json().dump(4);
+        // 遍历数组并输出每个元素
+        auto data = req->json().dump();
         std::string result = complex_filter(data);
         resp->String("we are fineee");
     });
