@@ -38,30 +38,6 @@ void auth_if_needed() {
     authed = true;
 }
 
-vector <string> split(const string &str, const string &pattern) {
-    vector <string> res;
-    if (pattern.empty()) return res;
-    size_t start = 0, end = 0;
-    while ((end = str.find(pattern, start)) != string::npos) {
-        if (end > start) res.push_back(str.substr(start, end - start));
-        start = end + pattern.size();
-    }
-    if (start < str.size()) res.push_back(str.substr(start));
-    return res;
-}
-
-vector <string> params(const string &params) {
-    vector <string> res;
-    vector <string> p1 = split(params, "&");
-    for (const auto &re1: p1) {
-        vector <string> p2 = split(re1, "=");
-        for (const auto &re2: p2) {
-            res.push_back(re2);
-        }
-    }
-    return res;
-}
-
 char *ecall_curl_get(const char *url, const char *request) {
     auth_if_needed();
     std::string aesKey = getAESKey();
@@ -99,6 +75,13 @@ char *ecall_curl_get(const char *url, const char *request) {
 }
 
 char *ecall_complex_curl(const char *data) {
+
+    auto provide_decode_data = provide_query(data);
+
+    for (const auto &decode_data: provide_decode_data) {
+        printf("the data : %s \n", decode_data.c_str());
+    }
+
     std::string str = "we are fine and fucking ok";
     int len = str.length();
     printf("response return the data from the APP side: %s\n", data);

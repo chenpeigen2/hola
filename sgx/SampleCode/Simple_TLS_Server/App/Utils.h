@@ -14,6 +14,6 @@ void transform(char *str, std::string &src, int len);
 
 void toString(char *source, std::string &dest);
 
-vector <string> params(const string &params);
+std::vector <std::string> params(const string &params);
 
 #endif //SGX_UTILS_H
