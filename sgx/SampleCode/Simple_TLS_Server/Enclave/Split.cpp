@@ -6,6 +6,7 @@
 #include "Enclave.h"
 #include <string>
 #include <vector>
+#include "Request.h"
 
 using namespace std;
 
@@ -37,5 +38,7 @@ std::vector <std::string> provide_query(const std::string source) {
     std::vector <std::string> res;
     res.push_back("aaaaaaaaaaaa");
     res.push_back("bbbbbbbbbbbb");
+    Request re("aaa", "zzzzzzzzzzzz");
+    re.print();
     return res;
 }
