@@ -36,7 +36,15 @@ std::vector <std::string> params(const std::string &params) {
 
 std::vector <Request> provide_query(const std::string source) {
     std::vector <Request> res;
-    res.push_back(Request("aaaa1", "bbbbbbbbb"));
-    res.push_back(Request("cccc1", "dddddddd"));
+    std::string request_data = "db_name=fake1&filter={\n"
+                               "    \"execution_stats\": true,\n"
+                               "    \"selector\": {\n"
+                               "        \"data.countryid\": {\n"
+                               "            \"$gt\": -1\n"
+                               "        }\n"
+                               "    }\n"
+                               "}";
+    res.push_back(Request("http://127.0.0.1:8080/_find", request_data));
+    res.push_back(Request("http://127.0.0.1:8081/_find", request_data));
     return res;
 }
