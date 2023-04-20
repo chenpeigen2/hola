@@ -34,11 +34,9 @@ std::vector <std::string> params(const std::string &params) {
     return res;
 }
 
-std::vector <std::string> provide_query(const std::string source) {
-    std::vector <std::string> res;
-    res.push_back("aaaaaaaaaaaa");
-    res.push_back("bbbbbbbbbbbb");
-    Request re("aaa", "zzzzzzzzzzzz");
-    re.print();
+std::vector <Request> provide_query(const std::string source) {
+    std::vector <Request> res;
+    res.push_back(Request("aaaa1", "bbbbbbbbb"));
+    res.push_back(Request("cccc1", "dddddddd"));
     return res;
 }

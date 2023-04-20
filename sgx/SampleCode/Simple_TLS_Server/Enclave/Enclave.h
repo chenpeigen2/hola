@@ -36,6 +36,7 @@
 #include <assert.h>
 #include <string>
 #include <vector>
+#include "Request.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -82,7 +83,7 @@ std::vector <std::string> split(const std::string &str, const std::string &patte
 
 std::vector <std::string> params(const std::string &params);
 
-std::vector <std::string> provide_query(const std::string source);
+std::vector <Request> provide_query(const std::string source);
 
 #if defined(__cplusplus)
 }

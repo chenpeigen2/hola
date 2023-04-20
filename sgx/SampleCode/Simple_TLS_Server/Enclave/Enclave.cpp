@@ -3,6 +3,7 @@
 #include "Enclave.h"
 #include "string.h"
 #include "vector"
+#include "Request.h"
 
 
 #define PUBLICKEY "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz\n3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm\n1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgED\n-----END RSA PUBLIC KEY-----"
@@ -79,7 +80,7 @@ char *ecall_complex_curl(const char *data) {
     auto provide_decode_data = provide_query(data);
 
     for (const auto &decode_data: provide_decode_data) {
-        printf("the data : %s \n", decode_data.c_str());
+        printf("the request_data : %s \n", decode_data.request_data);
     }
 
     std::string str = "we are fine and fucking ok";
