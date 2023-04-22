@@ -43,7 +43,7 @@ void auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&
     authSet.insert(url);
 }
 
-char *ecall_curl_get(const char *url, const char *request) {
+std::string curl_get(const char *url, const char *request) {
     http_url httpUrl;
     if (!httpUrl.parse(url)) {
         exit(0);
@@ -77,6 +77,12 @@ char *ecall_curl_get(const char *url, const char *request) {
     response = ecb_decrypt(response.c_str(), response.length(),
                            reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length());
+    return response;
+}
+
+char *ecall_curl_get(const char *url, const char *request) {
+    auto response = curl_get(url, request);
+    // assemble with c type
     int len = response.length();
     char *p = new char[len + 1];
     strncpy(p, response.c_str(), len);
@@ -91,13 +97,15 @@ char *ecall_complex_curl(const char *data) {
     std::string res;
     // perform execution
     for (const auto &decode_data: provide_decode_data) {
-        std::string return_data = ecall_curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
+        std::string &&return_data = curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
         res.append(return_data);
     }
-    // assemble the data
+
+    // assemble the data with c++ type
     int len = res.length();
-    char *p = new char[len];
-    strncpy(p, res.c_str(), len);
+    char *p = new char[len + 1];
+    res.copy(p, len);
+    p[len] = '\0';
     return p;
 }
 
