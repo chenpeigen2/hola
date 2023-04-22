@@ -27,13 +27,13 @@ std::string getAESKey() {
 
 bool authed = false;
 
-void auth_if_needed() {
+void auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
     if (getAESKey().compare("") != 0 && authed) return;
     std::string aesKey = generateAESKey();
     std::string encryptKey = encrypt(reinterpret_cast<const unsigned char *>(aesKey.c_str()), aesKey.length(),
                                      (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
     encryptKey = encode(encryptKey.c_str(), encryptKey.length());
-    std::string url = "http://127.0.0.1:8080/_auth";
+    std::string url = proto + "://" + domain + ":" + to_string(port) + "/_auth";
     std::string body = "{\"key\":\"" +
                        encryptKey +
                        "\"}";
@@ -42,7 +42,12 @@ void auth_if_needed() {
 }
 
 char *ecall_curl_get(const char *url, const char *request) {
-    auth_if_needed();
+    http_url httpUrl;
+    if (!httpUrl.parse(url)) {
+        exit(0);
+    }
+    auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()), httpUrl.get_port());
+
     std::string aesKey = getAESKey();
     vector <string> param = params(request);
     std::string base_url(url);
@@ -83,7 +88,7 @@ char *ecall_complex_curl(const char *data) {
         unsigned short port;
         char host[256];
         memset(host, 0, sizeof(host));
-        std::string url = "http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=07G4cs0cAGGikFwOxi7aJOLVBdIz+/WZGTLLLhmuIY/3wOPahDsH5R0vigMRnzT9RncKh2QMHv8PsSaxKR9ko09iXcTRoNvMTd8rlwpnPtYV69wKp+dRz+yOE55DN2/+2vYun56FDoaBzUo4JAW0q46ZMeaQAcr+G1iTe+8eOXg= ";
+        std::string url = "http://127.0.0.1:8080/_find";
 
 
         http_url httpUrl;
@@ -92,11 +97,13 @@ char *ecall_complex_curl(const char *data) {
             exit(0);
         }
 
-        printf("proto: %s", httpUrl.get_proto());
-        printf("domain: %s", httpUrl.get_domain());
-        printf("port: %d", httpUrl.get_port());
-        printf("url_path: %s", httpUrl.get_url_path());
-        printf("url_params: %s", httpUrl.get_url_params());
+        printf("proto: %s \n", httpUrl.get_proto());
+        printf("domain: %s \n", httpUrl.get_domain());
+        printf("port: %d \n", httpUrl.get_port());
+        printf("url_path: %s \n", httpUrl.get_url_path());
+        printf("url_params: %s \n", httpUrl.get_url_params());
+
+        auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()), httpUrl.get_port());
 
         printf("\n\n");
     }
