@@ -80,7 +80,8 @@ char *ecall_complex_curl(const char *data) {
     auto provide_decode_data = provide_query(data);
 
     for (const auto &decode_data: provide_decode_data) {
-        printf("the request_data : %s \n", decode_data.request_data.c_str());
+        std::string return_data = ecall_curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
+        printf("the request_data : %s and the return data: %s ===\n", decode_data.request_data.c_str(), return_data.c_str());
     }
 
     std::string str = "we are fine and fucking ok";
