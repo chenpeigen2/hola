@@ -85,17 +85,19 @@ char *ecall_curl_get(const char *url, const char *request) {
 }
 
 char *ecall_complex_curl(const char *data) {
+    // provide the requests
     auto provide_decode_data = provide_query(data);
+    // the result
+    std::string res;
+    // perform execution
     for (const auto &decode_data: provide_decode_data) {
         std::string return_data = ecall_curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
-        printf("the request_data : %s and the return data: %s ===\n", decode_data.request_data.c_str(),
-               return_data.c_str());
+        res.append(return_data);
     }
-    std::string str = "we are fine and fucking ok";
-    int len = str.length();
-    printf("response return the data from the APP side: %s\n", data);
+    // assemble the data
+    int len = res.length();
     char *p = new char[len];
-    strncpy(p, str.c_str(), len);
+    strncpy(p, res.c_str(), len);
     return p;
 }
 
