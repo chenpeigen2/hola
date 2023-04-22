@@ -2,6 +2,7 @@
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
 #include "string.h"
+#include <set>
 #include "vector"
 #include "Request.h"
 #include "http_utils.h"
@@ -25,20 +26,21 @@ std::string getAESKey() {
     return sk;
 }
 
-bool authed = false;
+// indicate the authed set
+std::set <std::string> authSet;
 
 void auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
-    if (getAESKey().compare("") != 0 && authed) return;
+    std::string url = proto + "://" + domain + ":" + to_string(port) + "/_auth";
+    if (getAESKey().compare("") != 0 && authSet.count(url) != 0) return;
     std::string aesKey = generateAESKey();
     std::string encryptKey = encrypt(reinterpret_cast<const unsigned char *>(aesKey.c_str()), aesKey.length(),
                                      (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
     encryptKey = encode(encryptKey.c_str(), encryptKey.length());
-    std::string url = proto + "://" + domain + ":" + to_string(port) + "/_auth";
     std::string body = "{\"key\":\"" +
                        encryptKey +
                        "\"}";
     sgx_curl_post(url.c_str(), body.c_str());
-    authed = true;
+    authSet.insert(url);
 }
 
 char *ecall_curl_get(const char *url, const char *request) {
@@ -83,39 +85,12 @@ char *ecall_curl_get(const char *url, const char *request) {
 }
 
 char *ecall_complex_curl(const char *data) {
-
-    {
-        unsigned short port;
-        char host[256];
-        memset(host, 0, sizeof(host));
-        std::string url = "http://127.0.0.1:8080/_find";
-
-
-        http_url httpUrl;
-
-        if (!httpUrl.parse(url.c_str())) {
-            exit(0);
-        }
-
-        printf("proto: %s \n", httpUrl.get_proto());
-        printf("domain: %s \n", httpUrl.get_domain());
-        printf("port: %d \n", httpUrl.get_port());
-        printf("url_path: %s \n", httpUrl.get_url_path());
-        printf("url_params: %s \n", httpUrl.get_url_params());
-
-        auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()), httpUrl.get_port());
-
-        printf("\n\n");
-    }
-
     auto provide_decode_data = provide_query(data);
-
     for (const auto &decode_data: provide_decode_data) {
         std::string return_data = ecall_curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
         printf("the request_data : %s and the return data: %s ===\n", decode_data.request_data.c_str(),
                return_data.c_str());
     }
-
     std::string str = "we are fine and fucking ok";
     int len = str.length();
     printf("response return the data from the APP side: %s\n", data);
