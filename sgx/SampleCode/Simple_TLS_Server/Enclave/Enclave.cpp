@@ -4,12 +4,14 @@
 #include "string.h"
 #include "vector"
 #include "Request.h"
+#include "http_utils.h"
 
 
 #define PUBLICKEY "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz\n3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm\n1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgED\n-----END RSA PUBLIC KEY-----"
 #define PRIVATE_KEY "-----BEGIN RSA PRIVATE KEY-----\nMIICWwIBAAKBgQC2a7bm+na9YhCfiWYZU7x+99MktMW9el8sjd+v0AEtth95Nh/6\nf7Wzc9ydwsuOJSu8OKDWnTsEYCE4wyJ4Zmw6nCpRYiO1zwgt+dRLm7IIhdcjsI1S\njLLyptToJJ1ab2E3dq6Ck1ifMpJ36lj8cLAFLKRqW8edSbf87mFyxYZY/wIBAwKB\ngHmdJJn8TyjsCxUGRBDifan6jMMjLn5RlMhelR/gAMkkFPt5aqb/zneikxPXMl7D\ncn17FeRo0gLqwNCCFvru8tCcvtCCbgkwre72cGuL/ggN0MvLFQZGwr3tCmhWSAGJ\nnSyg3zzqyiUay1FTqBDNqGmlXyLwIcCzqqQVJlcBmv87AkEA5grvj0F75uSHzzOn\n90FSim17VXWNVzr7iSerg6nAFnrTqk/dOe0/KYQ1O9gi1ZWvPPFdpI+YRbCfZaOi\nBpI6PQJBAMsBKQ89LB8ev7j4AlJzqeawdqp4O8tT2jodoB+HmAp6oNsPyfk8KGDd\nSLEEwGadt3ekWE8FY/aHZ2kETjyLn+sCQQCZXJ+01lKZ7a/fd8VPgOGxnlI4+Qjk\n0f0GGnJXxoAO/I0cNT4mniobrXjSkBc5DnTTS5PDCmWDyxTubRavDCbTAkEAh1Yb\nX34dahR/0KVW4aJxRHWkcaV9Mjfm0WkValplXFHAkgqGpiga6z4wdgMq7xPPpRg6\n31jtTwTvm1g0KF0VRwJAY0rj3NWey/4apiEdrNV143w83iQtFTDliKXB8voAxk6y\npZkunO7IzRcbnC2+132e0/G9LdLGbVqgHO4i2leMYw==\n-----END RSA PRIVATE KEY-----"
 
 using namespace std;
+using namespace oceanstar;
 
 std::string sk;
 
@@ -77,11 +79,34 @@ char *ecall_curl_get(const char *url, const char *request) {
 
 char *ecall_complex_curl(const char *data) {
 
+    {
+        unsigned short port;
+        char host[256];
+        memset(host, 0, sizeof(host));
+        std::string url = "http://127.0.0.1:8080/_find?db_name=MjRpTSD5v4iCxUTzs+brYw==&filter=07G4cs0cAGGikFwOxi7aJOLVBdIz+/WZGTLLLhmuIY/3wOPahDsH5R0vigMRnzT9RncKh2QMHv8PsSaxKR9ko09iXcTRoNvMTd8rlwpnPtYV69wKp+dRz+yOE55DN2/+2vYun56FDoaBzUo4JAW0q46ZMeaQAcr+G1iTe+8eOXg= ";
+
+
+        http_url httpUrl;
+
+        if (!httpUrl.parse(url.c_str())) {
+            exit(0);
+        }
+
+        printf("proto: %s", httpUrl.get_proto());
+        printf("domain: %s", httpUrl.get_domain());
+        printf("port: %d", httpUrl.get_port());
+        printf("url_path: %s", httpUrl.get_url_path());
+        printf("url_params: %s", httpUrl.get_url_params());
+
+        printf("\n\n");
+    }
+
     auto provide_decode_data = provide_query(data);
 
     for (const auto &decode_data: provide_decode_data) {
         std::string return_data = ecall_curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
-        printf("the request_data : %s and the return data: %s ===\n", decode_data.request_data.c_str(), return_data.c_str());
+        printf("the request_data : %s and the return data: %s ===\n", decode_data.request_data.c_str(),
+               return_data.c_str());
     }
 
     std::string str = "we are fine and fucking ok";
