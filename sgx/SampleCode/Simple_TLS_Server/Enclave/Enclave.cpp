@@ -1,11 +1,11 @@
 #include "Enclave_t.h"
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
-#include "string.h"
+#include <string.h>
+#include <string>
 #include <set>
-#include "vector"
-#include "Request.h"
 #include "http_utils.h"
+#include "encalve_utils.h"
 
 
 #define PUBLICKEY "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz\n3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm\n1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgED\n-----END RSA PUBLIC KEY-----"
@@ -79,6 +79,9 @@ std::string curl_get(const char *url, const char *request) {
                            aesKey.length());
     return response;
 }
+
+
+// ### below are the ecall ###
 
 char *ecall_curl_get(const char *url, const char *request) {
     auto response = curl_get(url, request);
