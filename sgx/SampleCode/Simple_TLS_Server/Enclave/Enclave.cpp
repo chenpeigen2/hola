@@ -84,11 +84,11 @@ std::string curl_get(const char *url, const char *request) {
 // ### below are the ecall ###
 
 char *ecall_curl_get(const char *url, const char *request) {
-    auto response = curl_get(url, request);
-    // assemble with c type
+    std::string response = curl_get(url, request);
+    // assemble
     int len = response.length();
     char *p = new char[len + 1];
-    strncpy(p, response.c_str(), len);
+    response.copy(p, len);
     p[len] = '\0';
     return p;
 }
@@ -97,17 +97,16 @@ char *ecall_complex_curl(const char *data) {
     // provide the requests
     auto provide_decode_data = provide_query(data);
     // the result
-    std::string res;
+    std::string response;
     // perform execution
     for (const auto &decode_data: provide_decode_data) {
         std::string &&return_data = curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
-        res.append(return_data);
+        response.append(return_data);
     }
-
-    // assemble the data with c++ type
-    int len = res.length();
+    // assemble
+    int len = response.length();
     char *p = new char[len + 1];
-    res.copy(p, len);
+    response.copy(p, len);
     p[len] = '\0';
     return p;
 }
