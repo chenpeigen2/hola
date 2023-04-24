@@ -8,7 +8,7 @@
 #include "encalve_utils.h"
 
 // TODO provide query 重写
-// TODO aes key
+// TODO aes key 需要random和刷新
 // TODO 用户到飞地的加密传输
 // TODO attestion process
 #define PUBLICKEY "-----BEGIN RSA PUBLIC KEY-----\nMIGHAoGBALZrtub6dr1iEJ+JZhlTvH730yS0xb16XyyN36/QAS22H3k2H/p/tbNz\n3J3Cy44lK7w4oNadOwRgITjDInhmbDqcKlFiI7XPCC351EubsgiF1yOwjVKMsvKm\n1OgknVpvYTd2roKTWJ8yknfqWPxwsAUspGpbx51Jt/zuYXLFhlj/AgED\n-----END RSA PUBLIC KEY-----"
@@ -51,12 +51,6 @@ std::string curl_get(const char *url, const char *request) {
     if (!httpUrl.parse(url)) {
         exit(0);
     }
-    // http://localhost:8080/_uuids?count=10
-    // http
-//    lcoalhost
-//    8080
-//    _uuilds
-// ?count=10
     auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()), httpUrl.get_port());
 
     std::string aesKey = getAESKey();
