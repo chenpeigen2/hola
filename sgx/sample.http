@@ -46,9 +46,9 @@ Content-Type: application/json
 
 [
   {
-    "query": "http://localhost:8080/_complex"
+    "query": "http://localhost:8080/_find"
   },
   {
-    "query": "http://localhost:8081/_complex"
+    "query": "http://localhost:8081/_find"
   }
 ]

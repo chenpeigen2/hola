@@ -4,6 +4,13 @@ enclave {
 	include "time.h"
 
 	from "sgx_tstdc.edl" import *;
+
+     /* structure definition */
+    struct struct_foo_t {
+        /* Basic types can be used in structure. */
+        uint32_t struct_foo_0;
+        uint64_t struct_foo_1;
+    };
 	
 	trusted {
 		public void ecall_start_tls_server(void);
@@ -13,6 +20,7 @@ enclave {
 		public void ecall_curl_get_response([in, string] const char *response);
 		public char *ecall_test();
 		public char *ecall_test_params([in, string] const char *request);
+		public void ecall_type_struct(struct struct_foo_t val);
 	};
 
 	untrusted {

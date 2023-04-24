@@ -34,7 +34,7 @@ std::vector <std::string> params(const std::string &params) {
     return res;
 }
 
-std::vector <Request> provide_query(const std::string source) {
+std::vector <Request> provide_query(const std::string &source) {
     std::vector <Request> res;
     std::string request_data = "db_name=fake1&filter={\n"
                                "    \"execution_stats\": true,\n"
