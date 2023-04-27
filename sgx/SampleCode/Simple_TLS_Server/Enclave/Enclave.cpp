@@ -3,6 +3,14 @@
 #include "Enclave.h"
 #include <string.h>
 #include <string>
+#include <string>
+#include <iostream>
+#include <cstring>
+#include <random>
+
+#include <random>
+#include <string>
+#include <array>
 #include <set>
 #include "http_utils.h"
 #include "encalve_utils.h"
@@ -19,7 +27,32 @@ using namespace oceanstar;
 
 std::string sk;
 
+std::string generateRandomString(size_t length) {
+    // 定义所使用的字符集
+    const std::array<char, 64> charset{
+            "0123456789"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "abcdefghijklmnopqrstuvwxyz"
+    };
+    const size_t charsetLength = charset.size();
+
+    // 生成随机数引擎
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, charsetLength - 1);
+
+    // 生成随机字符串
+    std::string result;
+    result.reserve(length);
+    for (size_t i = 0; i < length; ++i) {
+        result.push_back(charset[dis(gen)]);
+    }
+    return result;
+}
+
 std::string generateAESKey() {
+    std::string &&res = generateRandomString(16);
+    printf("======================the source %s\n", res);
     std::string aesKey = "0123456789abcdefghijklmn";
     sk = aesKey;
     return aesKey;
