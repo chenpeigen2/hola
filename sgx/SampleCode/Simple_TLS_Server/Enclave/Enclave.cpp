@@ -12,6 +12,7 @@
 #include <string>
 #include <array>
 #include <set>
+#include <map>
 #include "http_utils.h"
 #include "encalve_utils.h"
 
@@ -27,48 +28,28 @@ using namespace oceanstar;
 
 std::string sk;
 
-std::string generateRandomString(size_t length) {
-    // 定义所使用的字符集
-    const std::array<char, 64> charset{
-            "0123456789"
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "abcdefghijklmnopqrstuvwxyz"
-    };
-    const size_t charsetLength = charset.size();
+// indicate the authed set
+std::set <std::string> authSet;
+std::map <std::string, std::string> auth_map;
 
-    // 生成随机数引擎
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, charsetLength - 1);
-
-    // 生成随机字符串
-    std::string result;
-    result.reserve(length);
-    for (size_t i = 0; i < length; ++i) {
-        result.push_back(charset[dis(gen)]);
-    }
-    return result;
+string random_string(int len) {
+    string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    random_device rd;
+    mt19937 generator(rd());
+    shuffle(str.begin(), str.end(), generator);
+    return str.substr(0, len);
 }
 
 std::string generateAESKey() {
-    std::string &&res = generateRandomString(16);
-    printf("======================the source %s\n", res);
-    std::string aesKey = "0123456789abcdefghijklmn";
-    sk = aesKey;
-    return aesKey;
+    return random_string(24);
 }
 
-std::string getAESKey() {
-    return sk;
-}
-
-// indicate the authed set
-std::set <std::string> authSet;
-
-void auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
+std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
     std::string url = proto + "://" + domain + ":" + to_string(port) + "/_auth";
-    if (getAESKey().compare("") != 0 && authSet.count(url) != 0) return;
-    std::string aesKey = generateAESKey();
+    if (auth_map.count(url) > 0) {
+        return auth_map.at(url);
+    }
+    std::string &&aesKey = generateAESKey();
     std::string encryptKey = encrypt(reinterpret_cast<const unsigned char *>(aesKey.c_str()), aesKey.length(),
                                      (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
     encryptKey = encode(encryptKey.c_str(), encryptKey.length());
@@ -76,7 +57,8 @@ void auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&
                        encryptKey +
                        "\"}";
     sgx_curl_post(url.c_str(), body.c_str());
-    authSet.insert(url);
+    auth_map[url] = aesKey;
+    return aesKey;
 }
 
 std::string curl_get(const char *url, const char *request) {
@@ -84,9 +66,10 @@ std::string curl_get(const char *url, const char *request) {
     if (!httpUrl.parse(url)) {
         exit(0);
     }
-    auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()), httpUrl.get_port());
 
-    std::string aesKey = getAESKey();
+    std::string aesKey = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
+                                        httpUrl.get_port());
+
     vector <string> param = params(request);
     std::string base_url(url);
     std::string res;
