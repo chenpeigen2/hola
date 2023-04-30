@@ -3,13 +3,11 @@
 #include "Enclave.h"
 #include <string.h>
 #include <string>
-#include <string>
 #include <iostream>
 #include <cstring>
 #include <random>
+#include <time.h>
 
-#include <random>
-#include <string>
 #include <array>
 #include <set>
 #include <map>
@@ -32,6 +30,23 @@ std::string sk;
 std::set <std::string> authSet;
 std::map <std::string, std::string> auth_map;
 
+//// indicate the refresh rate
+#define ELAPSE_MINUTES 15
+time_t start;
+
+bool refreshIfNeeded() {
+    time_t now = sgx_time(nullptr);
+    if (start == 0) {
+        start = now;
+    }
+    double seconds = difftime(now, start);
+    if (seconds >= ELAPSE_MINUTES * 60) {
+        start = now;
+        return true;
+    }
+    return false;
+}
+
 string random_string(int len) {
     string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     random_device rd;
@@ -46,7 +61,8 @@ std::string generateAESKey() {
 
 std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
     std::string url = proto + "://" + domain + ":" + to_string(port) + "/_auth";
-    if (auth_map.count(url) > 0) {
+    bool refresh = refreshIfNeeded();
+    if (auth_map.count(url) > 0 && !refresh) {
         return auth_map.at(url);
     }
     std::string &&aesKey = generateAESKey();
