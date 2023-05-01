@@ -45,6 +45,10 @@ CURL_SGX_PATH = ../../CURL_SGX
 CURL_SGX_INC = -I$(CURL_SGX_PATH)/include
 CURL_LIBS = -lcurl
 
+JSON_SGX_PATH = ../../JSON_SGX
+JSON_SGX_INC = -I$(JSON_SGX_PATH)/include
+JSON_LIBS = -lnlohmann_json
+
 # stay the same
 ifeq ($(shell getconf LONG_BIT), 32)
 	SGX_ARCH := x86
@@ -158,7 +162,7 @@ Crypto_Library_Name := sgx_tcrypto
 
 # added
 Enclave_Cpp_Files := $(wildcard Enclave/*.cpp)
-Enclave_Include_Paths := -IInclude -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/libcxx -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/stlport $(OPENSSL_SGX_INC) $(CURL_SGX_INC)
+Enclave_Include_Paths := -IInclude -IEnclave -I$(SGX_SDK)/include -I$(SGX_SDK)/include/libcxx -I$(SGX_SDK)/include/tlibc -I$(SGX_SDK)/include/stlport $(OPENSSL_SGX_INC) $(JSON_SGX_INC) $(CURL_SGX_INC)
 
 # added
 Enclave_C_Flags := $(SGX_COMMON_CFLAGS) -nostdinc -fvisibility=hidden -fpie -fstack-protector -fno-builtin-printf $(Enclave_Include_Paths)
@@ -180,6 +184,7 @@ Enclave_Link_Flags := $(Enclave_Security_Link_Flags) \
 	-Wl,--no-undefined -nostdlib -nodefaultlibs -nostartfiles -L$(SGX_LIBRARY_PATH) \
 	-Wl,--whole-archive -l$(Trts_Library_Name) -Wl,--no-whole-archive \
 	-L$(OPENSSL_SGX_PATH) $(OPENSSL_LIBS) \
+	-L$(JSON_SGX_PATH) \
 	-L$(CURL_SGX_PATH) $(CURL_LIBS)\
 	-Wl,--start-group -lsgx_tstdc -lsgx_tcxx -l$(Crypto_Library_Name) -l$(Service_Library_Name) -Wl,--end-group \
 	-Wl,-Bstatic -Wl,-Bsymbolic -Wl,--no-undefined \
