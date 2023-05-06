@@ -46,6 +46,7 @@ int sgxssl_read_rand(unsigned char *rand_buf, int length_in_bytes);
 const unsigned short **__ctype_b_loc(void);
 const int32_t **__ctype_tolower_loc(void);
 int sgx_json_arr_length(const char *data);
+std::string sgx_json_query(int idx, const char *key);
 #define printf sgx_printf
 #define printe(fmt, ...) sgx_printe(__FUNCTION__, fmt, ##__VA_ARGS__)
 #define printl(fmt, ...) sgx_printl(__FUNCTION__, fmt, ##__VA_ARGS__)

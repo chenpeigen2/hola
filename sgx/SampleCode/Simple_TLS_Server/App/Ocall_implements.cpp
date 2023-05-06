@@ -146,6 +146,16 @@ int ocall_json_arr_length(const char *data) {
     }
 }
 
+char *ocall_json_query(int idx, const char *key) {
+    std::cout << idx << "   " << key << std::endl;
+    std::string response = "ocall_json_queryocall_json_queryocall_json_queryocall_json_queryocall_json_queryocall_json_query";
+    int len = response.length();
+    char *p = new char[len + 1];
+    strncpy(p, response.c_str(), len);
+    p[len] = '\0';
+    return p;
+}
+
 void ocall_sgx_exit(int e) {
     exit(e);
 }

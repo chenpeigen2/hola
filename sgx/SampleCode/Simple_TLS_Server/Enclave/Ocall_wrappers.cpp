@@ -190,6 +190,13 @@ std::string sgx_curl_post(const char *url, const char *body) {
     return res;
 }
 
+std::string sgx_json_query(int idx, const char *key) {
+    char *retrival;
+    ocall_json_query(&retrival, idx, key);
+    std::string res(retrival);
+    return res;
+}
+
 int sgx_json_arr_length(const char *data) {
     int value = -1;
     ocall_json_arr_length(&value, data);
