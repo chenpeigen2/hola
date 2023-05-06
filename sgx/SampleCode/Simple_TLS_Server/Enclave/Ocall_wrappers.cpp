@@ -190,6 +190,13 @@ std::string sgx_curl_post(const char *url, const char *body) {
     return res;
 }
 
+int sgx_json_arr_length(const char *data) {
+    int value = -1;
+    ocall_json_arr_length(&value, data);
+    return value;
+}
+
+
 void sgx_printe(const char *fname, const char *fmt, ...) {
     char ebuf[BUFSIZ] = {'\0'};
     char buf[BUFSIZ] = {'\0'};

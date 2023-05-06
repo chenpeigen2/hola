@@ -35,6 +35,11 @@ std::vector <std::string> params(const std::string &params) {
 }
 
 std::vector <Request> provide_query(const std::string &source) {
+
+    int length = sgx_json_arr_length(source.c_str());
+
+    printf("xxxxxxxxxxxxxxxxx %d", length);
+
     std::vector <Request> res;
     std::string request_data = "db_name=fake1&filter={\n"
                                "    \"execution_stats\": true,\n"

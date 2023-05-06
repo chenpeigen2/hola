@@ -34,6 +34,7 @@ void ocall_print_string(const char *str);
 void ocall_save_rsa(const char *publickey, const char *privatekey);
 char *ocall_curl_get(const char *params);
 char *ocall_curl_post(const char *url, const char *body);
+int ocall_json_arr_length(const char *data);
 #if defined(__cplusplus)
 }
 #endif

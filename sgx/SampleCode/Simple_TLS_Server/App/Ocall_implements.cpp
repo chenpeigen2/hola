@@ -6,6 +6,10 @@
 #include <iostream>
 #include "App.h"
 #include "Curl.h"
+#include <iomanip>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 #define PUB_KEY_FILE "pubkey.pem"
 #define PRI_KEY_FILE "prikey.pem"
@@ -128,6 +132,18 @@ char *ocall_curl_post(const char *url, const char *body) {
     strncpy(p, response.c_str(), len);
     p[len] = '\0';
     return p;
+}
+
+int ocall_json_arr_length(const char *data) {
+    printf("%s \n\n\n", data);
+    if (json::accept(data)) {
+        json j_arr = json::parse(data);
+        auto str = j_arr.at(0).at("query").get<std::string>();
+        std::cout << str << std::endl;
+        return j_arr.size();
+    } else {
+        return -1;
+    }
 }
 
 void ocall_sgx_exit(int e) {
