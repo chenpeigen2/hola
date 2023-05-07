@@ -35,24 +35,25 @@ std::vector <std::string> params(const std::string &params) {
 }
 
 std::vector <Request> provide_query(const std::string &source) {
-
-    int length = sgx_json_arr_length(source.c_str());
-
-    std::string &&ret = sgx_json_query(0, "wewewewe");
-
-    printf("xxxxxxxxxxxxxxxxx %d", length);
-    printf("zzzzzzz %s", ret.c_str());
-
+    int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
-    std::string request_data = "db_name=fake1&filter={\n"
-                               "    \"execution_stats\": true,\n"
-                               "    \"selector\": {\n"
-                               "        \"data.countryid\": {\n"
-                               "            \"$gt\": -1\n"
-                               "        }\n"
-                               "    }\n"
-                               "}";
-    res.push_back(Request("http://127.0.0.1:8080/_find", request_data));
-    res.push_back(Request("http://127.0.0.1:8081/_find", request_data));
+    for (int i = 0; i < len; ++i) {
+        std::string query = sgx_json_query(i, "query");
+        std::string db_name = sgx_json_query(i, "db_name");
+        std::string filter = sgx_json_query(i, "filter");
+        std::string request_data = "db_name=" + db_name + "&filter=" + filter;
+        printf("the data decode from the json: %s %s \n", query.c_str(), request_data.c_str());
+        res.push_back(Request(query, request_data));
+        res.push_back(Request(query, request_data));
+    }
+//    std::string request_data = "db_name=fake1&filter={\n"
+//                               "    \"execution_stats\": true,\n"
+//                               "    \"selector\": {\n"
+//                               "        \"data.countryid\": {\n"
+//                               "            \"$gt\": -1\n"
+//                               "        }\n"
+//                               "    }\n"
+//                               "}";
+//    printf("%s", request_data.c_str());
     return res;
 }

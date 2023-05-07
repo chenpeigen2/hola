@@ -46,9 +46,27 @@ Content-Type: application/json
 
 [
   {
-    "query": "http://localhost:8080/_find"
+    "query": "http://localhost:8080/_find",
+    "db_name": "fake1",
+    "filter": {
+      "execution_stats": true,
+      "selector": {
+        "data.countryid": {
+          "$gt": -1
+        }
+      }
+    }
   },
   {
-    "query": "http://localhost:8081/_find"
+    "query": "http://localhost:8081/_find",
+    "db_name": "fake3",
+    "filter": {
+      "execution_stats": true,
+      "selector": {
+        "data.countryid": {
+          "$gt": -1
+        }
+      }
+    }
   }
 ]

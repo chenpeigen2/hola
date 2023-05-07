@@ -134,12 +134,13 @@ char *ocall_curl_post(const char *url, const char *body) {
     return p;
 }
 
+/** arr we are restoring **/
+json j_arr = nullptr;
+
 int ocall_json_arr_length(const char *data) {
-    printf("%s \n\n\n", data);
     if (json::accept(data)) {
-        json j_arr = json::parse(data);
-        auto str = j_arr.at(0).at("query").get<std::string>();
-        std::cout << str << std::endl;
+        j_arr = json::parse(data);
+        if (!j_arr.is_array()) return -1;
         return j_arr.size();
     } else {
         return -1;
@@ -147,13 +148,24 @@ int ocall_json_arr_length(const char *data) {
 }
 
 char *ocall_json_query(int idx, const char *key) {
-    std::cout << idx << "   " << key << std::endl;
-    std::string response = "ocall_json_queryocall_json_queryocall_json_queryocall_json_queryocall_json_queryocall_json_query";
-    int len = response.length();
-    char *p = new char[len + 1];
-    strncpy(p, response.c_str(), len);
-    p[len] = '\0';
-    return p;
+    if (j_arr != nullptr) {
+        auto j_object = j_arr.at(idx);
+        std::cout << j_object.contains(key) << std::endl;
+        if (j_object.contains(key)) {
+            std::string response;
+            if (j_object.at(key).is_object()) {
+                response = j_object.at(key).dump();
+            } else {
+                response = j_object.at(key).get<std::string>();
+            }
+            int len = response.length();
+            char *p = new char[len + 1];
+            strncpy(p, response.c_str(), len);
+            p[len] = '\0';
+            return p;
+        }
+    }
+    return nullptr;
 }
 
 void ocall_sgx_exit(int e) {

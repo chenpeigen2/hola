@@ -190,9 +190,11 @@ std::string sgx_curl_post(const char *url, const char *body) {
     return res;
 }
 
+/** may query the key return null **/
 std::string sgx_json_query(int idx, const char *key) {
     char *retrival;
     ocall_json_query(&retrival, idx, key);
+    if (retrival == nullptr) return "null";
     std::string res(retrival);
     return res;
 }
