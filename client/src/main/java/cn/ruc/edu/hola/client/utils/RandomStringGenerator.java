@@ -17,4 +17,8 @@ public class RandomStringGenerator {
 
         return sb.toString();
     }
+
+    public static String generateAESKey() {
+        return generateRandomString(24);
+    }
 }
