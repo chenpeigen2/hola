@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client.impl
 
 import cn.ruc.edu.hola.client.ApiService
+import cn.ruc.edu.hola.client.json.JsonUtils
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
@@ -22,6 +23,22 @@ internal class ApiServiceImpl : ApiService() {
             .headers(headers.toHeaders())
 //            .cacheControl()
             .tag("filterDocs${databaseName}")
+            .build()
+        return client.newCall(request).execute();
+    }
+
+    override fun complex(requests: MutableList<cn.ruc.edu.hola.client.entity.Request>?): Response {
+        val text = JsonUtils.json.toJson(requests)
+        val body = text.toRequestBody("application/json".toMediaType())
+        val url = baseUrl
+            .addPathSegment("_complex")
+            .build()
+        val request = Request.Builder()
+            .url(url)
+            .method("POST", body)
+            .headers(headers.toHeaders())
+//            .cacheControl()
+            .tag("complex")
             .build()
         return client.newCall(request).execute();
     }
