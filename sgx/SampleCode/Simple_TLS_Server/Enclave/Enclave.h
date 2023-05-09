@@ -79,12 +79,6 @@ std::string ecb_encrypt(const char *src,
 std::string ecb_decrypt(const char *src, size_t src_len,
                         const unsigned char *key, size_t key_len);
 
-std::vector <std::string> split(const std::string &str, const std::string &pattern);
-
-std::vector <std::string> params(const std::string &params);
-
-std::vector <Request> provide_query(const std::string &source);
-
 #if defined(__cplusplus)
 }
 #endif

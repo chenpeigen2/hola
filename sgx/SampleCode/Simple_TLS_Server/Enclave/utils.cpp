@@ -1,11 +1,9 @@
 //
 // Created by chenpeigen on 23-4-19.
 //
-#include "Enclave_t.h"
+#include "utils.h"
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
-#include <string>
-#include <vector>
 #include "Request.h"
 
 using namespace std;
