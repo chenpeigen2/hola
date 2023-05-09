@@ -43,3 +43,9 @@ std::string complex_filter(const std::string &data) {
     toString(response, res);
     return res;
 }
+
+std::string auth_sgx(const std::string &data) {
+    int runned = 0;
+    ecall_auth(global_eid, &runned, data.c_str());
+    return "hello world";
+}

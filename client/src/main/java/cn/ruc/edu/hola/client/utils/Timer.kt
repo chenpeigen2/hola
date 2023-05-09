@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.client
+package cn.ruc.edu.hola.client.utils
 
 object Timer {
 

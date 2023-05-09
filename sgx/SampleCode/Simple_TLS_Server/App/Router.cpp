@@ -85,6 +85,16 @@ void router(wfrest::HttpServer &server) {
         fprintf(stderr, "Json : %s", req->json().dump(4).c_str());
     });
 
+    server.POST("/_auth", [](const HttpReq *req, HttpResp *resp) {
+        if (req->content_type() != APPLICATION_JSON) {
+            resp->String("NOT APPLICATION_JSON");
+            return;
+        }
+        auto data = req->json().dump();
+        auto ret = auth_sgx(data);
+        fprintf(stderr, "Json : %s", req->json().dump(4).c_str());
+    });
+
     server.POST("/json6", [](const HttpReq *req, HttpResp *resp) {
         if (req->content_type() != APPLICATION_JSON) {
             resp->String("NOT APPLICATION_JSON");

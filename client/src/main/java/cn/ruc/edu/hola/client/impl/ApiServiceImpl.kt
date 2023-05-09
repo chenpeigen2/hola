@@ -1,7 +1,11 @@
 package cn.ruc.edu.hola.client.impl
 
 import cn.ruc.edu.hola.client.ApiService
+import cn.ruc.edu.hola.client.entity.auth.AuthData
+import cn.ruc.edu.hola.client.entity.auth.RSAAuthData
 import cn.ruc.edu.hola.client.json.JsonUtils
+import cn.ruc.edu.hola.client.utils.RandomStringGenerator
+import cn.ruc.edu.hola.client.utils.Timer
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
@@ -27,7 +31,33 @@ internal class ApiServiceImpl : ApiService() {
         return client.newCall(request).execute();
     }
 
+    private val map = hashMapOf<String, String>()
+
+    // TODO need acquire the return data
+    private fun refresh() {
+        val aesKey = RandomStringGenerator.generateAESKey();
+        val data: AuthData = RSAAuthData(RandomStringGenerator.UID, aesKey);
+        val text = JsonUtils.json.toJson(data)
+        val body = text.toRequestBody("application/json".toMediaType())
+        val url = baseUrl
+            .addPathSegment("_auth")
+            .build()
+        val request = Request.Builder()
+            .url(url)
+            .method("POST", body)
+            .headers(headers.toHeaders())
+//            .cacheControl()
+            .tag("_auth")
+            .build()
+        client.newCall(request).execute()
+        map[baseUrl.toString()] = aesKey
+    }
+
     override fun complex(requests: MutableList<cn.ruc.edu.hola.client.entity.Request>?): Response {
+        if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
+            refresh() //refresh the key
+        }
+
         val text = JsonUtils.json.toJson(requests)
         val body = text.toRequestBody("application/json".toMediaType())
         val url = baseUrl
@@ -40,7 +70,7 @@ internal class ApiServiceImpl : ApiService() {
 //            .cacheControl()
             .tag("complex")
             .build()
-        return client.newCall(request).execute();
+        return client.newCall(request).execute()
     }
 
 }

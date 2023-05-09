@@ -21,6 +21,7 @@ enclave {
 		public char *ecall_test();
 		public char *ecall_test_params([in, string] const char *request);
 		public void ecall_type_struct(struct struct_foo_t val);
+		public int ecall_auth([in, string] const char* data);
 	};
 
 	untrusted {
