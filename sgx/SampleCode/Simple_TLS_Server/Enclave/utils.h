@@ -22,4 +22,6 @@ std::vector <std::string> params(const std::string &params);
 
 std::vector <Request> provide_query(const std::string &source);
 
+bool client_auth(const std::string &source);
+
 #endif //SGX_UTILS_H

@@ -44,14 +44,9 @@ std::vector <Request> provide_query(const std::string &source) {
         res.push_back(Request(query, request_data));
         res.push_back(Request(query, request_data));
     }
-//    std::string request_data = "db_name=fake1&filter={\n"
-//                               "    \"execution_stats\": true,\n"
-//                               "    \"selector\": {\n"
-//                               "        \"data.countryid\": {\n"
-//                               "            \"$gt\": -1\n"
-//                               "        }\n"
-//                               "    }\n"
-//                               "}";
-//    printf("%s", request_data.c_str());
     return res;
+}
+
+bool client_auth(const std::string &source) {
+    // TODO
 }
