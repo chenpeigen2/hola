@@ -50,6 +50,7 @@ internal class ApiServiceImpl : ApiService() {
             .tag("_auth")
             .build()
         client.newCall(request).execute()
+        println(aesKey)
         map[baseUrl.toString()] = aesKey
     }
 

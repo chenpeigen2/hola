@@ -48,6 +48,7 @@ enclave {
 		char *ocall_curl_post([in, string] const char *url, [in, string] const char *body);
 		int ocall_json_arr_length([in, string] const char *data);
 		char* ocall_json_query(int idx, [in, string] const char *key);
+		char *ocall_json_object([in, string] const char *data, [in, string] const char *key);
 	};
 
 };

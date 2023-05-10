@@ -10,7 +10,7 @@ long sgx_clock(void) {
     return retv;
 }
 
-time_t sgx_time(time_t * timep) {
+time_t sgx_time(time_t *timep) {
     time_t retv;
     sgx_status_t sgx_retv;
     if ((sgx_retv = ocall_sgx_time(&retv, timep, sizeof(time_t))) != SGX_SUCCESS) {
@@ -194,6 +194,14 @@ std::string sgx_curl_post(const char *url, const char *body) {
 std::string sgx_json_query(int idx, const char *key) {
     char *retrival;
     ocall_json_query(&retrival, idx, key);
+    if (retrival == nullptr) return "null";
+    std::string res(retrival);
+    return res;
+}
+
+std::string sgx_json_object(const char *data, const char *key) {
+    char *retrival;
+    ocall_json_object(&retrival, data, key);
     if (retrival == nullptr) return "null";
     std::string res(retrival);
     return res;

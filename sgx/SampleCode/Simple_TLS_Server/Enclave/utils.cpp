@@ -5,6 +5,7 @@
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
 #include "Request.h"
+#include <map>
 
 using namespace std;
 
@@ -47,6 +48,18 @@ std::vector <Request> provide_query(const std::string &source) {
     return res;
 }
 
+std::map <std::string, std::string> client_auth_map;
+
 bool client_auth(const std::string &source) {
-    // TODO
+    std::string &&uid = sgx_json_object(source.c_str(), "uid");
+    std::string &&key = sgx_json_object(source.c_str(), "key");
+    printf("client_auth %s %s\n", uid.c_str(), key.c_str());
+
+    key = decode(key.c_str(), key.length());
+    key = decrypt(reinterpret_cast<const unsigned char *>(key.c_str()), key.length(),
+                  (const unsigned char *) PRIVATE_KEY, strlen(PRIVATE_KEY));
+
+    client_auth_map[uid] = key;
+    printf("client_auth %s %s\n", uid.c_str(), key.c_str());
+    return true;
 }

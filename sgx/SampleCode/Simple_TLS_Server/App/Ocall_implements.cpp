@@ -168,6 +168,28 @@ char *ocall_json_query(int idx, const char *key) {
     return nullptr;
 }
 
+
+char *ocall_json_object(const char *data, const char *key) {
+    if (json::accept(data)) {
+        auto j_object = json::parse(data);
+        if (!j_object.is_object()) return nullptr;
+        if (j_object.contains(key)) {
+            std::string response;
+            if (j_object.at(key).is_object()) {
+                response = j_object.at(key).dump();
+            } else if (j_object.at(key).is_string()) {
+                response = j_object.at(key).get<std::string>();
+            }
+            int len = response.length();
+            char *p = new char[len + 1];
+            strncpy(p, response.c_str(), len);
+            p[len] = '\0';
+            return p;
+        }
+    }
+    return nullptr;
+}
+
 void ocall_sgx_exit(int e) {
     exit(e);
 }
