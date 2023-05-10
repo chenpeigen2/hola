@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client.impl
 
 import cn.ruc.edu.hola.client.ApiService
+import cn.ruc.edu.hola.client.encrypy.EncryptUtils
 import cn.ruc.edu.hola.client.entity.auth.AuthData
 import cn.ruc.edu.hola.client.entity.auth.RSAAuthData
 import cn.ruc.edu.hola.client.json.JsonUtils
@@ -35,7 +36,7 @@ internal class ApiServiceImpl : ApiService() {
 
     // TODO need acquire the return data
     private fun refresh() {
-        val aesKey = RandomStringGenerator.generateAESKey();
+        val aesKey = RandomStringGenerator.generateAESKey()
         val data: AuthData = RSAAuthData(RandomStringGenerator.UID, aesKey);
         val text = JsonUtils.json.toJson(data)
         val body = text.toRequestBody("application/json".toMediaType())
@@ -50,16 +51,26 @@ internal class ApiServiceImpl : ApiService() {
             .tag("_auth")
             .build()
         client.newCall(request).execute()
-        println(aesKey)
         map[baseUrl.toString()] = aesKey
     }
 
-    override fun complex(requests: MutableList<cn.ruc.edu.hola.client.entity.Request>?): Response {
+    override fun complex(requests: MutableList<cn.ruc.edu.hola.client.entity.Request>): Response {
         if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
             refresh() //refresh the key
         }
+        val aesKey = map[baseUrl.toString()]
+        println(aesKey)
+        val authedRequest = mutableListOf<cn.ruc.edu.hola.client.entity.Request>()
+        requests.forEach {
+            authedRequest.add(
+                cn.ruc.edu.hola.client.entity.Request(
+                    it.query, EncryptUtils.encryptAES(it.db_name, aesKey),
+                    it.filter
+                )
+            )
+        }
 
-        val text = JsonUtils.json.toJson(requests)
+        val text = JsonUtils.json.toJson(authedRequest)
         val body = text.toRequestBody("application/json".toMediaType())
         val url = baseUrl
             .addPathSegment("_complex")

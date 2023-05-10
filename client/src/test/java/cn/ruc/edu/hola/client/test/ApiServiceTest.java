@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.client.test;
 
 import cn.ruc.edu.hola.client.ApiService;
-import cn.ruc.edu.hola.client.entity.AuthRequest;
 import cn.ruc.edu.hola.client.entity.Request;
 import cn.ruc.edu.hola.client.json.JsonUtils;
 import org.junit.jupiter.api.Test;
@@ -35,7 +34,7 @@ public class ApiServiceTest {
     @Test
     public void testSizable() {
         List<Request> requests = new ArrayList<>();
-        requests.add(new AuthRequest("http://localhost:8080/_find", "fake1", """
+        requests.add(new Request("http://localhost:8080/_find", "fake1", """
                 {
                       "execution_stats": true,
                       "selector": {
@@ -44,7 +43,7 @@ public class ApiServiceTest {
                         }
                       }
                     }"""));
-        requests.add(new AuthRequest("http://localhost:8080/_find", "fake3", """
+        requests.add(new Request("http://localhost:8080/_find", "fake3", """
                 {
                       "execution_stats": true,
                       "selector": {

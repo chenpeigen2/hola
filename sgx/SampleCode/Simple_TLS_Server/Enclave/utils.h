@@ -26,4 +26,6 @@ std::vector <Request> provide_query(const std::string &source);
 
 bool client_auth(const std::string &source);
 
+std::string client_get_aes_key(const std::string &uid);
+
 #endif //SGX_UTILS_H

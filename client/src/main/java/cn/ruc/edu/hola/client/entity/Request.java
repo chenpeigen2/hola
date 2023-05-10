@@ -1,10 +1,10 @@
 package cn.ruc.edu.hola.client.entity;
 
 public class Request {
-    protected String query;
-    protected String db_name;
+    private final String query;
+    private final String db_name;
 
-    protected String filter;
+    private final String filter;
 
     public Request(String query, String db_name, String filter) {
         this.query = query;

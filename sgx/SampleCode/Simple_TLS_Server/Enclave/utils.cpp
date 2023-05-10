@@ -37,10 +37,28 @@ std::vector <std::string> params(const std::string &params) {
 std::vector <Request> provide_query(const std::string &source) {
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
+
+    std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
+    std::string aesKey = client_get_aes_key(uid);
+    printf("the aes key: %s \n", aesKey.c_str());
+
     for (int i = 0; i < len; ++i) {
         std::string query = sgx_json_query(i, "query");
         std::string db_name = sgx_json_query(i, "db_name");
         std::string filter = sgx_json_query(i, "filter");
+
+        // decrypt
+        db_name = decode(db_name.c_str(), db_name.length());
+        db_name = ecb_decrypt(db_name.c_str(), db_name.length(),
+                              reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                              aesKey.length());
+
+//        filter = decode(filter.c_str(), filter.length());
+//        filter = ecb_decrypt(filter.c_str(), filter.length(),
+//                             reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+//                             aesKey.length());
+
+
         std::string request_data = "db_name=" + db_name + "&filter=" + filter;
         printf("the data decode from the json: %s %s \n", query.c_str(), request_data.c_str());
         res.push_back(Request(query, request_data));
@@ -50,7 +68,6 @@ std::vector <Request> provide_query(const std::string &source) {
 }
 
 /** client-sgx auth execution **/
-
 std::map <std::string, std::string> client_auth_map;
 
 bool client_auth(const std::string &source) {
@@ -62,12 +79,12 @@ bool client_auth(const std::string &source) {
     key = decrypt(reinterpret_cast<const unsigned char *>(key.c_str()), key.length(),
                   (const unsigned char *) PRIVATE_KEY, strlen(PRIVATE_KEY));
 
-    client_auth_map[uid] = key;
+    client_auth_map[uid] = key.substr(0, key.find('\0'));
     printf("client_auth %s %s\n", uid.c_str(), key.c_str());
     return true;
 }
 
-std::string clinet_get_aes_key(const std::string &uid) {
+std::string client_get_aes_key(const std::string &uid) {
     if (client_auth_map.count(uid) > 0) {
         return client_auth_map[uid];
     }
