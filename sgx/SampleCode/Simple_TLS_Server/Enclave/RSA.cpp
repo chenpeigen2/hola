@@ -9,6 +9,8 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 #include <string>
+#include "Encrypt.h"
+
 
 #define KEY_LENGTH  2048             // 密钥长度
 

@@ -9,6 +9,7 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 #include <string>
+#include "Encrypt.h"
 
 std::string encode(const char *src, size_t src_len) {
     BIO *bmem, *b64;

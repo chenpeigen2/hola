@@ -14,6 +14,7 @@
 #include "http_utils.h"
 #include "encalve_utils.h"
 #include "utils.h"
+#include "Encrypt.h"
 
 // TODO provide query 重写
 // TODO attestion process

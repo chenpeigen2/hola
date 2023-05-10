@@ -10,6 +10,7 @@
 #include <openssl/err.h>
 #include <string>
 #include <openssl/aes.h>
+#include "Encrypt.h"
 
 
 void padding(std::string &src, int alignSize, PaddingModel mode) {

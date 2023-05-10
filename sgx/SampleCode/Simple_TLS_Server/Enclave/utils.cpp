@@ -6,6 +6,7 @@
 #include "Enclave.h"
 #include "Request.h"
 #include <map>
+#include "Encrypt.h"
 
 using namespace std;
 
@@ -48,6 +49,8 @@ std::vector <Request> provide_query(const std::string &source) {
     return res;
 }
 
+/** client-sgx auth execution **/
+
 std::map <std::string, std::string> client_auth_map;
 
 bool client_auth(const std::string &source) {
@@ -62,4 +65,11 @@ bool client_auth(const std::string &source) {
     client_auth_map[uid] = key;
     printf("client_auth %s %s\n", uid.c_str(), key.c_str());
     return true;
+}
+
+std::string clinet_get_aes_key(const std::string &uid) {
+    if (client_auth_map.count(uid) > 0) {
+        return client_auth_map[uid];
+    }
+    return "null";
 }
