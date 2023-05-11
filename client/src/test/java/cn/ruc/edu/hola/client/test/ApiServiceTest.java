@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client.test;
 
 import cn.ruc.edu.hola.client.ApiService;
+import cn.ruc.edu.hola.client.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.client.entity.Request;
 import cn.ruc.edu.hola.client.json.JsonUtils;
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,8 @@ public class ApiServiceTest {
                     }"""));
 
         try (var res = apiService.complex(requests)) {
-            System.out.println(res.body().string());
+            var text = res.body().string();
+            System.out.println(EncryptUtils.decryptAES(text, apiService.getAESKey()));
         } catch (Exception ignored) {
 
         }

@@ -40,6 +40,8 @@ public abstract class ApiService {
 
     public abstract Response complex(List<Request> requests);
 
+    public abstract String getAESKey();
+
     public void update(String scheme, String host, int port) {
         this.host = host;
         this.port = port;

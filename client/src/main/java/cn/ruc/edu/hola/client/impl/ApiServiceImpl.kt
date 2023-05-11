@@ -85,4 +85,8 @@ internal class ApiServiceImpl : ApiService() {
         return client.newCall(request).execute()
     }
 
+    override fun getAESKey(): String? {
+        return map[baseUrl.toString()]
+    }
+
 }
