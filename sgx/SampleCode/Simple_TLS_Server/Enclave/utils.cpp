@@ -53,10 +53,10 @@ std::vector <Request> provide_query(const std::string &source) {
                               reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                               aesKey.length());
 
-//        filter = decode(filter.c_str(), filter.length());
-//        filter = ecb_decrypt(filter.c_str(), filter.length(),
-//                             reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-//                             aesKey.length());
+        filter = decode(filter.c_str(), filter.length());
+        filter = ecb_decrypt(filter.c_str(), filter.length(),
+                             reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                             aesKey.length());
 
 
         std::string request_data = "db_name=" + db_name + "&filter=" + filter;
