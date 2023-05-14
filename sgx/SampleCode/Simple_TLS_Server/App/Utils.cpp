@@ -55,3 +55,7 @@ void read_json_file(json **data, const std::string &file_name) {
     *data = new json(std::move(j));
     file.close();
 }
+
+void hello_world_utils() {
+    std::cout << "hello world from the Utils ......." << std::endl;
+}

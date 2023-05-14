@@ -254,6 +254,10 @@ main(int argc, char *argv[]) {
     }
 
     {
+        hello_world_utils();
+    }
+
+    {
         /** test for Http Server API **/
         proxy.makeRouter(); // make a router
         proxy.start(); // start the server
