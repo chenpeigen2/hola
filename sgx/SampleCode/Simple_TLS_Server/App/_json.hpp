@@ -16,8 +16,8 @@
 using json = nlohmann::json;
 
 void read_json_file(json **data, const std::string &file_name) {
-    ifstream file(file_name);
-    ifstream valid_file(file_name);
+    std::ifstream file(file_name);
+    std::ifstream valid_file(file_name);
     if (!valid_file.is_open() || !json::accept(valid_file)) {
         file.close();
         valid_file.close();

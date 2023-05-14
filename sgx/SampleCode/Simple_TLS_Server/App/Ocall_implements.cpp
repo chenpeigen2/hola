@@ -8,6 +8,8 @@
 #include "Curl.h"
 #include <iomanip>
 #include <nlohmann/json.hpp>
+#include <fstream>
+#include "_json.hpp"
 
 using json = nlohmann::json;
 

@@ -50,7 +50,7 @@
 #include <iostream>
 #include <string>
 #include "Utils.h"
-#include "_json.hpp"
+//#include "_json.hpp"
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -257,10 +257,10 @@ main(int argc, char *argv[]) {
     {
         /** test for utils **/
         hello_world_utils();
-        json *j;
-        read_json_file(&j, "hello.json");
-        auto zx1 = j->at("hello").get<string>();
-        cout << zx1 << endl;
+//        json *j;
+//        read_json_file(&j, "hello.json");
+//        auto zx1 = j->at("hello").get<string>();
+//        cout << zx1 << endl;
     }
 
     {
