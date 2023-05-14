@@ -49,6 +49,7 @@ enclave {
 		int ocall_json_arr_length([in, string] const char *data);
 		char* ocall_json_query(int idx, [in, string] const char *key);
 		char *ocall_json_object([in, string] const char *data, [in, string] const char *key);
+		int ocall_json_file_read([in, string] const char *key, [in, string] const char *file_name);
 	};
 
 };

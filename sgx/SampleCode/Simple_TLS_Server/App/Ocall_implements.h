@@ -37,6 +37,7 @@ char *ocall_curl_post(const char *url, const char *body);
 int ocall_json_arr_length(const char *data);
 char* ocall_json_query(int idx, const char *key);
 char *ocall_json_object(const char *data, const char *key);
+int ocall_json_file_read(const char *key, const char *file_name);
 #if defined(__cplusplus)
 }
 #endif

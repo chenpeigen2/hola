@@ -38,6 +38,13 @@ std::vector <Request> provide_query(const std::string &source) {
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
 
+    {
+        std::string key = "hello";
+        std::string file_name = "config.json";
+        int value = sgx_json_file_read(key.c_str(), file_name.c_str());
+        printf("\n======================== %d", value);
+    }
+
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
     std::string aesKey = client_get_aes_key(uid);
     printf("the aes key: %s \n", aesKey.c_str());

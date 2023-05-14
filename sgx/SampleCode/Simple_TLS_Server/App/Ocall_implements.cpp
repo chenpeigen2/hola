@@ -192,6 +192,32 @@ char *ocall_json_object(const char *data, const char *key) {
     return nullptr;
 }
 
+json *json_data;
+json *key_data;
+
+/** read the given json file object and get the key if needed **/
+int ocall_json_file_read(const char *key, const char *file_name) {
+    if (json_data == nullptr) {
+        read_json_file(&json_data, file_name);
+    }
+    if (json_data == nullptr) return -2;
+    // we expect the json_data must be the object
+    if (json_data->is_object()) {
+        if (json_data->contains(key)) {
+            if (key_data != nullptr) {
+                delete key_data;
+            }
+            key_data = new json(json_data->at(key));
+            if (key_data->is_array()) {
+                return key_data->size();
+            }
+            return 0;
+        }
+        return -1;
+    }
+    return -3;
+}
+
 void ocall_sgx_exit(int e) {
     exit(e);
 }
