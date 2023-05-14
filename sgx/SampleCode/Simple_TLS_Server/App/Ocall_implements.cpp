@@ -197,6 +197,7 @@ json *key_data;
 
 /** read the given json file object and get the key if needed **/
 int ocall_json_file_read(const char *key, const char *file_name) {
+//    key_map_t
     if (json_data == nullptr) {
         read_json_file(&json_data, file_name);
     }
@@ -216,6 +217,10 @@ int ocall_json_file_read(const char *key, const char *file_name) {
         return -1;
     }
     return -3;
+}
+
+struct key_map_t ocall_key_map_struct() {
+
 }
 
 void ocall_sgx_exit(int e) {

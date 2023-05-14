@@ -38,6 +38,7 @@ int ocall_json_arr_length(const char *data);
 char* ocall_json_query(int idx, const char *key);
 char *ocall_json_object(const char *data, const char *key);
 int ocall_json_file_read(const char *key, const char *file_name);
+struct key_map_t ocall_key_map_struct();
 #if defined(__cplusplus)
 }
 #endif
