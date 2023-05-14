@@ -43,18 +43,18 @@ vector <string> params(const string &params) {
     return res;
 }
 
-void read_json_file(json **data, const std::string &file_name) {
-    ifstream file(file_name);
-    ifstream valid_file(file_name);
-    if (!valid_file.is_open() || !json::accept(valid_file)) {
-        file.close();
-        valid_file.close();
-        return;
-    };
-    json j = json::parse(file);
-    *data = new json(std::move(j));
-    file.close();
-}
+//void read_json_file(json **data, const std::string &file_name) {
+//    ifstream file(file_name);
+//    ifstream valid_file(file_name);
+//    if (!valid_file.is_open() || !json::accept(valid_file)) {
+//        file.close();
+//        valid_file.close();
+//        return;
+//    };
+//    json j = json::parse(file);
+//    *data = new json(std::move(j));
+//    file.close();
+//}
 
 void hello_world_utils() {
     std::cout << "hello world from the Utils ......." << std::endl;

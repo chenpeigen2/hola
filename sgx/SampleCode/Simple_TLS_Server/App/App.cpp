@@ -51,6 +51,31 @@
 #include <string>
 #include "Utils.h"
 
+// read_json_file START
+#include <fstream>
+#include <nlohmann/json.hpp>
+#include <iostream>
+#include <fstream>
+#include <iosfwd>
+#include <ios>
+
+using json = nlohmann::json;
+
+void read_json_file(json **data, const std::string &file_name) {
+    ifstream file(file_name);
+    ifstream valid_file(file_name);
+    if (!valid_file.is_open() || !json::accept(valid_file)) {
+        file.close();
+        valid_file.close();
+        return;
+    };
+    json j = json::parse(file);
+    *data = new json(std::move(j));
+    file.close();
+}
+
+// read_json_file END
+
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
 
@@ -256,6 +281,10 @@ main(int argc, char *argv[]) {
     {
         /** test for utils **/
         hello_world_utils();
+        json *j;
+        read_json_file(&j, "hello.json");
+        auto zx1 = j->at("hello").get<string>();
+        cout << zx1 << endl;
     }
 
     {
