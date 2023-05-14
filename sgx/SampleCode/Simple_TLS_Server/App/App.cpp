@@ -254,6 +254,7 @@ main(int argc, char *argv[]) {
     }
 
     {
+        /** test for utils **/
         hello_world_utils();
     }
 
