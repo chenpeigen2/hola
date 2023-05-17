@@ -16,6 +16,7 @@ enclave {
     struct key_map_t {
         int a;
         int b;
+        char *c;
     };
 	
 	trusted {

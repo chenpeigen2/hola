@@ -220,7 +220,13 @@ int ocall_json_file_read(const char *key, const char *file_name) {
 }
 
 struct key_map_t ocall_key_map_struct() {
-
+    struct key_map_t ret{456, 2};
+    std::string abc = "we the data from the ocall_key_map_struct";
+    int len = abc.length();
+    ret.c = new char[len + 1];
+    strncpy(ret.c, abc.c_str(), len);
+    ret.c[len] = '\0';
+    return ret;
 }
 
 void ocall_sgx_exit(int e) {
