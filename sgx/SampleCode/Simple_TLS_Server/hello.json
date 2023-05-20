@@ -1,9 +1,1 @@
-{
-  "hello": "world",
-  "world": [
-    "a",
-    "b",
-    "c",
-    "d"
-  ]
-}
+{"selector":{"data.countryid":{"$gt":-1}}}

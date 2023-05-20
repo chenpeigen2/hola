@@ -1,8 +1,8 @@
 {
-  "hello": [
+  "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}": [
     "==========hello===========abnd",
-    "b",
-    "c",
-    "d"
+    "b2",
+    "c3",
+    "d4"
   ]
 }

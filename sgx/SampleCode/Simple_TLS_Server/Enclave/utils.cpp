@@ -39,12 +39,13 @@ std::vector <Request> provide_query(const std::string &source) {
     std::vector <Request> res;
 
     {
-        std::string key = "hello";
+        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
         std::string file_name = "config.json";
         int value = sgx_json_file_read(key.c_str(), file_name.c_str());
         printf("\n======================== %d", value);
         for (int i = 0; i < value; ++i) {
-            sgx_struct(i);
+            auto z = sgx_key_map_struct(i);
+            printf("the result: %d %s \n", z.idx, z.data);
         }
     }
 

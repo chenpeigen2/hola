@@ -219,10 +219,10 @@ int sgx_json_file_read(const char *key, const char *file_name) {
     return value;
 }
 
-void sgx_struct(int idx) {
+struct key_map_t sgx_key_map_struct(int idx) {
     struct key_map_t ret;
     ocall_key_map_struct(&ret, idx);
-    printf("\nwewewewe %d %s \n", ret.idx, ret.data);
+    return ret;
 }
 
 void sgx_printe(const char *fname, const char *fmt, ...) {
