@@ -212,7 +212,6 @@ int ocall_json_file_read(const char *key, const char *file_name) {
             if (key_data->is_array()) {
                 std::cout << key_data->dump() << std::endl;
                 std::cout << key_data->at(0).dump() << std::endl;
-                std::cout << "wewewewewewwwwwwwwwwwwwwwwww" << std::endl;
                 return key_data->size();
             }
             return 0;
@@ -225,11 +224,20 @@ int ocall_json_file_read(const char *key, const char *file_name) {
 /** only the config.json array usage **/
 struct key_map_t ocall_key_map_struct(int idx) {
     struct key_map_t ret{idx};
-    std::string abc = key_data->at(idx).dump();
-    int len = abc.length();
-    ret.data = new char[len + 1];
-    strncpy(ret.data, abc.c_str(), len);
-    ret.data[len] = '\0';
+    json key_object = key_data->at(idx);
+    std::string query = key_object.at("query").get<std::string>();
+    std::string db_name = key_object.at("db_name").get<std::string>();
+    // provide query
+    int len = query.length();
+    ret.query = new char[len + 1];
+    strncpy(ret.query, query.c_str(), len);
+    ret.query[len] = '\0';
+    // provide db_name
+    len = db_name.length();
+    ret.db_name = new char[len + 1];
+    strncpy(ret.db_name, db_name.c_str(), len);
+    ret.db_name[len] = '\0';
+    // return the data
     return ret;
 }
 

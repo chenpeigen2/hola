@@ -1,8 +1,12 @@
 {
   "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}": [
-    "==========hello===========abnd",
-    "b2",
-    "c3",
-    "d4"
+    {
+      "query": "http://localhost:8080/_find",
+      "db_name": "fake1"
+    },
+    {
+      "query": "http://localhost:8080/_find",
+      "db_name": "fake3"
+    }
   ]
 }

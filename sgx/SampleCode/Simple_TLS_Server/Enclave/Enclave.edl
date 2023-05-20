@@ -16,6 +16,8 @@ enclave {
     struct key_map_t {
         int idx;
         char *data;
+        char *query;
+        char *db_name;
     };
 	
 	trusted {
