@@ -14,9 +14,8 @@ enclave {
 
     /* struct definition for key_map */
     struct key_map_t {
-        int a;
-        int b;
-        char *c;
+        int idx;
+        char *data;
     };
 	
 	trusted {
@@ -57,7 +56,7 @@ enclave {
 		char* ocall_json_query(int idx, [in, string] const char *key);
 		char *ocall_json_object([in, string] const char *data, [in, string] const char *key);
 		int ocall_json_file_read([in, string] const char *key, [in, string] const char *file_name);
-		struct key_map_t ocall_key_map_struct();
+		struct key_map_t ocall_key_map_struct(int idx);
 	};
 
 };

@@ -210,6 +210,9 @@ int ocall_json_file_read(const char *key, const char *file_name) {
             }
             key_data = new json(json_data->at(key));
             if (key_data->is_array()) {
+                std::cout << key_data->dump() << std::endl;
+                std::cout << key_data->at(0).dump() << std::endl;
+                std::cout << "wewewewewewwwwwwwwwwwwwwwwww" << std::endl;
                 return key_data->size();
             }
             return 0;
@@ -219,15 +222,17 @@ int ocall_json_file_read(const char *key, const char *file_name) {
     return -3;
 }
 
-struct key_map_t ocall_key_map_struct() {
-    struct key_map_t ret{456, 2};
-    std::string abc = "we the data from the ocall_key_map_struct";
+/** only the config.json array usage **/
+struct key_map_t ocall_key_map_struct(int idx) {
+    struct key_map_t ret{idx};
+    std::string abc = key_data->at(idx).dump();
     int len = abc.length();
-    ret.c = new char[len + 1];
-    strncpy(ret.c, abc.c_str(), len);
-    ret.c[len] = '\0';
+    ret.data = new char[len + 1];
+    strncpy(ret.data, abc.c_str(), len);
+    ret.data[len] = '\0';
     return ret;
 }
+
 
 void ocall_sgx_exit(int e) {
     exit(e);

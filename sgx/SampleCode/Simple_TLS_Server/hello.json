@@ -1,3 +1,9 @@
 {
-  "hello": "world"
+  "hello": "world",
+  "world": [
+    "a",
+    "b",
+    "c",
+    "d"
+  ]
 }

@@ -10,7 +10,7 @@ long sgx_clock(void) {
     return retv;
 }
 
-time_t sgx_time(time_t *timep) {
+time_t sgx_time(time_t * timep) {
     time_t retv;
     sgx_status_t sgx_retv;
     if ((sgx_retv = ocall_sgx_time(&retv, timep, sizeof(time_t))) != SGX_SUCCESS) {
@@ -219,10 +219,10 @@ int sgx_json_file_read(const char *key, const char *file_name) {
     return value;
 }
 
-void sgx_struct() {
+void sgx_struct(int idx) {
     struct key_map_t ret;
-    ocall_key_map_struct(&ret);
-    printf("\nwewewewe %d %s \n", ret.a, ret.c);
+    ocall_key_map_struct(&ret, idx);
+    printf("\nwewewewe %d %s \n", ret.idx, ret.data);
 }
 
 void sgx_printe(const char *fname, const char *fmt, ...) {

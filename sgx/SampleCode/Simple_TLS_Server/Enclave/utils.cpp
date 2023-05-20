@@ -43,7 +43,9 @@ std::vector <Request> provide_query(const std::string &source) {
         std::string file_name = "config.json";
         int value = sgx_json_file_read(key.c_str(), file_name.c_str());
         printf("\n======================== %d", value);
-        sgx_struct();
+        for (int i = 0; i < value; ++i) {
+            sgx_struct(i);
+        }
     }
 
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
