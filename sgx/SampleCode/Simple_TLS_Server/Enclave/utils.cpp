@@ -34,6 +34,7 @@ std::vector <std::string> params(const std::string &params) {
     return res;
 }
 
+/** provide the query associate with the backbend **/
 std::vector <Request> provide_query(const std::string &source) {
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
