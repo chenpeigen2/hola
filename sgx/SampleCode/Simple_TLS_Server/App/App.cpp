@@ -50,7 +50,6 @@
 #include <iostream>
 #include <string>
 #include "Utils.h"
-//#include "_json.hpp"
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -243,32 +242,10 @@ main(int argc, char *argv[]) {
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
 
     {
-        /** test for curl get API **/
-        char *response;
-        std::string res;
-        std::string url = "http://127.0.0.1:8080/_find";
-        std::string request = "db_name=fake1&filter={\"selector\": {\"data.countryid\": {\"$gt\": -1}},\"execution_stats\": true}";
-        ecall_curl_get(global_eid, &response, url.c_str(), request.c_str());
-        printf("APP side response: %s\n", response);
-        toString(response, res);
-        std::cout << res << std::endl;
-    }
-
-    {
-        /** test for utils **/
-        hello_world_utils();
-//        json *j;
-//        read_json_file(&j, "hello.json");
-//        auto zx1 = j->at("hello").get<string>();
-//        cout << zx1 << endl;
-    }
-
-    {
         /** test for Http Server API **/
         proxy.makeRouter(); // make a router
         proxy.start(); // start the server
     }
-
 
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);

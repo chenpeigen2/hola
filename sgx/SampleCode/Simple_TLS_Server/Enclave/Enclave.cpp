@@ -75,6 +75,40 @@ std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsi
     return aesKey;
 }
 
+std::string curl_post(const char *url, const Request &request) {
+    http_url httpUrl;
+    if (!httpUrl.parse(url)) {
+        exit(0);
+    }
+
+    std::string aesKey = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
+                                        httpUrl.get_port());
+
+    std::string db_name = request.db_name;
+    db_name = ecb_encrypt(db_name.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                          aesKey.length(), PaddingModel::PKCS5OR7);
+    db_name = encode(db_name.c_str(), db_name.length());
+
+    std::string filter = request.filter;
+    filter = ecb_encrypt(filter.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                         aesKey.length(), PaddingModel::PKCS5OR7);
+    filter = encode(filter.c_str(), filter.length());
+
+    std::string body = "{\"db_name\":\"" + db_name + "\",\"filter\":\"" + filter + "\"}";
+    /** curl post **/
+    std::string response = sgx_curl_post(url, body.c_str());
+
+    // decrypt
+    response = decode(response.c_str(), response.length());
+    response = ecb_decrypt(response.c_str(), response.length(),
+                           reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+                           aesKey.length());
+
+    printf("The RESPONSE: %s\n", response.c_str());
+
+    return response;
+}
+
 std::string curl_get(const char *url, const char *request) {
     http_url httpUrl;
     if (!httpUrl.parse(url)) {
@@ -133,7 +167,7 @@ char *ecall_complex_curl(const char *data) {
     std::string response;
     // perform execution
     for (const auto &decode_data: provide_decode_data) {
-        std::string &&return_data = curl_get(decode_data.url.c_str(), decode_data.request_data.c_str());
+        std::string &&return_data = curl_post(decode_data.url.c_str(), decode_data);
         response.append(return_data);
     }
 

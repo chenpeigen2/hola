@@ -59,10 +59,7 @@ std::vector <Request> provide_query(const std::string &source) {
 
             std::string query = data_struct.query;
             std::string db_name = data_struct.db_name;
-
-            std::string request_data = "db_name=" + db_name + "&filter=" + filter;
-            printf("the data decode from the json: %s %s \n", query.c_str(), request_data.c_str());
-            res.push_back(Request(query, request_data));
+            res.push_back(Request(query, db_name, filter));
         }
     }
     return res;

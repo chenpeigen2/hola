@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.entity.Auth;
+import cn.ruc.edu.hola.backbend.entity.Filter;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import com.google.gson.JsonSyntaxException;
 import io.vertx.core.AbstractVerticle;
@@ -31,7 +32,7 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/delete_db").handler(this::deleteDb);
         router.get("/add_doc").handler(this::addDoc);
         router.get("/delete_doc").handler(this::deleteDoc);
-        router.get("/_find").handler(this::filterDocs);
+        router.post("/_find").handler(this::filterDocs);
         router.get("/_index").handler(this::createIndex);
         router.post("/_auth").handler(this::auth); // shoule change to post
 
@@ -154,10 +155,11 @@ public class CouchVerticle extends AbstractVerticle {
     }
 
     public void filterDocs(RoutingContext ctx) {
-        String dataBaseName = ctx.request().getParam("db_name");
-        String filter = ctx.request().getParam("filter");
-        dataBaseName = dataBaseName.replaceAll(" ", "+");
-        filter = filter.replaceAll(" ", "+");
+        Filter object = JsonUtils.INSTANCE.toFilter(ctx.body().asString());
+
+        String dataBaseName = object.getDbName();
+        String filter = object.getFilter();
+
         System.out.println(dataBaseName);
         System.out.println(filter);
         try {

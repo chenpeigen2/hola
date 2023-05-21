@@ -12,9 +12,11 @@ public:
 
     std::string url;
 
-    std::string request_data;
+    std::string db_name;
 
-    Request(std::string url, std::string request_data);
+    std::string filter;
+
+    Request(std::string url, std::string db_name, std::string filter);
 
     void print();
 };
