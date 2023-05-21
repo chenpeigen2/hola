@@ -190,24 +190,6 @@ void ecall_curl_get_response(const char *response) {
     printf("response return the data from the APP side: %s\n", response);
 }
 
-char *ecall_test() {
-    std::string str = "abcdefghijklmnopqrstuvwxyz123456789010 excited so ssososososo, Trusted function will be treated as [private] w/o the [public]";
-    int len = str.length();
-    printf("the length %d \n", len);
-    char *p = new char[len];
-    strncpy(p, str.c_str(), len);
-    return p;
-}
-
-char *ecall_test_params(const char *request) {
-    std::string str = "Trust the ecall_test_params";
-    int len = str.length();
-    printf("the length %d \n", len);
-    char *p = new char[len];
-    strncpy(p, str.c_str(), len);
-    return p;
-}
-
 std::string ecall_string_test() {
     std::string str = "after milline of da Following keywords/attributes are supported for untrusted functions: we should treat it ok";
     return str;
