@@ -65,7 +65,6 @@ public class ApiServiceTest {
         List<Request> requests = new ArrayList<>();
         requests.add(new Request(RandomStringGenerator.UID, """
                 {
-                      "execution_stats": true,
                       "selector": {
                         "data.countryid": {
                           "$gt": -1

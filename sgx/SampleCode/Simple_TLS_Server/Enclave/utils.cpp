@@ -53,9 +53,10 @@ std::vector <Request> provide_query(const std::string &source) {
                              aesKey.length());
 
         // we insert here to create our own filter
-        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
+//        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
+
         std::string file_name = "config.json";
-        int find_num = sgx_json_file_read(key.c_str(), file_name.c_str());
+        int find_num = sgx_json_file_read(filter.c_str(), file_name.c_str());
         for (int j = 0; j < find_num; j++) {
             auto data_struct = sgx_key_map_struct(j);
 
