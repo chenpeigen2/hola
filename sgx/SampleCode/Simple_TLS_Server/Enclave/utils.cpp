@@ -38,13 +38,14 @@ std::vector <Request> provide_query(const std::string &source) {
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
 
-    std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
-    std::string aesKey = client_get_aes_key(uid);
-    printf("the aes key: %s \n", aesKey.c_str());
-
     for (int i = 0; i < len; ++i) {
-        std::string filter = sgx_json_query(i, "filter");
+        // we acquire the uid associate with the aes key
+        std::string uid = sgx_json_query(i, "uid");
+        std::string aesKey = client_get_aes_key(uid);
+        printf("the aes key: %s \n", aesKey.c_str());
 
+        std::string filter = sgx_json_query(i, "filter");
+        // we acquire the filter
         filter = decode(filter.c_str(), filter.length());
         filter = ecb_decrypt(filter.c_str(), filter.length(),
                              reinterpret_cast<const unsigned char *>(aesKey.c_str()),

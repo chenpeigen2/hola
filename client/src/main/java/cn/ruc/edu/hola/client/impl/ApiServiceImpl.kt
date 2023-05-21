@@ -64,6 +64,7 @@ internal class ApiServiceImpl : ApiService() {
         requests.forEach {
             authedRequest.add(
                 cn.ruc.edu.hola.client.entity.Request(
+                    it.uid,
                     EncryptUtils.encryptAES(it.filter(), aesKey)
                 )
             )

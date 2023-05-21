@@ -4,6 +4,7 @@ import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.client.entity.Request;
 import cn.ruc.edu.hola.client.json.JsonUtils;
+import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class ApiServiceTest {
     @Test
     public void testSizable() {
         List<Request> requests = new ArrayList<>();
-        requests.add(new Request("""
+        requests.add(new Request(RandomStringGenerator.UID, """
                 {
                       "execution_stats": true,
                       "selector": {
@@ -44,7 +45,7 @@ public class ApiServiceTest {
                         }
                       }
                     }"""));
-        requests.add(new Request("""
+        requests.add(new Request(RandomStringGenerator.UID, """
                 {
                       "execution_stats": true,
                       "selector": {
@@ -62,7 +63,7 @@ public class ApiServiceTest {
         ApiService apiService = ApiService.getInstance();
         apiService.update("http", "127.0.0.1", 8888);
         List<Request> requests = new ArrayList<>();
-        requests.add(new Request("""
+        requests.add(new Request(RandomStringGenerator.UID, """
                 {
                       "execution_stats": true,
                       "selector": {
