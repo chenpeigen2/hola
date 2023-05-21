@@ -35,7 +35,7 @@ public class ApiServiceTest {
     @Test
     public void testSizable() {
         List<Request> requests = new ArrayList<>();
-        requests.add(new Request("http://localhost:8080/_find", "fake1", """
+        requests.add(new Request("""
                 {
                       "execution_stats": true,
                       "selector": {
@@ -44,7 +44,7 @@ public class ApiServiceTest {
                         }
                       }
                     }"""));
-        requests.add(new Request("http://localhost:8080/_find", "fake3", """
+        requests.add(new Request("""
                 {
                       "execution_stats": true,
                       "selector": {
@@ -62,16 +62,7 @@ public class ApiServiceTest {
         ApiService apiService = ApiService.getInstance();
         apiService.update("http", "127.0.0.1", 8888);
         List<Request> requests = new ArrayList<>();
-        requests.add(new Request("http://localhost:8080/_find", "fake1", """
-                {
-                      "execution_stats": true,
-                      "selector": {
-                        "data.countryid": {
-                          "$gt": -1
-                        }
-                      }
-                    }"""));
-        requests.add(new Request("http://localhost:8080/_find", "fake3", """
+        requests.add(new Request("""
                 {
                       "execution_stats": true,
                       "selector": {

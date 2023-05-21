@@ -38,43 +38,32 @@ std::vector <Request> provide_query(const std::string &source) {
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
 
-    {
-        // read the data from the json file
-        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
-        std::string file_name = "config.json";
-        int value = sgx_json_file_read(key.c_str(), file_name.c_str());
-        for (int i = 0; i < value; i++) {
-            printf("\nwewe %d \n", i);
-            auto z = sgx_key_map_struct(i);
-            printf("the result: %d %s  %s \n", z.idx, z.query, z.db_name);
-        }
-    }
-
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
     std::string aesKey = client_get_aes_key(uid);
     printf("the aes key: %s \n", aesKey.c_str());
 
     for (int i = 0; i < len; ++i) {
-        std::string query = sgx_json_query(i, "query");
-        std::string db_name = sgx_json_query(i, "db_name");
         std::string filter = sgx_json_query(i, "filter");
-
-        // decrypt
-        db_name = decode(db_name.c_str(), db_name.length());
-        db_name = ecb_decrypt(db_name.c_str(), db_name.length(),
-                              reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                              aesKey.length());
 
         filter = decode(filter.c_str(), filter.length());
         filter = ecb_decrypt(filter.c_str(), filter.length(),
                              reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                              aesKey.length());
 
+        // we insert here to create our own filter
+        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
+        std::string file_name = "config.json";
+        int find_num = sgx_json_file_read(key.c_str(), file_name.c_str());
+        for (int j = 0; j < find_num; j++) {
+            auto data_struct = sgx_key_map_struct(j);
 
-        std::string request_data = "db_name=" + db_name + "&filter=" + filter;
-        printf("the data decode from the json: %s %s \n", query.c_str(), request_data.c_str());
-        res.push_back(Request(query, request_data));
-        res.push_back(Request(query, request_data));
+            std::string query = data_struct.query;
+            std::string db_name = data_struct.db_name;
+
+            std::string request_data = "db_name=" + db_name + "&filter=" + filter;
+            printf("the data decode from the json: %s %s \n", query.c_str(), request_data.c_str());
+            res.push_back(Request(query, request_data));
+        }
     }
     return res;
 }
