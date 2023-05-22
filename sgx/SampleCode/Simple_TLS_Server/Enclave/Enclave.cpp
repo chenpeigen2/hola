@@ -164,12 +164,16 @@ char *ecall_complex_curl(const char *data) {
     // provide the requests
     auto provide_decode_data = provide_query(data);
     // the result
-    std::string response;
+    std::vector <string> resp;
+
     // perform execution
     for (const auto &decode_data: provide_decode_data) {
         std::string &&return_data = curl_post(decode_data.url.c_str(), decode_data);
-        response.append(return_data);
+        resp.push_back(return_data);
     }
+
+    // aggregation process
+    std::string &&response = simple_aggregation(resp);
 
     // encrypt
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";

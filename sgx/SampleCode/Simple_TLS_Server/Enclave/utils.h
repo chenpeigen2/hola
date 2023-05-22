@@ -8,6 +8,7 @@
 #include <cstdio>
 #include <iostream>
 #include <string.h>
+#include <vector>
 #include "http_utils.h"
 #include "Enclave_t.h"
 #include "Ocall_wrappers.h"
@@ -27,5 +28,7 @@ std::vector <Request> provide_query(const std::string &source);
 bool client_auth(const std::string &source);
 
 std::string client_get_aes_key(const std::string &uid);
+
+std::string simple_aggregation(std::vector <std::string> &resp);
 
 #endif //SGX_UTILS_H
