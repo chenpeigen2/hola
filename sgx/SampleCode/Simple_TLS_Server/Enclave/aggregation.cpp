@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+/** define the simple aggregation process **/
 std::string simple_aggregation(std::vector <std::string> &resp) {
     std::string ret;
     for (const auto &item: resp) {
