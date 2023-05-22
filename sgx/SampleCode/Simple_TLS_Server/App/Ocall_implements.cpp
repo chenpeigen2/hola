@@ -2,13 +2,11 @@
 #include "Enclave_u.h"
 #include <fstream>
 #include <cstring>
-#include <string>
 #include <iostream>
 #include "App.h"
 #include "Curl.h"
 #include <iomanip>
 #include <nlohmann/json.hpp>
-#include <fstream>
 #include "_json.hpp"
 
 using json = nlohmann::json;

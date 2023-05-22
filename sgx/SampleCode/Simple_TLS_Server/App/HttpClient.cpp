@@ -18,10 +18,6 @@
 #include "Utils.h"
 #include <iostream>
 
-std::string hello_world() {
-    std::string hello_world = "hello world";
-    return hello_world;
-}
 
 std::string filter_find(const std::string &db_name, const std::string &filter) {
     /** test for curl get API **/

@@ -241,11 +241,9 @@ main(int argc, char *argv[]) {
     }
     sgx_status_t ret = SGX_ERROR_UNEXPECTED;
 
-    {
-        /** test for Http Server API **/
-        proxy.makeRouter(); // make a router
-        proxy.start(); // start the server
-    }
+    /** Http Server **/
+    proxy.makeRouter(); // make a router
+    proxy.start(); // start the server
 
     /* Destroy the enclave */
     sgx_destroy_enclave(global_eid);
