@@ -1,0 +1,38 @@
+{
+  "bb1": {
+    "code": "i",
+    "message": "s",
+    "data": {
+      "id": "i",
+      "name": "s",
+      "bfirstletter": "s",
+      "logo": "s",
+      "country": "s",
+      "countryid": "i"
+    }
+  },
+  "bb2": {
+    "code": "i",
+    "message": "s",
+    "data": {
+      "id": "i",
+      "name": "s",
+      "bfirstletter": "s",
+      "logo": "s",
+      "country": "s",
+      "countryid": "i"
+    }
+  },
+  "bb3": {
+    "code": "i",
+    "message": "s",
+    "data": {
+      "id": "i",
+      "name": "s",
+      "bfirstletter": "s",
+      "logo": "s",
+      "country": "s",
+      "countryid": "i"
+    }
+  }
+}
