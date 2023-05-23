@@ -39,6 +39,16 @@ public class Verticle extends AbstractVerticle {
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
         });
 
+        router.post("/com").handler(ctx -> {
+            var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
+            List<String> ret = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                var keyWord = jsonArray.getString(i);
+                ret.add(backbend.getOrDefault(keyWord, null));
+            }
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
+        });
+
         router.post("/index_com").handler(ctx -> {
             var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
             Map<String, List<String>> ret = new HashMap<>();

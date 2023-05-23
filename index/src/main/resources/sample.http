@@ -9,6 +9,16 @@ Content-Type: application/json
 ]
 
 ### post for get the data
+POST /com HTTP/1.1
+Accept: application/json
+Host: localhost:3000
+Content-Type: application/json
+
+[
+  "bb1","bb2","bb3"
+]
+
+### post for get the data
 POST /index_com HTTP/1.1
 Accept: application/json
 Host: localhost:3000
