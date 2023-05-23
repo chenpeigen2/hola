@@ -8,8 +8,14 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
+import java.util.Map;
+import java.util.Set;
+
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
+
+    public static Map<String, Set<String>> struct = Indexer.remappingStruct("struct.json");
+    public static Map<String, String> backbend = Indexer.remappingUrl("backbend.json");
 
     @Override
     public void start() throws Exception {

@@ -22,7 +22,7 @@ public final class Indexer {
      * remapping struct config
      **/
     public static Map<String, Set<String>> remappingStruct(String filePath) {
-        URL url = Main.class.getClassLoader().getResource(filePath);
+        URL url = Indexer.class.getClassLoader().getResource(filePath);
         if (url == null) return null;
         try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
             JsonElement element = JsonParser.parseReader(reader);
@@ -45,7 +45,7 @@ public final class Indexer {
      * remapping the backbend config
      **/
     public static Map<String, String> remappingUrl(String filePath) {
-        URL url = Main.class.getClassLoader().getResource(filePath);
+        URL url = Indexer.class.getClassLoader().getResource(filePath);
         if (url == null) return null;
         try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
             JsonElement element = JsonParser.parseReader(reader);
