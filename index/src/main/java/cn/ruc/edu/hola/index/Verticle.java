@@ -2,7 +2,6 @@ package cn.ruc.edu.hola.index;
 
 import cn.ruc.edu.hola.index.json.JsonUtils;
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -10,8 +9,6 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
