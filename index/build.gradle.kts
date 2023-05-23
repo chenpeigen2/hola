@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    kotlin("jvm") version "1.8.21"
 }
 
 group = "cn.ruc.edu.hola.index"
@@ -20,4 +20,16 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    options.release.set(17)
+    options.isIncremental = true
+    options.isFork = true
+    options.isFailOnError = true
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
+    kotlinOptions.jvmTarget = "17"
 }

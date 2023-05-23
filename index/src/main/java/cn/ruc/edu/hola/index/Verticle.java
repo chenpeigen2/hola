@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.index;
 
+import cn.ruc.edu.hola.index.json.JsonUtils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
@@ -27,7 +28,7 @@ public class Verticle extends AbstractVerticle {
         router.get("/hello").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
-                out(ctx, "wewewe are fineeee");
+                out(ctx, JsonUtils.INSTANCE.getJson().toJson(struct));
             }
         });
 
@@ -40,7 +41,7 @@ public class Verticle extends AbstractVerticle {
             ctx.fail(400);
             return;
         }
-        System.out.println(msg);
+        System.err.println(msg);
         ctx.response().putHeader("Content-Type", "application/json; charset=utf-8")
                 .end(msg);
     }
