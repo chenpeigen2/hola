@@ -1,0 +1,19 @@
+### post for get the data
+POST /index HTTP/1.1
+Accept: application/json
+Host: localhost:3000
+Content-Type: application/json
+
+[
+  "data.id","data.loge","code","message"
+]
+
+### post for get the data
+POST /index_com HTTP/1.1
+Accept: application/json
+Host: localhost:3000
+Content-Type: application/json
+
+[
+  "data.id","data.loge","code","message"
+]

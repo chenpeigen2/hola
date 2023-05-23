@@ -9,8 +9,9 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
@@ -25,11 +26,36 @@ public class Verticle extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
-        router.get("/hello").handler(new Handler<RoutingContext>() {
-            @Override
-            public void handle(RoutingContext ctx) {
-                out(ctx, JsonUtils.INSTANCE.getJson().toJson(struct));
+        router.post("/index").handler(ctx -> {
+            var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
+            Map<String, List<String>> ret = new HashMap<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                var keyWord = jsonArray.getString(i);
+                struct.forEach((k, v) -> {
+                    if (v.contains(keyWord)) {
+                        var list = ret.getOrDefault(keyWord, new ArrayList<>());
+                        list.add(k);
+                        ret.put(keyWord, list);
+                    }
+                });
             }
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
+        });
+
+        router.post("/index_com").handler(ctx -> {
+            var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
+            Map<String, List<String>> ret = new HashMap<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                var keyWord = jsonArray.getString(i);
+                struct.forEach((k, v) -> {
+                    if (v.contains(keyWord)) {
+                        var list = ret.getOrDefault(keyWord, new ArrayList<>());
+                        list.add(backbend.getOrDefault(k, null));
+                        ret.put(keyWord, list);
+                    }
+                });
+            }
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
         });
 
         server.requestHandler(router).listen(PORT);
