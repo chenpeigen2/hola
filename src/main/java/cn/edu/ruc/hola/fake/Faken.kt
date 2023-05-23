@@ -89,8 +89,7 @@ object Faken {
     }
 
     suspend fun createFakeIndex(cnt: Int) {
-
-        val info: String = """
+        var info: String = """
                         {
                         "index": {
                             "fields": ["data.countryid"]
@@ -113,15 +112,38 @@ object Faken {
                 }
             }
         }
+
+        info = """
+                 {
+                       "index": {
+                            "fields": ["message"]
+                        },
+                        "name" : "message-index",
+                        "type" : "json"
+                    }
+        """.trimIndent()
+
+        ServerHelper.hosts.forEach {
+            it.let { host ->
+                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+                repeat(cnt) { cnt ->
+                    dbUtils.createIndex("fake$cnt", info).use { res ->
+                        val bos = res.body?.string()
+                        logger.info("$host")
+                        logger.info(bos)
+                    }
+                }
+            }
+        }
     }
 
     suspend fun fakeComplexQuery(cnt: Int): List<Node> {
         val query = """
                    {
                 "selector": {
+                        "message":"success",
                         "data.countryid": {"${'$'}gt": -1}
-                    },
-                    "execution_stats": true
+                    }
                 }         
         """.trimIndent()
         val l = mutableListOf<Node>()

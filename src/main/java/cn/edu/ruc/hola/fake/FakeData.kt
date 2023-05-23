@@ -35,7 +35,7 @@ object FakeData {
         d._id = uuid
         d.data = Doc.Data()
         d.data.id = 0
-        d.data.name = ""
+        d.data.name = "Peter"
         d.data.bfirstletter = ""
         d.data.logo = ""
         d.data.country = "China"
