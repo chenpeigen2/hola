@@ -14,7 +14,7 @@ public interface Action {
                     "message": "success"
                   }
                 ],
-                "code": 0
+                "data.id": 0
               },
               "execution_stats": true
             }""";
