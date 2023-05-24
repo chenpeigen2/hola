@@ -1,0 +1,15 @@
+{
+  "selector": {
+    "$or": [
+      {
+        "data.countryid": {
+          "$gt": -1
+        }
+      },
+      {
+        "message": "success"
+      }
+    ],
+    "code": 0
+  }
+}
