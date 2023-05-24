@@ -138,14 +138,7 @@ object Faken {
     }
 
     suspend fun fakeComplexQuery(cnt: Int): List<Node> {
-        val query = """
-                   {
-                "selector": {
-                        "message":"success",
-                        "data.countryid": {"${'$'}gt": -1}
-                    }
-                }         
-        """.trimIndent()
+        val query = Action.query.trimIndent()
         val l = mutableListOf<Node>()
         ServerHelper.hosts.forEach {
             it.let { host ->
