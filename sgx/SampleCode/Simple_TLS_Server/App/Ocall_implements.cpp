@@ -7,6 +7,8 @@
 #include "Curl.h"
 #include <iomanip>
 #include <nlohmann/json.hpp>
+#include <vector>
+#include <string>
 #include "_json.hpp"
 
 using json = nlohmann::json;
@@ -237,6 +239,67 @@ struct key_map_t ocall_key_map_struct(int idx) {
     ret.db_name[len] = '\0';
     // return the data
     return ret;
+}
+
+
+std::vector <std::vector<std::string>> *simple_split_res;
+
+/** simple impl for split execution **/
+void ocall_simple_split(const char *data) {
+    // we need to parser the given json_string for further execution
+    json j_test = json::parse("{\n"
+                              "  \"selector\": {\n"
+                              "    \"$or\": [\n"
+                              "      {\n"
+                              "        \"data.countryid\": {\n"
+                              "          \"$gt\": -1\n"
+                              "        }\n"
+                              "      },\n"
+                              "      {\n"
+                              "        \"message\": \"success\"\n"
+                              "      }\n"
+                              "    ],\n"
+                              "    \"code\": 0,\n"
+                              "    \"data.id\" : 1\n"
+                              "  }\n"
+                              "}");
+
+    auto selector = j_test.at("selector");
+
+    std::vector <std::vector<std::string>> nestedVector;
+    std::cout << nestedVector.size() << std::endl;
+    if (selector.contains("$or")) {
+        auto $or = selector.at("$or");
+        for (auto &number_object: $or) {
+            std::vector <std::string> vec; // define a vec
+            // 遍历对象并打印每个键
+            for (auto &element: number_object.items()) {
+                std::cout << element.key() << std::endl;
+                vec.push_back(element.key());
+            }
+            nestedVector.push_back(vec);
+        }
+    }
+    if (nestedVector.empty()) {
+        std::vector <std::string> vec;
+        for (auto &element: selector.items()) {
+            vec.push_back(element.key());
+        }
+        nestedVector.push_back(vec);
+    } else {
+        for (auto &element: selector.items()) {
+            if (element.key() != "$or") {
+                for (auto &number_object: nestedVector) {
+                    number_object.push_back(element.key());
+                }
+            }
+        }
+    }
+    if (simple_split_res != nullptr) {
+        delete simple_split_res;
+    }
+    simple_split_res = new std::vector <std::vector<std::string>>(nestedVector);
+    std::cout << selector.dump() << std::endl;
 }
 
 
