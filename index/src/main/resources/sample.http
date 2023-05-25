@@ -27,3 +27,23 @@ Content-Type: application/json
 [
   "data.id","data.loge","code","message"
 ]
+
+### post for aggregate the data
+POST /aggregate HTTP/1.1
+Accept: application/json
+Host: localhost:3000
+Content-Type: application/json
+
+[
+  "data.id","data.loge","code","message"
+]
+
+### post for aggregate the data
+POST /aggregate_com HTTP/1.1
+Accept: application/json
+Host: localhost:3000
+Content-Type: application/json
+
+[
+  "data.id","data.loge","code","message"
+]

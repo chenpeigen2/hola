@@ -65,8 +65,54 @@ public class Verticle extends AbstractVerticle {
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
         });
 
+        router.post("/aggregate").handler(ctx -> {
+            var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
+            List<List<String>> ret = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                var keyWord = jsonArray.getString(i);
+                List<String> list = new ArrayList<>();
+                struct.forEach((k, v) -> {
+                    if (v.contains(keyWord)) {
+                        list.add(k);
+                    }
+                });
+                ret.add(list);
+            }
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(retainElementList(ret)));
+        });
+
+        router.post("/aggregate_com").handler(ctx -> {
+            var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
+            List<List<String>> ret = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                var keyWord = jsonArray.getString(i);
+                List<String> list = new ArrayList<>();
+                struct.forEach((k, v) -> {
+                    if (v.contains(keyWord)) {
+                        list.add(k);
+                    }
+                });
+                ret.add(list);
+            }
+
+            List<String> ans = new ArrayList<>();
+            retainElementList(ret).forEach(re -> ans.add(backbend.getOrDefault(re, null)));
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(ans));
+        });
+
         server.requestHandler(router).listen(PORT);
 
+    }
+
+    public static List<String> retainElementList(List<List<String>> elementLists) {
+
+        Optional<List<String>> result = elementLists.parallelStream()
+                .filter(elementList -> elementList != null && elementList.size() != 0)
+                .reduce((a, b) -> {
+                    a.retainAll(b);
+                    return a;
+                });
+        return result.orElse(new ArrayList<>());
     }
 
     private void out(RoutingContext ctx, String msg) {
