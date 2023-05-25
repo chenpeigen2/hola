@@ -4,9 +4,9 @@ plugins {
     kotlin("jvm") version "1.8.21"
     id("de.qualersoft.jmeter") version "2.4.0"
     application
-    id("org.springframework.boot") version "3.0.4"
+    id("org.springframework.boot") version "3.1.0"
     id("io.spring.dependency-management") version "1.1.0"
-    kotlin("plugin.spring") version "1.8.10"
+    kotlin("plugin.spring") version "1.8.21"
 }
 
 group = "cn.edu.ruc"
