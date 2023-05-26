@@ -207,6 +207,14 @@ std::string sgx_json_object(const char *data, const char *key) {
     return res;
 }
 
+std::string sgx_acquire_vector(int idx) {
+    char *retrival;
+    ocall_acquire_vector(&retrival, idx);
+    if (retrival == nullptr) return "null";
+    std::string res(retrival);
+    return res;
+}
+
 int sgx_json_arr_length(const char *data) {
     int value = -1;
     ocall_json_arr_length(&value, data);

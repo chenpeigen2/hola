@@ -50,6 +50,7 @@ std::string sgx_json_query(int idx, const char *key);
 std::string sgx_json_object(const char *data, const char *key);
 int sgx_json_file_read(const char *key, const char *file_name);
 struct key_map_t sgx_key_map_struct(int idx);
+std::string sgx_acquire_vector(int idx);
 #define printf sgx_printf
 #define printe(fmt, ...) sgx_printe(__FUNCTION__, fmt, ##__VA_ARGS__)
 #define printl(fmt, ...) sgx_printl(__FUNCTION__, fmt, ##__VA_ARGS__)
