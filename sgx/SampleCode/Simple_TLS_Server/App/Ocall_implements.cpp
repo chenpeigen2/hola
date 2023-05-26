@@ -302,6 +302,23 @@ void ocall_simple_split(const char *data) {
     std::cout << selector.dump() << std::endl;
 }
 
+char *ocall_acquire_vector(int idx) {
+    auto vec = simple_split_res->at(idx);
+    std::string str;
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        str += *it;
+        if (it != vec.end() - 1) {
+            str += "#";
+        }
+    }
+
+    size_t len = str.length();
+    char *p = new char[len + 1];
+    str.copy(p, len);
+    p[len] = '\0';
+    return p;
+}
+
 
 void ocall_sgx_exit(int e) {
     exit(e);
