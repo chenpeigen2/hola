@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string.h>
 #include <vector>
+#include <numeric>
 #include "http_utils.h"
 #include "Enclave_t.h"
 #include "Ocall_wrappers.h"
@@ -30,5 +31,9 @@ bool client_auth(const std::string &source);
 std::string client_get_aes_key(const std::string &uid);
 
 std::string simple_aggregation(std::vector <std::string> &resp);
+
+std::string convert_vec_to_json(std::vector <std::string> &vec);
+
+std::vector <std::string> convert_json_to_vec(std::string basicString);
 
 #endif //SGX_UTILS_H
