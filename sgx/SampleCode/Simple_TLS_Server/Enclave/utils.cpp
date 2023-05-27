@@ -6,6 +6,9 @@
 #include "Enclave.h"
 #include "Request.h"
 #include <map>
+#include <vector>
+#include <string>
+#include <sstream>
 #include "Encrypt.h"
 
 using namespace std;
@@ -39,6 +42,16 @@ std::vector <Request> provide_query(const std::string &source) {
 
     {
         // here we expect to create our own new provide query execution
+        int len = sgx_simple_split(source.c_str());
+
+        printf("\n the simple split we are now using %d \n", len);
+
+        for (int i = 0; i < len; ++i) {
+            std::string text = sgx_acquire_vector(i);
+            printf("the acquired vector %s \n", text.c_str());
+            auto vec = convert_to_vec(text);
+            printf("%s \n", convert_vec_to_json(vec).c_str());
+        }
 
     }
 
@@ -124,5 +137,15 @@ std::vector <std::string> convert_json_to_vec(std::string basicString) {
         }
     }
     vec.push_back(token);
+    return vec;
+}
+
+std::vector <std::string> convert_to_vec(const std::string &source) {
+    std::vector <std::string> vec;
+    std::stringstream ss(source);
+    std::string token;
+    while (std::getline(ss, token, '#')) {
+        vec.push_back(token);
+    }
     return vec;
 }
