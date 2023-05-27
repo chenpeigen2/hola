@@ -227,6 +227,12 @@ int sgx_json_file_read(const char *key, const char *file_name) {
     return value;
 }
 
+int sgx_simple_split(const char *data) {
+    int ret = -1;
+    ocall_simple_split(&ret, data);
+    return ret;
+}
+
 struct key_map_t sgx_key_map_struct(int idx) {
     struct key_map_t ret;
     ocall_key_map_struct(&ret, idx);
