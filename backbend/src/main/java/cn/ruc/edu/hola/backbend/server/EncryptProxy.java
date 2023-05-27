@@ -151,7 +151,8 @@ public class EncryptProxy extends AbstractProxy {
     public String filterDocs(String databaseName, String filter) {
         String result = null;
         try {
-            String de_databaseName = EncryptUtils.decryptAES(databaseName, mAesKey);
+//            String de_databaseName = EncryptUtils.decryptAES(databaseName, mAesKey);
+            String de_databaseName = databaseName;
             String de_filter = EncryptUtils.decryptAES(filter, mAesKey);
             result = super.filterDocs(de_databaseName, de_filter);
             if (result != null) {
