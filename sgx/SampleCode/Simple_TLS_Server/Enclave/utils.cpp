@@ -38,7 +38,7 @@ std::vector <std::string> params(const std::string &params) {
 }
 
 /** provide the query associate with the backbend **/
-std::vector <Request> provide_query(const std::string &source) {
+std::vector <Request> provide_query(const std::string &&url_path, const std::string &source) {
 
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
@@ -56,42 +56,25 @@ std::vector <Request> provide_query(const std::string &source) {
                              reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                              aesKey.length());
 
-        {
-            // here we expect to create our own new provide query execution
-            int len = sgx_simple_split(filter.c_str());
-
-            printf("\n the simple split we are now using %d \n", len);
-
-            for (int i = 0; i < len; ++i) {
-                std::string text = sgx_acquire_vector(i);
-                printf("the acquired vector %s \n", text.c_str());
-                auto vec = convert_to_vec(text);
-                printf("%s \n", convert_vec_to_json(vec).c_str());
-
-                std::string ress = sgx_curl_post("http://localhost:3000/aggregate_com",
-                                                 convert_vec_to_json(vec).c_str());
-
-                printf("wwwwwwwwwwwwww  zzzzzzzzzzzzzz  %s", ress.c_str());
-
+        // here we expect to create our own new provide query execution
+        int len = sgx_simple_split(filter.c_str());
+        for (int i = 0; i < len; ++i) {
+            std::string text = sgx_acquire_vector(i);
+            printf("the acquired vector %s \n", text.c_str());
+            auto vec = convert_to_vec(text);
+            std::string urls = sgx_curl_post("http://localhost:3000/aggregate_com",
+                                             convert_vec_to_json(vec).c_str());
+            auto url_vec = convert_json_to_vec(urls);
+            for (const auto &item: url_vec) {
+                res.push_back(Request(item + url_path, filter));
             }
-
-        }
-
-
-        // fake filter
-        filter = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
-
-        // we insert here to create our own filter
-//        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
-
-        std::string file_name = "config.json";
-        int find_num = sgx_json_file_read(filter.c_str(), file_name.c_str());
-        for (int j = 0; j < find_num; j++) {
-            auto data_struct = sgx_key_map_struct(j);
-            std::string query = data_struct.query;
-            res.push_back(Request(query, filter));
         }
     }
+
+    for (const auto &item: res) {
+        printf("\n the url: %s  the filter: %s \n", item.url.c_str(), item.filter.c_str());
+    }
+
     return res;
 }
 
@@ -136,9 +119,13 @@ std::vector <std::string> convert_json_to_vec(std::string basicString) {
     std::vector <std::string> vec;
     std::string token;
     for (size_t i = 1; i < basicString.size() - 1; ++i) {
-        if (basicString[i] == ',') {
+        if (basicString[i] == '[') {
+            continue;
+        } else if (basicString[i] == ',') {
             vec.push_back(token);
             token = "";
+        } else if (basicString[i] == ']') {
+            break;
         } else if (basicString[i] != '\"') {
             token += basicString[i];
         }

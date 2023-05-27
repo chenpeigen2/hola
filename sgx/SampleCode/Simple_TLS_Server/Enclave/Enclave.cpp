@@ -157,8 +157,12 @@ char *ecall_curl_get(const char *url, const char *request) {
 }
 
 char *ecall_complex_curl(const char *data) {
+
+    printf("\n wewwwwwwwwww   %s \n", data);
+
+
     // provide the requests
-    auto provide_decode_data = provide_query(data);
+    auto provide_decode_data = provide_query("/_find", data);
     // the result
     std::vector <string> resp;
 
