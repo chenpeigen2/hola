@@ -58,6 +58,7 @@ enclave {
 		int ocall_json_file_read([in, string] const char *key, [in, string] const char *file_name);
 		struct key_map_t ocall_key_map_struct(int idx);
 		char* ocall_acquire_vector(int idx);
+		int ocall_simple_split([in, string] const char *data);
 	};
 
 };

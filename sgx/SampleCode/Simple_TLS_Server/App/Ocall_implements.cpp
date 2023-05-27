@@ -245,7 +245,7 @@ struct key_map_t ocall_key_map_struct(int idx) {
 std::vector <std::vector<std::string>> *simple_split_res;
 
 /** simple impl for split execution **/
-void ocall_simple_split(const char *data) {
+int ocall_simple_split(const char *data) {
     // we need to parser the given json_string for further execution
     json j_test = json::parse("{\n"
                               "  \"selector\": {\n"
@@ -300,6 +300,7 @@ void ocall_simple_split(const char *data) {
     }
     simple_split_res = new std::vector <std::vector<std::string>>(nestedVector);
     std::cout << selector.dump() << std::endl;
+    return simple_split_res->size();
 }
 
 char *ocall_acquire_vector(int idx) {
