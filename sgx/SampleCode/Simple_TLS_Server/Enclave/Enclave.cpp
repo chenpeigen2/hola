@@ -70,6 +70,7 @@ std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsi
     std::string body = "{\"key\":\"" +
                        encryptKey +
                        "\"}";
+    printf("the uuuuuuuuuuuuu %s", url.c_str());
     sgx_curl_post(url.c_str(), body.c_str());
     auth_map[url] = aesKey;
     return aesKey;
@@ -84,17 +85,12 @@ std::string curl_post(const char *url, const Request &request) {
     std::string aesKey = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
                                         httpUrl.get_port());
 
-    std::string db_name = request.db_name;
-    db_name = ecb_encrypt(db_name.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                          aesKey.length(), PaddingModel::PKCS5OR7);
-    db_name = encode(db_name.c_str(), db_name.length());
-
     std::string filter = request.filter;
     filter = ecb_encrypt(filter.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                          aesKey.length(), PaddingModel::PKCS5OR7);
     filter = encode(filter.c_str(), filter.length());
 
-    std::string body = "{\"db_name\":\"" + db_name + "\",\"filter\":\"" + filter + "\"}";
+    std::string body = "{\"filter\":\"" + filter + "\"}";
     /** curl post **/
     std::string response = sgx_curl_post(url, body.c_str());
 

@@ -247,22 +247,7 @@ std::vector <std::vector<std::string>> *simple_split_res;
 /** simple impl for split execution **/
 int ocall_simple_split(const char *data) {
     // we need to parser the given json_string for further execution
-    json j_test = json::parse("{\n"
-                              "  \"selector\": {\n"
-                              "    \"$or\": [\n"
-                              "      {\n"
-                              "        \"data.countryid\": {\n"
-                              "          \"$gt\": -1\n"
-                              "        }\n"
-                              "      },\n"
-                              "      {\n"
-                              "        \"message\": \"success\"\n"
-                              "      }\n"
-                              "    ],\n"
-                              "    \"code\": 0,\n"
-                              "    \"data.id\" : 1\n"
-                              "  }\n"
-                              "}");
+    json j_test = json::parse(data);
 
     auto selector = j_test.at("selector");
 

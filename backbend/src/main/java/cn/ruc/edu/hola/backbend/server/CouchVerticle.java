@@ -157,13 +157,13 @@ public class CouchVerticle extends AbstractVerticle {
     public void filterDocs(RoutingContext ctx) {
         Filter object = JsonUtils.INSTANCE.toFilter(ctx.body().asString());
 
-        String dataBaseName = object.getDbName();
+//        String dataBaseName = object.getDbName();
         String filter = object.getFilter();
 
-        System.out.println(dataBaseName);
+//        System.out.println(dataBaseName);
         System.out.println(filter);
         try {
-            out(ctx, proxyMethods.filterDocs(dataBaseName, filter));
+            out(ctx, proxyMethods.filterDocs("fake1", filter));
         } catch (NumberFormatException e) {
             ctx.fail(400);
         }

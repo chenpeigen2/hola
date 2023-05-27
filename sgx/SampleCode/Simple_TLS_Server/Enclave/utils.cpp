@@ -40,22 +40,6 @@ std::vector <std::string> params(const std::string &params) {
 /** provide the query associate with the backbend **/
 std::vector <Request> provide_query(const std::string &source) {
 
-    {
-        // here we expect to create our own new provide query execution
-        int len = sgx_simple_split(source.c_str());
-
-        printf("\n the simple split we are now using %d \n", len);
-
-        for (int i = 0; i < len; ++i) {
-            std::string text = sgx_acquire_vector(i);
-            printf("the acquired vector %s \n", text.c_str());
-            auto vec = convert_to_vec(text);
-            printf("%s \n", convert_vec_to_json(vec).c_str());
-        }
-
-    }
-
-
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
 
@@ -72,6 +56,31 @@ std::vector <Request> provide_query(const std::string &source) {
                              reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                              aesKey.length());
 
+        {
+            // here we expect to create our own new provide query execution
+            int len = sgx_simple_split(filter.c_str());
+
+            printf("\n the simple split we are now using %d \n", len);
+
+            for (int i = 0; i < len; ++i) {
+                std::string text = sgx_acquire_vector(i);
+                printf("the acquired vector %s \n", text.c_str());
+                auto vec = convert_to_vec(text);
+                printf("%s \n", convert_vec_to_json(vec).c_str());
+
+                std::string ress = sgx_curl_post("http://localhost:3000/aggregate_com",
+                                                 convert_vec_to_json(vec).c_str());
+
+                printf("wwwwwwwwwwwwww  zzzzzzzzzzzzzz  %s", ress.c_str());
+
+            }
+
+        }
+
+
+        // fake filter
+        filter = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
+
         // we insert here to create our own filter
 //        std::string key = "{\"selector\":{\"data.countryid\":{\"$gt\":-1}}}";
 
@@ -79,10 +88,8 @@ std::vector <Request> provide_query(const std::string &source) {
         int find_num = sgx_json_file_read(filter.c_str(), file_name.c_str());
         for (int j = 0; j < find_num; j++) {
             auto data_struct = sgx_key_map_struct(j);
-
             std::string query = data_struct.query;
-            std::string db_name = data_struct.db_name;
-            res.push_back(Request(query, db_name, filter));
+            res.push_back(Request(query, filter));
         }
     }
     return res;

@@ -11,13 +11,12 @@
 #include "vector"
 #include <string>
 
-Request::Request(std::string url, std::string db_name, std::string filter) {
+Request::Request(std::string url, std::string filter) {
     this->url = url;
-    this->db_name = db_name;
     this->filter = filter;
 }
 
 /** impl for only for print the data **/
 void Request::print() {
-    printf("the url: %s  , the value: %s %s \n", this->url, this->db_name, this->filter);
+    printf("the url: %s  , the value: %s \n", this->url, this->filter);
 }
