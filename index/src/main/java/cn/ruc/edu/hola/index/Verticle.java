@@ -13,7 +13,7 @@ import java.util.*;
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
 
-    public static Map<String, Set<String>> struct = Indexer.remappingStruct("struct.json");
+    public static Map<String, List<Set<String>>> struct = Indexer.remappingStruct("struct.json");
     public static Map<String, String> backbend = Indexer.remappingUrl("backbend.json");
 
     @Override

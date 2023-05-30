@@ -10,10 +10,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
 
 public final class Indexer {
     private Indexer() {}
@@ -21,17 +19,28 @@ public final class Indexer {
     /**
      * remapping struct config
      **/
-    public static Map<String, Set<String>> remappingStruct(String filePath) {
+    public static Map<String, List<Set<String>>> remappingStruct(String filePath) {
         URL url = Indexer.class.getClassLoader().getResource(filePath);
         if (url == null) return null;
         try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
             JsonElement element = JsonParser.parseReader(reader);
             JsonObject obj = element.getAsJsonObject();
-            Map<String, Set<String>> ret = new HashMap<>();
+            Map<String, List<Set<String>>> ret = new HashMap<>();
             for (var entry : obj.entrySet()) {
-                Set<String> set = new HashSet<>();
-                getJsonKey(set, entry.getValue(), "");
-                ret.put(entry.getKey(), set);
+                List<Set<String>> list = new ArrayList<>();
+
+                entry.getValue().getAsJsonArray().iterator().forEachRemaining(
+                        new Consumer<JsonElement>() {
+                            @Override
+                            public void accept(JsonElement element) {
+                                Set<String> set = new HashSet<>();
+                                getJsonKey(set, element, "");
+                                list.add(set);
+                            }
+                        }
+                );
+
+                ret.put(entry.getKey(), list);
             }
 
             return ret;
