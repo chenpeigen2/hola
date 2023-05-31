@@ -9,6 +9,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
@@ -29,11 +30,17 @@ public class Verticle extends AbstractVerticle {
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
                 struct.forEach((k, v) -> {
-                    if (v.contains(keyWord)) {
-                        var list = ret.getOrDefault(keyWord, new ArrayList<>());
-                        list.add(k);
-                        ret.put(keyWord, list);
-                    }
+                    v.forEach(new Consumer<Set<String>>() {
+                        @Override
+                        public void accept(Set<String> strings) {
+                            if (strings.contains(keyWord)) {
+                                var list = ret.getOrDefault(keyWord, new ArrayList<>());
+                                list.add(k);
+                                ret.put(keyWord, list);
+                            }
+                        }
+                    });
+
                 });
             }
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
@@ -55,11 +62,16 @@ public class Verticle extends AbstractVerticle {
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
                 struct.forEach((k, v) -> {
-                    if (v.contains(keyWord)) {
-                        var list = ret.getOrDefault(keyWord, new ArrayList<>());
-                        list.add(backbend.getOrDefault(k, null));
-                        ret.put(keyWord, list);
-                    }
+                    v.forEach(new Consumer<Set<String>>() {
+                        @Override
+                        public void accept(Set<String> strings) {
+                            if (strings.contains(keyWord)) {
+                                var list = ret.getOrDefault(keyWord, new ArrayList<>());
+                                list.add(backbend.getOrDefault(k, null));
+                                ret.put(keyWord, list);
+                            }
+                        }
+                    });
                 });
             }
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ret));
@@ -72,9 +84,14 @@ public class Verticle extends AbstractVerticle {
                 var keyWord = jsonArray.getString(i);
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
-                    if (v.contains(keyWord)) {
-                        list.add(k);
-                    }
+                    v.forEach(new Consumer<Set<String>>() {
+                        @Override
+                        public void accept(Set<String> strings) {
+                            if (strings.contains(keyWord)) {
+                                list.add(k);
+                            }
+                        }
+                    });
                 });
                 ret.add(list);
             }
@@ -88,9 +105,14 @@ public class Verticle extends AbstractVerticle {
                 var keyWord = jsonArray.getString(i);
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
-                    if (v.contains(keyWord)) {
-                        list.add(k);
-                    }
+                    v.forEach(new Consumer<Set<String>>() {
+                        @Override
+                        public void accept(Set<String> strings) {
+                            if (strings.contains(keyWord)) {
+                                list.add(k);
+                            }
+                        }
+                    });
                 });
                 ret.add(list);
             }
