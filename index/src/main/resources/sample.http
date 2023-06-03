@@ -35,7 +35,7 @@ Host: localhost:3000
 Content-Type: application/json
 
 [
-  "data.id","data.loge","code","message"
+  "data.id","data.logo","code","message"
 ]
 
 ### post for aggregate the data
@@ -45,5 +45,5 @@ Host: localhost:3000
 Content-Type: application/json
 
 [
-  "data.id","data.loge","code","message"
+  "data.id","data.logo","code","message"
 ]

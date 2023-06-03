@@ -19,23 +19,38 @@ public final class Indexer {
     /**
      * remapping struct config
      **/
-    public static Map<String, List<Set<String>>> remappingStruct(String filePath) {
+    public static Map<String, List<StructInfo>> remappingStruct(String filePath) {
         URL url = Indexer.class.getClassLoader().getResource(filePath);
         if (url == null) return null;
         try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
+            // top object
             JsonElement element = JsonParser.parseReader(reader);
             JsonObject obj = element.getAsJsonObject();
-            Map<String, List<Set<String>>> ret = new HashMap<>();
+            // the result
+            Map<String, List<StructInfo>> ret = new HashMap<>();
+
             for (var entry : obj.entrySet()) {
-                List<Set<String>> list = new ArrayList<>();
+                List<StructInfo> list = new ArrayList<>();
 
                 entry.getValue().getAsJsonArray().iterator().forEachRemaining(
                         new Consumer<JsonElement>() {
                             @Override
                             public void accept(JsonElement element) {
-                                Set<String> set = new HashSet<>();
-                                getJsonKey(set, element, "");
-                                list.add(set);
+                                var structObject = element.getAsJsonObject();
+
+                                var dbs = structObject.getAsJsonArray("dbs");
+                                Set<String> db_set = new HashSet<>();
+                                dbs.forEach(new Consumer<JsonElement>() {
+                                    @Override
+                                    public void accept(JsonElement element) {
+                                        db_set.add(element.getAsString());
+                                    }
+                                });
+
+                                var struct = structObject.getAsJsonObject("struct");
+                                Set<String> struct_set = new HashSet<>();
+                                getJsonKey(struct_set, struct, "");
+                                list.add(new StructInfo(db_set, struct_set));
                             }
                         }
                 );

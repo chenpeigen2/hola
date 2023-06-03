@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
 
-    public static Map<String, List<Set<String>>> struct = Indexer.remappingStruct("struct.json");
+    public static Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
     public static Map<String, String> backbend = Indexer.remappingUrl("backbend.json");
 
     @Override
@@ -29,11 +29,13 @@ public class Verticle extends AbstractVerticle {
             Map<String, List<String>> ret = new HashMap<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
+
                 struct.forEach((k, v) -> {
-                    v.forEach(new Consumer<Set<String>>() {
+
+                    v.forEach(new Consumer<StructInfo>() {
                         @Override
-                        public void accept(Set<String> strings) {
-                            if (strings.contains(keyWord)) {
+                        public void accept(StructInfo structInfo) {
+                            if (structInfo.getInfo().contains(keyWord)) {
                                 var list = ret.getOrDefault(keyWord, new ArrayList<>());
                                 list.add(k);
                                 ret.put(keyWord, list);
@@ -62,10 +64,10 @@ public class Verticle extends AbstractVerticle {
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
                 struct.forEach((k, v) -> {
-                    v.forEach(new Consumer<Set<String>>() {
+                    v.forEach(new Consumer<StructInfo>() {
                         @Override
-                        public void accept(Set<String> strings) {
-                            if (strings.contains(keyWord)) {
+                        public void accept(StructInfo structInfo) {
+                            if (structInfo.getInfo().contains(keyWord)) {
                                 var list = ret.getOrDefault(keyWord, new ArrayList<>());
                                 list.add(backbend.getOrDefault(k, null));
                                 ret.put(keyWord, list);
@@ -84,10 +86,10 @@ public class Verticle extends AbstractVerticle {
                 var keyWord = jsonArray.getString(i);
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
-                    v.forEach(new Consumer<Set<String>>() {
+                    v.forEach(new Consumer<StructInfo>() {
                         @Override
-                        public void accept(Set<String> strings) {
-                            if (strings.contains(keyWord)) {
+                        public void accept(StructInfo structInfo) {
+                            if (structInfo.getInfo().contains(keyWord)) {
                                 list.add(k);
                             }
                         }
@@ -105,10 +107,10 @@ public class Verticle extends AbstractVerticle {
                 var keyWord = jsonArray.getString(i);
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
-                    v.forEach(new Consumer<Set<String>>() {
+                    v.forEach(new Consumer<StructInfo>() {
                         @Override
-                        public void accept(Set<String> strings) {
-                            if (strings.contains(keyWord)) {
+                        public void accept(StructInfo structInfo) {
+                            if (structInfo.getInfo().contains(keyWord)) {
                                 list.add(k);
                             }
                         }
