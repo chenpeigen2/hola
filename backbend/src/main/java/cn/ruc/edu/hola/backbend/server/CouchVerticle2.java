@@ -5,6 +5,10 @@ import io.vertx.ext.web.Router;
 
 public class CouchVerticle2 extends CouchVerticle {
 
+    public String getTag() {
+        return "bb3";
+    }
+
     @Override
     public void listen(HttpServer server, Router router) {
         server.requestHandler(router).listen(8082);

@@ -20,6 +20,10 @@ public class CouchVerticle extends AbstractVerticle {
 
     final Proxy proxyMethods = new EncryptProxy();
 
+    public String getTag() {
+        return "bb1";
+    }
+
     @Override
     public void start() {
         HttpServer server = vertx.createHttpServer();
