@@ -20,6 +20,8 @@ public final class FilterParser {
 
     /**
      * 可能会误伤其他的struct结构（暂时先不考虑）
+     * <p>
+     * 可能是伪需求 ！！！
      **/
     public static Set<String> getFilterDbs(String filter, String backbend_name) {
         JsonObject object = JsonParser.parseString(filter).getAsJsonObject();
