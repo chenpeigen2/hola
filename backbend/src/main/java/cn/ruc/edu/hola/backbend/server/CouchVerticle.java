@@ -167,7 +167,7 @@ public class CouchVerticle extends AbstractVerticle {
 //        System.out.println(dataBaseName);
         System.out.println(filter);
         try {
-            out(ctx, proxyMethods.filterDocs("fake1", filter));
+            out(ctx, proxyMethods.filterDocsByBB(filter, getTag()));
         } catch (NumberFormatException e) {
             ctx.fail(400);
         }

@@ -153,14 +153,16 @@ public class EncryptProxy extends AbstractProxy {
         String de_filter = EncryptUtils.decryptAES(filter, mAesKey);
         var dbs = FilterParser.getFilterDbs(de_filter, bb);
         StringBuilder sb = new StringBuilder();
-        for (String db : dbs) {
-            var resp = super.filterDocs(db, filter);
+        for (String db : dbs) { // 可能是伪需求
+            var resp = super.filterDocs(db, de_filter);
             if (resp != null) {
-                sb.append(resp);
+                sb.append(resp); // simple aggregation
             }
         }
         var ret = sb.toString();
         if (ret.isBlank() || ret.isEmpty()) return null;
+        ret = ret.trim();
+        ret = EncryptUtils.encryptAES(ret, mAesKey);
         return ret;
     }
 
