@@ -27,7 +27,7 @@ public interface Proxy {
 
     String filterDocs(String databaseName, String filter);
 
-    default String filterDocs(String filter) {return null;}
+    default String filterDocsByBB(String filter, String bb) {return null;}
 
     String createIndex(String databaseName, String info);
 

@@ -3,6 +3,7 @@ package cn.ruc.edu.hola.backbend.server;
 import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
+import cn.ruc.edu.hola.backbend.parser.FilterParser;
 
 public class EncryptProxy extends AbstractProxy {
     @Override
@@ -148,10 +149,19 @@ public class EncryptProxy extends AbstractProxy {
     }
 
     @Override
-    public String filterDocs(String filter) {
-
-
-        return super.filterDocs(filter);
+    public String filterDocsByBB(String filter, String bb) {
+        String de_filter = EncryptUtils.decryptAES(filter, mAesKey);
+        var dbs = FilterParser.getFilterDbs(de_filter, bb);
+        StringBuilder sb = new StringBuilder();
+        for (String db : dbs) {
+            var resp = super.filterDocs(db, filter);
+            if (resp != null) {
+                sb.append(resp);
+            }
+        }
+        var ret = sb.toString();
+        if (ret.isBlank() || ret.isEmpty()) return null;
+        return ret;
     }
 
     @Override
