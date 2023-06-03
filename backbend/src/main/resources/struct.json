@@ -1,0 +1,59 @@
+{
+  "bb1": [
+    {
+      "dbs": [
+        "fake1"
+      ],
+      "struct": {
+        "code": "i",
+        "message": "s",
+        "data": {
+          "id": "i",
+          "name": "s",
+          "bfirstletter": "s",
+          "logo": "s",
+          "country": "s",
+          "countryid": "i"
+        }
+      }
+    }
+  ],
+  "bb2": [
+    {
+      "dbs": [
+        "fake1"
+      ],
+      "struct": {
+        "code": "i",
+        "message": "s",
+        "data": {
+          "id": "i",
+          "name": "s",
+          "bfirstletter": "s",
+          "logo": "s",
+          "country": "s",
+          "countryid": "i"
+        }
+      }
+    }
+  ],
+  "bb3": [
+    {
+      "dbs": [
+        "fake1"
+      ],
+      "struct": {
+        "code": "i",
+        "message": "s",
+        "data": {
+          "id": "i",
+          "name": "s",
+          "bfirstletter": "s",
+          "logo": "s",
+          "country": "s",
+          "countryid": "i"
+        }
+      }
+    }
+  ]
+}
