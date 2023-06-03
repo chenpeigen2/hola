@@ -148,6 +148,13 @@ public class EncryptProxy extends AbstractProxy {
     }
 
     @Override
+    public String filterDocs(String filter) {
+
+
+        return super.filterDocs(filter);
+    }
+
+    @Override
     public String filterDocs(String databaseName, String filter) {
         String result = null;
         try {

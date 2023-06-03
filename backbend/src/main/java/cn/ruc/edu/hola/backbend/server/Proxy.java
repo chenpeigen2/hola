@@ -27,6 +27,8 @@ public interface Proxy {
 
     String filterDocs(String databaseName, String filter);
 
+    default String filterDocs(String filter) {return null;}
+
     String createIndex(String databaseName, String info);
 
     /** auth for get the aes key **/
