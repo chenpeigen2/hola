@@ -6,7 +6,6 @@
       ],
       "struct": {
         "code": "i",
-        "message": "s",
         "data": {
           "id": "i",
           "name": "s",
@@ -31,8 +30,7 @@
           "name": "s",
           "bfirstletter": "s",
           "logo": "s",
-          "country": "s",
-          "countryid": "i"
+          "country": "s"
         }
       }
     }
@@ -50,7 +48,6 @@
           "name": "s",
           "bfirstletter": "s",
           "logo": "s",
-          "country": "s",
           "countryid": "i"
         }
       }
