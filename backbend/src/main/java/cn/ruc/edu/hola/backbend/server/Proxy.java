@@ -1,5 +1,7 @@
 package cn.ruc.edu.hola.backbend.server;
 
+import cn.ruc.edu.hola.backbend.entity.Auth;
+
 public interface Proxy {
     String uuids(int cnt);
 
@@ -32,5 +34,5 @@ public interface Proxy {
     String createIndex(String databaseName, String info);
 
     /** auth for get the aes key **/
-    boolean acquireAESKey(String encryptedRSAText);
+    String acquireAESKey(Auth auth);
 }

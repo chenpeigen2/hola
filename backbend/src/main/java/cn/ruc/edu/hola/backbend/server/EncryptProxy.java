@@ -3,7 +3,12 @@ package cn.ruc.edu.hola.backbend.server;
 import cn.ruc.edu.hola.backbend.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.backbend.encrypy.Keys;
 import cn.ruc.edu.hola.backbend.encrypy.RSAUtils;
+import cn.ruc.edu.hola.backbend.entity.Auth;
 import cn.ruc.edu.hola.backbend.parser.FilterParser;
+import cn.ruc.edu.hola.backbend.util.RandomStringGenerator;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EncryptProxy extends AbstractProxy {
     @Override
@@ -202,12 +207,19 @@ public class EncryptProxy extends AbstractProxy {
     // default set
     private String mAesKey = "0123456789abcdefghijklmn";
 
+    /**
+     * restore the aes-key
+     **/
+    private Map<String, String> aesKeyStore = new HashMap<>();
+
     @Override
-    public boolean acquireAESKey(String encryptedRSAText) {
-        String aesKey = EncryptUtils.rsaDecrypt(encryptedRSAText, EncryptUtils.RSA_PRIVATE_KEY);
-        if (aesKey == null) return false;
+    public String acquireAESKey(Auth auth) {
+        String aesKey = EncryptUtils.rsaDecrypt(auth.getKey(), EncryptUtils.RSA_PRIVATE_KEY);
+        if (aesKey == null) return null;
         this.mAesKey = aesKey;
         System.err.println(" ==================     acquired aes key: " + mAesKey);
-        return true;
+        var uuid = RandomStringGenerator.generateRandomUUID();
+        aesKeyStore.put(uuid, aesKey);
+        return uuid;
     }
 }

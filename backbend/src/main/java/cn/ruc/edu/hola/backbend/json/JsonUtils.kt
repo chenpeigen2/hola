@@ -6,7 +6,7 @@ import com.google.gson.Gson
 
 object JsonUtils {
 
-    private val json = Gson()
+    val json = Gson()
 
     fun String.toAuth(): Auth {
         return json.fromJson(this, Auth::class.java)

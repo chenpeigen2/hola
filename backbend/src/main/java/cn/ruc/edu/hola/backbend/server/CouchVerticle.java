@@ -1,18 +1,16 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.entity.Auth;
+import cn.ruc.edu.hola.backbend.entity.AuthResp;
 import cn.ruc.edu.hola.backbend.entity.Filter;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import com.google.gson.JsonSyntaxException;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.ServerWebSocket;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
-
-import javax.naming.directory.SearchResult;
 
 public class CouchVerticle extends AbstractVerticle {
 
@@ -80,22 +78,9 @@ public class CouchVerticle extends AbstractVerticle {
         try {
             System.err.println("auth !!!");
             Auth auth = JsonUtils.INSTANCE.toAuth(ctx.body().asString());
-            boolean acquired = proxyMethods.acquireAESKey(auth.getKey());
-            if (acquired) {
-                out(ctx, """
-                        {
-                            "ok": true
-                        }
-                        """);
-
-            } else {
-                out(ctx, """
-                        {
-                            "ok": false
-                        }
-                        """);
-
-            }
+            String uuid = proxyMethods.acquireAESKey(auth);
+            AuthResp authResp = new AuthResp(uuid, (uuid != null));
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(authResp));
         } catch (JsonSyntaxException ignored) {
             ctx.fail(400);
         }

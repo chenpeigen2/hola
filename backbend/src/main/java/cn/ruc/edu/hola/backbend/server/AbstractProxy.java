@@ -176,17 +176,4 @@ public abstract class AbstractProxy implements Proxy {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        Proxy methods = new AbstractProxy() {
-
-            @Override
-            public boolean acquireAESKey(String encryptedRSAText) {
-                return false;
-            }
-        };
-        var xx = methods.createDb("xxxx1");
-        System.out.println("================");
-        System.out.println(xx);
-    }
 }
