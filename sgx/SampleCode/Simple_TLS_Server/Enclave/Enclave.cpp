@@ -9,8 +9,9 @@
 #include <time.h>
 
 #include <array>
-#include <set>
+#include <unordered_set>
 #include <map>
+#include <unordered_map>
 #include "http_utils.h"
 #include "encalve_utils.h"
 #include "utils.h"
@@ -25,8 +26,9 @@ using namespace oceanstar;
 std::string sk;
 
 // indicate the authed set
-std::set <std::string> authSet;
-std::map <std::string, std::string> auth_map;
+std::unordered_set <std::string> authSet;
+std::unordered_map <std::string, std::string> auth_map;
+std::unordered_map <std::string, std::string> auth_uuid_map;
 
 //// indicate the refresh rate
 #define ELAPSE_MINUTES 15
@@ -71,10 +73,12 @@ std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsi
                        encryptKey +
                        "\"}";
     std::string &&post_data = sgx_curl_post(url.c_str(), body.c_str()); // execute the auth execution
+    auto resp_vec = convert_json_to_vec(post_data); // the resp
 
-    printf("the post_data %s", post_data.c_str());
-
+    // restore in a map
+    auth_uuid_map[url] = resp_vec.at(0);
     auth_map[url] = aesKey;
+
     return aesKey;
 }
 
