@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.entity.Auth;
-import cn.ruc.edu.hola.backbend.entity.AuthResp;
 import cn.ruc.edu.hola.backbend.entity.Filter;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import com.google.gson.JsonSyntaxException;
@@ -150,11 +149,10 @@ public class CouchVerticle extends AbstractVerticle {
     public void filterDocs(RoutingContext ctx) {
         Filter object = JsonUtils.INSTANCE.toFilter(ctx.body().asString());
 
-//        String dataBaseName = object.getDbName();
-        String filter = object.getFilter();
+        // ack the data
+        String filter = object.filter();
+        String uuid = object.uuid();
 
-//        System.out.println(dataBaseName);
-        System.out.println(filter);
         try {
             out(ctx, proxyMethods.filterDocsByBB(filter, getTag()));
         } catch (NumberFormatException e) {

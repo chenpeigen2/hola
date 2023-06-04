@@ -1,9 +1,5 @@
 package cn.ruc.edu.hola.backbend.entity;
 
-public class Filter {
-    private String filter;
+public record Filter(String uuid, String filter) {
 
-    public String getFilter() {
-        return filter;
-    }
 }
