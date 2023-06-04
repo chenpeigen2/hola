@@ -154,8 +154,10 @@ public class EncryptProxy extends AbstractProxy {
     }
 
     @Override
-    public String filterDocsByBB(String filter, String bb) {
-        String de_filter = EncryptUtils.decryptAES(filter, mAesKey);
+    public String filterDocsByBB(String uuid, String filter, String bb) {
+        var aesKey = aesKeyStore.get(uuid);
+        if (aesKey == null) aesKey = mAesKey;
+        String de_filter = EncryptUtils.decryptAES(filter, aesKey);
         var dbs = FilterParser.getFilterDbs(de_filter, bb);
         StringBuilder sb = new StringBuilder();
         for (String db : dbs) { // 可能是伪需求
@@ -167,7 +169,7 @@ public class EncryptProxy extends AbstractProxy {
         var ret = sb.toString();
         if (ret.isBlank() || ret.isEmpty()) return null;
         ret = ret.trim();
-        ret = EncryptUtils.encryptAES(ret, mAesKey);
+        ret = EncryptUtils.encryptAES(ret, aesKey);
         return ret;
     }
 
@@ -210,7 +212,7 @@ public class EncryptProxy extends AbstractProxy {
     /**
      * restore the aes-key
      **/
-    private Map<String, String> aesKeyStore = new HashMap<>();
+    private final Map<String, String> aesKeyStore = new HashMap<>();
 
     @Override
     public String acquireAESKey(Auth auth) {

@@ -38,7 +38,7 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/delete_doc").handler(this::deleteDoc);
         router.post("/_find").handler(this::filterDocs);
         router.get("/_index").handler(this::createIndex);
-        router.post("/_auth").handler(this::auth); // shoule change to post
+        router.post("/_auth").handler(this::auth); // should change to post
 
         listen(server, router);
     }
@@ -154,7 +154,7 @@ public class CouchVerticle extends AbstractVerticle {
         String uuid = object.uuid();
 
         try {
-            out(ctx, proxyMethods.filterDocsByBB(filter, getTag()));
+            out(ctx, proxyMethods.filterDocsByBB(uuid, filter, getTag()));
         } catch (NumberFormatException e) {
             ctx.fail(400);
         }
