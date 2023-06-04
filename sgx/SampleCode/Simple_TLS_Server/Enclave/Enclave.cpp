@@ -12,6 +12,7 @@
 #include <unordered_set>
 #include <map>
 #include <unordered_map>
+#include <utility>
 #include "http_utils.h"
 #include "encalve_utils.h"
 #include "utils.h"
@@ -59,11 +60,11 @@ std::string generateAESKey() {
     return random_string(24);
 }
 
-std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
+std::pair <std::string, std::string> auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port) {
     std::string url = proto + "://" + domain + ":" + to_string(port) + "/_auth";
     bool refresh = refreshIfNeeded();
     if (auth_map.count(url) > 0 && !refresh) {
-        return auth_map.at(url);
+        return make_pair(auth_map.at(url), auth_uuid_map.at(url));
     }
     std::string &&aesKey = generateAESKey();
     std::string encryptKey = encrypt(reinterpret_cast<const unsigned char *>(aesKey.c_str()), aesKey.length(),
@@ -79,7 +80,7 @@ std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsi
     auth_uuid_map[url] = resp_vec.at(0);
     auth_map[url] = aesKey;
 
-    return aesKey;
+    return make_pair(aesKey, resp_vec.at(0));
 }
 
 std::string curl_post(const char *url, const Request &request) {
@@ -88,8 +89,11 @@ std::string curl_post(const char *url, const Request &request) {
         exit(0);
     }
 
-    std::string aesKey = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
-                                        httpUrl.get_port());
+    auto auth_result = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
+                                      httpUrl.get_port());
+
+    std::string aesKey = auth_result.first;
+    std::string uuid = auth_result.second;
 
     std::string filter = request.filter;
     filter = ecb_encrypt(filter.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
@@ -117,8 +121,11 @@ std::string curl_get(const char *url, const char *request) {
         exit(0);
     }
 
-    std::string aesKey = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
-                                        httpUrl.get_port());
+    auto auth_result = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
+                                      httpUrl.get_port());
+
+    std::string aesKey = auth_result.first;
+    std::string uuid = auth_result.second;
 
     vector <string> param = params(request);
     std::string base_url(url);

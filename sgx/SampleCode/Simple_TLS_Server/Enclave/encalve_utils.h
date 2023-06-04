@@ -7,10 +7,11 @@
 
 #include <string>
 #include "Request.h"
+#include <utility>
 
 std::string generateAESKey();
 
-std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port);
+std::pair <std::string, std::string> auth_if_needed(std::string &&proto, std::string &&domain, short unsigned &&port);
 
 std::string curl_get(const char *url, const char *request);
 
