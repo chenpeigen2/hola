@@ -9,6 +9,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <unordered_set>
 #include "Encrypt.h"
 
 using namespace std;
@@ -42,6 +43,7 @@ std::vector <Request> provide_query(const std::string &&url_path, const std::str
 
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
+    std::unordered_set <std::string> sorted; // 去重逻辑
 
     for (int i = 0; i < len; ++i) {
         // we acquire the uid associate with the aes key
@@ -66,14 +68,18 @@ std::vector <Request> provide_query(const std::string &&url_path, const std::str
                                              convert_vec_to_json(vec).c_str());
             auto url_vec = convert_json_to_vec(urls);
             for (const auto &item: url_vec) {
+                if (sorted.count(item) > 0) continue;
+                sorted.insert(item);
                 res.push_back(Request(item + url_path, filter));
             }
         }
     }
 
+    printf("\n===================================\n");
     for (const auto &item: res) {
         printf("\n the url: %s  the filter: %s \n", item.url.c_str(), item.filter.c_str());
     }
+    printf("\n===================================\n");
 
     return res;
 }
