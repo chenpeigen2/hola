@@ -70,8 +70,7 @@ std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsi
     std::string body = "{\"key\":\"" +
                        encryptKey +
                        "\"}";
-    printf("the uuuuuuuuuuuuu %s", url.c_str());
-    sgx_curl_post(url.c_str(), body.c_str());
+    sgx_curl_post(url.c_str(), body.c_str()); // execute the auth execution
     auth_map[url] = aesKey;
     return aesKey;
 }
@@ -157,10 +156,6 @@ char *ecall_curl_get(const char *url, const char *request) {
 }
 
 char *ecall_complex_curl(const char *data) {
-
-    printf("\n wewwwwwwwwww   %s \n", data);
-
-
     // provide the requests
     auto provide_decode_data = provide_query("/_find", data);
     // the result
