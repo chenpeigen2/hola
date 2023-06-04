@@ -63,14 +63,7 @@ public class ApiServiceTest {
         ApiService apiService = ApiService.getInstance();
         apiService.update("http", "127.0.0.1", 8888);
         List<Request> requests = new ArrayList<>();
-        requests.add(new Request(RandomStringGenerator.UID, """
-                {
-                      "selector": {
-                        "data.countryid": {
-                          "$gt": -1
-                        }
-                      }
-                    }"""));
+        requests.add(new Request(RandomStringGenerator.UID, Action.query));
 
         try (var res = apiService.complex(requests)) {
             var text = res.body().string();
