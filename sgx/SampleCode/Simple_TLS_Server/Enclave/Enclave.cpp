@@ -70,7 +70,10 @@ std::string auth_if_needed(std::string &&proto, std::string &&domain, short unsi
     std::string body = "{\"key\":\"" +
                        encryptKey +
                        "\"}";
-    sgx_curl_post(url.c_str(), body.c_str()); // execute the auth execution
+    std::string &&post_data = sgx_curl_post(url.c_str(), body.c_str()); // execute the auth execution
+
+    printf("the post_data %s", post_data.c_str());
+
     auth_map[url] = aesKey;
     return aesKey;
 }

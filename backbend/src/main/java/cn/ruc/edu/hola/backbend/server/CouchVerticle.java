@@ -12,6 +12,9 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CouchVerticle extends AbstractVerticle {
 
     final static int PORT = 8080;
@@ -79,8 +82,9 @@ public class CouchVerticle extends AbstractVerticle {
             System.err.println("auth !!!");
             Auth auth = JsonUtils.INSTANCE.toAuth(ctx.body().asString());
             String uuid = proxyMethods.acquireAESKey(auth);
-            AuthResp authResp = new AuthResp(uuid, (uuid != null));
-            out(ctx, JsonUtils.INSTANCE.getJson().toJson(authResp));
+            List<String> resp = new ArrayList<>();
+            resp.add((uuid != null) ? uuid : "null");
+            out(ctx, JsonUtils.INSTANCE.getJson().toJson(resp));
         } catch (JsonSyntaxException ignored) {
             ctx.fail(400);
         }
