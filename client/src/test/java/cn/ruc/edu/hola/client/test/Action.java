@@ -13,7 +13,8 @@ public interface Action {
                   {
                     "message": "success"
                   }
-                ]
+                ],
+                "data.country": "China"
               },
               "execution_stats": true
             }""";
