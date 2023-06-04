@@ -100,7 +100,11 @@ std::string curl_post(const char *url, const Request &request) {
                          aesKey.length(), PaddingModel::PKCS5OR7);
     filter = encode(filter.c_str(), filter.length());
 
-    std::string body = "{\"filter\":\"" + filter + "\"}";
+    std::string body = "{\n"
+                       "  \"uuid\" : \"" + uuid +
+                       "\",\n"
+                       "  \"filter\" : \"" + filter + "\"\n"
+                                                      "}";
     /** curl post **/
     std::string response = sgx_curl_post(url, body.c_str());
 
