@@ -5,11 +5,11 @@
 #include "Ocall_wrappers.h"
 #include "Enclave.h"
 #include "Request.h"
-#include <map>
 #include <vector>
 #include <string>
 #include <sstream>
 #include <unordered_set>
+#include <unordered_map>
 #include "Encrypt.h"
 
 using namespace std;
@@ -85,7 +85,7 @@ std::vector <Request> provide_query(const std::string &&url_path, const std::str
 }
 
 /** client-sgx auth execution **/
-std::map <std::string, std::string> client_auth_map;
+std::unordered_map <std::string, std::string> client_auth_map;
 
 bool client_auth(const std::string &source) {
     std::string &&uid = sgx_json_object(source.c_str(), "uid");
