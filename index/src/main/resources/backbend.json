@@ -1,14 +1,14 @@
 {
   "bb1": {
     "url": "http://localhost:8080",
-    "find": "/find"
+    "find": "/_find"
   },
   "bb2": {
     "url": "http://localhost:8081",
-    "find": "/find"
+    "find": "/_find"
   },
   "bb3": {
     "url": "http://localhost:8082",
-    "find": "/find"
+    "find": "/_find"
   }
 }
