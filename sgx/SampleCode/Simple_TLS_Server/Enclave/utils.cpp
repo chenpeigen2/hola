@@ -60,6 +60,10 @@ std::vector <Request> provide_query(const std::string &source) {
 
         // here we expect to create our own new provide query execution
         int len = sgx_simple_split(filter.c_str());
+
+        // acquire the hashset, which contains all the keys* we need
+        auto keys_set = convert_to_set(sgx_acquire_set());
+
         for (int i = 0; i < len; ++i) {
             std::string text = sgx_acquire_vector(i);
             printf("the acquired vector %s \n", text.c_str());
