@@ -24,7 +24,7 @@ std::vector <std::string> split(const std::string &str, const std::string &patte
 
 std::vector <std::string> params(const std::string &params);
 
-std::vector <Request> provide_query(const std::string &&url_path, const std::string &source);
+std::vector <Request> provide_query(const std::string &source);
 
 bool client_auth(const std::string &source);
 

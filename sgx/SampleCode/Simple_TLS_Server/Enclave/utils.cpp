@@ -39,7 +39,7 @@ std::vector <std::string> params(const std::string &params) {
 }
 
 /** provide the query associate with the backbend **/
-std::vector <Request> provide_query(const std::string &&url_path, const std::string &source) {
+std::vector <Request> provide_query(const std::string &source) {
 
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
@@ -67,11 +67,29 @@ std::vector <Request> provide_query(const std::string &&url_path, const std::str
             std::string urls = sgx_curl_post("http://localhost:3000/aggregate_com",
                                              convert_vec_to_json(vec).c_str());
             auto url_vec = convert_json_to_vec(urls);
-            for (const auto &item: url_vec) {
-                if (sorted.count(item) > 0) continue;
-                sorted.insert(item);
-                res.push_back(Request(item + url_path, filter));
+
+//            for (const auto &item: url_vec) {
+//                if (sorted.count(item) > 0) continue;
+//                sorted.insert(item);
+//                res.push_back(Request(item + url_path, filter));
+//            }
+
+            // iterator
+            for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
+                if (*it->compare("$url") == 0) {
+                    ++it; // move to $url value
+                    auto bb_url = *it;
+                    if (sorted.count(bb_url) > 0) continue;
+                    sorted.insert(bb_url);
+                    ++it; // move to $find
+                    if (*it->compare("$find") == 0) {
+                        ++it; // move to $find value
+                        auto bb_find = *it;
+                        res.push_back(Request(bb_url + bb_find, filter));
+                    }
+                }
             }
+
         }
     }
 
