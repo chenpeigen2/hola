@@ -322,6 +322,22 @@ char *ocall_acquire_vector(int idx) {
     return p;
 }
 
+char *ocall_acquire_set() {
+    std::string str;
+    for (auto it = simple_keys_set->begin(); it != simple_keys_set->end(); ++it) {
+        str += *it;
+        if (it != vec.end() - 1) {
+            str += "#";
+        }
+    }
+
+    size_t len = str.length();
+    char *p = new char[len + 1];
+    str.copy(p, len);
+    p[len] = '\0';
+    return p;
+}
+
 
 void ocall_sgx_exit(int e) {
     exit(e);
