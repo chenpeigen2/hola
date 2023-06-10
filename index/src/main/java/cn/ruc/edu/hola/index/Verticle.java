@@ -9,7 +9,6 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
