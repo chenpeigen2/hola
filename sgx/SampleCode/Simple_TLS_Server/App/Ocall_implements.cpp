@@ -9,6 +9,7 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 #include <string>
+#include <unordered_set>
 #include "_json.hpp"
 
 using json = nlohmann::json;
@@ -243,6 +244,7 @@ struct key_map_t ocall_key_map_struct(int idx) {
 
 
 std::vector <std::vector<std::string>> *simple_split_res;
+std::unordered_set <std::string> *simple_keys_set;
 
 /** simple impl for split execution **/
 int ocall_simple_split(const char *data) {
@@ -250,6 +252,8 @@ int ocall_simple_split(const char *data) {
     json j_test = json::parse(data);
 
     auto selector = j_test.at("selector");
+
+    std::unordered_set <std::string> keys_set;
 
     std::vector <std::vector<std::string>> nestedVector;
     std::cout << nestedVector.size() << std::endl;
@@ -260,6 +264,9 @@ int ocall_simple_split(const char *data) {
             // 遍历对象并打印每个键
             for (auto &element: number_object.items()) {
                 std::cout << element.key() << std::endl;
+                if (keys_set.count(element.key()) == 0) {
+                    keys_set.insert(element.key());
+                }
                 vec.push_back(element.key());
             }
             nestedVector.push_back(vec);
@@ -268,6 +275,9 @@ int ocall_simple_split(const char *data) {
     if (nestedVector.empty()) {
         std::vector <std::string> vec;
         for (auto &element: selector.items()) {
+            if (keys_set.count(element.key()) == 0) {
+                keys_set.insert(element.key());
+            }
             vec.push_back(element.key());
         }
         nestedVector.push_back(vec);
@@ -275,6 +285,9 @@ int ocall_simple_split(const char *data) {
         for (auto &element: selector.items()) {
             if (element.key() != "$or") {
                 for (auto &number_object: nestedVector) {
+                    if (keys_set.count(element.key()) == 0) {
+                        keys_set.insert(element.key());
+                    }
                     number_object.push_back(element.key());
                 }
             }
@@ -283,7 +296,11 @@ int ocall_simple_split(const char *data) {
     if (simple_split_res != nullptr) {
         delete simple_split_res;
     }
+    if (simple_keys_set != nullptr) {
+        delete simple_keys_set;
+    }
     simple_split_res = new std::vector <std::vector<std::string>>(nestedVector);
+    simple_keys_set = new std::unordered_set<std::string>(keys_set);
     std::cout << selector.dump() << std::endl;
     return simple_split_res->size();
 }
