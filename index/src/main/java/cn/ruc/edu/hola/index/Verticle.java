@@ -15,7 +15,7 @@ public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
 
     public static Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
-    public static Map<String, String> backbend = Indexer.remappingUrl("backbend.json");
+    public static Map<String, BackBendInfo> backbend = Indexer.remappingUrl("backbend.json");
 
     @Override
     public void start() throws Exception {
@@ -35,7 +35,7 @@ public class Verticle extends AbstractVerticle {
                     v.forEach(new Consumer<StructInfo>() {
                         @Override
                         public void accept(StructInfo structInfo) {
-                            if (structInfo.getInfo().contains(keyWord)) {
+                            if (structInfo.info().contains(keyWord)) {
                                 var list = ret.getOrDefault(keyWord, new ArrayList<>());
                                 list.add(k);
                                 ret.put(keyWord, list);
@@ -50,7 +50,7 @@ public class Verticle extends AbstractVerticle {
 
         router.post("/com").handler(ctx -> {
             var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
-            List<String> ret = new ArrayList<>();
+            List<BackBendInfo> ret = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
                 ret.add(backbend.getOrDefault(keyWord, null));
@@ -60,14 +60,14 @@ public class Verticle extends AbstractVerticle {
 
         router.post("/index_com").handler(ctx -> {
             var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
-            Map<String, List<String>> ret = new HashMap<>();
+            Map<String, List<BackBendInfo>> ret = new HashMap<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
                 struct.forEach((k, v) -> {
                     v.forEach(new Consumer<StructInfo>() {
                         @Override
                         public void accept(StructInfo structInfo) {
-                            if (structInfo.getInfo().contains(keyWord)) {
+                            if (structInfo.info().contains(keyWord)) {
                                 var list = ret.getOrDefault(keyWord, new ArrayList<>());
                                 list.add(backbend.getOrDefault(k, null));
                                 ret.put(keyWord, list);
@@ -89,7 +89,7 @@ public class Verticle extends AbstractVerticle {
                     v.forEach(new Consumer<StructInfo>() {
                         @Override
                         public void accept(StructInfo structInfo) {
-                            if (structInfo.getInfo().contains(keyWord)) {
+                            if (structInfo.info().contains(keyWord)) {
                                 list.add(k);
                             }
                         }
@@ -110,7 +110,7 @@ public class Verticle extends AbstractVerticle {
                     v.forEach(new Consumer<StructInfo>() {
                         @Override
                         public void accept(StructInfo structInfo) {
-                            if (structInfo.getInfo().contains(keyWord)) {
+                            if (structInfo.info().contains(keyWord)) {
                                 list.add(k);
                             }
                         }
@@ -119,7 +119,7 @@ public class Verticle extends AbstractVerticle {
                 ret.add(list);
             }
 
-            List<String> ans = new ArrayList<>();
+            List<BackBendInfo> ans = new ArrayList<>();
             retainElementList(ret).forEach(re -> ans.add(backbend.getOrDefault(re, null)));
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ans));
         });

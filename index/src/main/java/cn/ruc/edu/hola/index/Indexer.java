@@ -68,15 +68,18 @@ public final class Indexer {
     /**
      * remapping the backbend config
      **/
-    public static Map<String, String> remappingUrl(String filePath) {
+    public static Map<String, BackBendInfo> remappingUrl(String filePath) {
         URL url = Indexer.class.getClassLoader().getResource(filePath);
         if (url == null) return null;
         try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
             JsonElement element = JsonParser.parseReader(reader);
             JsonObject obj = element.getAsJsonObject();
-            Map<String, String> ret = new HashMap<>();
+            Map<String, BackBendInfo> ret = new HashMap<>();
             for (var entry : obj.entrySet()) {
-                ret.put(entry.getKey(), entry.getValue().getAsString());
+                var jsonObj = entry.getValue().getAsJsonObject();
+                var bb_url = jsonObj.get("url").getAsString();
+                var bb_find = jsonObj.get("find").getAsString();
+                ret.put(entry.getKey(), new BackBendInfo(bb_url, bb_find));
             }
             return ret;
         } catch (IOException | URISyntaxException ignored) {
