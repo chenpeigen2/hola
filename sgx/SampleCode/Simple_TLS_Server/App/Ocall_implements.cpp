@@ -323,13 +323,11 @@ char *ocall_acquire_vector(int idx) {
 }
 
 char *ocall_acquire_set() {
-    std::string str;
+    std::string str = "";
     for (auto it = simple_keys_set->begin(); it != simple_keys_set->end(); ++it) {
-        str += *it;
-        if (it != vec.end() - 1) {
-            str += "#";
-        }
+        str += *it + "#";
     }
+    str.pop_back();
 
     size_t len = str.length();
     char *p = new char[len + 1];

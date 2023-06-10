@@ -80,13 +80,13 @@ std::vector <Request> provide_query(const std::string &source) {
 
             // iterator
             for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
-                if (*it->compare("$url") == 0) {
+                if (it->compare("$url") == 0) {
                     ++it; // move to $url value
                     auto bb_url = *it;
                     if (sorted.count(bb_url) > 0) continue;
                     sorted.insert(bb_url);
                     ++it; // move to $find
-                    if (*it->compare("$find") == 0) {
+                    if (it->compare("$find") == 0) {
                         ++it; // move to $find value
                         auto bb_find = *it;
                         res.push_back(Request(bb_url + bb_find, filter));
