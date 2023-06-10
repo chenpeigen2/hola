@@ -62,7 +62,12 @@ std::vector <Request> provide_query(const std::string &source) {
         int len = sgx_simple_split(filter.c_str());
 
         // acquire the hashset, which contains all the keys* we need
+        printf("\n+++++++++++++++++++++++++++\n");
         auto keys_set = convert_to_set(sgx_acquire_set());
+        for (const auto &item: keys_set) {
+            printf("%s \n", item.c_str());
+        }
+        printf("\n+++++++++++++++++++++++++++\n");
 
         for (int i = 0; i < len; ++i) {
             std::string text = sgx_acquire_vector(i);
