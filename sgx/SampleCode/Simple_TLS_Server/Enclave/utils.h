@@ -10,6 +10,7 @@
 #include <string.h>
 #include <vector>
 #include <numeric>
+#include <unordered_set>
 #include "http_utils.h"
 #include "Enclave_t.h"
 #include "Ocall_wrappers.h"
@@ -37,5 +38,7 @@ std::string convert_vec_to_json(std::vector <std::string> &vec);
 std::vector <std::string> convert_json_to_vec(std::string basicString);
 
 std::vector <std::string> convert_to_vec(const std::string &source);
+
+std::unordered_set <std::string> convert_to_set(const std::string &source);
 
 #endif //SGX_UTILS_H

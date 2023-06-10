@@ -167,3 +167,15 @@ std::vector <std::string> convert_to_vec(const std::string &source) {
     }
     return vec;
 }
+
+std::unordered_set <std::string> convert_to_set(const std::string &source) {
+    std::unordered_set <std::string> set;
+    std::stringstream ss(source);
+    std::string token;
+    while (std::getline(ss, token, '#')) {
+        if (set.count(token) == 0) {
+            set.insert(token);
+        }
+    }
+    return set;
+}
