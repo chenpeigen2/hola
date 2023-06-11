@@ -126,7 +126,6 @@ std::vector <Request> provide_query(const std::string &source) {
 
                         }
 
-                        res.push_back(Request(bb_url + bb_find, filter));
                     }
                 }
             }
