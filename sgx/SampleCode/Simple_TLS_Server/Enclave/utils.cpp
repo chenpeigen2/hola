@@ -105,9 +105,10 @@ std::vector <Request> provide_query(const std::string &source) {
                         auto bb_find = *it;
 
                         // compute the url_remove_map for info
-                        if (url_remove_map.find(bb_url + bb_find) == 0) {
+                        if (url_remove_map.count(bb_url + bb_find) == 0) {
                             std::unordered_set <std::string> set(do_not_has);
-                            url_remove_map.insert(set);
+                            std::pair <std::string, std::unordered_set<std::string>> my_pair(bb_url + bb_find, set);
+                            url_remove_map.insert(my_pair);
                         } else {
                             auto set = url_remove_map.at(bb_url + bb_find);
 
