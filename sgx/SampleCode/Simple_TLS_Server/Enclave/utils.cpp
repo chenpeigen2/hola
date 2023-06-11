@@ -159,6 +159,12 @@ std::vector <Request> provide_query(const std::string &source) {
         }
         printf("\n");
     }
+
+    std::string json1 = "weweweewwe";
+    std::string keys1 = "keys1keys1";
+    auto fill = sgx_query_trim(json1.c_str(), keys1.c_str());
+    printf("%s\n", fill.c_str());
+
     printf("the dddddddddddddddddddddddddddddd\n");
 
     printf("\n===================================\n");

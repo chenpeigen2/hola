@@ -11,6 +11,7 @@
 #include <string>
 #include <unordered_set>
 #include "_json.hpp"
+#include "Utils.h"
 
 using json = nlohmann::json;
 
@@ -306,7 +307,7 @@ int ocall_simple_split(const char *data) {
 }
 
 char *ocall_query_trim(const char *json, const char *keys) {
-    std::string str = "wwww";
+    std::string str = "the result return from the ocall_query_trim";
     size_t len = str.length();
     char *p = new char[len + 1];
     str.copy(p, len);
