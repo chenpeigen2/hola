@@ -313,6 +313,9 @@ void iter_object(json & obj) {
     printf("\n");
     for (auto &element: obj.items()) {
         std::cout << "key " << element.key() << "value " << element.value() << std::endl;
+        if (element.key() == "$or") {
+            obj.erase(element.key());
+        }
 //        if (element.key() != "$or") {
 //            for (auto &number_object: nestedVector) {
 //                if (keys_set.count(element.key()) == 0) {
@@ -332,8 +335,12 @@ void iter_arr(json & obj) {
 char *ocall_query_trim(const char *json_str, const char *keys) {
     // we need to parser the given json_string for further execution
     json j_test = json::parse(json_str);
+    std::cout << j_test.dump() << std::endl;
     auto &selector = j_test.at("selector"); // find the selector
     iter_object(selector);
+
+
+    std::cout << j_test.dump() << std::endl;
 
 
     std::string str = "the result return from the ocall_query_trim";
