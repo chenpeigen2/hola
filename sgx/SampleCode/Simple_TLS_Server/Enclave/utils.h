@@ -41,4 +41,6 @@ std::vector <std::string> convert_to_vec(const std::string &source);
 
 std::unordered_set <std::string> convert_to_set(const std::string &source);
 
+std::string convert_set_to_string(std::unordered_set <std::string> &set);
+
 #endif //SGX_UTILS_H

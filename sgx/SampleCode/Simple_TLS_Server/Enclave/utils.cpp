@@ -148,24 +148,23 @@ std::vector <Request> provide_query(const std::string &source) {
             }
 
         }
-    }
 
-
-    printf("the dddddddddddddddddddddddddddddd\n");
-    for (const auto &item: url_remove_map) {
-        printf("%s\t", item.first.c_str());
-        for (const auto &item1: item.second) {
-            printf("%s\t", item1.c_str());
+        // execute the sgx_query_trim
+        printf("the dddddddddddddddddddddddddddddd\n");
+        for (const auto &item: url_remove_map) {
+            printf("%s\t", item.first.c_str());
+            std::unordered_set <std::string> set = item.second;
+            auto sets_str = convert_set_to_string(set);
+            auto valul = sgx_query_trim(filter.c_str(), sets_str.c_str());
+            printf("\n converted sets %s  the resultss %s\n", sets_str.c_str(), valul.c_str());
+            for (const auto &item1: item.second) {
+                printf("%s\t", item1.c_str());
+            }
+            printf("\n");
         }
-        printf("\n");
+        printf("the dddddddddddddddddddddddddddddd\n");
+        // clean the map
     }
-
-    std::string json1 = "weweweewwe";
-    std::string keys1 = "keys1keys1";
-    auto fill = sgx_query_trim(json1.c_str(), keys1.c_str());
-    printf("%s\n", fill.c_str());
-
-    printf("the dddddddddddddddddddddddddddddd\n");
 
     printf("\n===================================\n");
     for (const auto &item: res) {
@@ -211,6 +210,15 @@ std::string convert_vec_to_json(std::vector <std::string> &vec) {
     }
     ret += "]";
     return ret;
+}
+
+std::string convert_set_to_string(std::unordered_set <std::string> &set) {
+    std::string str;
+    for (auto it = set.begin(); it != set.end(); ++it) {
+        str += *it + "#";
+    }
+    str.pop_back();
+    return str;
 }
 
 std::vector <std::string> convert_json_to_vec(std::string basicString) {
