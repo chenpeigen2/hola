@@ -8,7 +8,7 @@
 #include "utils.h"
 
 // define the simple match backbend func
-std::vector <std::string> simple_match(const std::string body) {
+std::vector <std::string> simple_match(const std::string &&body) {
 
     std::string urls = sgx_curl_post("http://localhost:3000/aggregate_com",
                                      body.c_str());
