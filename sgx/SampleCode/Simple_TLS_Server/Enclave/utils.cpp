@@ -44,6 +44,8 @@ std::vector <Request> provide_query(const std::string &source) {
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
     std::unordered_set <std::string> sorted; // 去重逻辑
+    // restore the data that need to remove for the filter
+    std::unordered_map <std::string, std::unordered_set<std::string>> url_remove_map;
 
     for (int i = 0; i < len; ++i) {
         // we acquire the uid associate with the aes key
@@ -63,9 +65,6 @@ std::vector <Request> provide_query(const std::string &source) {
 
         // acquire the hashset, which contains all the keys* we need
         auto keys_set = convert_to_set(sgx_acquire_set());
-
-        // restore the data that need to remove for the filter
-        std::unordered_map <std::string, std::unordered_set<std::string>> url_remove_map;
 
         for (int i = 0; i < len; ++i) {
             std::string text = sgx_acquire_vector(i);
@@ -150,6 +149,17 @@ std::vector <Request> provide_query(const std::string &source) {
 
         }
     }
+
+
+    printf("the dddddddddddddddddddddddddddddd\n");
+    for (const auto &item: url_remove_map) {
+        printf("%s\t", item.first.c_str());
+        for (const auto &item1: item.second) {
+            printf("%s\t", item1.c_str());
+        }
+        printf("\n");
+    }
+    printf("the dddddddddddddddddddddddddddddd\n");
 
     printf("\n===================================\n");
     for (const auto &item: res) {
