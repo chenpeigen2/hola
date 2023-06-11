@@ -110,7 +110,7 @@ std::vector <Request> provide_query(const std::string &source) {
                             std::pair <std::string, std::unordered_set<std::string>> my_pair(bb_url + bb_find, set);
                             url_remove_map.insert(my_pair);
                         } else {
-                            auto set = url_remove_map.at(bb_url + bb_find);
+                            auto &set = url_remove_map.at(bb_url + bb_find);
 
                             // if prev the key in that map, we need to remove the key
                             for (const auto &item: do_has) {
