@@ -11,6 +11,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include "Encrypt.h"
+#include "match.h"
 
 using namespace std;
 
@@ -88,10 +89,7 @@ std::vector <Request> provide_query(const std::string &source) {
                 }
             }
             // compute the vec end
-
-            std::string urls = sgx_curl_post("http://localhost:3000/aggregate_com",
-                                             convert_vec_to_json(vec).c_str());
-            auto url_vec = convert_json_to_vec(urls);
+            auto url_vec = simple_match(convert_vec_to_json(vec));
 
             // compute the url_remove_map start
             for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
