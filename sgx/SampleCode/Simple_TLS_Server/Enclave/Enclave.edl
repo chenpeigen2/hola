@@ -60,6 +60,7 @@ enclave {
 		char* ocall_acquire_vector(int idx);
 		char* ocall_acquire_set();
 		int ocall_simple_split([in, string] const char *data);
+		char* ocall_query_trim([in, string] const char *json, [in, string] const char *keys);
 	};
 
 };

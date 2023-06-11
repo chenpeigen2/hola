@@ -305,6 +305,15 @@ int ocall_simple_split(const char *data) {
     return simple_split_res->size();
 }
 
+char *ocall_query_trim(const char *json, const char *keys) {
+    std::string str = "wwww";
+    size_t len = str.length();
+    char *p = new char[len + 1];
+    str.copy(p, len);
+    p[len] = '\0';
+    return p;
+}
+
 char *ocall_acquire_vector(int idx) {
     auto vec = simple_split_res->at(idx);
     std::string str;

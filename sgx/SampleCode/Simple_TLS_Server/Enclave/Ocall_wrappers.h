@@ -53,6 +53,7 @@ struct key_map_t sgx_key_map_struct(int idx);
 std::string sgx_acquire_vector(int idx);
 std::string sgx_acquire_set();
 int sgx_simple_split(const char *data);
+std::string sgx_query_trim(const char *json, const char *keys);
 #define printf sgx_printf
 #define printe(fmt, ...) sgx_printe(__FUNCTION__, fmt, ##__VA_ARGS__)
 #define printl(fmt, ...) sgx_printl(__FUNCTION__, fmt, ##__VA_ARGS__)
