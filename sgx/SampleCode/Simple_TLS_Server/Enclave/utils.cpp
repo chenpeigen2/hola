@@ -95,7 +95,7 @@ std::vector <Request> provide_query(const std::string &source) {
             auto url_vec = convert_json_to_vec(urls);
 
             // compute the url_remove_map start
-            for (auto it = url_vec.begin(); it != urls.end(); ++it) {
+            for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
                 if (it->compare("$url") == 0) {
                     ++it; // move to $url value
                     auto bb_url = *it;
