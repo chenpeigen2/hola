@@ -62,26 +62,37 @@ std::vector <Request> provide_query(const std::string &source) {
         int len = sgx_simple_split(filter.c_str());
 
         // acquire the hashset, which contains all the keys* we need
-        printf("\n+++++++++++++++++++++++++++\n");
         auto keys_set = convert_to_set(sgx_acquire_set());
-        for (const auto &item: keys_set) {
-            printf("%s \n", item.c_str());
-        }
-        printf("\n+++++++++++++++++++++++++++\n");
+
+        // restore the data that need to remove for the filter
+        std::unordered_map <std::string, std::unordered_set<std::string>> url_remove_map;
 
         for (int i = 0; i < len; ++i) {
             std::string text = sgx_acquire_vector(i);
             printf("the acquired vector %s \n", text.c_str());
             auto vec = convert_to_vec(text);
+
+            // compute the vec start
+            std::unordered_set <std::string> do_has;
+            std::unordered_set <std::string> do_not_has;
+
+            // init the do has
+            for (const auto &item: vec) {
+                if (do_has.count(item) == 0) {
+                    do_has.insert(item);
+                }
+            }
+            // init the do not has
+            for (const auto &item: keys_set) {
+                if (do_has.count(item) == 0 && do_not_has.count(item) == 0) {
+                    do_not_has.insert(item);
+                }
+            }
+            // compute the vec end
+
             std::string urls = sgx_curl_post("http://localhost:3000/aggregate_com",
                                              convert_vec_to_json(vec).c_str());
             auto url_vec = convert_json_to_vec(urls);
-
-//            for (const auto &item: url_vec) {
-//                if (sorted.count(item) > 0) continue;
-//                sorted.insert(item);
-//                res.push_back(Request(item + url_path, filter));
-//            }
 
             // iterator
             for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
