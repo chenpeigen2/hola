@@ -94,6 +94,44 @@ std::vector <Request> provide_query(const std::string &source) {
                                              convert_vec_to_json(vec).c_str());
             auto url_vec = convert_json_to_vec(urls);
 
+            // compute the url_remove_map start
+            for (auto it = url_vec.begin(); it != urls.end(); ++it) {
+                if (it->compare("$url") == 0) {
+                    ++it; // move to $url value
+                    auto bb_url = *it;
+                    ++it; // move to $find
+                    if (it->compare("$find") == 0) {
+                        ++it; // move to $find value
+                        auto bb_find = *it;
+
+                        // compute the url_remove_map for info
+                        if (url_remove_map.find(bb_url + bb_find) == 0) {
+                            std::unordered_set <std::string> set(do_not_has);
+                            url_remove_map.insert(set);
+                        } else {
+                            auto set = url_remove_map.at(bb_url + bb_find);
+
+                            // if prev the key in that map, we need to remove the key
+                            for (const auto &item: do_has) {
+                                if (set.count(item) > 0) {
+                                    set.erase(item);
+                                }
+                            }
+                            // if now the key do not in the map, we should  add in the map
+                            for (const auto &item: do_not_has) {
+                                if (set.count(item) == 0) {
+                                    set.insert(item);
+                                }
+                            }
+
+                        }
+
+                        res.push_back(Request(bb_url + bb_find, filter));
+                    }
+                }
+            }
+            // compute the url_remove_map end
+
             // iterator
             for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
                 if (it->compare("$url") == 0) {
