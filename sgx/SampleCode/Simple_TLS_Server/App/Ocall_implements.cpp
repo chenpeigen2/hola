@@ -306,7 +306,36 @@ int ocall_simple_split(const char *data) {
     return simple_split_res->size();
 }
 
-char *ocall_query_trim(const char *json, const char *keys) {
+
+void iter_object(json & obj) {
+    if (!obj.is_object()) return;
+
+    printf("\n");
+    for (auto &element: obj.items()) {
+        std::cout << "key " << element.key() << "value " << element.value() << std::endl;
+//        if (element.key() != "$or") {
+//            for (auto &number_object: nestedVector) {
+//                if (keys_set.count(element.key()) == 0) {
+//                    keys_set.insert(element.key());
+//                }
+//                number_object.push_back(element.key());
+//            }
+//        }
+    }
+
+}
+
+void iter_arr(json & obj) {
+    if (!obj.is_array()) return;
+}
+
+char *ocall_query_trim(const char *json_str, const char *keys) {
+    // we need to parser the given json_string for further execution
+    json j_test = json::parse(json_str);
+    auto &selector = j_test.at("selector"); // find the selector
+    iter_object(selector);
+
+
     std::string str = "the result return from the ocall_query_trim";
     size_t len = str.length();
     char *p = new char[len + 1];

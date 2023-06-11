@@ -42,7 +42,7 @@ struct key_map_t ocall_key_map_struct(int idx);
 char* ocall_acquire_vector(int idx);
 char *ocall_acquire_set();
 int ocall_simple_split(const char *data);
-char* ocall_query_trim(const char *json, const char* keys);
+char* ocall_query_trim(const char *json_str, const char* keys);
 #if defined(__cplusplus)
 }
 #endif
