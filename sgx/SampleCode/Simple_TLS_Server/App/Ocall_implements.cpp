@@ -307,7 +307,7 @@ int ocall_simple_split(const char *data) {
 }
 
 
-void iter_object(json & obj) {
+void iter_object(json &obj, const std::unordered_set <std::string> &keys) {
     if (!obj.is_object()) return;
 
     printf("\n");
@@ -328,7 +328,7 @@ void iter_object(json & obj) {
 
 }
 
-void iter_arr(json & obj) {
+void iter_arr(json &obj, const std::unordered_set <std::string> &keys) {
     if (!obj.is_array()) return;
 }
 
@@ -337,12 +337,11 @@ char *ocall_query_trim(const char *json_str, const char *keys) {
     json j_test = json::parse(json_str);
     std::cout << j_test.dump() << std::endl;
     auto &selector = j_test.at("selector"); // find the selector
-    iter_object(selector);
-
+    // constructor a keys_set
+    auto keys_set = convert_to_set(keys);
+    iter_object(selector, keys_set);
 
     std::cout << j_test.dump() << std::endl;
-
-
     std::string str = "the result return from the ocall_query_trim";
     size_t len = str.length();
     char *p = new char[len + 1];

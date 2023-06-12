@@ -23,4 +23,6 @@ std::vector <std::string> params(const string &params);
 
 void hello_world_utils();
 
+std::unordered_set <std::string> convert_to_set(const std::string &&source);
+
 #endif //SGX_UTILS_H
