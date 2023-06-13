@@ -308,32 +308,22 @@ int ocall_simple_split(const char *data) {
 
 void iter_arr(json & obj, std::unordered_set < std::string > &keys) {
     if (!obj.is_array()) return;
+    int i = 0;
+    vector<int> vec;
     for (auto &element: obj.items()) {
-        std::cout << "iter arr " << element.value() << std::endl;
         iter_object(element.value(), keys);
+        if (element.value().size() == 0) {
+            vec.push_back(i);
+        }
+        i++;
+    }
+    for (const auto &item: vec) {
+        obj.erase(item);
     }
 }
 
 void iter_object(json & obj, std::unordered_set < std::string > &keys) {
     if (!obj.is_object()) return;
-
-//    for (auto &element: obj.items()) {
-//        std::cout << "key " << element.key() << " value " << element.value() << std::endl;
-//        if (element.value().is_array()) {
-//            iter_arr(element.value(), keys);
-//        }
-//        if (keys.count(element.key()) > 0) {
-//            std::cout << "catched " << element << std::endl;
-//            try {
-//                obj.erase(obj.find("message"));
-//            } catch (exception e) {
-////                e.what()
-//                std::cout << e.what() << std::endl;
-//            }
-//
-//        }
-//    }
-
     for (auto it = obj.begin(); it != obj.end();) {
         if (it.value().is_array()) {
             iter_arr(it.value(), keys);
@@ -341,13 +331,11 @@ void iter_object(json & obj, std::unordered_set < std::string > &keys) {
             continue;
         }
         if (keys.count(it.key()) > 0) {
-//            std::cout << "caught " << it << std::endl;
             it = obj.erase(it);
         } else {
             ++it;
         }
     }
-
 }
 
 
