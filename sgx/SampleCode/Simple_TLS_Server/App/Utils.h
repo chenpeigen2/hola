@@ -26,4 +26,8 @@ void hello_world_utils();
 
 std::unordered_set <std::string> convert_to_set(const std::string &&source);
 
+void iter_arr(json &obj, std::unordered_set <std::string> &keys);
+
+void iter_object(json &obj, std::unordered_set <std::string> &keys);
+
 #endif //SGX_UTILS_H

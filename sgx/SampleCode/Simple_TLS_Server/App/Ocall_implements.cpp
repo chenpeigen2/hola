@@ -306,31 +306,50 @@ int ocall_simple_split(const char *data) {
     return simple_split_res->size();
 }
 
+void iter_arr(json & obj, std::unordered_set < std::string > &keys) {
+    if (!obj.is_array()) return;
+    for (auto &element: obj.items()) {
+        std::cout << "iter arr " << element.value() << std::endl;
+        iter_object(element.value(), keys);
+    }
+}
 
-void iter_object(json &obj, const std::unordered_set <std::string> &keys) {
+void iter_object(json & obj, std::unordered_set < std::string > &keys) {
     if (!obj.is_object()) return;
 
-    printf("\n");
-    for (auto &element: obj.items()) {
-        std::cout << "key " << element.key() << "value " << element.value() << std::endl;
-        if (element.key() == "$or") {
-            obj.erase(element.key());
-        }
-//        if (element.key() != "$or") {
-//            for (auto &number_object: nestedVector) {
-//                if (keys_set.count(element.key()) == 0) {
-//                    keys_set.insert(element.key());
-//                }
-//                number_object.push_back(element.key());
-//            }
+//    for (auto &element: obj.items()) {
+//        std::cout << "key " << element.key() << " value " << element.value() << std::endl;
+//        if (element.value().is_array()) {
+//            iter_arr(element.value(), keys);
 //        }
+//        if (keys.count(element.key()) > 0) {
+//            std::cout << "catched " << element << std::endl;
+//            try {
+//                obj.erase(obj.find("message"));
+//            } catch (exception e) {
+////                e.what()
+//                std::cout << e.what() << std::endl;
+//            }
+//
+//        }
+//    }
+
+    for (auto it = obj.begin(); it != obj.end();) {
+        if (it.value().is_array()) {
+            iter_arr(it.value(), keys);
+            ++it;
+            continue;
+        }
+        if (keys.count(it.key()) > 0) {
+//            std::cout << "caught " << it << std::endl;
+            it = obj.erase(it);
+        } else {
+            ++it;
+        }
     }
 
 }
 
-void iter_arr(json &obj, const std::unordered_set <std::string> &keys) {
-    if (!obj.is_array()) return;
-}
 
 char *ocall_query_trim(const char *json_str, const char *keys) {
     // we need to parser the given json_string for further execution
@@ -341,7 +360,9 @@ char *ocall_query_trim(const char *json_str, const char *keys) {
     auto keys_set = convert_to_set(keys);
     iter_object(selector, keys_set);
 
-    std::cout << j_test.dump() << std::endl;
+    std::cout << "keys: " << keys << std::endl;
+
+    std::cout << "dumppppppppppppp" << j_test.dump() << std::endl;
     std::string str = "the result return from the ocall_query_trim";
     size_t len = str.length();
     char *p = new char[len + 1];
