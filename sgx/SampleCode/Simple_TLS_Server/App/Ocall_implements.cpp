@@ -309,7 +309,7 @@ int ocall_simple_split(const char *data) {
 void iter_arr(json & obj, std::unordered_set < std::string > &keys) {
     if (!obj.is_array()) return;
     int i = 0;
-    vector<int> vec;
+    std::vector<int> vec;
     for (auto &element: obj.items()) {
         iter_object(element.value(), keys);
         if (element.value().size() == 0) {
