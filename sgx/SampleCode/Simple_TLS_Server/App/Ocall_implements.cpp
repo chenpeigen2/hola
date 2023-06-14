@@ -347,11 +347,7 @@ char *ocall_query_trim(const char *json_str, const char *keys) {
     // constructor a keys_set
     auto keys_set = convert_to_set(keys);
     iter_object(selector, keys_set);
-
-    std::cout << "keys: " << keys << std::endl;
-
-    std::cout << "dumppppppppppppp" << j_test.dump() << std::endl;
-    std::string str = "the result return from the ocall_query_trim";
+    std::string str = j_test.dump();
     size_t len = str.length();
     char *p = new char[len + 1];
     str.copy(p, len);

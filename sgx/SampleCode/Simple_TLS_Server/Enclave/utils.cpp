@@ -128,39 +128,15 @@ std::vector <Request> provide_query(const std::string &source) {
                 }
             }
             // compute the url_remove_map end
-
-            // iterator
-            for (auto it = url_vec.begin(); it != url_vec.end(); ++it) {
-                if (it->compare("$url") == 0) {
-                    ++it; // move to $url value
-                    auto bb_url = *it;
-                    if (sorted.count(bb_url) > 0) continue;
-                    sorted.insert(bb_url);
-                    ++it; // move to $find
-                    if (it->compare("$find") == 0) {
-                        ++it; // move to $find value
-                        auto bb_find = *it;
-                        res.push_back(Request(bb_url + bb_find, filter));
-                    }
-                }
-            }
-
         }
 
         // execute the sgx_query_trim
-        printf("the dddddddddddddddddddddddddddddd\n");
         for (const auto &item: url_remove_map) {
-            printf("%s\t", item.first.c_str());
             std::unordered_set <std::string> set = item.second;
             auto sets_str = convert_set_to_string(set);
-            auto valul = sgx_query_trim(filter.c_str(), sets_str.c_str());
-            printf("\n converted sets %s  the resultss %s\n", sets_str.c_str(), valul.c_str());
-            for (const auto &item1: item.second) {
-                printf("%s\t", item1.c_str());
-            }
-            printf("\n");
+            auto trim_filter = sgx_query_trim(filter.c_str(), sets_str.c_str());
+            res.push_back(Request(item.first, trim_filter));
         }
-        printf("the dddddddddddddddddddddddddddddd\n");
         // clean the map
     }
 
