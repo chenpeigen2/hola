@@ -41,10 +41,8 @@ std::vector <std::string> params(const std::string &params) {
 
 /** provide the query associate with the backbend **/
 std::vector <Request> provide_query(const std::string &source) {
-
     int len = sgx_json_arr_length(source.c_str());
     std::vector <Request> res;
-    std::unordered_set <std::string> sorted; // 去重逻辑
     // restore the data that need to remove for the filter
     std::unordered_map <std::string, std::unordered_set<std::string>> url_remove_map;
 
@@ -138,8 +136,10 @@ std::vector <Request> provide_query(const std::string &source) {
             res.push_back(Request(item.first, trim_filter));
         }
         // clean the map
+        url_remove_map.clear();
     }
 
+    // print the queries
     printf("\n===================================\n");
     for (const auto &item: res) {
         printf("\n the url: %s  the filter: %s \n", item.url.c_str(), item.filter.c_str());
