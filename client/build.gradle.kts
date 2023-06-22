@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.8.21"
+    application
 }
 
 group = "cn.ruc.edu.hola.client"
@@ -7,6 +8,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+application {
+    mainClass.set("cn.ruc.edu.hola.client.HelloWorld")
 }
 
 dependencies {
