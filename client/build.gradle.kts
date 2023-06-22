@@ -7,6 +7,9 @@ group = "cn.ruc.edu.hola.client"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    maven("https://maven.aliyun.com/repository/public/")
+    maven("https://maven.aliyun.com/repository/spring/")
+    mavenLocal()
     mavenCentral()
 }
 
