@@ -19,6 +19,7 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
     implementation("cn.hutool:hutool-crypto:5.8.15")
+    implementation(project("application-gateway-java"))
 }
 
 tasks.getByName<Test>("test") {
