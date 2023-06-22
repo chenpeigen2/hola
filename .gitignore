@@ -60,3 +60,4 @@ bin/
 /sgx/HelloWorld/*.o
 /sgx/.idea/
 /fabric-samples/
+/install-fabric.sh
