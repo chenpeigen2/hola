@@ -59,3 +59,4 @@ bin/
 /sgx/app
 /sgx/HelloWorld/*.o
 /sgx/.idea/
+/fabric-samples/
