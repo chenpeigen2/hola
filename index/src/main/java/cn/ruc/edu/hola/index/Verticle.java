@@ -92,9 +92,13 @@ public class Verticle extends AbstractVerticle {
 
         router.post("/aggregate_com").handler(ctx -> {
             var jsonArray = ctx.body().asJsonArray(); // we expect to return the arr
+
+            List<String> keyWords = new ArrayList<>();
+
             List<List<String>> ret = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 var keyWord = jsonArray.getString(i);
+                keyWords.add(keyWord);  // keyWords add
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
                     v.forEach(structInfo -> {
@@ -114,7 +118,7 @@ public class Verticle extends AbstractVerticle {
                 aggregate.add("$url");
                 aggregate.add(backBendInfo.url());
                 aggregate.add("$find");
-                aggregate.add(backBendInfo.find());
+                aggregate.add(backBendInfo.getPath(keyWords));
             });
 
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(aggregate));
