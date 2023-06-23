@@ -78,8 +78,26 @@ public final class Indexer {
             for (var entry : obj.entrySet()) {
                 var jsonObj = entry.getValue().getAsJsonObject();
                 var bb_url = jsonObj.get("url").getAsString();
-                var bb_find = jsonObj.get("find").getAsString();
-                ret.put(entry.getKey(), new BackBendInfo(bb_url, bb_find));
+
+                var path_obj = jsonObj.get("$path").getAsJsonObject();
+
+                BackBendInfo backBendInfo = new BackBendInfo(bb_url);
+
+                {
+                    // execute the path_obj
+                    for (Map.Entry<String, JsonElement> entry_path : path_obj.entrySet()) {
+                        String path = entry_path.getKey();
+                        JsonElement keywords = entry_path.getValue();
+                        // Do something with key and value
+
+                        BackBendInfo.PathMapping pathMapping = new BackBendInfo.PathMapping(path);
+                        keywords.getAsJsonArray().forEach(jsonElement -> pathMapping.put(jsonElement.getAsString()));
+
+                        backBendInfo.putPath(pathMapping);
+                    }
+                }
+
+                ret.put(entry.getKey(), backBendInfo);
             }
             return ret;
         } catch (IOException | URISyntaxException ignored) {
