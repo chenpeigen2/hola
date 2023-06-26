@@ -14,7 +14,7 @@ repositories {
 }
 
 application {
-    mainClass.set("cn.ruc.edu.hola.client.HelloWorld")
+    mainClass.set("cn.ruc.edu.hola.client.Entry")
 }
 
 dependencies {
