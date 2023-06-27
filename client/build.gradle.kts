@@ -18,15 +18,19 @@ application {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:31.1-jre")
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.google.guava:guava:32.0.1-jre")
+// https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+// https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.google.code.gson:gson:2.10.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.15")
+    implementation("cn.hutool:hutool-crypto:5.8.20")
+    implementation("io.vertx:vertx-web:4.4.4")
+    implementation("io.vertx:vertx-web-validation:4.4.4")
     implementation(project("application-gateway-java"))
 }
 
