@@ -1,9 +1,10 @@
 package cn.ruc.edu.hola.client;
 
-import cn.ruc.edu.hola.client.bridge.ChainCodeBridge;
 import cn.ruc.edu.hola.client.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.client.entity.Request;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
+import cn.ruc.edu.hola.client.web.Verticle;
+import io.vertx.core.Vertx;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +14,8 @@ import java.util.List;
  **/
 public class Entry {
     public static void main(String[] args) {
-        System.out.println("hello world");
-        ChainCodeBridge bridge = new ChainCodeBridge();
-        triggerClient(); // trigger the query
-        bridge.triggerChaincode(); // trigger the chaincode
+        Vertx vertx = Vertx.vertx();
+        vertx.deployVerticle(Verticle.class.getName());
     }
 
     public static void triggerClient() {
