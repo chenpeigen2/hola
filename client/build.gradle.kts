@@ -32,6 +32,15 @@ dependencies {
     implementation("io.vertx:vertx-web:4.4.4")
     implementation("io.vertx:vertx-web-validation:4.4.4")
     implementation(project("application-gateway-java"))
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.10.1")
+// https://mvnrepository.com/artifact/io.grpc/grpc-api
+    compileOnly("io.grpc:grpc-api:1.56.0")
+    // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
+    runtimeOnly("io.grpc:grpc-netty-shaded:1.56.0")
+// https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
+    implementation("org.hyperledger.fabric:fabric-gateway:1.3.0")
+    implementation(project(":chaincode-java"))
 }
 
 tasks.getByName<Test>("test") {
