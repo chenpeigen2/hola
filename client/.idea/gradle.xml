@@ -8,6 +8,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/application-gateway-java" />
+            <option value="$PROJECT_DIR$/chaincode-java" />
           </set>
         </option>
       </GradleProjectSettings>
