@@ -1,19 +1,19 @@
 package cn.ruc.edu.hola.client;
 
 public interface AssetTransfer {
-    Asset CreateAsset(final String assetID, final String color, final int size,
+    Asset createAsset(final String assetID, final String color, final int size,
                       final String owner, final int appraisedValue);
 
-    Asset ReadAsset(final String assetID);
+    Asset readAsset(final String assetID);
 
-    Asset UpdateAsset(final String assetID, final String color, final int size,
+    Asset updateAsset(final String assetID, final String color, final int size,
                       final String owner, final int appraisedValue);
 
-    void DeleteAsset(final String assetID);
+    void deleteAsset(final String assetID);
 
-    boolean AssetExists(final String assetID);
+    boolean assetExists(final String assetID);
 
-    String TransferAsset(final String assetID, final String newOwner);
+    String transferAsset(final String assetID, final String newOwner);
 
-    String GetAllAssets();
+    String getAllAssets();
 }

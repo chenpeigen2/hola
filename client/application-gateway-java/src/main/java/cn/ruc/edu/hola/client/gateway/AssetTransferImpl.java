@@ -4,6 +4,7 @@ import cn.ruc.edu.hola.client.Asset;
 import cn.ruc.edu.hola.client.AssetTransfer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import io.grpc.Grpc;
 import io.grpc.ManagedChannel;
 import io.grpc.TlsChannelCredentials;
@@ -11,6 +12,7 @@ import org.hyperledger.fabric.client.*;
 import org.hyperledger.fabric.client.identity.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -102,6 +104,15 @@ public class AssetTransferImpl implements AssetTransfer {
         initLedger(); // init the ledger
     }
 
+    private String prettyJson(final byte[] json) {
+        return prettyJson(new String(json, StandardCharsets.UTF_8));
+    }
+
+    private String prettyJson(final String json) {
+        var parsedJson = JsonParser.parseString(json);
+        return gson.toJson(parsedJson);
+    }
+
 
     /**
      * This type of transaction would typically only be run once by an application
@@ -118,37 +129,146 @@ public class AssetTransferImpl implements AssetTransfer {
 
 
     @Override
-    public Asset CreateAsset(String assetID, String color, int size, String owner, int appraisedValue) {
+    public Asset createAsset(String assetID, String color, int size, String owner, int appraisedValue) {
+        System.out.println("\n--> Submit Transaction: CreateAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
+
+//        contract.submitTransaction("CreateAsset", assetId, "yellow", "5", "Tom", "1300");
+
+        try {
+            contract.submitTransaction("CreateAsset", assetID, color, String.valueOf(size), owner, String.valueOf(appraisedValue));
+        } catch (EndorseException | SubmitException | CommitStatusException e) {
+            throw new RuntimeException(e);
+        } catch (CommitException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("*** Transaction committed successfully");
         return null;
     }
 
     @Override
-    public Asset ReadAsset(String assetID) {
+    public Asset readAsset(String assetID) {
+        System.out.println("\n--> Evaluate Transaction: ReadAsset, function returns all the current assets on the ledger");
+
+        byte[] result;
+        try {
+            result = contract.evaluateTransaction("ReadAsset");
+        } catch (GatewayException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("*** Result: " + prettyJson(result));
         return null;
     }
 
     @Override
-    public Asset UpdateAsset(String assetID, String color, int size, String owner, int appraisedValue) {
+    public Asset updateAsset(String assetID, String color, int size, String owner, int appraisedValue) {
+
+        try {
+            System.out.println("\n--> Submit Transaction: UpdateAsset asset70, asset70 does not exist and should return an error");
+
+//            contract.submitTransaction("UpdateAsset", "asset70", "blue", "5", "Tomoko", "300");
+            contract.submitTransaction("UpdateAsset", assetID, color, String.valueOf(size), owner, String.valueOf(appraisedValue));
+
+            System.out.println("******** FAILED to return an error");
+        } catch (EndorseException | SubmitException | CommitStatusException e) {
+            System.out.println("*** Successfully caught the error: ");
+            e.printStackTrace(System.out);
+            System.out.println("Transaction ID: " + e.getTransactionId());
+
+            var details = e.getDetails();
+            if (!details.isEmpty()) {
+                System.out.println("Error Details:");
+                for (var detail : details) {
+                    System.out.println("- address: " + detail.getAddress() + ", mspId: " + detail.getMspId()
+                            + ", message: " + detail.getMessage());
+                }
+            }
+        } catch (CommitException e) {
+            System.out.println("*** Successfully caught the error: " + e);
+            e.printStackTrace(System.out);
+            System.out.println("Transaction ID: " + e.getTransactionId());
+            System.out.println("Status code: " + e.getCode());
+        }
+
         return null;
     }
 
     @Override
-    public void DeleteAsset(String assetID) {
-
+    public void deleteAsset(String assetID) {
+        System.out.println("\n--> Submit Transaction: DeleteAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
+        try {
+            contract.submitTransaction("DeleteAsset", assetID);
+        } catch (EndorseException | SubmitException | CommitStatusException e) {
+            throw new RuntimeException(e);
+        } catch (CommitException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("*** Transaction committed successfully");
     }
 
     @Override
-    public boolean AssetExists(String assetID) {
+    public boolean assetExists(String assetID) {
+        System.out.println("\n--> Evaluate Transaction: ReadAsset, function returns all the current assets on the ledger");
+
+        byte[] result;
+        try {
+            result = contract.evaluateTransaction("AssetExists", assetID);
+        } catch (GatewayException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("*** Result: " + prettyJson(result));
         return false;
     }
 
     @Override
-    public String TransferAsset(String assetID, String newOwner) {
+    public String transferAsset(String assetID, String newOwner) {
+        System.out.println("\n--> Async Submit Transaction: TransferAsset, updates existing asset owner");
+
+        try {
+            var commit = contract.newProposal("TransferAsset")
+                    .addArguments(assetID, newOwner)
+                    .build()
+                    .endorse()
+                    .submitAsync();
+
+            var result = commit.getResult();
+            var oldOwner = new String(result, StandardCharsets.UTF_8);
+
+            System.out.println("*** Successfully submitted transaction to transfer ownership from " + oldOwner + " to Saptha");
+            System.out.println("*** Waiting for transaction commit");
+
+            var status = commit.getStatus();
+            if (!status.isSuccessful()) {
+                throw new RuntimeException("Transaction " + status.getTransactionId() +
+                        " failed to commit with status code " + status.getCode());
+            }
+
+            System.out.println("*** Transaction committed successfully");
+        } catch (EndorseException e) {
+            throw new RuntimeException(e);
+        } catch (SubmitException e) {
+            throw new RuntimeException(e);
+        } catch (CommitStatusException e) {
+            throw new RuntimeException(e);
+        }
+
         return null;
     }
 
     @Override
-    public String GetAllAssets() {
+    public String getAllAssets() {
+        System.out.println("\n--> Evaluate Transaction: GetAllAssets, function returns all the current assets on the ledger");
+
+        byte[] result;
+        try {
+            result = contract.evaluateTransaction("GetAllAssets");
+        } catch (GatewayException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("*** Result: " + prettyJson(result));
         return null;
     }
 }
