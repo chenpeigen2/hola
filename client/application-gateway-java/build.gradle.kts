@@ -23,6 +23,7 @@ dependencies {
     runtimeOnly("io.grpc:grpc-netty-shaded:1.56.0")
 // https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
     implementation("org.hyperledger.fabric:fabric-gateway:1.3.0")
+    implementation(project(":chaincode-java"))
 }
 
 tasks.withType<JavaCompile> {
