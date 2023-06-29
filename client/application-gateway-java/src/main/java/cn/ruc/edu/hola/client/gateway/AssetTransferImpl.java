@@ -152,7 +152,7 @@ public class AssetTransferImpl implements AssetTransfer {
 
         byte[] result;
         try {
-            result = contract.evaluateTransaction("ReadAsset");
+            result = contract.evaluateTransaction("ReadAsset", assetID);
         } catch (GatewayException e) {
             throw new RuntimeException(e);
         }
