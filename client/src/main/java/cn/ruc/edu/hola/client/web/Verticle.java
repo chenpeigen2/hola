@@ -43,6 +43,25 @@ public class Verticle extends AbstractVerticle {
             out(ctx, "trigger success");
         });
 
+        router.get("/trigger_new").handler(ctx -> {
+            System.out.println("hello world");
+            ChainCodeBridge bridge = new ChainCodeBridge();
+//            Entry.triggerClient(); // trigger the query
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        bridge.trigger(); // trigger the chaincode
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            }).start();
+
+            out(ctx, "trigger success");
+        });
 
         server.requestHandler(router).listen(PORT);
     }
