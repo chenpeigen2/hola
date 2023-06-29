@@ -36,6 +36,10 @@ public final class ChainCodeBridge {
 
             assetTransfer.updateAsset("asset70", "blue", 5, "Tomoko", 300);
 
+            assetTransfer.assetExists(assetId); // check exist
+
+            assetTransfer.deleteAsset(assetId); // delete asset
+
         }
 
         AssetTransferImpl.destroy(wrapper);
