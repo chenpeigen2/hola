@@ -196,7 +196,7 @@ public class AssetTransferImpl implements AssetTransfer {
 
     @Override
     public void deleteAsset(String assetID) {
-        System.out.println("\n--> Submit Transaction: DeleteAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
+        System.out.println("\n--> Submit Transaction: DeleteAsset");
         try {
             contract.submitTransaction("DeleteAsset", assetID);
         } catch (EndorseException | SubmitException | CommitStatusException e) {
@@ -209,7 +209,7 @@ public class AssetTransferImpl implements AssetTransfer {
 
     @Override
     public boolean assetExists(String assetID) {
-        System.out.println("\n--> Evaluate Transaction: ReadAsset, function returns all the current assets on the ledger");
+        System.out.println("\n--> Evaluate Transaction: assetExists");
 
         byte[] result;
         try {
