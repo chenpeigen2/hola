@@ -32,6 +32,18 @@ public final class QueryTransfer implements ContractInterface {
     private final Genson genson = new Genson();
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
+    public void InitLedger(final Context ctx) {
+        ChaincodeStub stub = ctx.getStub();
+
+        CreateQuery(ctx, "asset1", "blue");
+        CreateQuery(ctx, "asset2", "red");
+        CreateQuery(ctx, "asset3", "green");
+        CreateQuery(ctx, "asset4", "yellow");
+        CreateQuery(ctx, "asset5", "black");
+        CreateQuery(ctx, "asset6", "white");
+    }
+
+    @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Query CreateQuery(final Context ctx, final String req, final String owner) {
         ChaincodeStub stub = ctx.getStub();
 
