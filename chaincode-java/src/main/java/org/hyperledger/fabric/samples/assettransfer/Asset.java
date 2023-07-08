@@ -17,11 +17,6 @@ public final class Asset {
     @Property()
     private final String assetID;
 
-    @Property()
-    private final String color;
-
-    @Property()
-    private final int size;
 
     @Property()
     private final String owner;
@@ -37,14 +32,6 @@ public final class Asset {
 
     public String getAssetID() {
         return assetID;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public int getSize() {
-        return size;
     }
 
     public String getOwner() {
@@ -63,12 +50,10 @@ public final class Asset {
         return query;
     }
 
-    public Asset(@JsonProperty("assetID") final String assetID, @JsonProperty("color") final String color,
-                 @JsonProperty("size") final int size, @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
+    public Asset(@JsonProperty("assetID") final String assetID,
+                 @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
                  @JsonProperty("appraisedValue") final int appraisedValue, @JsonProperty("query") final String query) {
         this.assetID = assetID;
-        this.color = color;
-        this.size = size;
         this.owner = owner;
         this.date = date;
         this.appraisedValue = appraisedValue;
@@ -88,22 +73,21 @@ public final class Asset {
         Asset other = (Asset) obj;
 
         return Objects.deepEquals(
-                new String[]{getAssetID(), getColor(), getOwner(), getDate(), getQuery()},
-                new String[]{other.getAssetID(), other.getColor(), other.getOwner(), other.getDate(), other.getQuery()})
+                new String[]{getAssetID(), getOwner(), getDate(), getQuery()},
+                new String[]{other.getAssetID(), other.getOwner(), other.getDate(), other.getQuery()})
                 &&
                 Objects.deepEquals(
-                        new int[]{getSize(), getAppraisedValue()},
-                        new int[]{other.getSize(), other.getAppraisedValue()});
+                        new int[]{getAppraisedValue()},
+                        new int[]{other.getAppraisedValue()});
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getDate(), getAppraisedValue(), getQuery());
+        return Objects.hash(getAssetID(), getOwner(), getDate(), getAppraisedValue(), getQuery());
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [assetID=" + assetID + ", color="
-                + color + ", size=" + size + ", owner=" + owner + ", appraisedValue=" + appraisedValue + "]";
+        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [assetID=" + assetID + ", owner=" + owner + ", appraisedValue=" + appraisedValue + "]";
     }
 }

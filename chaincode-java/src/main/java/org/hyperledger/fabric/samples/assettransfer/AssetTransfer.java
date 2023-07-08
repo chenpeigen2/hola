@@ -55,12 +55,12 @@ public final class AssetTransfer implements ContractInterface {
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
 
-        CreateAsset(ctx, "asset1", "blue", 5, "Tomoko", 300);
-        CreateAsset(ctx, "asset2", "red", 5, "Brad", 400);
-        CreateAsset(ctx, "asset3", "green", 10, "Jin Soo", 500);
-        CreateAsset(ctx, "asset4", "yellow", 10, "Max", 600);
-        CreateAsset(ctx, "asset5", "black", 15, "Adrian", 700);
-        CreateAsset(ctx, "asset6", "white", 15, "Michel", 700);
+        CreateAsset(ctx, "asset1", "Tomoko", 300);
+        CreateAsset(ctx, "asset2", "Brad", 400);
+        CreateAsset(ctx, "asset3", "Jin Soo", 500);
+        CreateAsset(ctx, "asset4", "Max", 600);
+        CreateAsset(ctx, "asset5", "Adrian", 700);
+        CreateAsset(ctx, "asset6", "Michel", 700);
 
     }
 
@@ -69,21 +69,19 @@ public final class AssetTransfer implements ContractInterface {
      *
      * @param ctx            the transaction context
      * @param assetID        the ID of the new asset
-     * @param color          the color of the new asset
-     * @param size           the size for the new asset
      * @param owner          the owner of the new asset
      * @param appraisedValue the appraisedValue of the new asset
      * @return the created asset
      */
     @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public Asset CreateAsset(final Context ctx, final String assetID, final String color, final int size,
+    public Asset CreateAsset(final Context ctx, final String assetID,
                              final String owner, final int appraisedValue) {
         ChaincodeStub stub = ctx.getStub();
 
         String date = "UUUUUUUUDDDDDDDDDDD";
         String query = "query";
 
-        Asset asset = new Asset(assetID, color, size, owner, date, appraisedValue, query);
+        Asset asset = new Asset(assetID, owner, date, appraisedValue, query);
         // Use Genson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = genson.serialize(asset);
         stub.putStringState(assetID, sortedJson);
