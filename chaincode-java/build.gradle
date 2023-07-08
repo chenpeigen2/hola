@@ -16,6 +16,10 @@ dependencies {
     implementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'
     implementation 'org.json:json:20230618'
     implementation 'com.owlike:genson:1.5'
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.11.0'
+    // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
     testImplementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     testImplementation 'org.assertj:assertj-core:3.24.2'

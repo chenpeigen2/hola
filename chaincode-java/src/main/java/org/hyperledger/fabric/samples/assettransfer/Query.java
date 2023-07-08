@@ -12,7 +12,7 @@ import org.hyperledger.fabric.contract.annotation.Property;
 import com.owlike.genson.annotation.JsonProperty;
 
 @DataType()
-public final class Asset {
+public final class Query {
 
     @Property()
     private final String assetID;
@@ -43,7 +43,7 @@ public final class Asset {
         return query;
     }
 
-    public Asset(@JsonProperty("assetID") final String assetID,
+    public Query(@JsonProperty("assetID") final String assetID,
                  @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
                  @JsonProperty("query") final String query) {
         this.assetID = assetID;
@@ -62,7 +62,7 @@ public final class Asset {
             return false;
         }
 
-        Asset other = (Asset) obj;
+        Query other = (Query) obj;
 
         return Objects.deepEquals(
                 new String[]{getAssetID(), getOwner(), getDate(), getQuery()},
