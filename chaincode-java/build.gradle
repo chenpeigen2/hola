@@ -5,6 +5,7 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.22'
     id 'checkstyle'
     id 'jacoco'
 }
@@ -22,6 +23,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
     testImplementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation 'org.assertj:assertj-core:3.24.2'
     testImplementation 'org.mockito:mockito-core:5.4.0'
 }
@@ -71,6 +73,10 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+}
+
+kotlin {
+    jvmToolchain(11)
 }
 
 mainClassName = 'org.hyperledger.fabric.contract.ContractRouter'
