@@ -27,6 +27,9 @@ public final class Asset {
     private final String owner;
 
     @Property()
+    private final String owner1;
+
+    @Property()
     private final int appraisedValue;
 
     public String getAssetID() {
@@ -45,17 +48,22 @@ public final class Asset {
         return owner;
     }
 
+    public String getOwner1() {
+        return owner1;
+    }
+
     public int getAppraisedValue() {
         return appraisedValue;
     }
 
     public Asset(@JsonProperty("assetID") final String assetID, @JsonProperty("color") final String color,
-            @JsonProperty("size") final int size, @JsonProperty("owner") final String owner,
+            @JsonProperty("size") final int size, @JsonProperty("owner") final String owner, @JsonProperty("owner1") final String owner1,
             @JsonProperty("appraisedValue") final int appraisedValue) {
         this.assetID = assetID;
         this.color = color;
         this.size = size;
         this.owner = owner;
+        this.owner1 = owner1;
         this.appraisedValue = appraisedValue;
     }
 
@@ -72,8 +80,8 @@ public final class Asset {
         Asset other = (Asset) obj;
 
         return Objects.deepEquals(
-                new String[] {getAssetID(), getColor(), getOwner()},
-                new String[] {other.getAssetID(), other.getColor(), other.getOwner()})
+                new String[] {getAssetID(), getColor(), getOwner(), getOwner1()},
+                new String[] {other.getAssetID(), other.getColor(), other.getOwner(), other.getOwner1()})
                 &&
                 Objects.deepEquals(
                 new int[] {getSize(), getAppraisedValue()},
@@ -82,7 +90,7 @@ public final class Asset {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getAppraisedValue());
+        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getOwner1(), getAppraisedValue());
     }
 
     @Override
