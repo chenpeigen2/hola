@@ -14,8 +14,8 @@ version '1.0-SNAPSHOT'
 
 dependencies {
     implementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'
-    implementation 'org.json:json:20230618'
-    implementation 'com.owlike:genson:1.5'
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.10.1'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
@@ -43,11 +43,11 @@ checkstyle {
 }
 
 checkstyleMain {
-    source ='src/main/java'
+    source = 'src/main/java'
 }
 
 checkstyleTest {
-    source ='src/test/java'
+    source = 'src/test/java'
 }
 
 jacocoTestReport {

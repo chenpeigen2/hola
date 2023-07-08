@@ -6,23 +6,27 @@ package org.hyperledger.fabric.samples.assettransfer;
 
 import java.util.Objects;
 
+import com.google.gson.annotations.SerializedName;
 import org.hyperledger.fabric.contract.annotation.DataType;
 import org.hyperledger.fabric.contract.annotation.Property;
 
-import com.owlike.genson.annotation.JsonProperty;
 
 @DataType()
 public final class Query {
 
+    @SerializedName("assetID")
     @Property()
     private final String assetID;
 
+    @SerializedName("owner")
     @Property()
     private final String owner;
 
+    @SerializedName("date")
     @Property()
     private final String date;
 
+    @SerializedName("query")
     @Property
     private final String query;
 
@@ -43,9 +47,9 @@ public final class Query {
         return query;
     }
 
-    public Query(@JsonProperty("assetID") final String assetID,
-                 @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
-                 @JsonProperty("query") final String query) {
+    public Query(final String assetID,
+                 final String owner, final String date,
+                 final String query) {
         this.assetID = assetID;
         this.owner = owner;
         this.date = date;

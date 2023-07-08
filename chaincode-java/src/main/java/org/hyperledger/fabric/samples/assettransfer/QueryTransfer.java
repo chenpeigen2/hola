@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 
+import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,7 +31,6 @@ import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 
-import com.owlike.genson.Genson;
 
 @Contract(
         name = "basic",
@@ -48,7 +48,7 @@ import com.owlike.genson.Genson;
 @Default
 public final class QueryTransfer implements ContractInterface {
 
-    private final Genson genson = new Genson();
+    private final Gson gson = new Gson();
 
     private enum AssetTransferErrors {
         ASSET_NOT_FOUND,
@@ -151,8 +151,8 @@ public final class QueryTransfer implements ContractInterface {
         String query = "query";
 
         Query asset = new Query(assetID, owner, date, query);
-        // Use Genson to convert the Asset into string, sort it alphabetically and serialize it into a json string
-        String sortedJson = genson.serialize(asset);
+        // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
+        String sortedJson = gson.toJson(asset);
         stub.putStringState(assetID, sortedJson);
 
         return asset;
@@ -170,7 +170,7 @@ public final class QueryTransfer implements ContractInterface {
             throw new ChaincodeException(errorMessage, AssetTransferErrors.ASSET_NOT_FOUND.toString());
         }
 
-        Query query = genson.deserialize(assetJSON, Query.class);
+        Query query = gson.fromJson(assetJSON, Query.class);
         return query;
     }
 
@@ -187,12 +187,12 @@ public final class QueryTransfer implements ContractInterface {
         QueryResultsIterator<KeyValue> results = stub.getStateByRange("", "");
 
         for (KeyValue result : results) {
-            Query query = genson.deserialize(result.getStringValue(), Query.class);
+            Query query = gson.fromJson(result.getStringValue(), Query.class);
             System.out.println(query);
             queryResults.add(query);
         }
 
-        final String response = genson.serialize(queryResults);
+        final String response = gson.toJson(queryResults);
 
         return response;
     }
