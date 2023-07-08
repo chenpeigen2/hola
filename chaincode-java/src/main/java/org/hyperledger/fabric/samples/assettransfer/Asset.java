@@ -17,7 +17,6 @@ public final class Asset {
     @Property()
     private final String assetID;
 
-
     @Property()
     private final String owner;
 
