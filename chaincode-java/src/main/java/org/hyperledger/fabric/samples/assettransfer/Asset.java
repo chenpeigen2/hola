@@ -29,6 +29,9 @@ public final class Asset {
     @Property()
     private final String date;
 
+    @Property
+    private final String query;
+
     @Property()
     private final int appraisedValue;
 
@@ -56,15 +59,20 @@ public final class Asset {
         return appraisedValue;
     }
 
+    public String getQuery() {
+        return query;
+    }
+
     public Asset(@JsonProperty("assetID") final String assetID, @JsonProperty("color") final String color,
-            @JsonProperty("size") final int size, @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
-            @JsonProperty("appraisedValue") final int appraisedValue) {
+                 @JsonProperty("size") final int size, @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
+                 @JsonProperty("appraisedValue") final int appraisedValue, @JsonProperty("query") final String query) {
         this.assetID = assetID;
         this.color = color;
         this.size = size;
         this.owner = owner;
         this.date = date;
         this.appraisedValue = appraisedValue;
+        this.query = query;
     }
 
     @Override
@@ -80,17 +88,17 @@ public final class Asset {
         Asset other = (Asset) obj;
 
         return Objects.deepEquals(
-                new String[] {getAssetID(), getColor(), getOwner(), getDate()},
-                new String[] {other.getAssetID(), other.getColor(), other.getOwner(), other.getDate()})
+                new String[]{getAssetID(), getColor(), getOwner(), getDate(), getQuery()},
+                new String[]{other.getAssetID(), other.getColor(), other.getOwner(), other.getDate(), other.getQuery()})
                 &&
                 Objects.deepEquals(
-                new int[] {getSize(), getAppraisedValue()},
-                new int[] {other.getSize(), other.getAppraisedValue()});
+                        new int[]{getSize(), getAppraisedValue()},
+                        new int[]{other.getSize(), other.getAppraisedValue()});
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getDate(), getAppraisedValue());
+        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getDate(), getAppraisedValue(), getQuery());
     }
 
     @Override

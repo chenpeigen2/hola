@@ -81,8 +81,9 @@ public final class AssetTransfer implements ContractInterface {
         ChaincodeStub stub = ctx.getStub();
 
         String date = "UUUUUUUUDDDDDDDDDDD";
+        String query = "query";
 
-        Asset asset = new Asset(assetID, color, size, owner, date, appraisedValue);
+        Asset asset = new Asset(assetID, color, size, owner, date, appraisedValue, query);
         // Use Genson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = genson.serialize(asset);
         stub.putStringState(assetID, sortedJson);
