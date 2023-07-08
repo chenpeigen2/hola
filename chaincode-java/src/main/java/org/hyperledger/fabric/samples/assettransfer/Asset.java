@@ -27,7 +27,7 @@ public final class Asset {
     private final String owner;
 
     @Property()
-    private final String owner1;
+    private final String date;
 
     @Property()
     private final int appraisedValue;
@@ -48,8 +48,8 @@ public final class Asset {
         return owner;
     }
 
-    public String getOwner1() {
-        return owner1;
+    public String getDate() {
+        return date;
     }
 
     public int getAppraisedValue() {
@@ -57,13 +57,13 @@ public final class Asset {
     }
 
     public Asset(@JsonProperty("assetID") final String assetID, @JsonProperty("color") final String color,
-            @JsonProperty("size") final int size, @JsonProperty("owner") final String owner, @JsonProperty("owner1") final String owner1,
+            @JsonProperty("size") final int size, @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
             @JsonProperty("appraisedValue") final int appraisedValue) {
         this.assetID = assetID;
         this.color = color;
         this.size = size;
         this.owner = owner;
-        this.owner1 = owner1;
+        this.date = date;
         this.appraisedValue = appraisedValue;
     }
 
@@ -80,8 +80,8 @@ public final class Asset {
         Asset other = (Asset) obj;
 
         return Objects.deepEquals(
-                new String[] {getAssetID(), getColor(), getOwner(), getOwner1()},
-                new String[] {other.getAssetID(), other.getColor(), other.getOwner(), other.getOwner1()})
+                new String[] {getAssetID(), getColor(), getOwner(), getDate()},
+                new String[] {other.getAssetID(), other.getColor(), other.getOwner(), other.getDate()})
                 &&
                 Objects.deepEquals(
                 new int[] {getSize(), getAppraisedValue()},
@@ -90,7 +90,7 @@ public final class Asset {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getOwner1(), getAppraisedValue());
+        return Objects.hash(getAssetID(), getColor(), getSize(), getOwner(), getDate(), getAppraisedValue());
     }
 
     @Override
