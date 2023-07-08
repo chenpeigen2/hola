@@ -4,20 +4,16 @@
 
 package org.hyperledger.fabric.samples.assettransfer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.hyperledger.fabric.Logger;
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.Contact;
@@ -50,6 +46,8 @@ public final class QueryTransfer implements ContractInterface {
 
     private final Gson gson = new Gson();
 
+    private final Logger logger = Logger.getLogger("QueryTransfer");
+
     private enum AssetTransferErrors {
         ASSET_NOT_FOUND,
         ASSET_ALREADY_EXISTS
@@ -59,34 +57,12 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
-
         CreateAsset(ctx, "asset1", "Tomoko");
         CreateAsset(ctx, "asset2", "Brad");
         CreateAsset(ctx, "asset3", "Jin Soo");
         CreateAsset(ctx, "asset4", "Max");
         CreateAsset(ctx, "asset5", "Adrian");
         CreateAsset(ctx, "asset6", "Michel");
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                String res = main();
-//                System.out.println(res);
-//
-//            }
-//        }).start();
-        CreateAsset(ctx, "asset7", "Michel111");
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                main();
-                main(null);
-            }
-        }).start();
-
-        String text = UUID.randomUUID().toString();
-        System.out.println(text);
     }
 
     public static String main() {
@@ -98,47 +74,14 @@ public final class QueryTransfer implements ContractInterface {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            System.out.println(response.body().string());
-            res = response.body().string();
+            res = response.body().string(); // can only call once
+            System.out.println(res);
+            System.out.println("8888889999999999777777777777");
+            System.out.println("executing the okhttp3");
         } catch (IOException e) {
             e.printStackTrace();
         }
         return res;
-    }
-
-    public static void main(final String[] args) {
-        try {
-            // 创建URL对象
-            URL url = new URL("https://www.baidu.com");
-
-            // 创建HttpURLConnection对象
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            // 发送请求并获取响应码
-            int responseCode = connection.getResponseCode();
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                // 获取响应数据
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-
-                // 输出响应结果
-                System.out.println(response.toString());
-            } else {
-                System.out.println("请求失败，响应码为：" + responseCode);
-            }
-
-            // 断开连接
-            connection.disconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -193,6 +136,15 @@ public final class QueryTransfer implements ContractInterface {
         }
 
         final String response = gson.toJson(queryResults);
+
+        // execute the okhttp3
+        try {
+            main();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("444444444444443333333333333338888888888888888888");
+            logger.error(e.toString());
+        }
 
         return response;
     }
