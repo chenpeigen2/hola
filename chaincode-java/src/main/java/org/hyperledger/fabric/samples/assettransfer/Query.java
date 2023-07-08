@@ -14,9 +14,9 @@ import org.hyperledger.fabric.contract.annotation.Property;
 @DataType()
 public final class Query {
 
-    @SerializedName("assetID")
+    @SerializedName("queryID")
     @Property()
-    private final String assetID;
+    private final String queryID;
 
     @SerializedName("owner")
     @Property()
@@ -30,8 +30,8 @@ public final class Query {
     @Property
     private final String query;
 
-    public String getAssetID() {
-        return assetID;
+    public String getQueryID() {
+        return queryID;
     }
 
     public String getOwner() {
@@ -47,10 +47,10 @@ public final class Query {
         return query;
     }
 
-    public Query(final String assetID,
+    public Query(final String queryID,
                  final String owner, final String date,
                  final String query) {
-        this.assetID = assetID;
+        this.queryID = queryID;
         this.owner = owner;
         this.date = date;
         this.query = query;
@@ -69,17 +69,17 @@ public final class Query {
         Query other = (Query) obj;
 
         return Objects.deepEquals(
-                new String[]{getAssetID(), getOwner(), getDate(), getQuery()},
-                new String[]{other.getAssetID(), other.getOwner(), other.getDate(), other.getQuery()});
+                new String[]{getQueryID(), getOwner(), getDate(), getQuery()},
+                new String[]{other.getQueryID(), other.getOwner(), other.getDate(), other.getQuery()});
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAssetID(), getOwner(), getDate(), getQuery());
+        return Objects.hash(getQueryID(), getOwner(), getDate(), getQuery());
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [assetID=" + assetID + ", owner=" + owner + "]";
+        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [queryID=" + queryID + ", owner=" + owner + "]";
     }
 }
