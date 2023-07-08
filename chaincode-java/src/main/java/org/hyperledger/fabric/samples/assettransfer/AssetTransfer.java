@@ -46,42 +46,30 @@ public final class AssetTransfer implements ContractInterface {
         ASSET_ALREADY_EXISTS
     }
 
-    /**
-     * Creates some initial assets on the ledger.
-     *
-     * @param ctx the transaction context
-     */
+
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
 
-        CreateAsset(ctx, "asset1", "Tomoko", 300);
-        CreateAsset(ctx, "asset2", "Brad", 400);
-        CreateAsset(ctx, "asset3", "Jin Soo", 500);
-        CreateAsset(ctx, "asset4", "Max", 600);
-        CreateAsset(ctx, "asset5", "Adrian", 700);
-        CreateAsset(ctx, "asset6", "Michel", 700);
+        CreateAsset(ctx, "asset1", "Tomoko");
+        CreateAsset(ctx, "asset2", "Brad");
+        CreateAsset(ctx, "asset3", "Jin Soo");
+        CreateAsset(ctx, "asset4", "Max");
+        CreateAsset(ctx, "asset5", "Adrian");
+        CreateAsset(ctx, "asset6", "Michel");
 
     }
 
-    /**
-     * Creates a new asset on the ledger.
-     *
-     * @param ctx            the transaction context
-     * @param assetID        the ID of the new asset
-     * @param owner          the owner of the new asset
-     * @param appraisedValue the appraisedValue of the new asset
-     * @return the created asset
-     */
+
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Asset CreateAsset(final Context ctx, final String assetID,
-                             final String owner, final int appraisedValue) {
+                             final String owner) {
         ChaincodeStub stub = ctx.getStub();
 
         String date = "UUUUUUUUDDDDDDDDDDD";
         String query = "query";
 
-        Asset asset = new Asset(assetID, owner, date, appraisedValue, query);
+        Asset asset = new Asset(assetID, owner, date, query);
         // Use Genson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = genson.serialize(asset);
         stub.putStringState(assetID, sortedJson);
@@ -89,13 +77,7 @@ public final class AssetTransfer implements ContractInterface {
         return asset;
     }
 
-    /**
-     * Retrieves an asset with the specified ID from the ledger.
-     *
-     * @param ctx     the transaction context
-     * @param assetID the ID of the asset
-     * @return the asset found on the ledger if there was one
-     */
+
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public Asset ReadAsset(final Context ctx, final String assetID) {
         ChaincodeStub stub = ctx.getStub();
@@ -111,12 +93,6 @@ public final class AssetTransfer implements ContractInterface {
         return asset;
     }
 
-    /**
-     * Retrieves all assets from the ledger.
-     *
-     * @param ctx the transaction context
-     * @return array of assets found on the ledger
-     */
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public String GetAllAssets(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();

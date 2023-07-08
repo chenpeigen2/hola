@@ -27,9 +27,6 @@ public final class Asset {
     @Property
     private final String query;
 
-    @Property()
-    private final int appraisedValue;
-
     public String getAssetID() {
         return assetID;
     }
@@ -42,9 +39,6 @@ public final class Asset {
         return date;
     }
 
-    public int getAppraisedValue() {
-        return appraisedValue;
-    }
 
     public String getQuery() {
         return query;
@@ -52,11 +46,10 @@ public final class Asset {
 
     public Asset(@JsonProperty("assetID") final String assetID,
                  @JsonProperty("owner") final String owner, @JsonProperty("date") final String date,
-                 @JsonProperty("appraisedValue") final int appraisedValue, @JsonProperty("query") final String query) {
+                 @JsonProperty("query") final String query) {
         this.assetID = assetID;
         this.owner = owner;
         this.date = date;
-        this.appraisedValue = appraisedValue;
         this.query = query;
     }
 
@@ -74,20 +67,16 @@ public final class Asset {
 
         return Objects.deepEquals(
                 new String[]{getAssetID(), getOwner(), getDate(), getQuery()},
-                new String[]{other.getAssetID(), other.getOwner(), other.getDate(), other.getQuery()})
-                &&
-                Objects.deepEquals(
-                        new int[]{getAppraisedValue()},
-                        new int[]{other.getAppraisedValue()});
+                new String[]{other.getAssetID(), other.getOwner(), other.getDate(), other.getQuery()});
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAssetID(), getOwner(), getDate(), getAppraisedValue(), getQuery());
+        return Objects.hash(getAssetID(), getOwner(), getDate(), getQuery());
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [assetID=" + assetID + ", owner=" + owner + ", appraisedValue=" + appraisedValue + "]";
+        return this.getClass().getSimpleName() + "@" + Integer.toHexString(hashCode()) + " [assetID=" + assetID + ", owner=" + owner + "]";
     }
 }
