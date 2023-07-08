@@ -6,7 +6,7 @@ import org.hyperledger.fabric.contract.annotation.Property;
 import java.util.Objects;
 
 @DataType
-public class Query {
+public final class Query {
 
     @Property
     private final String queryId;
@@ -15,10 +15,10 @@ public class Query {
     private final String date;
 
     @Property
-    private final String query;
+    private final String req;
 
     @Property
-    private final String result;
+    private final String resp;
 
     @Property
     private final String owner;
@@ -31,37 +31,38 @@ public class Query {
         return date;
     }
 
-    public String getQuery() {
-        return query;
+    public String getReq() {
+        return req;
     }
 
-    public String getResult() {
-        return result;
+    public String getResp() {
+        return resp;
     }
 
     public String getOwner() {
         return owner;
     }
 
-    public Query(final String queryId, final String date, final String query, final String result, final String owner) {
+    public Query(final String queryId, final String date, final String req, final String resp, final String owner) {
         this.queryId = queryId;
         this.date = date;
-        this.query = query;
-        this.result = result;
+        this.req = req;
+        this.resp = resp;
         this.owner = owner;
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Query query1 = (Query) o;
-        return Objects.equals(queryId, query1.queryId) && Objects.equals(date, query1.date) && Objects.equals(query, query1.query) && Objects.equals(result, query1.result) && Objects.equals(owner, query1.owner);
+        Query query = (Query) o;
+        return Objects.equals(queryId, query.queryId) && Objects.equals(date, query.date) && Objects.equals(req, query.req) && Objects.equals(resp, query.resp) && Objects.equals(owner, query.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(queryId, date, query, result, owner);
+        return Objects.hash(queryId, date, req, resp, owner);
     }
 
     @Override
@@ -69,8 +70,8 @@ public class Query {
         return "Query{" +
                 "queryId='" + queryId + '\'' +
                 ", date='" + date + '\'' +
-                ", query='" + query + '\'' +
-                ", result='" + result + '\'' +
+                ", req='" + req + '\'' +
+                ", resp='" + resp + '\'' +
                 ", owner='" + owner + '\'' +
                 '}';
     }
