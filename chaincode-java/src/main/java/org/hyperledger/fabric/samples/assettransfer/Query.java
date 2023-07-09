@@ -16,19 +16,19 @@ public final class Query {
 
     @SerializedName("queryID")
     @Property()
-    private final String queryID;
+    private final String queryID; // 查询的唯一标识
 
     @SerializedName("owner")
     @Property()
-    private final String owner;
+    private final String owner; // 查询的所属owner
 
     @SerializedName("date")
     @Property()
-    private final String date;
+    private final String date; // 查询的时间
 
     @SerializedName("query")
     @Property
-    private final String query;
+    private final String query; // 查询的请求内容
 
     public String getQueryID() {
         return queryID;
