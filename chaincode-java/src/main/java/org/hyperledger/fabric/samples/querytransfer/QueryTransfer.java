@@ -90,7 +90,7 @@ public final class QueryTransfer implements ContractInterface {
                              final String owner) {
         ChaincodeStub stub = ctx.getStub();
 
-        String date = "UUUUUUUUDDDDDDDDDDD";
+        String date = "UUUUUUU111";
         String query = "query";
 
         Query asset = new Query(queryID, owner, date, query);

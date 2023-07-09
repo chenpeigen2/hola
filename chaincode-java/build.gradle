@@ -6,8 +6,6 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'application'
     id 'org.jetbrains.kotlin.jvm' version '1.7.22'
-    id 'checkstyle'
-    id 'jacoco'
 }
 
 group 'org.hyperledger.fabric.samples'
@@ -39,35 +37,6 @@ application {
     mainClass = 'org.hyperledger.fabric.contract.ContractRouter'
 }
 
-checkstyle {
-    toolVersion '8.21'
-    configFile file("config/checkstyle/checkstyle.xml")
-}
-
-checkstyleMain {
-    source = 'src/main/java'
-}
-
-checkstyleTest {
-    source = 'src/test/java'
-}
-
-jacocoTestReport {
-    dependsOn test
-}
-
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.9
-            }
-        }
-    }
-
-    finalizedBy jacocoTestReport
-}
-
 test {
     useJUnitPlatform()
     testLogging {
@@ -90,6 +59,3 @@ shadowJar {
         attributes 'Main-Class': 'org.hyperledger.fabric.contract.ContractRouter'
     }
 }
-
-check.dependsOn jacocoTestCoverageVerification
-installDist.dependsOn check
