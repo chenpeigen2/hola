@@ -22,6 +22,7 @@ import org.hyperledger.fabric.contract.annotation.Default;
 import org.hyperledger.fabric.contract.annotation.Info;
 import org.hyperledger.fabric.contract.annotation.License;
 import org.hyperledger.fabric.contract.annotation.Transaction;
+import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
@@ -44,9 +45,9 @@ import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 @Default
 public final class QueryTransfer implements ContractInterface {
 
-    private final Gson gson = new Gson();
+    private final Gson gson = JsonUtils.INSTANCE.getJson();
 
-    private final Logger logger = Logger.getLogger("QueryTransfer");
+    private final Logger logger = Logger.getLogger(QueryTransfer.class.getName());
 
     private enum AssetTransferErrors {
         ASSET_NOT_FOUND,
@@ -93,7 +94,7 @@ public final class QueryTransfer implements ContractInterface {
         String date = "UUUUUUU111";
         String query = "query";
 
-        Query asset = new Query(queryID, owner, date, query);
+        Query asset = new Query(queryID, owner, date, query, null);
         // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = gson.toJson(asset);
         stub.putStringState(queryID, sortedJson);

@@ -4,31 +4,39 @@
 
 package org.hyperledger.fabric.samples.querytransfer;
 
-import java.util.Objects;
-
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.hyperledger.fabric.contract.annotation.DataType;
 import org.hyperledger.fabric.contract.annotation.Property;
+
+import java.util.Objects;
 
 
 @DataType()
 public final class Query {
 
+    @Expose
     @SerializedName("queryID")
     @Property()
     private final String queryID; // 查询的唯一标识
 
+    @Expose
     @SerializedName("owner")
     @Property()
     private final String owner; // 查询的所属owner
 
+    @Expose
     @SerializedName("date")
     @Property()
     private final String date; // 查询的时间
 
+    @Expose
     @SerializedName("query")
     @Property
     private final String query; // 查询的请求内容
+
+    @Expose(serialize = false, deserialize = false)
+    private final String resp;
 
     public String getQueryID() {
         return queryID;
@@ -47,13 +55,16 @@ public final class Query {
         return query;
     }
 
-    public Query(final String queryID,
-                 final String owner, final String date,
-                 final String query) {
+    public String getResp() {
+        return resp;
+    }
+
+    public Query(String queryID, String owner, String date, String query, String resp) {
         this.queryID = queryID;
         this.owner = owner;
         this.date = date;
         this.query = query;
+        this.resp = resp;
     }
 
     @Override

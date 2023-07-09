@@ -1,8 +1,8 @@
 package org.hyperledger.fabric.samples.querytransfer.json
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 object JsonUtils {
 
-    val json = Gson()
+    val json = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
 }
