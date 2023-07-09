@@ -31,16 +31,16 @@ import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 @Contract(
         name = "basic",
         info = @Info(
-                title = "Asset Transfer",
-                description = "The hyperlegendary asset transfer",
+                title = "Query Transfer",
+                description = "The hyperlegendary query transfer",
                 version = "0.0.1-SNAPSHOT",
                 license = @License(
                         name = "Apache 2.0 License",
                         url = "http://www.apache.org/licenses/LICENSE-2.0.html"),
                 contact = @Contact(
-                        email = "a.transfer@example.com",
-                        name = "Adrian Transfer",
-                        url = "https://hyperledger.example.com")))
+                        email = "O1831938181O@gmail.com",
+                        name = "chenpeigen",
+                        url = "https://gitlab.com/o1831938181o")))
 @Default
 public final class QueryTransfer implements ContractInterface {
 
@@ -150,5 +150,20 @@ public final class QueryTransfer implements ContractInterface {
         System.out.println(Hello.INSTANCE.getA());
 
         return response;
+    }
+
+    @Override
+    public void beforeTransaction(final Context ctx) {
+        ContractInterface.super.beforeTransaction(ctx);
+    }
+
+    @Override
+    public void afterTransaction(final Context ctx, final Object result) {
+        ContractInterface.super.afterTransaction(ctx, result);
+    }
+
+    @Override
+    public void unknownTransaction(final Context ctx) {
+        ContractInterface.super.unknownTransaction(ctx);
     }
 }
