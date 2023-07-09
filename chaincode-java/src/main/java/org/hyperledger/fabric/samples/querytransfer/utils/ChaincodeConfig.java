@@ -1,7 +1,6 @@
 package org.hyperledger.fabric.samples.querytransfer.utils;
 
 import org.hyperledger.fabric.Logging;
-import org.hyperledger.fabric.shim.ChaincodeBase;
 
 import java.io.IOException;
 import java.io.InputStream;
