@@ -1,0 +1,2 @@
+CHAINCODE_TRACES_ENABLED=true
+CHAINCODE_TRACES_PROVIDER=org.hyperledger.fabric.traces.impl.OpenTelemetryTracesProvider
