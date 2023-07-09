@@ -57,12 +57,12 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
-        CreateAsset(ctx, "asset1", "Tomoko");
-        CreateAsset(ctx, "asset2", "Brad");
-        CreateAsset(ctx, "asset3", "Jin Soo");
-        CreateAsset(ctx, "asset4", "Max");
-        CreateAsset(ctx, "asset5", "Adrian");
-        CreateAsset(ctx, "asset6", "Michel");
+        CreateQuery(ctx, "asset1", "Tomoko");
+        CreateQuery(ctx, "asset2", "Brad");
+        CreateQuery(ctx, "asset3", "Jin Soo");
+        CreateQuery(ctx, "asset4", "Max");
+        CreateQuery(ctx, "asset5", "Adrian");
+        CreateQuery(ctx, "asset6", "Michel");
     }
 
     public static String main() {
@@ -86,29 +86,29 @@ public final class QueryTransfer implements ContractInterface {
 
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public Query CreateAsset(final Context ctx, final String assetID,
+    public Query CreateQuery(final Context ctx, final String queryID,
                              final String owner) {
         ChaincodeStub stub = ctx.getStub();
 
         String date = "UUUUUUUUDDDDDDDDDDD";
         String query = "query";
 
-        Query asset = new Query(assetID, owner, date, query);
+        Query asset = new Query(queryID, owner, date, query);
         // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = gson.toJson(asset);
-        stub.putStringState(assetID, sortedJson);
+        stub.putStringState(queryID, sortedJson);
 
         return asset;
     }
 
 
     @Transaction(intent = Transaction.TYPE.EVALUATE)
-    public Query ReadAsset(final Context ctx, final String assetID) {
+    public Query ReadQuery(final Context ctx, final String queryID) {
         ChaincodeStub stub = ctx.getStub();
-        String assetJSON = stub.getStringState(assetID);
+        String assetJSON = stub.getStringState(queryID);
 
         if (assetJSON == null || assetJSON.isEmpty()) {
-            String errorMessage = String.format("Asset %s does not exist", assetID);
+            String errorMessage = String.format("Asset %s does not exist", queryID);
             System.out.println(errorMessage);
             throw new ChaincodeException(errorMessage, AssetTransferErrors.ASSET_NOT_FOUND.toString());
         }
@@ -118,7 +118,7 @@ public final class QueryTransfer implements ContractInterface {
     }
 
     @Transaction(intent = Transaction.TYPE.EVALUATE)
-    public String GetAllAssets(final Context ctx) {
+    public String GetAllQueries(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
 
         List<Query> queryResults = new ArrayList<Query>();
