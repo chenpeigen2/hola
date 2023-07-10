@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.client;
 
 import cn.ruc.edu.hola.client.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.utils.ChaincodeConfig;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import cn.ruc.edu.hola.client.web.Verticle;
 import io.vertx.core.Vertx;
@@ -24,11 +25,16 @@ public class Entry {
         List<Request> requests = new ArrayList<>();
         requests.add(new Request(RandomStringGenerator.UID, Action.query));
 
-        try (var res = apiService.complex(requests)) {
-            var text = res.body().string();
-            System.out.println(EncryptUtils.decryptAES(text, apiService.getAESKey()));
-        } catch (Exception ignored) {
+        if (!ChaincodeConfig.supportNet()) {
+            try (var res = apiService.complex(requests).getOkResponse()) {
+                var text = res.body().string();
+                System.out.println(EncryptUtils.decryptAES(text, apiService.getAESKey()));
+            } catch (Exception ignored) {
 
+            }
+        } else {
+            var text = apiService.complex(requests).getResponse();
+            System.out.println(text);
         }
     }
 
