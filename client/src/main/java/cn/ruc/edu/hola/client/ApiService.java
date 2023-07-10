@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client;
 
 
+import cn.ruc.edu.hola.client.entity.RealResponse;
 import cn.ruc.edu.hola.client.entity.Request;
 import cn.ruc.edu.hola.client.impl.ApiServiceImpl;
 import okhttp3.HttpUrl;
@@ -38,7 +39,7 @@ public abstract class ApiService {
 
     public abstract Response filterDocs(String dataBaseName, String filter);
 
-    public abstract Response complex(List<Request> requests);
+    public abstract RealResponse complex(List<Request> requests);
 
     public abstract String getAESKey();
 
