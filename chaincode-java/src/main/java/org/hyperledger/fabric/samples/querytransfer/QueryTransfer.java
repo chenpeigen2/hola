@@ -58,12 +58,12 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
-        CreateQuery(ctx, "asset1", "Tomoko");
-        CreateQuery(ctx, "asset2", "Brad");
-        CreateQuery(ctx, "asset3", "Jin Soo");
-        CreateQuery(ctx, "asset4", "Max");
-        CreateQuery(ctx, "asset5", "Adrian");
-        CreateQuery(ctx, "asset6", "Michel");
+        CreateQuery(ctx, "asset1", "Tomoko", "111", "query", null);
+        CreateQuery(ctx, "asset2", "Brad", "111", "query", null);
+        CreateQuery(ctx, "asset3", "Jin Soo", "111", "query", null);
+        CreateQuery(ctx, "asset4", "Max", "111", "query", null);
+        CreateQuery(ctx, "asset5", "Adrian", "111", "query", null);
+        CreateQuery(ctx, "asset6", "Michel", "111", "query", null);
     }
 
     public static String main() {
@@ -88,13 +88,9 @@ public final class QueryTransfer implements ContractInterface {
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Query CreateQuery(final Context ctx, final String queryID,
-                             final String owner) {
+                             final String owner, final String date, final String query, final String resp) {
         ChaincodeStub stub = ctx.getStub();
-
-        String date = "UUUUUUU111";
-        String query = "query";
-
-        Query asset = new Query(queryID, owner, date, query, null);
+        Query asset = new Query(queryID, owner, date, query, resp);
         // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = gson.toJson(asset);
         stub.putStringState(queryID, sortedJson);

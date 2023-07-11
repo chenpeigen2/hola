@@ -35,7 +35,9 @@ public final class Query {
     @Property
     private final String query; // 查询的请求内容
 
-    @Expose(serialize = false, deserialize = false)
+    @Expose
+    @SerializedName("resp")
+    @Property
     private final String resp;
 
     public String getQueryID() {
