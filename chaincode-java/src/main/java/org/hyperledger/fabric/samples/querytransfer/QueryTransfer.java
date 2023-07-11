@@ -23,6 +23,7 @@ import org.hyperledger.fabric.contract.annotation.Info;
 import org.hyperledger.fabric.contract.annotation.License;
 import org.hyperledger.fabric.contract.annotation.Transaction;
 import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
+import org.hyperledger.fabric.samples.querytransfer.utils.ChaincodeConfig;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
@@ -77,7 +78,6 @@ public final class QueryTransfer implements ContractInterface {
         try (Response response = client.newCall(request).execute()) {
             res = response.body().string(); // can only call once
             System.out.println(res);
-            System.out.println("8888889999999999777777777777");
             System.out.println("executing the okhttp3");
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,7 +90,14 @@ public final class QueryTransfer implements ContractInterface {
     public Query CreateQuery(final Context ctx, final String queryID,
                              final String owner, final String date, final String query, final String resp) {
         ChaincodeStub stub = ctx.getStub();
-        Query asset = new Query(queryID, owner, date, query, resp);
+        Query asset;
+        if (!ChaincodeConfig.supportNet()) {
+            asset = new Query(queryID, owner, date, query, resp);
+        } else {
+            // here we execute our own http request
+            asset = new Query(queryID, owner, date, query, "zzzz");
+        }
+
         // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = gson.toJson(asset);
         stub.putStringState(queryID, sortedJson);
