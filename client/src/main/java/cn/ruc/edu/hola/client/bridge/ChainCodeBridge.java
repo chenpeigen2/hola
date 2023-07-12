@@ -4,6 +4,7 @@ import cn.ruc.edu.hola.client.AssetTransfer;
 import cn.ruc.edu.hola.client.gateway.App;
 import cn.ruc.edu.hola.client.gateway.AssetTransferImpl;
 import cn.ruc.edu.hola.client.impl.SgxConfig;
+import cn.ruc.edu.hola.client.json.JsonUtils;
 
 import java.time.Instant;
 
@@ -19,7 +20,15 @@ public final class ChainCodeBridge {
     }
 
     public String invokeQuery(final SgxConfig sgxConfig, final String queryId, final String owner, final String date, final String query, final String resp) {
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(JsonUtils.INSTANCE.getJson().toJson(sgxConfig))
+                .append(queryId)
+                .append(owner)
+                .append(date)
+                .append(queryId)
+                .append(query)
+                .append(resp);
+        return sb.toString();
     }
 
 
