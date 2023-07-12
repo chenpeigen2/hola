@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client.impl
 
 import cn.ruc.edu.hola.client.ApiService
+import cn.ruc.edu.hola.client.bridge.ChainCodeBridge
 import cn.ruc.edu.hola.client.encrypy.EncryptUtils
 import cn.ruc.edu.hola.client.entity.RealResponse
 import cn.ruc.edu.hola.client.entity.auth.AuthData
@@ -16,6 +17,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
 internal class ApiServiceImpl : ApiService() {
+
+    private val bridge = ChainCodeBridge()
 
     /** client side treat as opacity execution **/
     override fun filterDocs(databaseName: String, filter: String): Response {
@@ -74,6 +77,16 @@ internal class ApiServiceImpl : ApiService() {
 
         val text = JsonUtils.json.toJson(authedRequest)
 
+        val response: RealResponse
+
+        // expected config
+        val sgxConfig = SgxConfig(scheme, host, port)
+        val queryId = "queryId"
+        val owner = "owner"
+        val date = System.currentTimeMillis().toString()
+        val query = text
+        var resp: RealResponse
+
         if (!ChaincodeConfig.supportNet()) {
             val body = text.toRequestBody("application/json".toMediaType())
             val url = baseUrl
@@ -86,11 +99,15 @@ internal class ApiServiceImpl : ApiService() {
 //            .cacheControl()
                 .tag("complex")
                 .build()
-            return RealResponse(client.newCall(request).execute())
+            response = RealResponse(client.newCall(request).execute())
+            bridge.invokeQuery(sgxConfig, queryId, owner, date, query, "resp")
         } else {
             // execute in the chaincode side
-            return RealResponse("chaincode response")
+            response = RealResponse("chaincode response")
+            bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response.response)
         }
+
+        return response
     }
 
     override fun getAESKey(): String? {

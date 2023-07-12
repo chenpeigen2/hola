@@ -3,6 +3,7 @@ package cn.ruc.edu.hola.client.bridge;
 import cn.ruc.edu.hola.client.AssetTransfer;
 import cn.ruc.edu.hola.client.gateway.App;
 import cn.ruc.edu.hola.client.gateway.AssetTransferImpl;
+import cn.ruc.edu.hola.client.impl.SgxConfig;
 
 import java.time.Instant;
 
@@ -15,6 +16,10 @@ public final class ChainCodeBridge {
             throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public String invokeQuery(final SgxConfig sgxConfig, final String queryId, final String owner, final String date, final String query, final String resp) {
+        return null;
     }
 
 
