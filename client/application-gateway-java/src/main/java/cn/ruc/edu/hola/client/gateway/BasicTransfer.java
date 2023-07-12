@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.client.gateway;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import io.grpc.Grpc;
 import io.grpc.ManagedChannel;
 import io.grpc.TlsChannelCredentials;
@@ -10,6 +11,7 @@ import org.hyperledger.fabric.client.Gateway;
 import org.hyperledger.fabric.client.identity.*;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -87,5 +89,14 @@ public abstract class BasicTransfer {
     public static void destroy(ConfigWrapper wrapper) throws Exception {
         wrapper.gateway.close();
         wrapper.channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
+    }
+
+    protected String prettyJson(final byte[] json) {
+        return prettyJson(new String(json, StandardCharsets.UTF_8));
+    }
+
+    protected String prettyJson(final String json) {
+        var parsedJson = JsonParser.parseString(json);
+        return gson.toJson(parsedJson);
     }
 }

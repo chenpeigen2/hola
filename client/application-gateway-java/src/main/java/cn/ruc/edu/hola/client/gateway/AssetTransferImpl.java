@@ -2,7 +2,6 @@ package cn.ruc.edu.hola.client.gateway;
 
 import cn.ruc.edu.hola.client.Asset;
 import cn.ruc.edu.hola.client.AssetTransfer;
-import com.google.gson.JsonParser;
 import org.hyperledger.fabric.client.*;
 
 import java.nio.charset.StandardCharsets;
@@ -18,15 +17,6 @@ public class AssetTransferImpl extends BasicTransfer implements AssetTransfer {
         contract = network.getContract(CHAINCODE_NAME);
 
         initLedger(); // init the ledger
-    }
-
-    private String prettyJson(final byte[] json) {
-        return prettyJson(new String(json, StandardCharsets.UTF_8));
-    }
-
-    private String prettyJson(final String json) {
-        var parsedJson = JsonParser.parseString(json);
-        return gson.toJson(parsedJson);
     }
 
 
