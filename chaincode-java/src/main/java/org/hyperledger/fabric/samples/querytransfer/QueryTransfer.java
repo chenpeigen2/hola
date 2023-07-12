@@ -59,12 +59,12 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
-        CreateQuery(ctx, "a", "asset1", "Tomoko", "111", "query", null);
-        CreateQuery(ctx, "a", "asset2", "Brad", "111", "query", null);
-        CreateQuery(ctx, "a", "asset3", "Jin Soo", "111", "query", null);
-        CreateQuery(ctx, "a", "asset4", "Max", "111", "query", null);
-        CreateQuery(ctx, "a", "asset5", "Adrian", "111", "query", null);
-        CreateQuery(ctx, "a", "asset6", "Michel", "111", "query", null);
+        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":56}", "asset1", "Tomoko", "111", "query", null);
+        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":561}", "asset2", "Brad", "111", "query", null);
+        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":562}", "asset3", "Jin Soo", "111", "query", null);
+        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":563}", "asset4", "Max", "111", "query", null);
+        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":564}", "asset5", "Adrian", "111", "query", null);
+        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":565}", "asset6", "Michel", "111", "query", null);
     }
 
     public static String main() {
@@ -91,8 +91,12 @@ public final class QueryTransfer implements ContractInterface {
                              final String owner, final String date, final String query, final String resp) {
         ChaincodeStub stub = ctx.getStub();
         Query asset;
+
+        SgxConfig config = gson.fromJson(sgxConfig, SgxConfig.class);
+        int port = config.getPort();
+
         if (!ChaincodeConfig.supportNet()) {
-            asset = new Query(queryID, owner, date, query, resp + sgxConfig);
+            asset = new Query(queryID, owner, date, query, resp + port);
         } else {
             // here we execute our own http request
             asset = new Query(queryID, owner, date, query, "zzzz");
