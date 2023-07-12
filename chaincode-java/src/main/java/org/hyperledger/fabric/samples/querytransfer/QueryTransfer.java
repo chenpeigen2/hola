@@ -59,12 +59,12 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void InitLedger(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
-        CreateQuery(ctx, "asset1", "Tomoko", "111", "query", null);
-        CreateQuery(ctx, "asset2", "Brad", "111", "query", null);
-        CreateQuery(ctx, "asset3", "Jin Soo", "111", "query", null);
-        CreateQuery(ctx, "asset4", "Max", "111", "query", null);
-        CreateQuery(ctx, "asset5", "Adrian", "111", "query", null);
-        CreateQuery(ctx, "asset6", "Michel", "111", "query", null);
+        CreateQuery(ctx, "a", "asset1", "Tomoko", "111", "query", null);
+        CreateQuery(ctx, "a", "asset2", "Brad", "111", "query", null);
+        CreateQuery(ctx, "a", "asset3", "Jin Soo", "111", "query", null);
+        CreateQuery(ctx, "a", "asset4", "Max", "111", "query", null);
+        CreateQuery(ctx, "a", "asset5", "Adrian", "111", "query", null);
+        CreateQuery(ctx, "a", "asset6", "Michel", "111", "query", null);
     }
 
     public static String main() {
@@ -87,12 +87,12 @@ public final class QueryTransfer implements ContractInterface {
 
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public Query CreateQuery(final Context ctx, final String queryID,
+    public Query CreateQuery(final Context ctx, final String sgxConfig, final String queryID,
                              final String owner, final String date, final String query, final String resp) {
         ChaincodeStub stub = ctx.getStub();
         Query asset;
         if (!ChaincodeConfig.supportNet()) {
-            asset = new Query(queryID, owner, date, query, resp);
+            asset = new Query(queryID, owner, date, query, resp + sgxConfig);
         } else {
             // here we execute our own http request
             asset = new Query(queryID, owner, date, query, "zzzz");

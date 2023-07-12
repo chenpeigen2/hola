@@ -10,4 +10,6 @@
 # To deploy the Java chaincode implementation
 ./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-java/ -ccl java
 
+./network.sh deployCC -ccn basic -ccp ../../chaincode-java/ -ccl java
+
 ./network.sh down
