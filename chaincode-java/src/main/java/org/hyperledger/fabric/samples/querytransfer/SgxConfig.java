@@ -6,15 +6,24 @@ import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
 public final class SgxConfig {
 
     @Expose
+    private final String scheme;
+
+    @Expose
     private final String host;
 
     @Expose
     private final int port;
 
-    public SgxConfig(String host, int port) {
+    public String getScheme() {
+        return scheme;
+    }
+
+    public SgxConfig(String scheme, String host, int port) {
+        this.scheme = scheme;
         this.host = host;
         this.port = port;
     }
+
 
     public String getHost() {
         return host;
@@ -27,13 +36,14 @@ public final class SgxConfig {
     @Override
     public String toString() {
         return "SgxConfig{" +
-                "host='" + host + '\'' +
+                "scheme='" + scheme + '\'' +
+                ", host='" + host + '\'' +
                 ", port=" + port +
                 '}';
     }
 
     public static void main(String[] args) {
-        SgxConfig sgxConfig = new SgxConfig("host", 56);
+        SgxConfig sgxConfig = new SgxConfig("shceme", "host", 56);
         String text = JsonUtils.INSTANCE.getJson().toJson(sgxConfig);
         System.out.println(text);
         SgxConfig sgxConfig1 = JsonUtils.INSTANCE.getJson().fromJson(text, SgxConfig.class);
