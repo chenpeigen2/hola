@@ -26,7 +26,7 @@ public abstract class BasicTransfer {
     protected static final String CHAINCODE_NAME = System.getenv().getOrDefault("CHAINCODE_NAME", "basic");
 
     // Path to crypto materials.
-    protected static final Path CRYPTO_PATH = Paths.get("../fabric-samples/test-network/organizations/peerOrganizations/org1.example.com");
+    protected static final Path CRYPTO_PATH = Paths.get("fabric-samples/test-network/organizations/peerOrganizations/org1.example.com");
     // Path to user certificate.
     protected static final Path CERT_PATH = CRYPTO_PATH.resolve(Paths.get("users/User1@org1.example.com/msp/signcerts/cert.pem"));
     // Path to user private key directory.
