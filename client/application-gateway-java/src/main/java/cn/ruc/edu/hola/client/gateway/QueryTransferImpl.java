@@ -6,7 +6,7 @@ import org.hyperledger.fabric.client.*;
 
 public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
 
-    public QueryTransferImpl(final Gateway gateway) throws EndorseException, CommitException, SubmitException, CommitStatusException {
+    public QueryTransferImpl(final Gateway gateway) {
         // Get a network instance representing the channel where the smart contract is
         // deployed.
         var network = gateway.getNetwork(CHANNEL_NAME);
@@ -17,6 +17,16 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
 
     @Override
     public Query CreateQuery(String config, String queryID, String owner, String date, String query, String resp) {
+        System.out.println("\n--> Submit Transaction: CreateAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
+        try {
+            var result = contract.submitTransaction("CreateQuery", config, queryID, owner, date, query, resp);
+            var json_result = prettyJson(result);
+            System.out.println(json_result);
+            return gson.fromJson(json_result, Query.class);
+        } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
+//            throw new RuntimeException(e);
+        }
+
         return null;
     }
 
@@ -27,6 +37,14 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
 
     @Override
     public String GetAllQueries() {
+        try {
+            var result = contract.evaluateTransaction("GetAllQueries");
+            var json_result = prettyJson(result);
+            System.out.println(json_result);
+            return json_result;
+        } catch (GatewayException e) {
+//            throw new RuntimeException(e);
+        }
         return null;
     }
 }
