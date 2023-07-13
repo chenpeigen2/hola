@@ -28,15 +28,15 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("commons-codec:commons-codec:1.16.0")
-    implementation("com.google.guava:guava:32.0.1-jre")
+    implementation("com.google.guava:guava:32.1.1-jre")
     implementation("net.bytebuddy:byte-buddy:1.14.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("io.vertx:vertx-web:4.4.4")
     implementation(project("sample")) // add sub-sample-project

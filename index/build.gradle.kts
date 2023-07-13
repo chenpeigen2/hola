@@ -14,7 +14,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.vertx:vertx-web:4.4.4")
     implementation("io.vertx:vertx-web-validation:4.4.4")
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.9.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
