@@ -14,6 +14,9 @@ import org.hyperledger.fabric.client.CommitStatusException;
 import org.hyperledger.fabric.client.EndorseException;
 import org.hyperledger.fabric.client.SubmitException;
 
+import java.util.Date;
+import java.util.UUID;
+
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3001;
 
@@ -66,13 +69,23 @@ public class Verticle extends AbstractVerticle {
 
         router.get("/trigger_invoke_query").handler(ctx -> {
             ChainCodeBridge bridge = new ChainCodeBridge();
-            var resp = bridge.invokeQuery(new SgxConfig("shche", "host", 8080), "queryId", "owner", "date", "query", "resp");
+            String resp = null;
+            try {
+                resp = bridge.invokeQuery(new SgxConfig("shche", "host", 8080), UUID.randomUUID().toString(), "owner", new Date().toString(), "query", "resp");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             out(ctx, resp);
         });
 
         router.get("/trigger_invoke_get_queries").handler(ctx -> {
             ChainCodeBridge bridge = new ChainCodeBridge();
-            var resp = bridge.invokeGetAllQueries();
+            String resp = null;
+            try {
+                resp = bridge.invokeGetAllQueries();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             out(ctx, resp);
         });
 
