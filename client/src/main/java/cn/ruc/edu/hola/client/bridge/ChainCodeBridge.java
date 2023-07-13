@@ -31,6 +31,10 @@ public final class ChainCodeBridge {
         return sb.toString();
     }
 
+    public String invokeGetAllQueries() {
+        return "invokeGetAllQueries";
+    }
+
 
     public void trigger() throws Exception {
         var wrapper = AssetTransferImpl.init();

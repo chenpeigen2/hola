@@ -64,9 +64,15 @@ public class Verticle extends AbstractVerticle {
             out(ctx, "trigger success");
         });
 
-        router.get("/trigger_hello").handler(ctx -> {
+        router.get("/trigger_invoke_query").handler(ctx -> {
             ChainCodeBridge bridge = new ChainCodeBridge();
             var resp = bridge.invokeQuery(new SgxConfig("shche", "host", 8080), "queryId", "owner", "date", "query", "resp");
+            out(ctx, resp);
+        });
+
+        router.get("/trigger_invoke_get_queries").handler(ctx -> {
+            ChainCodeBridge bridge = new ChainCodeBridge();
+            var resp = bridge.invokeGetAllQueries();
             out(ctx, resp);
         });
 
