@@ -1,8 +1,6 @@
 package cn.ruc.edu.hola.client;
 
-import cn.ruc.edu.hola.client.encrypy.EncryptUtils;
 import cn.ruc.edu.hola.client.entity.Request;
-import cn.ruc.edu.hola.client.utils.ChaincodeConfig;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import cn.ruc.edu.hola.client.web.Verticle;
 import io.vertx.core.Vertx;
