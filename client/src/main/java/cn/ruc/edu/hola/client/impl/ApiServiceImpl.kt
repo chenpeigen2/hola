@@ -100,14 +100,12 @@ internal class ApiServiceImpl : ApiService() {
                 .tag("complex")
                 .build()
             response = RealResponse(client.newCall(request).execute())
-            bridge.invokeQuery(sgxConfig, queryId, owner, date, query, "resp")
         } else {
             // execute in the chaincode side
             response = RealResponse("chaincode response")
-            bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response.response)
         }
 
-        return response
+        return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
     }
 
     override fun getAESKey(): String? {

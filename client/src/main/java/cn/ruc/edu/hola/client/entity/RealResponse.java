@@ -15,6 +15,10 @@ public final class RealResponse {
         this.okResponse = okResponse;
     }
 
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
     public String getResponse() {
         return response;
     }

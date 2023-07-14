@@ -65,18 +65,7 @@ public class ApiServiceTest {
         apiService.update("http", "127.0.0.1", 8888);
         List<Request> requests = new ArrayList<>();
         requests.add(new Request(RandomStringGenerator.UID, Action.query));
-
-        if (!ChaincodeConfig.supportNet()) {
-            try (var res = apiService.complex(requests).getOkResponse()) {
-                var text = res.body().string();
-                System.out.println(EncryptUtils.decryptAES(text, apiService.getAESKey()));
-            } catch (Exception ignored) {
-
-            }
-        } else {
-            var text = apiService.complex(requests).getResponse();
-            System.out.println(text);
-        }
-
+        var text = apiService.complex(requests).getResponse();
+        System.out.println(text);
     }
 }
