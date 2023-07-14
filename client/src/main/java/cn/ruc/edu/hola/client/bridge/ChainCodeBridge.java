@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.client.bridge;
 
 import cn.ruc.edu.hola.client.AssetTransfer;
-import cn.ruc.edu.hola.client.gateway.App;
 import cn.ruc.edu.hola.client.gateway.AssetTransferImpl;
 import cn.ruc.edu.hola.client.gateway.QueryTransferImpl;
 import cn.ruc.edu.hola.client.impl.SgxConfig;
@@ -10,16 +9,6 @@ import cn.ruc.edu.hola.client.json.JsonUtils;
 import java.time.Instant;
 
 public final class ChainCodeBridge {
-    public boolean triggerChaincode() {
-        try {
-            // trigger the chaincode
-            App.main(null);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return true;
-    }
-
     public String invokeQuery(final SgxConfig sgxConfig, final String queryId, final String owner, final String date, final String query, final String resp) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(JsonUtils.INSTANCE.getJson().toJson(sgxConfig))
