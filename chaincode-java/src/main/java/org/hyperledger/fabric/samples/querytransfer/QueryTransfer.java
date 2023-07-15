@@ -4,11 +4,6 @@
 
 package org.hyperledger.fabric.samples.querytransfer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-
 import com.google.gson.Gson;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,18 +11,17 @@ import okhttp3.Response;
 import org.hyperledger.fabric.Logger;
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
-import org.hyperledger.fabric.contract.annotation.Contact;
-import org.hyperledger.fabric.contract.annotation.Contract;
-import org.hyperledger.fabric.contract.annotation.Default;
-import org.hyperledger.fabric.contract.annotation.Info;
-import org.hyperledger.fabric.contract.annotation.License;
-import org.hyperledger.fabric.contract.annotation.Transaction;
+import org.hyperledger.fabric.contract.annotation.*;
 import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
 import org.hyperledger.fabric.samples.querytransfer.utils.ChaincodeConfig;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Contract(
@@ -88,18 +82,23 @@ public final class QueryTransfer implements ContractInterface {
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Query CreateQuery(final Context ctx, final String sgxConfig, final String queryID,
-                             final String owner, final String date, final String query, final String resp) {
+                             final String owner, final String date, final String query, String resp) {
         ChaincodeStub stub = ctx.getStub();
         Query asset;
 
         SgxConfig config = gson.fromJson(sgxConfig, SgxConfig.class);
-        int port = config.getPort();
 
         if (!ChaincodeConfig.supportNet()) {
-            asset = new Query(queryID, owner, date, query, resp + port);
+            asset = new Query(queryID, owner, date, query, resp);
         } else {
             // here we execute our own http request
-            asset = new Query(queryID, owner, date, query, "zzzz");
+            try (Response response = HttpClient.INSTANCE.executeComplex(config, query)) {
+                resp = response.body().string();
+            } catch (Exception exception) {
+                logger.error(exception.toString());
+            }
+
+            asset = new Query(queryID, owner, date, query, resp);
         }
 
         // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
