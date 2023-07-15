@@ -42,8 +42,7 @@ public class Entry {
                       }
                     ],
                     "data.country": "China"
-                  },
-                  "execution_stats": true
+                  }
                 }""";
     }
 }
