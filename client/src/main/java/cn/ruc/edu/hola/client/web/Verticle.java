@@ -57,14 +57,9 @@ public class Verticle extends AbstractVerticle {
         });
 
         router.get("/trigger_invoke_get_queries").handler(ctx -> {
-            ChainCodeBridge bridge = new ChainCodeBridge();
-            String resp = null;
-            try {
-                resp = bridge.invokeGetAllQueries();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            out(ctx, resp);
+            var response = impl.getChaincodeQueries();
+            var text = response.getResponse();
+            out(ctx, text);
         });
 
         server.requestHandler(router).listen(PORT);

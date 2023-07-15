@@ -41,6 +41,8 @@ public abstract class ApiService {
 
     public abstract RealResponse complex(List<Request> requests);
 
+    public abstract RealResponse getChaincodeQueries();
+
     public abstract String getAESKey();
 
     public void update(String scheme, String host, int port) {
