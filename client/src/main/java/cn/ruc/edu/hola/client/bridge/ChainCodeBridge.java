@@ -31,34 +31,14 @@ public final class ChainCodeBridge {
         return resp;
     }
 
-
-    public String invokeQuery(final SgxConfig sgxConfig, final String queryId, final String owner, final String date, final String query, final String resp) throws Exception {
-        StringBuilder sb = new StringBuilder();
-        sb.append(JsonUtils.INSTANCE.getJson().toJson(sgxConfig))
-                .append(queryId)
-                .append(owner)
-                .append(date)
-                .append(queryId)
-                .append(query)
-                .append(resp);
-        var wrapper = QueryTransferImpl.init();
-
-        var queryTransfer = new QueryTransferImpl(wrapper.gateway);
-
-        queryTransfer.CreateQuery(JsonUtils.INSTANCE.getJson().toJson(sgxConfig), queryId, owner, date, query, "resp");
-
-        QueryTransferImpl.destroy(wrapper);
-        return sb.toString();
-    }
-
     public String invokeGetAllQueries() throws Exception {
         var wrapper = QueryTransferImpl.init();
-
         var queryTransfer = new QueryTransferImpl(wrapper.gateway);
 
         var result = queryTransfer.GetAllQueries();
 
         QueryTransferImpl.destroy(wrapper);
+
         return result;
     }
 
