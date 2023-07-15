@@ -27,7 +27,7 @@ public class Entry {
 
     }
 
-    interface Action {
+    public interface Action {
         String query = """
                 {
                   "selector": {
