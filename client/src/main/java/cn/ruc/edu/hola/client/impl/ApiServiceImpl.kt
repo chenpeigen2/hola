@@ -15,6 +15,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import java.util.UUID
 
 internal class ApiServiceImpl : ApiService() {
 
@@ -81,11 +82,10 @@ internal class ApiServiceImpl : ApiService() {
 
         // expected config
         val sgxConfig = SgxConfig(scheme, host, port)
-        val queryId = "queryId"
-        val owner = "owner"
-        val date = System.currentTimeMillis().toString()
-        val query = text
-        var resp: RealResponse
+        val queryId = UUID.randomUUID().toString(); // use the uuid to delegate the queryId
+        val owner = RandomStringGenerator.UID // use the query UID to delegate the owner
+        val date = System.currentTimeMillis().toString() // use current date to delegate the query time
+        val query = text // query encrypt text
 
         if (!ChaincodeConfig.supportNet()) {
             val body = text.toRequestBody("application/json".toMediaType())

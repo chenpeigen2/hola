@@ -6,7 +6,7 @@ import java.util.UUID;
 public class RandomStringGenerator {
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    public static final String UID = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
+    public static final String UID = "e51dce84-f2a4-43db-9b8f-311250ff0ba1"; // current user
 
     public static String generateRandomString(int length) {
         Random random = new Random();
