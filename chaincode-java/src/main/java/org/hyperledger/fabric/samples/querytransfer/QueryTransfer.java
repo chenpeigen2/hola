@@ -153,9 +153,6 @@ public final class QueryTransfer implements ContractInterface {
             logger.error(e.toString());
         }
 
-        // exe use kotlin
-        System.out.println(Hello.INSTANCE.getA());
-
         return response;
     }
 
