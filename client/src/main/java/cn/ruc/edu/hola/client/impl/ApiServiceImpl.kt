@@ -99,10 +99,10 @@ internal class ApiServiceImpl : ApiService() {
 //            .cacheControl()
                 .tag("complex")
                 .build()
-            response = RealResponse(client.newCall(request).execute())
+            response = RealResponse(client.newCall(request).execute(), aesKey)
         } else {
             // execute in the chaincode side
-            response = RealResponse("chaincode response")
+            response = RealResponse("chaincode response", aesKey)
         }
 
         return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)

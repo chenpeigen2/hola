@@ -52,7 +52,7 @@ public class Verticle extends AbstractVerticle {
             impl.update("http", "127.0.0.1", 8888);
             List<Request> requests = new ArrayList<>();
             requests.add(new Request(RandomStringGenerator.UID, Entry.Action.query));
-            var text = impl.complex(requests).getResponse();
+            var text = impl.complex(requests).getDecryptResponse();
             out(ctx, text);
         });
 

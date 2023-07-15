@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.client.entity;
 
+import cn.ruc.edu.hola.client.encrypy.EncryptUtils;
 import okhttp3.Response;
 
 public final class RealResponse {
@@ -7,11 +8,15 @@ public final class RealResponse {
 
     private Response okResponse;
 
-    public RealResponse(String response) {
+    private final String aesKey;
+
+    public RealResponse(String response, String aesKey) {
+        this.aesKey = aesKey;
         this.response = response;
     }
 
-    public RealResponse(Response okResponse) {
+    public RealResponse(Response okResponse, String aesKey) {
+        this.aesKey = aesKey;
         this.okResponse = okResponse;
     }
 
@@ -21,6 +26,14 @@ public final class RealResponse {
 
     public String getResponse() {
         return response;
+    }
+
+    public String getAesKey() {
+        return aesKey;
+    }
+
+    public String getDecryptResponse() {
+        return EncryptUtils.decryptAES(getResponse(), getAesKey());
     }
 
     public Response getOkResponse() {
