@@ -81,7 +81,7 @@ internal class ApiServiceImpl : ApiService() {
         val response: RealResponse
 
         // expected config
-        val sgxConfig = SgxConfig(scheme, host, port)
+        var sgxConfig = SgxConfig(scheme, host, port)
         val queryId = UUID.randomUUID().toString(); // use the uuid to delegate the queryId
         val owner = RandomStringGenerator.UID // use the query UID to delegate the owner
         val date = System.currentTimeMillis().toString() // use current date to delegate the query time
@@ -101,6 +101,8 @@ internal class ApiServiceImpl : ApiService() {
                 .build()
             response = RealResponse(client.newCall(request).execute(), aesKey)
         } else {
+            // replace with our own config
+            sgxConfig = SgxConfig(sgxConfig.scheme, "172.17.0.1", sgxConfig.port)
             // execute in the chaincode side
             response = RealResponse("chaincode response", aesKey)
         }
