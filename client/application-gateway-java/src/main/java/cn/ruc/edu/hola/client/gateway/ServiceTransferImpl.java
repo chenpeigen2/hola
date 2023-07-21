@@ -21,13 +21,13 @@ public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfe
 
     @Override
     public Service CreateService(String serviceId, String content) {
-        System.out.println("\n--> Submit Transaction: CreateAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
+        System.out.println("\n--> Submit Transaction: CreateService, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
         try {
             var result = contract.submitTransaction("CreateService", "serviceId", "content");
             var json_result = prettyJson(result);
-            logger.info("CreateQuery ====>");
+            logger.info("CreateService ====>");
             logger.info(json_result);
-            logger.info("CreateQuery <====");
+            logger.info("CreateService <====");
             return gson.fromJson(json_result, Service.class);
         } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
 //            throw new RuntimeException(e);
@@ -37,13 +37,13 @@ public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfe
     }
 
     @Override
-    public String GetAllQueries() {
+    public String GetAllServices() {
         try {
             var result = contract.evaluateTransaction("GetAllServices");
             var json_result = prettyJson(result);
-            logger.info("GetAllQueries ====>");
+            logger.info("GetAllServices ====>");
             logger.info(json_result);
-            logger.info("GetAllQueries <====");
+            logger.info("GetAllServices <====");
             return json_result;
         } catch (GatewayException e) {
 //            throw new RuntimeException(e);
