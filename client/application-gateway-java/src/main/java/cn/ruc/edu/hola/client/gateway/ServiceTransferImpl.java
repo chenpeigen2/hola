@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfer {
     private static final Logger logger = Logger.getLogger(QueryTransferImpl.class.getName());
-    protected static final String CHAINCODE_NAME = System.getenv().getOrDefault("CHAINCODE_NAME", "service");
+
+    private static final String contractName = "service";
 
     public ServiceTransferImpl(final Gateway gateway) {
         // Get a network instance representing the channel where the smart contract is
@@ -16,7 +17,7 @@ public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfe
         var network = gateway.getNetwork(CHANNEL_NAME);
 
         // Get the smart contract from the network.
-        contract = network.getContract(CHAINCODE_NAME);
+        contract = network.getContract(CHAINCODE_NAME, contractName);
     }
 
     @Override
