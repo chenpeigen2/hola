@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client.bridge;
 
 import cn.ruc.edu.hola.client.AssetTransfer;
+import cn.ruc.edu.hola.client.Query;
 import cn.ruc.edu.hola.client.entity.RealResponse;
 import cn.ruc.edu.hola.client.gateway.AssetTransferImpl;
 import cn.ruc.edu.hola.client.gateway.QueryTransferImpl;
@@ -19,13 +20,13 @@ public final class ChainCodeBridge {
         if (resp.getOkResponse() != null) {
             try (var res = resp.getOkResponse()) {
                 response = res.body().string();
-                resp.setResponse(response);
             }
         } else {
             response = resp.getResponse();
         }
-
-        queryTransfer.CreateQuery(JsonUtils.INSTANCE.getJson().toJson(sgxConfig), queryId, owner, date, query, response);
+        Query chaincode_query = queryTransfer.CreateQuery(JsonUtils.INSTANCE.getJson().toJson(sgxConfig), queryId, owner, date, query, response);
+        response = chaincode_query.getResp();
+        resp.setResponse(response);
         QueryTransferImpl.destroy(wrapper);
 
         return resp;
