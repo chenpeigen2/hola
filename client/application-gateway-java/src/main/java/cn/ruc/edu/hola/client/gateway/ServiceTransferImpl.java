@@ -6,6 +6,7 @@ import org.hyperledger.fabric.client.*;
 
 import java.util.logging.Logger;
 
+@Deprecated
 public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfer {
     private static final Logger logger = Logger.getLogger(QueryTransferImpl.class.getName());
 

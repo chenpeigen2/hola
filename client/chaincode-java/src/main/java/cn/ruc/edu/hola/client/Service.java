@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.client;
 
 import java.util.Objects;
 
+@Deprecated
 public class Service {
     private final String serviceId;
 
