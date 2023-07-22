@@ -11,9 +11,9 @@ import java.util.Objects;
 public class Service {
 
     @Expose
-    @SerializedName("queryID")
+    @SerializedName("serviceId")
     @Property()
-    private final String queryID;
+    private final String serviceId;
 
 
     @Expose
@@ -23,12 +23,12 @@ public class Service {
 
 
     public Service(String queryID, String content) {
-        this.queryID = queryID;
+        this.serviceId = queryID;
         this.content = content;
     }
 
-    public String getQueryID() {
-        return queryID;
+    public String getServiceId() {
+        return serviceId;
     }
 
     public String getContent() {
@@ -40,18 +40,18 @@ public class Service {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Service service = (Service) o;
-        return Objects.equals(queryID, service.queryID) && Objects.equals(content, service.content);
+        return Objects.equals(serviceId, service.serviceId) && Objects.equals(content, service.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(queryID, content);
+        return Objects.hash(serviceId, content);
     }
 
     @Override
     public String toString() {
         return "Service{" +
-                "queryID='" + queryID + '\'' +
+                "serviceId='" + serviceId + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }

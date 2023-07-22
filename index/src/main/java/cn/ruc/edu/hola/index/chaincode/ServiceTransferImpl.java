@@ -22,7 +22,7 @@ public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfe
     public Service CreateService(String serviceId, String content) {
         System.out.println("\n--> Submit Transaction: CreateService, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
         try {
-            var result = contract.submitTransaction("CreateService", "serviceId", "content");
+            var result = contract.submitTransaction("CreateService", serviceId, content);
             var json_result = prettyJson(result);
             logger.info("CreateService ====>");
             logger.info(json_result);
