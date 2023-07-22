@@ -39,7 +39,6 @@ public abstract class BasicTransfer {
     protected static final String OVERRIDE_AUTH = "peer0.org1.example.com";
 
     protected Contract contract;
-    protected final String assetId = "asset" + Instant.now().toEpochMilli();
     protected final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     protected static ManagedChannel newGrpcConnection() throws IOException {
