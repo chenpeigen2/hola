@@ -27,7 +27,9 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
         router.post("/register").handler(ctx -> {
             Service ans;
             try {
-                System.out.println(ctx.body().asString());
+                // do register_remapping
+                RegisterInfo registerInfo = JsonUtils.INSTANCE.getJson().fromJson(ctx.body().asString(), RegisterInfo.class);
+                Indexer2.register(registerInfo);
                 ans = impl.register("aaa", UUID.randomUUID().toString());
                 System.out.println(JsonUtils.INSTANCE.getJson().toJson(ans));
             } catch (Exception e) {

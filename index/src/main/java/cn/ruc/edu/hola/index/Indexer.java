@@ -116,4 +116,10 @@ public final class Indexer {
             }
         }
     }
+
+    public static void main(String[] args) {
+        Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
+        Map<String, BackBendInfo> backbend = Indexer.remappingUrl("backbend.json");
+        System.out.println();
+    }
 }
