@@ -24,9 +24,10 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
-        router.get("/register").handler(ctx -> {
+        router.post("/register").handler(ctx -> {
             Service ans;
             try {
+                System.out.println(ctx.body().asString());
                 ans = impl.register("aaa", UUID.randomUUID().toString());
                 System.out.println(JsonUtils.INSTANCE.getJson().toJson(ans));
             } catch (Exception e) {
