@@ -36,6 +36,34 @@ public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfe
     }
 
     @Override
+    public void DeleteService(String serviceId) {
+        System.out.println("\n--> Submit Transaction: DeleteService");
+        try {
+            contract.submitTransaction("DeleteService", serviceId);
+        } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("*** Transaction committed successfully");
+    }
+
+    @Override
+    public Service ReadAssetById(String serviceId) {
+        System.out.println("\n--> Evaluate Transaction: ReadService, function returns asset attributes");
+
+        byte[] evaluateResult = new byte[0];
+        try {
+            evaluateResult = contract.evaluateTransaction("ReadService", serviceId);
+        } catch (GatewayException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println("*** Result:" + prettyJson(evaluateResult));
+        Service service = gson.fromJson(prettyJson(evaluateResult), Service.class);
+
+        return service;
+    }
+
+    @Override
     public String GetAllServices() {
         try {
             var result = contract.evaluateTransaction("GetAllServices");
