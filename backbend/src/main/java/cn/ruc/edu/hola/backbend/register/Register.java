@@ -11,12 +11,12 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public final class Indexer {
-    private Indexer() {}
+public final class Register {
+    private Register() {}
 
-    public static RegisterInfo remappingUrl(String serviceId, String serviceName, String filePath) {
+    public static RegisterInfo register(String serviceId, String serviceName, String filePath) {
         RegisterInfo registerInfo = null;
-        URL url = Indexer.class.getClassLoader().getResource(filePath);
+        URL url = Register.class.getClassLoader().getResource(filePath);
         if (url != null) {
             try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
                 JsonElement jsonElement = JsonParser.parseReader(reader);
@@ -29,10 +29,5 @@ public final class Indexer {
             }
         }
         return registerInfo;
-    }
-
-    public static void main(String[] args) {
-        var abc = remappingUrl("", "", "bb1_config.json");
-        System.out.println(abc);
     }
 }

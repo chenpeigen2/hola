@@ -2,9 +2,14 @@ package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.entity.Auth;
 import cn.ruc.edu.hola.backbend.entity.Filter;
+import cn.ruc.edu.hola.backbend.entity.RegisterInfo;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
+import cn.ruc.edu.hola.backbend.register.Register;
+import cn.ruc.edu.hola.backbend.register.Registers;
 import com.google.gson.JsonSyntaxException;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Context;
+import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -19,6 +24,27 @@ public class CouchVerticle extends AbstractVerticle {
     final static int PORT = 8080;
 
     final Proxy proxyMethods = new EncryptProxy();
+
+
+    @Override
+    public void init(Vertx vertx, Context context) {
+        super.init(vertx, context);
+        RegisterInfo registerInfo = null;
+        if (getTag().equals("bb1")) {
+            registerInfo = Register.register(getTag(), getTag(), "bb1_config.json");
+        } else if (getTag().equals("bb2")) {
+            registerInfo = Register.register(getTag(), getTag(), "bb2_config.json");
+        } else if (getTag().equals("bb3")) {
+            registerInfo = Register.register(getTag(), getTag(), "bb3_config.json");
+        }
+        if (registerInfo != null) {
+            doRegister(registerInfo);
+        }
+    }
+
+    private void doRegister(RegisterInfo registerInfo) {
+        Registers.INSTANCE.doRegister(registerInfo);
+    }
 
     public String getTag() {
         return "bb1";

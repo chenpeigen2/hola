@@ -88,7 +88,7 @@ public final class FilterParser {
 
         var ans = getFilterDbs(query, "bb1");
 
-        System.out.println();
+        System.out.println(ans);
 
     }
 }
