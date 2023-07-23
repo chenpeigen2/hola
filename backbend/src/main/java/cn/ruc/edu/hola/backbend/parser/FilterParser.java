@@ -37,8 +37,8 @@ public final class FilterParser {
             @Override
             public void accept(String key) {
                 for (StructInfo structInfo : structs) {
-                    if (structInfo.getInfo().contains(key)) {
-                        ret.addAll(structInfo.getDbs());
+                    if (structInfo.info().contains(key)) {
+                        ret.addAll(structInfo.dbs());
                     }
                 }
             }
