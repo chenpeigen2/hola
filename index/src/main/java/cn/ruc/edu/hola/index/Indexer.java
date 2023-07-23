@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Consumer;
 
+@Deprecated
 public final class Indexer {
     private Indexer() {}
 
@@ -115,11 +116,5 @@ public final class Indexer {
                 getJsonKey(ret, entry.getValue(), base + entry.getKey() + ".");
             }
         }
-    }
-
-    public static void main(String[] args) {
-        Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
-        Map<String, BackBendInfo> backbend = Indexer.remappingUrl("backbend.json");
-        System.out.println();
     }
 }

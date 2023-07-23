@@ -141,7 +141,7 @@ public class Verticle extends AbstractVerticle {
     public static List<String> retainElementList(List<List<String>> elementLists) {
 
         Optional<List<String>> result = elementLists.parallelStream()
-                .filter(elementList -> elementList != null && elementList.size() != 0)
+                .filter(elementList -> elementList != null && !elementList.isEmpty())
                 .reduce((a, b) -> {
                     a.retainAll(b);
                     return a;
