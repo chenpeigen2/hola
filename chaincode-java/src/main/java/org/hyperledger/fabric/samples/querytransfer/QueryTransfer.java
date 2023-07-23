@@ -61,25 +61,6 @@ public final class QueryTransfer implements ContractInterface {
         CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":565}", "asset6", "Michel", "111", "query", null);
     }
 
-    public static String main() {
-        String res = "placeholder";
-        OkHttpClient client = new OkHttpClient();
-
-        Request request = new Request.Builder()
-                .url("https://www.baidu.com")
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            res = response.body().string(); // can only call once
-            System.out.println(res);
-            System.out.println("executing the okhttp3");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
-
-
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Query CreateQuery(final Context ctx, final String sgxConfig, final String queryID,
                              final String owner, final String date, final String query, String resp) {
@@ -91,8 +72,7 @@ public final class QueryTransfer implements ContractInterface {
         if (!ChaincodeConfig.supportNet()) {
             try (Response response = HttpClient.INSTANCE.executeHello()) {
                 String responseText = response.body().string();
-                logger.info("wwwwwwwwwwwwwwwwwwwwwwwwwwww");
-                logger.error(responseText);
+                logger.info(responseText);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -135,7 +115,7 @@ public final class QueryTransfer implements ContractInterface {
     public String GetAllQueries(final Context ctx) {
         ChaincodeStub stub = ctx.getStub();
 
-        List<Query> queryResults = new ArrayList<Query>();
+        List<Query> queryResults = new ArrayList<>();
 
         // To retrieve all assets from the ledger use getStateByRange with empty startKey & endKey.
         // Giving empty startKey & endKey is interpreted as all the keys from beginning to end.
@@ -150,15 +130,6 @@ public final class QueryTransfer implements ContractInterface {
         }
 
         final String response = gson.toJson(queryResults);
-
-        // execute the okhttp3
-        try {
-            main();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("444444444444443333333333333338888888888888888888");
-            logger.error(e.toString());
-        }
 
         return response;
     }

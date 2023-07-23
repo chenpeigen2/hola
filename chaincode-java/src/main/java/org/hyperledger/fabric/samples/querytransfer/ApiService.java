@@ -10,6 +10,7 @@ import org.hyperledger.fabric.samples.querytransfer.impl.ApiServiceImpl;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public abstract class ApiService {
 
     private String scheme;

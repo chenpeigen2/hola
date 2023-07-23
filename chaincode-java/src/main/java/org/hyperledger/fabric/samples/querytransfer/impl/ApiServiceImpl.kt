@@ -7,6 +7,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.hyperledger.fabric.samples.querytransfer.ApiService
 
+@Deprecated(message = "using HttpClient instead")
 internal class ApiServiceImpl : ApiService() {
 
 
