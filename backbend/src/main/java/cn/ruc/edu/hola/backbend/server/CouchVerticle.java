@@ -39,8 +39,14 @@ public class CouchVerticle extends AbstractVerticle {
         router.post("/_find").handler(this::filterDocs);
         router.get("/_index").handler(this::createIndex);
         router.post("/_auth").handler(this::auth); // should change to post
-
+        installPing(router); // 保活
         listen(server, router);
+    }
+
+    private void installPing(Router router) {
+        router.get("/ping").handler(ctx -> {
+            out(ctx, "pong");
+        });
     }
 
     public void listen(HttpServer server, Router router) {
