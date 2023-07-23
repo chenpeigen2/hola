@@ -1,9 +1,7 @@
 package cn.ruc.edu.hola.backbend.register;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import cn.ruc.edu.hola.backbend.entity.RegisterInfo;
+import com.google.gson.*;
 import io.vertx.core.json.Json;
 
 import java.io.IOException;
@@ -18,19 +16,25 @@ import java.util.function.Consumer;
 public final class Indexer {
     private Indexer() {}
 
-    /**
-     * remapping the backbend config
-     **/
-    public static void remappingUrl(String filePath) {
-//        URL url = Indexer.class.getClassLoader().getResource(filePath);
-//        if (url == null) return null;
-//        try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
-//            JsonElement element = JsonParser.parseReader(reader);
-//            JsonObject obj = element.getAsJsonObject();
-////            new Gson().fromJson()
-//        } catch (IOException | URISyntaxException ignored) {
-//
-//        }
-//        return null;
+    public static void remappingUrl(String serviceId, String serviceName, String filePath) {
+        URL url = Indexer.class.getClassLoader().getResource(filePath);
+        if (url != null) {
+            try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
+                JsonElement jsonElement = JsonParser.parseReader(reader);
+                var json_object = jsonElement.getAsJsonObject();
+
+                RegisterInfo registerInfo = new RegisterInfo(serviceId, serviceName,
+                        json_object.getAsJsonObject("$info").toString()
+                        , json_object.getAsJsonArray("$struct").toString());
+                System.out.println(jsonElement.toString());
+                System.out.println(registerInfo);
+            } catch (IOException | URISyntaxException ignored) {
+
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        remappingUrl("", "", "bb1_config.json");
     }
 }

@@ -1,18 +1,20 @@
 {
-  "$name": "bb2",
-  "$url": "http://localhost:8081",
-  "$path": {
-    "/_find": [
-      "data.countryid",
-      "data.country",
-      "message"
-    ],
-    "fake": [
-      "data.id",
-      "data.logo",
-      "code",
-      "message"
-    ]
+  "$info": {
+    "$name": "bb2",
+    "$url": "http://localhost:8081",
+    "$path": {
+      "/_find": [
+        "data.countryid",
+        "data.country",
+        "message"
+      ],
+      "fake": [
+        "data.id",
+        "data.logo",
+        "code",
+        "message"
+      ]
+    }
   },
   "$struct": [
     {
