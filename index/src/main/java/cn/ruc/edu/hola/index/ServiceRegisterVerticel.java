@@ -35,7 +35,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ans));
         });
 
-        router.get("unregister").handler(ctx -> {
+        router.get("/unregister").handler(ctx -> {
             try {
                 impl.unregister("aaa");
             } catch (Exception e) {
@@ -44,7 +44,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, "success");
         });
 
-        router.get("getAll").handler(ctx -> {
+        router.get("/getAll").handler(ctx -> {
             String text = "a";
             try {
                 text = impl.getServices();
@@ -54,7 +54,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, text);
         });
 
-        router.get("getSpec").handler(ctx -> {
+        router.get("/getSpec").handler(ctx -> {
             String text = "a";
             try {
                 text = JsonUtils.INSTANCE.getJson().toJson(impl.getSpecService("aaa"));
