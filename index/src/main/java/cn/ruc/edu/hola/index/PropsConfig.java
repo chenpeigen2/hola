@@ -21,7 +21,7 @@ public final class PropsConfig {
      *
      * @return Configuration
      */
-    public static Properties getChaincodeConfig() {
+    public static Properties getPropsConfig() {
         if (props == null) {
 
             final ClassLoader cl = PropsConfig.class.getClassLoader();
@@ -46,7 +46,7 @@ public final class PropsConfig {
     }
 
     public static boolean supportIndexer2() {
-        Properties properties = getChaincodeConfig();
+        Properties properties = getPropsConfig();
         if (properties.containsKey(USING_INDEX2)) {
             return Boolean.parseBoolean((String) props.get(USING_INDEX2));
         }
