@@ -7,6 +7,7 @@ import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.*;
 import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
+import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
@@ -33,6 +34,11 @@ public class ServiceTransfer implements ContractInterface {
 
     private final Logger logger = Logger.getLogger(ServiceTransfer.class.getName());
 
+    private enum ServiceTransferErrors {
+        SERVICE_NOT_FOUND,
+        SERVICE_ALREADY_EXISTS
+    }
+
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Service CreateService(final Context ctx, final String serviceId, final String content) {
         ChaincodeStub stub = ctx.getStub();
@@ -42,6 +48,56 @@ public class ServiceTransfer implements ContractInterface {
         String sortedJson = gson.toJson(service);
         stub.putStringState(serviceId, sortedJson);
         return service;
+    }
+
+    /**
+     * Retrieves an asset with the specified ID from the ledger.
+     *
+     * @param ctx       the transaction context
+     * @param serviceId the ID of the asset
+     * @return the asset found on the ledger if there was one
+     */
+    @Transaction(intent = Transaction.TYPE.EVALUATE)
+    public Service ReadService(final Context ctx, final String serviceId) {
+        ChaincodeStub stub = ctx.getStub();
+        String assetJSON = stub.getStringState(serviceId);
+
+        if (assetJSON == null || assetJSON.isEmpty()) {
+            String errorMessage = String.format("Service %s does not exist", serviceId);
+            System.out.println(errorMessage);
+            throw new ChaincodeException(errorMessage, ServiceTransferErrors.SERVICE_NOT_FOUND.toString());
+        }
+
+        Service service = gson.fromJson(assetJSON, Service.class);
+        return service;
+    }
+
+    /**
+     * Checks the existence of the asset on the ledger
+     *
+     * @param ctx       the transaction context
+     * @param serviceId the ID of the asset
+     * @return boolean indicating the existence of the asset
+     */
+    @Transaction(intent = Transaction.TYPE.EVALUATE)
+    public boolean ServiceExists(final Context ctx, final String serviceId) {
+        ChaincodeStub stub = ctx.getStub();
+        String assetJSON = stub.getStringState(serviceId);
+
+        return (assetJSON != null && !assetJSON.isEmpty());
+    }
+
+    @Transaction(intent = Transaction.TYPE.SUBMIT)
+    public void DeleteService(final Context ctx, final String serviceId) {
+        ChaincodeStub stub = ctx.getStub();
+
+        if (!ServiceExists(ctx, serviceId)) {
+            String errorMessage = String.format("Service %s does not exist", serviceId);
+            System.out.println(errorMessage);
+            throw new ChaincodeException(errorMessage, ServiceTransferErrors.SERVICE_NOT_FOUND.toString());
+        }
+
+        stub.delState(serviceId);
     }
 
     @Transaction(intent = Transaction.TYPE.EVALUATE)
