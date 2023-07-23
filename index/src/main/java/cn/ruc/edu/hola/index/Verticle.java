@@ -13,8 +13,18 @@ import java.util.*;
 public class Verticle extends AbstractVerticle {
     final static int PORT = 3000;
 
-    public static Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
-    public static Map<String, BackBendInfo> backbend = Indexer.remappingUrl("backbend.json");
+    public static Map<String, List<StructInfo>> struct;
+    public static Map<String, BackBendInfo> backbend;
+
+    static {
+        if (PropsConfig.supportIndexer2()) {
+            struct = Indexer2.struct;
+            backbend = Indexer2.backbend;
+        } else {
+            struct = Indexer.remappingStruct("struct.json");
+            backbend = Indexer.remappingUrl("backbend.json");
+        }
+    }
 
     @Override
     public void start() {
