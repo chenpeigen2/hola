@@ -59,6 +59,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             try {
                 text = JsonUtils.INSTANCE.getJson().toJson(impl.getSpecService("aaa"));
             } catch (Exception e) {
+                System.out.println("77777");
                 out(ctx, text);
             }
             out(ctx, text);
