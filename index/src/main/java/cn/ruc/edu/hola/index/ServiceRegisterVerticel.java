@@ -54,6 +54,16 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, text);
         });
 
+        router.get("getSpec").handler(ctx -> {
+            String text = "a";
+            try {
+                text = JsonUtils.INSTANCE.getJson().toJson(impl.getSpecService("aaa"));
+            } catch (Exception e) {
+                out(ctx, text);
+            }
+            out(ctx, text);
+        });
+
         server.requestHandler(router).listen(PORT);
     }
 
