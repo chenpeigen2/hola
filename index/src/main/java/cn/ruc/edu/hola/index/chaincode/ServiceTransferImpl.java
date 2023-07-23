@@ -47,7 +47,7 @@ public class ServiceTransferImpl extends BasicTransfer implements ServiceTransfe
     }
 
     @Override
-    public Service ReadAssetById(String serviceId) {
+    public Service ReadServiceById(String serviceId) {
         System.out.println("\n--> Evaluate Transaction: ReadService, function returns asset attributes");
 
         byte[] evaluateResult = new byte[0];

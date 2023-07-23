@@ -27,12 +27,31 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
         router.get("/register").handler(ctx -> {
             Service ans;
             try {
-                ans = impl.register(UUID.randomUUID().toString(), UUID.randomUUID().toString());
+                ans = impl.register("aaa", UUID.randomUUID().toString());
                 System.out.println(JsonUtils.INSTANCE.getJson().toJson(ans));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ans));
+        });
+
+        router.get("unregister").handler(ctx -> {
+            try {
+                impl.unregister("aaa");
+            } catch (Exception e) {
+                out(ctx, "error");
+            }
+            out(ctx, "success");
+        });
+
+        router.get("getAll").handler(ctx -> {
+            String text = "a";
+            try {
+                text = impl.getServices();
+            } catch (Exception e) {
+                out(ctx, text);
+            }
+            out(ctx, text);
         });
 
         server.requestHandler(router).listen(PORT);

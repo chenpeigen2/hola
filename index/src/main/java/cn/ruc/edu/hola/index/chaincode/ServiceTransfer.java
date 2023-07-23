@@ -7,5 +7,5 @@ public interface ServiceTransfer {
 
     String GetAllServices();
 
-    Service ReadAssetById(String serviceId);
+    Service ReadServiceById(String serviceId);
 }

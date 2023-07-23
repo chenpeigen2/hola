@@ -14,7 +14,26 @@ public final class ChainCodeBridge {
         return service;
     }
 
-    public String getAllRegisters() throws Exception {
+    public void unregister(final String serviceId) throws Exception {
+        var wrapper = ServiceTransferImpl.init();
+        var impl = new ServiceTransferImpl(wrapper.gateway);
+
+        impl.DeleteService(serviceId);
+
+        ServiceTransferImpl.destroy(wrapper);
+    }
+
+    public Service getSpecService(final String serviceId) throws Exception {
+        var wrapper = ServiceTransferImpl.init();
+        var impl = new ServiceTransferImpl(wrapper.gateway);
+
+        Service service = impl.ReadServiceById(serviceId);
+
+        ServiceTransferImpl.destroy(wrapper);
+        return service;
+    }
+
+    public String getServices() throws Exception {
         var wrapper = ServiceTransferImpl.init();
         var impl = new ServiceTransferImpl(wrapper.gateway);
 
