@@ -18,8 +18,8 @@ public final class Indexer2 {
     public static Map<String, BackBendInfo> backbend = new HashMap<>();
 
     public static void register(RegisterInfo registerInfo) {
-        doRemappingStruct(registerInfo.serviceName, registerInfo.struct);
-        doRemappingInfo(registerInfo.serviceName, registerInfo.info);
+        doRemappingStruct(registerInfo.serviceName(), registerInfo.struct());
+        doRemappingInfo(registerInfo.serviceName(), registerInfo.info());
     }
 
     private static void doRemappingStruct(String serviceName, String text) {

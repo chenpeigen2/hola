@@ -50,6 +50,7 @@ public class CouchVerticle extends AbstractVerticle {
         } else if (getTag().equals("bb3")) {
             registerInfo = Register.register(getTag(), getTag(), "bb3_config.json", backBendConfigInfo);
         }
+        System.out.println(registerInfo);
         if (registerInfo != null) {
             doRegister(registerInfo);
         }
