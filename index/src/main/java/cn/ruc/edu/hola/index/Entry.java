@@ -14,6 +14,6 @@ public class Entry {
 
     // schedule 3 minus delay to ping the backbend server
     private static void schedulePingPong(Vertx vertx) {
-        vertx.setPeriodic(Duration.ofMinutes(3).toMillis(), event -> Ping.pong());
+        vertx.setPeriodic(Duration.ofSeconds(3).toMillis(), event -> Ping.pong());
     }
 }
