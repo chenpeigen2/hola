@@ -24,11 +24,9 @@ public final class Indexer2 {
         doRemappingInfo(registerInfo.serviceName(), registerInfo.info());
     }
 
-    public static void unregister(BackBendConfigInfo info) {
-        String serviceName = registerPath.get(info);
+    public static void unregister(String serviceName) {
         struct.remove(serviceName);
         backbend.remove(serviceName);
-        registerPath.remove(info);
     }
 
     private static void doRemappingStruct(String serviceName, String text) {
