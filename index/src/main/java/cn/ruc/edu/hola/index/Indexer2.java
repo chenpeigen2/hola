@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.index;
 
+import cn.ruc.edu.hola.index.chaincode.ChainCodeBridge;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -17,9 +18,13 @@ public final class Indexer2 {
     public static Map<String, List<StructInfo>> struct = new HashMap<>();
     public static Map<String, BackBendInfo> backbend = new HashMap<>();
     public static Map<BackBendConfigInfo, String> registerPath = new HashMap<>();
+    public static Map<String, String > services = new HashMap<>();
+
+    public final static ChainCodeBridge impl = new ChainCodeBridge();
 
     public static void register(RegisterInfo registerInfo) {
         registerPath.put(registerInfo.backBendConfigInfo(),registerInfo.serviceName());
+        services.put(registerInfo.serviceName(),registerInfo.serviceId());
         doRemappingStruct(registerInfo.serviceName(), registerInfo.struct());
         doRemappingInfo(registerInfo.serviceName(), registerInfo.info());
     }
@@ -27,6 +32,11 @@ public final class Indexer2 {
     public static void unregister(String serviceName) {
         struct.remove(serviceName);
         backbend.remove(serviceName);
+        try {
+            impl.unregister(services.get(serviceName));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void doRemappingStruct(String serviceName, String text) {

@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ServiceRegisterVerticel extends AbstractVerticle {
     final static int PORT = 2999;
 
-    final ChainCodeBridge impl = new ChainCodeBridge();
+    final ChainCodeBridge impl = Indexer2.impl;
 
     @Override
     public void start() throws Exception {
@@ -32,7 +32,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
                 RegisterInfo registerInfo = JsonUtils.INSTANCE.getJson().fromJson(text, RegisterInfo.class);
                 Indexer2.register(registerInfo); // do register
 
-                ans = impl.register("aaa", UUID.randomUUID().toString());
+                ans = impl.register(registerInfo.serviceId(), registerInfo.serviceName());
                 System.out.println(JsonUtils.INSTANCE.getJson().toJson(ans));
 
             } catch (Exception e) {
@@ -41,6 +41,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(ans));
         });
 
+        // TODO
         router.get("/unregister").handler(ctx -> {
             try {
                 impl.unregister("aaa");
@@ -50,6 +51,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, "success");
         });
 
+        // TODO
         router.get("/getAll").handler(ctx -> {
             String text = "a";
             try {
@@ -60,6 +62,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, text);
         });
 
+        // TODO
         router.get("/getSpec").handler(ctx -> {
             String text = "a";
             try {
