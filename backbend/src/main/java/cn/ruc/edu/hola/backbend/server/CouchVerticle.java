@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.entity.Auth;
+import cn.ruc.edu.hola.backbend.entity.BackBendConfigInfo;
 import cn.ruc.edu.hola.backbend.entity.Filter;
 import cn.ruc.edu.hola.backbend.entity.RegisterInfo;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
@@ -25,17 +26,29 @@ public class CouchVerticle extends AbstractVerticle {
 
     final Proxy proxyMethods = new EncryptProxy();
 
+    public String getHost() {
+        return "127.0.0.1";
+    }
+
+    public int getPort() {
+        return 8080;
+    }
+
+    public String getPath() {
+        return "/ping";
+    }
 
     @Override
     public void init(Vertx vertx, Context context) {
         super.init(vertx, context);
         RegisterInfo registerInfo = null;
+        BackBendConfigInfo backBendConfigInfo = new BackBendConfigInfo(getHost(), getPort(), getPath());
         if (getTag().equals("bb1")) {
-            registerInfo = Register.register(getTag(), getTag(), "bb1_config.json");
+            registerInfo = Register.register(getTag(), getTag(), "bb1_config.json", backBendConfigInfo);
         } else if (getTag().equals("bb2")) {
-            registerInfo = Register.register(getTag(), getTag(), "bb2_config.json");
+            registerInfo = Register.register(getTag(), getTag(), "bb2_config.json", backBendConfigInfo);
         } else if (getTag().equals("bb3")) {
-            registerInfo = Register.register(getTag(), getTag(), "bb3_config.json");
+            registerInfo = Register.register(getTag(), getTag(), "bb3_config.json", backBendConfigInfo);
         }
         if (registerInfo != null) {
             doRegister(registerInfo);

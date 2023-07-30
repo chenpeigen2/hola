@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.register;
 
+import cn.ruc.edu.hola.backbend.entity.BackBendConfigInfo;
 import cn.ruc.edu.hola.backbend.entity.RegisterInfo;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -14,7 +15,7 @@ import java.nio.file.Paths;
 public final class Register {
     private Register() {}
 
-    public static RegisterInfo register(String serviceId, String serviceName, String filePath) {
+    public static RegisterInfo register(String serviceId, String serviceName, String filePath, BackBendConfigInfo info) {
         RegisterInfo registerInfo = null;
         URL url = Register.class.getClassLoader().getResource(filePath);
         if (url != null) {
@@ -23,7 +24,7 @@ public final class Register {
                 var json_object = jsonElement.getAsJsonObject();
                 registerInfo = new RegisterInfo(serviceId, serviceName,
                         json_object.getAsJsonObject("$info").toString()
-                        , json_object.getAsJsonArray("$struct").toString());
+                        , json_object.getAsJsonArray("$struct").toString(), info);
             } catch (IOException | URISyntaxException ignored) {
 
             }

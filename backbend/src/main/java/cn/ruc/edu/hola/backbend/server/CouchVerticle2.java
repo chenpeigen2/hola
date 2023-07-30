@@ -9,6 +9,10 @@ public class CouchVerticle2 extends CouchVerticle {
         return "bb3";
     }
 
+    public int getPort() {
+        return 8082;
+    }
+
     @Override
     public void listen(HttpServer server, Router router) {
         server.requestHandler(router).listen(8082);

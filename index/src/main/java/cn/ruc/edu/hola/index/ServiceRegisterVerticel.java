@@ -31,6 +31,13 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
                 RegisterInfo registerInfo = JsonUtils.INSTANCE.getJson().fromJson(ctx.body().asString(), RegisterInfo.class);
                 Indexer2.register(registerInfo); // do register
 
+
+                System.out.println(ctx.request().uri());
+                System.out.println(ctx.request().scheme());
+                System.out.println(ctx.request().host());
+                System.out.println(ctx.request().path());
+
+
                 ans = impl.register("aaa", UUID.randomUUID().toString());
                 System.out.println(JsonUtils.INSTANCE.getJson().toJson(ans));
             } catch (Exception e) {
