@@ -3,7 +3,7 @@ package cn.ruc.edu.hola.index;
 import java.util.logging.Logger;
 
 public final class Ping {
-    private static Logger logger = Logger.getLogger(Ping.class.getSimpleName());
+    private final static Logger logger = Logger.getLogger(Ping.class.getSimpleName());
 
     private Ping() {}
 
