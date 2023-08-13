@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.index.chaincode;
+package cn.ruc.edu.hola.index.chaincode.basic;
 
 import io.grpc.ManagedChannel;
 import org.hyperledger.fabric.client.Gateway;

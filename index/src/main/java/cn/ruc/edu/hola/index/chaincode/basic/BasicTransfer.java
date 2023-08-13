@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.index.chaincode;
+package cn.ruc.edu.hola.index.chaincode.basic;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,7 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.cert.CertificateException;
-import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BasicTransfer {

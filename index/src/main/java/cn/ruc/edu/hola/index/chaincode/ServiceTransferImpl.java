@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.index.chaincode;
 
+import cn.ruc.edu.hola.index.chaincode.basic.BasicTransfer;
 import org.hyperledger.fabric.client.*;
 
 import java.util.logging.Logger;
