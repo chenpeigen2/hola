@@ -56,6 +56,13 @@ public class Verticle extends AbstractVerticle {
             out(ctx, text);
         });
 
+        // define yr own query process
+        router.post("/_find").handler(ctx -> {
+            var postData = ctx.body().asString();
+            System.out.println(postData);
+            out(ctx,"hello world !!!");
+        });
+
         router.get("/trigger_invoke_get_queries").handler(ctx -> {
             var response = impl.getChaincodeQueries();
             var text = response.getResponse();
