@@ -4,9 +4,9 @@ plugins {
     kotlin("jvm") version "1.8.22"
     id("de.qualersoft.jmeter") version "2.4.0"
     application
-    id("org.springframework.boot") version "3.1.0"
-    id("io.spring.dependency-management") version "1.1.0"
-    kotlin("plugin.spring") version "1.8.21"
+    id("org.springframework.boot") version "3.1.2"
+    id("io.spring.dependency-management") version "1.1.2"
+    kotlin("plugin.spring") version "1.8.22"
 }
 
 group = "cn.edu.ruc"
@@ -34,7 +34,7 @@ dependencies {
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("commons-codec:commons-codec:1.16.0")
-    implementation("com.google.guava:guava:32.1.1-jre")
+    implementation("com.google.guava:guava:32.1.2-jre")
     implementation("net.bytebuddy:byte-buddy:1.14.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.apache.commons:commons-math3:3.6.1")
