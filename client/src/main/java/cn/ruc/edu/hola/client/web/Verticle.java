@@ -4,6 +4,7 @@ import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.Entry;
 import cn.ruc.edu.hola.client.bridge.ChainCodeBridge;
 import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
@@ -58,10 +59,13 @@ public class Verticle extends AbstractVerticle {
 
         // define yr own query process
         router.post("/_find").handler(ctx -> {
+            impl.update("http", "127.0.0.1", 8888); // select associate
             var postData = ctx.body().asString();
-            System.out.println(postData);
-
-            out(ctx,"hello world !!!");
+            var jsonData = QueryParser.basicParser(postData); // expected jsonData
+            List<Request> requests = new ArrayList<>();
+            requests.add(new Request(RandomStringGenerator.UID, jsonData));
+            var text = impl.complex(requests).getDecryptResponse();
+            out(ctx, text);
         });
 
         router.get("/trigger_invoke_get_queries").handler(ctx -> {
