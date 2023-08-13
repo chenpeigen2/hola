@@ -22,11 +22,11 @@ dependencies {
     implementation("io.vertx:vertx-web:4.4.4")
     implementation("io.vertx:vertx-web-validation:4.4.4")
     // https://mvnrepository.com/artifact/io.grpc/grpc-api
-    compileOnly("io.grpc:grpc-api:1.56.0")
+    compileOnly("io.grpc:grpc-api:1.57.1")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
-    runtimeOnly("io.grpc:grpc-netty-shaded:1.56.0")
+    runtimeOnly("io.grpc:grpc-netty-shaded:1.57.1")
 // https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
-    implementation("org.hyperledger.fabric:fabric-gateway:1.3.0")
+    implementation("org.hyperledger.fabric:fabric-gateway:1.3.1")
     testImplementation(platform("org.junit:junit-bom:5.9.3"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }

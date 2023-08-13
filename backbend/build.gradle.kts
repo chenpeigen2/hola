@@ -17,10 +17,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.vertx:vertx-web:4.4.4")
     implementation("io.vertx:vertx-web-validation:4.4.4")
-    implementation("com.google.guava:guava:32.1.1-jre")
+    implementation("com.google.guava:guava:32.1.2-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.20")
+    implementation("cn.hutool:hutool-crypto:5.8.21")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 }

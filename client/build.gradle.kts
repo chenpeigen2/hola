@@ -18,7 +18,7 @@ application {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:32.1.1-jre")
+    implementation("com.google.guava:guava:32.1.2-jre")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
@@ -28,18 +28,18 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.20")
+    implementation("cn.hutool:hutool-crypto:5.8.21")
     implementation("io.vertx:vertx-web:4.4.4")
     implementation("io.vertx:vertx-web-validation:4.4.4")
     implementation(project("application-gateway-java"))
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10.1")
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
-    compileOnly("io.grpc:grpc-api:1.56.1")
+    compileOnly("io.grpc:grpc-api:1.57.1")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
-    runtimeOnly("io.grpc:grpc-netty-shaded:1.56.1")
+    runtimeOnly("io.grpc:grpc-netty-shaded:1.57.1")
 // https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
-    implementation("org.hyperledger.fabric:fabric-gateway:1.3.0")
+    implementation("org.hyperledger.fabric:fabric-gateway:1.3.1")
     implementation(project(":chaincode-java"))
 }
 
