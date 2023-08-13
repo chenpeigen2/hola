@@ -60,6 +60,7 @@ public class Verticle extends AbstractVerticle {
         router.post("/_find").handler(ctx -> {
             var postData = ctx.body().asString();
             System.out.println(postData);
+
             out(ctx,"hello world !!!");
         });
 

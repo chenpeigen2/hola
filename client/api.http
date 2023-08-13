@@ -7,6 +7,17 @@ Host: localhost:3001
 
 
 {
-    "name": "admin",
-    "password": "123456"
+  "selector": {
+    "$or": [
+      {
+        "data.countryid": {
+          "$gt": -1
+        }
+      },
+      {
+        "message": "success"
+      }
+    ],
+    "data.country": "China"
+  }
 }
