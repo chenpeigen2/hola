@@ -2,8 +2,10 @@ package cn.ruc.edu.hola.index;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.gson.annotations.Expose;
+import jdk.jfr.Experimental;
 
-public record BackBendConfigInfo(String host, int port, String path) {
+public record BackBendConfigInfo(@Experimental String host, @Expose int port, @Expose String path) {
 
     @Override
     public boolean equals(Object o) {

@@ -1,11 +1,18 @@
 package cn.ruc.edu.hola.index;
 
 
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
-public record RegisterInfo(String serviceId, String serviceName, String info, String struct,
-                           BackBendConfigInfo backBendConfigInfo) {
+public record RegisterInfo(@Expose(serialize = false) String serviceId, @Expose String serviceName, @Expose String info,
+                           @Expose String struct,
+                           @Expose BackBendConfigInfo backBendConfigInfo) {
+
+    private final static Gson gson = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
 
     @Override
     public boolean equals(Object o) {
@@ -22,13 +29,7 @@ public record RegisterInfo(String serviceId, String serviceName, String info, St
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("serviceId", serviceId)
-                .add("serviceName", serviceName)
-                .add("info", info)
-                .add("struct", struct)
-                .add("backBendConfigInfo", backBendConfigInfo)
-                .toString();
+        return gson.toJson(this);
     }
 }
 
