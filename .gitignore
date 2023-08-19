@@ -61,3 +61,4 @@ bin/
 /sgx/.idea/
 /fabric-samples/
 /install-fabric.sh
+/nginx/nginx-1.25.2/
