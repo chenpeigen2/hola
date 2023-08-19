@@ -10,8 +10,6 @@ import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
-import java.util.UUID;
-
 public class ServiceRegisterVerticel extends AbstractVerticle {
     final static int PORT = 2999;
 
@@ -39,7 +37,7 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
         });
 
 
-        router.get("/unregister").handler(ctx -> {
+        router.post("/unregister").handler(ctx -> {
             try {
                 var json_arr = ctx.body().asJsonArray();
                 for (int i = 0; i < json_arr.size(); i++) {
@@ -52,9 +50,9 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, "success");
         });
 
-        // TODO
+
         router.get("/getAll").handler(ctx -> {
-            String text = "a";
+            String text = null;
             try {
                 text = impl.getServices();
             } catch (Exception e) {
@@ -63,16 +61,19 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             out(ctx, text);
         });
 
-        // TODO
+
         router.get("/getSpec").handler(ctx -> {
-            String text = "a";
-            try {
-                text = JsonUtils.INSTANCE.getJson().toJson(impl.getSpecService("aaa"));
-            } catch (Exception e) {
-                System.out.println("77777");
-                out(ctx, text);
+            var serviceId = ctx.request().getParam("serviceId");
+            if (serviceId == null) {
+                out(ctx, "null");
+            } else {
+                var text = "execute exception";
+                try {
+                    text = JsonUtils.INSTANCE.getJson().toJson(impl.getSpecService("aaa"));
+                } catch (Exception e) {
+                    out(ctx, text);
+                }
             }
-            out(ctx, text);
         });
 
         server.requestHandler(router).listen(PORT);
