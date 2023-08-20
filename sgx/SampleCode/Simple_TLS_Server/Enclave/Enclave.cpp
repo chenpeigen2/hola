@@ -96,9 +96,18 @@ std::string curl_post(const char *url, const Request &request) {
     std::string uuid = auth_result.second;
 
     std::string filter = request.filter;
-    filter = ecb_encrypt(filter.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                         aesKey.length(), PaddingModel::PKCS5OR7);
-    filter = encode(filter.c_str(), filter.length());
+
+    // TODO
+    // need execute backbend
+
+//    filter = ecb_encrypt(filter.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+//                         aesKey.length(), PaddingModel::PKCS5OR7);
+//    filter = encode(filter.c_str(), filter.length());
+
+    filter = "hHghYcslO0PlRrE9SK8lPzhM/eHNBi8JmcTVAtfxaiKQMcqETSoofbnk0SW+kyaZqh9cCsjDFymwlf/wTklFdFnTlTl3Iy64tB7DG2Aqxu8=";
+
+    printf("\nhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh\n");
+    printf("\n%s \n", filter.c_str());
 
     std::string body = "{\n"
                        "  \"uuid\" : \"" + uuid +
@@ -109,12 +118,12 @@ std::string curl_post(const char *url, const Request &request) {
     std::string response = sgx_curl_post(url, body.c_str());
 
     // decrypt
-    response = decode(response.c_str(), response.length());
-    response = ecb_decrypt(response.c_str(), response.length(),
-                           reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                           aesKey.length());
+//    response = decode(response.c_str(), response.length());
+//    response = ecb_decrypt(response.c_str(), response.length(),
+//                           reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+//                           aesKey.length());
 
-//    printf("The RESPONSE: %s\n", response.c_str());
+    printf("The RESPONSE: %s\n", response.c_str());
 
     return response;
 }
