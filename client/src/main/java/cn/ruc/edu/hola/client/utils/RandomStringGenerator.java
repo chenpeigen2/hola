@@ -30,6 +30,6 @@ public class RandomStringGenerator {
     }
 
     public static void main(String[] args) {
-        System.out.println(generateRandomUUID());
+        System.out.println(generateAESKey());
     }
 }

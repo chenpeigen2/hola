@@ -114,7 +114,7 @@ std::string curl_post(const char *url, const Request &request) {
                            reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length());
 
-    printf("The RESPONSE: %s\n", response.c_str());
+//    printf("The RESPONSE: %s\n", response.c_str());
 
     return response;
 }
@@ -149,9 +149,9 @@ std::string curl_get(const char *url, const char *request) {
     }
     std::string final_url = base_url + "?" + res;
     /** curl get **/
-    printf("Encalve final url: %s \n", final_url.c_str());
+//    printf("Encalve final url: %s \n", final_url.c_str());
     std::string response = sgx_curl_get(final_url.c_str());
-    printf("The RESPONSE: %s\n", response.c_str());
+//    printf("The RESPONSE: %s\n", response.c_str());
     // decrypt
     response = decode(response.c_str(), response.length());
     response = ecb_decrypt(response.c_str(), response.length(),
@@ -175,9 +175,12 @@ char *ecall_curl_get(const char *url, const char *request) {
 
 char *ecall_complex_curl(const char *data) {
     // provide the requests
+    printf("xxxxxxxxxxxxxxddddddddddddddddddddddddd\n");
     auto provide_decode_data = provide_query(data);
     // the result
     std::vector <string> resp;
+    printf("xxxxxxxxxxxxxxddddddddddddddddddddddddd11\n");
+
 
     // perform execution
     for (const auto &decode_data: provide_decode_data) {
@@ -185,15 +188,19 @@ char *ecall_complex_curl(const char *data) {
         resp.push_back(return_data);
     }
 
+    printf("xxxxxxxxxxxxxxxxxxxx \n");
+
     // aggregation process
     std::string &&response = simple_aggregation(resp);
 
+    printf("yyyyyyyyyyyyyyyyyyy %s \n ", response.c_str());
+
     // encrypt
-    std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
-    std::string aesKey = client_get_aes_key(uid);
-    response = ecb_encrypt(response.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                           aesKey.length(), PaddingModel::PKCS5OR7);
-    response = encode(response.c_str(), response.length());
+//    std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
+//    std::string aesKey = "WUGTrWGPQ8K4oq0hLG9OEizi";
+//    response = ecb_encrypt(response.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+//                           aesKey.length(), PaddingModel::PKCS5OR7);
+//    response = encode(response.c_str(), response.length());
 
     // assemble
     int len = response.length();
@@ -260,7 +267,7 @@ void ecall_start_tls_server(void) {
     std::string aesKey = "0123456789abcdefghijklmn";
     std::string ecb_aes = ecb_encrypt(src.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                                       strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
-    printf("encoded aes string: %s\n", encode(ecb_aes.c_str(), ecb_aes.length()).c_str());
+//    printf("encoded aes string: %s\n", encode(ecb_aes.c_str(), ecb_aes.length()).c_str());
 }
 
 void ecall_type_struct(struct struct_foo_t val) {

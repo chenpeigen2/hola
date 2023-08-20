@@ -35,8 +35,15 @@ std::string filter_find(const std::string &db_name, const std::string &filter) {
 std::string complex_filter(const std::string &data) {
     char *response;
     std::string res;
+    std::cout << "aaaaaaaaaaaaaaaaaa" << std::endl;
+    std::cout << "bbbbbbbbbbbbbbbbbb" << std::endl;
+
     ecall_complex_curl(global_eid, &response, data.c_str());
+    std::cout << "ccccccccccccccc" << std::endl;
+    std::cout << "ddddddddddddddddddd" << std::endl;
+
     toString(response, res);
+    std::cout << "eeeeeeeeeeeeeeeeeeeeeee" << std::endl;
     return res;
 }
 

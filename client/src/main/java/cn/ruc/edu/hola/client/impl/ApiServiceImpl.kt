@@ -42,7 +42,7 @@ internal class ApiServiceImpl : ApiService() {
 
     // TODO need acquire the return data
     private fun refresh() {
-        val aesKey = RandomStringGenerator.generateAESKey()
+        val aesKey = "WUGTrWGPQ8K4oq0hLG9OEizi"
         val data: AuthData = RSAAuthData(RandomStringGenerator.UID, aesKey);
         val text = JsonUtils.json.toJson(data)
         val body = text.toRequestBody("application/json".toMediaType())
@@ -62,6 +62,7 @@ internal class ApiServiceImpl : ApiService() {
 
     override fun complex(requests: MutableList<cn.ruc.edu.hola.client.entity.Request>): RealResponse {
         if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
+            println("refreshingggggggggggggggggg !!!!!!!!!!!!!")
             refresh() //refresh the key
         }
         val aesKey = map[baseUrl.toString()]
@@ -88,6 +89,7 @@ internal class ApiServiceImpl : ApiService() {
         val query = text // query encrypt text
 
         if (!ChaincodeConfig.supportNet()) {
+            // direct call the sgx
             val body = text.toRequestBody("application/json".toMediaType())
             val url = baseUrl
                 .addPathSegment("_complex")

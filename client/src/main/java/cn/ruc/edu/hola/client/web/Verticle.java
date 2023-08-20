@@ -64,7 +64,7 @@ public class Verticle extends AbstractVerticle {
             var jsonData = QueryParser.basicParser(postData); // expected jsonData
             List<Request> requests = new ArrayList<>();
             requests.add(new Request(RandomStringGenerator.UID, jsonData));
-            var text = impl.complex(requests).getDecryptResponse();
+            var text = impl.complex(requests).getResponse();
             out(ctx, text);
         });
 
