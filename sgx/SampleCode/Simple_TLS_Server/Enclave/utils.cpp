@@ -47,24 +47,44 @@ std::vector <Request> provide_query(const std::string &source) {
     std::unordered_map <std::string, std::unordered_set<std::string>> url_remove_map;
 
     for (int i = 0; i < len; ++i) {
+        printf("555555555555555555555555555555555555\n");
+
         // we acquire the uid associate with the aes key
         std::string uid = sgx_json_query(i, "uid");
         std::string aesKey = client_get_aes_key(uid);
 //        printf("the aes key: %s \n", aesKey.c_str());
 
-        std::string filter = sgx_json_query(i, "filter");
+        printf("6666666666666666666666666666666\n");
+
+        printf("zzzzzzzzzzzzzzzzzzzwwwwwwwwwwwweeeeeeeeeeeee77777777777\n");
+
+        std::string filter = sgx_json_query(i, "filter"); // here error ????
+        printf("zzzzzzzzzzzzzzzzzzzwwwwwwwwwwwweeeeeeeeeeeee88888888\n");
+
         // we acquire the filter
-        filter = decode(filter.c_str(), filter.length());
-        filter = ecb_decrypt(filter.c_str(), filter.length(),
-                             reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                             aesKey.length());
+//        filter = decode(filter.c_str(), filter.length());
+//        printf("zzzzzzzzzzzzzzzzzzzwwwwwwwwwwwweeeeeeeeeeeee999999\n");
+//
+//        filter = ecb_decrypt(filter.c_str(), filter.length(),
+//                             reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+//                             aesKey.length());
+
+        filter = "{\"selector\":{\"$or\":[{\"data.countryid\":{\"$gt\":-1}},{\"message\":\"success\"}],\"data.country\":\"China\"}}";
+
+        printf("%s \n", filter.c_str());
+        printf("zzzzzzzzzzzzzzzzzzzwwwwwwwwwwwweeeeeeeeeeeee4444444444444444\n");
+
+
+        printf("zzzzzzzzzzzzzzzzzzzwwwwwwwwwwwweeeeeeeeeeeee\n");
 
         // here we expect to create our own new provide query execution
         int len = sgx_simple_split(filter.c_str());
+        printf("777777777777777777777777777777777777777\n");
 
         // acquire the hashset, which contains all the keys* we need
         auto keys_set = convert_to_set(sgx_acquire_set());
 
+        printf("zhizhanggggggggggggggggggggggggggggggg\n");
         for (int i = 0; i < len; ++i) {
             std::string text = sgx_acquire_vector(i);
 //            printf("the acquired vector %s \n", text.c_str());
