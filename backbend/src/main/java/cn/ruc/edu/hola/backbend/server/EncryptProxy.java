@@ -157,7 +157,7 @@ public class EncryptProxy extends AbstractProxy {
     public String filterDocsByBB(String uuid, String filter, String bb) {
         var aesKey = aesKeyStore.get(uuid);
         if (aesKey == null) aesKey = mAesKey;
-        String de_filter = EncryptUtils.decryptAES(filter, aesKey);
+        String de_filter = filter;
         var dbs = FilterParser.getFilterDbs(de_filter, bb);
         StringBuilder sb = new StringBuilder();
         for (String db : dbs) { // 可能是伪需求

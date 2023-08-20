@@ -104,7 +104,7 @@ std::string curl_post(const char *url, const Request &request) {
 //                         aesKey.length(), PaddingModel::PKCS5OR7);
 //    filter = encode(filter.c_str(), filter.length());
 
-    filter = "hHghYcslO0PlRrE9SK8lPzhM/eHNBi8JmcTVAtfxaiKQMcqETSoofbnk0SW+kyaZqh9cCsjDFymwlf/wTklFdFnTlTl3Iy64tB7DG2Aqxu8=";
+//    filter = "hHghYcslO0PlRrE9SK8lPzhM/eHNBi8JmcTVAtfxaiKQMcqETSoofbnk0SW+kyaZqh9cCsjDFymwlf/wTklFdFnTlTl3Iy64tB7DG2Aqxu8=";
 
     printf("\nhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh\n");
     printf("\n%s \n", filter.c_str());

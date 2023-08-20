@@ -193,11 +193,20 @@ public class CouchVerticle extends AbstractVerticle {
     }
 
     public void filterDocs(RoutingContext ctx) {
-        Filter object = JsonUtils.INSTANCE.toFilter(ctx.body().asString());
+
+        System.out.println(ctx.body().asString());
+
+        System.out.println("88888888888888888888888888");
+
+        try {
+            Filter object = JsonUtils.INSTANCE.toFilter(ctx.body().asString());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         // ack the data
-        String filter = object.filter();
-        String uuid = object.uuid();
+        String filter = "{\"selector\":{\"$or\":[{\"data.countryid\":{\"$gt\":-1}}],\"data.country\":\"China\"}}";
+        String uuid = "3ceb82d9-1448-4e9a-8397-6d173c24c4ae";
 
         try {
             out(ctx, proxyMethods.filterDocsByBB(uuid, filter, getTag()));
