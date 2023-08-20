@@ -13,21 +13,22 @@ import java.time.Instant;
 public final class ChainCodeBridge {
 
     public RealResponse invokeQuery(final SgxConfig sgxConfig, final String queryId, final String owner, final String date, final String query, final RealResponse resp) throws Exception {
-        var wrapper = QueryTransferImpl.init();
-        var queryTransfer = new QueryTransferImpl(wrapper.gateway);
 
         String response;
         if (resp.getOkResponse() != null) {
             try (var res = resp.getOkResponse()) {
                 response = res.body().string();
+                resp.setResponse(response);
             }
         } else {
+            var wrapper = QueryTransferImpl.init();
+            var queryTransfer = new QueryTransferImpl(wrapper.gateway);
             response = resp.getResponse();
+            Query chaincode_query = queryTransfer.CreateQuery(JsonUtils.INSTANCE.getJson().toJson(sgxConfig), queryId, owner, date, query, response);
+            response = chaincode_query.getResp();
+            resp.setResponse(response);
+            QueryTransferImpl.destroy(wrapper);
         }
-        Query chaincode_query = queryTransfer.CreateQuery(JsonUtils.INSTANCE.getJson().toJson(sgxConfig), queryId, owner, date, query, response);
-        response = chaincode_query.getResp();
-        resp.setResponse(response);
-        QueryTransferImpl.destroy(wrapper);
 
         return resp;
     }

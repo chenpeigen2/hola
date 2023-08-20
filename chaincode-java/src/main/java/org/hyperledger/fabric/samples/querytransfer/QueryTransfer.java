@@ -70,12 +70,6 @@ public final class QueryTransfer implements ContractInterface {
         SgxConfig config = gson.fromJson(sgxConfig, SgxConfig.class);
 
         if (!ChaincodeConfig.supportNet()) {
-            try (Response response = HttpClient.INSTANCE.executeHello()) {
-                String responseText = response.body().string();
-                logger.info(responseText);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
             asset = new Query(queryID, owner, date, query, resp);
         } else {
             // here we execute our own http request
