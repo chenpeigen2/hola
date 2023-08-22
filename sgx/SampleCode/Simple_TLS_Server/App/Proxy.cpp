@@ -3,13 +3,8 @@
 //
 
 #include "Proxy.h"
-#include <iostream>
 #include "wfrest/HttpServer.h"
 #include "wfrest/json.hpp"
-#include <iostream>
-#include <string>
-#include <chrono>
-#include <string_view>
 #include "Router.h"
 
 void Proxy::start() {

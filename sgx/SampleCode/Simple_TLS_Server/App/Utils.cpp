@@ -2,12 +2,8 @@
 // Created by chenpeigen on 23-2-19.
 //
 #include "Utils.h"
-#include <string>
 #include <cstring>
 #include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
 
 using namespace std;
 
@@ -42,19 +38,6 @@ vector <string> params(const string &params) {
     }
     return res;
 }
-
-//void read_json_file(json **data, const std::string &file_name) {
-//    ifstream file(file_name);
-//    ifstream valid_file(file_name);
-//    if (!valid_file.is_open() || !json::accept(valid_file)) {
-//        file.close();
-//        valid_file.close();
-//        return;
-//    };
-//    json j = json::parse(file);
-//    *data = new json(std::move(j));
-//    file.close();
-//}
 
 void hello_world_utils() {
     std::cout << "hello world from the Utils ......." << std::endl;
