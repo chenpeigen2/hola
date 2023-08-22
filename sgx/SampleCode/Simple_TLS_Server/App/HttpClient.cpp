@@ -37,6 +37,7 @@ std::string complex_filter(const std::string &data) {
     std::string res;
     ecall_complex_curl(global_eid, &response, data.c_str());
     toString(response, res);
+    delete response;
     return res;
 }
 

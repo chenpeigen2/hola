@@ -5,13 +5,6 @@ enclave {
 
 	from "sgx_tstdc.edl" import *;
 
-     /* structure definition */
-    struct struct_foo_t {
-        /* Basic types can be used in structure. */
-        uint32_t struct_foo_0;
-        uint64_t struct_foo_1;
-    };
-
     /* struct definition for key_map */
     struct key_map_t {
         int idx;
@@ -21,13 +14,10 @@ enclave {
     };
 	
 	trusted {
-		public void ecall_start_tls_server(void);
-		public void ecall_generate_rsa();
 		public char *ecall_complex_curl([in, string] const char *data);
 		public char *ecall_curl_get([in, string] const char *url, [in, string] const char *request);
-		public void ecall_curl_get_response([in, string] const char *response);
-		public void ecall_type_struct(struct struct_foo_t val);
 		public int ecall_auth([in, string] const char* data);
+		public void ecall_curl_get_response([in, string] const char *response);
 	};
 
 	untrusted {
