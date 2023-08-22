@@ -203,10 +203,6 @@ char *ecall_complex_curl(const char *data) {
     return p;
 }
 
-void ecall_curl_get_response(const char *response) {
-    printf("response return the data from the APP side: %s\n", response);
-}
-
 int ecall_auth(const char *data) {
     client_auth(data);
     printf("the ecall_auth: %s", data);
