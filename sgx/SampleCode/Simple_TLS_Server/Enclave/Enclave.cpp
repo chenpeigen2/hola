@@ -18,7 +18,6 @@
 #include "utils.h"
 #include "Encrypt.h"
 
-// TODO provide query 重写
 // TODO attestion process
 
 using namespace std;
@@ -205,6 +204,5 @@ char *ecall_complex_curl(const char *data) {
 
 int ecall_auth(const char *data) {
     client_auth(data);
-    printf("the ecall_auth: %s", data);
     return 1;
 }
