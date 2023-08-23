@@ -4,12 +4,10 @@
 #include "Curl.h"
 
 #include <iostream>
-#include <iostream>
-#include <string>
-#include <chrono>
-#include <string_view>
 #include "curl/curl.h"
 #include <sstream>
+
+// CHECKED
 
 //回调函数
 size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream) {
@@ -21,8 +19,7 @@ size_t write_data(void *ptr, size_t size, size_t nmemb, void *stream) {
 /** auth for the backbend **/
 CURLcode sgx_get(const std::string &url, std::string &response, int timeout) {
     CURLcode res;
-    CURL *curl;
-    curl = curl_easy_init();
+    CURL *curl = curl_easy_init();
     struct curl_slist *headers = nullptr;
     headers = curl_slist_append(headers, "Content-Type:application/json;charset=UTF-8");
     if (curl == nullptr) {
