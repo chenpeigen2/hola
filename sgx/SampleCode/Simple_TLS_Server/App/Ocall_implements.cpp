@@ -10,7 +10,6 @@
 #include <vector>
 #include <string>
 #include <unordered_set>
-#include "_json.hpp"
 #include "Utils.h"
 
 using json = nlohmann::json;
@@ -196,32 +195,6 @@ char *ocall_json_object(const char *data, const char *key) {
 
 json *json_data;
 json *key_data;
-
-/** read the given json file object and get the key if needed **/
-int ocall_json_file_read(const char *key, const char *file_name) {
-//    key_map_t
-    if (json_data == nullptr) {
-        read_json_file(&json_data, file_name);
-    }
-    if (json_data == nullptr) return -2;
-    // we expect the json_data must be the object
-    if (json_data->is_object()) {
-        if (json_data->contains(key)) {
-            if (key_data != nullptr) {
-                delete key_data;
-            }
-            key_data = new json(json_data->at(key));
-            if (key_data->is_array()) {
-                std::cout << key_data->dump() << std::endl;
-                std::cout << key_data->at(0).dump() << std::endl;
-                return key_data->size();
-            }
-            return 0;
-        }
-        return -1;
-    }
-    return -3;
-}
 
 std::vector <std::vector<std::string>> *simple_split_res;
 std::unordered_set <std::string> *simple_keys_set;

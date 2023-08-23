@@ -237,12 +237,6 @@ int sgx_json_arr_length(const char *data) {
     return value;
 }
 
-int sgx_json_file_read(const char *key, const char *file_name) {
-    int value = -4;
-    ocall_json_file_read(&value, key, file_name);
-    return value;
-}
-
 int sgx_simple_split(const char *data) {
     int ret = -1;
     ocall_simple_split(&ret, data);

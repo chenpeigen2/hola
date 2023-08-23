@@ -35,7 +35,7 @@ CURLcode sgx_get(const std::string &url, std::string &response, int timeout) {
     std::stringstream out;
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
     res = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
+    curl_easy_cleanup(curl); // free
     response = out.str();
     return res;
 }
@@ -58,7 +58,7 @@ CURLcode sgx_auth(const std::string &url, const std::string &data, std::string &
     std::stringstream out;
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
     res = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
+    curl_easy_cleanup(curl); // free
     response = out.str();
     return res;
 }
@@ -83,7 +83,7 @@ CURLcode sgx_post(const std::string &url, const std::string &data, std::string &
     std::stringstream out;
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &out);
     res = curl_easy_perform(curl);
-    curl_easy_cleanup(curl);
+    curl_easy_cleanup(curl); // free
     response = out.str();
     return res;
 }
