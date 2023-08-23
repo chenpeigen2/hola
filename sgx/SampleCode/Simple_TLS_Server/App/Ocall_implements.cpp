@@ -223,27 +223,6 @@ int ocall_json_file_read(const char *key, const char *file_name) {
     return -3;
 }
 
-/** only the config.json array usage **/
-struct key_map_t ocall_key_map_struct(int idx) {
-    struct key_map_t ret{idx};
-    json key_object = key_data->at(idx);
-    std::string query = key_object.at("query").get<std::string>();
-    std::string db_name = key_object.at("db_name").get<std::string>();
-    // provide query
-    int len = query.length();
-    ret.query = new char[len + 1];
-    strncpy(ret.query, query.c_str(), len);
-    ret.query[len] = '\0';
-    // provide db_name
-    len = db_name.length();
-    ret.db_name = new char[len + 1];
-    strncpy(ret.db_name, db_name.c_str(), len);
-    ret.db_name[len] = '\0';
-    // return the data
-    return ret;
-}
-
-
 std::vector <std::vector<std::string>> *simple_split_res;
 std::unordered_set <std::string> *simple_keys_set;
 
