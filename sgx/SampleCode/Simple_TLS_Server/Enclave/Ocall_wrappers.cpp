@@ -175,13 +175,6 @@ void sgx_save_rsa(const char *publickey, const char *privatekey) {
     ocall_save_rsa(publickey, privatekey);
 }
 
-std::string sgx_curl_get(const char *params) {
-    char *retrival;
-    ocall_curl_get(&retrival, params);
-    std::string res(retrival);
-    return res;
-}
-
 std::string sgx_curl_post(const char *url, const char *body) {
     char *retrival;
     ocall_curl_post(&retrival, url, body);

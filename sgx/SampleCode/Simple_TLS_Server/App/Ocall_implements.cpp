@@ -116,17 +116,6 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
     pri_file.close();
 }
 
-/** may not be prepare to localization **/
-char *ocall_curl_get(const char *url) {
-    std::string response;
-    sgx_get(url, response, 300); // curl
-    int len = response.length();
-    char *p = new char[len + 1];
-    strncpy(p, response.c_str(), len);
-    p[len] = '\0';
-    return p;
-}
-
 char *ocall_curl_post(const char *url, const char *body) {
     std::string response;
     sgx_post(url, body, response, 300);

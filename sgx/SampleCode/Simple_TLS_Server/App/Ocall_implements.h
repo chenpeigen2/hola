@@ -32,7 +32,6 @@ int ocall_sgx_close(int fd);
 int ocall_sgx_getenv(const char *env, int envlen, char *ret_str,int ret_len);
 void ocall_print_string(const char *str);
 void ocall_save_rsa(const char *publickey, const char *privatekey);
-char *ocall_curl_get(const char *params);
 char *ocall_curl_post(const char *url, const char *body);
 int ocall_json_arr_length(const char *data);
 char* ocall_json_query(int idx, const char *key);
