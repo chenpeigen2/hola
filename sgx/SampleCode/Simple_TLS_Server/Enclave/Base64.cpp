@@ -24,6 +24,11 @@ std::string encode(const char *src, size_t src_len) {
     std::string str_result(bptr->data, bptr->length);
 
     BIO_free_all(b64);
+//
+//    delete bmem;
+//    delete b64;
+//    delete bptr;
+
     return str_result;
 }
 
@@ -38,5 +43,9 @@ std::string decode(const char *src, size_t src_len) {
     std::string str_result(decode_len, 0);
     BIO_read(b64, (void *) str_result.c_str(), decode_len);
     BIO_free_all(bmem);
+
+//    delete bmem;
+//    delete b64;
+
     return str_result;
 }
