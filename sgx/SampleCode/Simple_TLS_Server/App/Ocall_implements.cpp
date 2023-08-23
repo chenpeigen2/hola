@@ -116,14 +116,16 @@ void ocall_save_rsa(const char *publickey, const char *privatekey) {
     pri_file.close();
 }
 
+char *p_response = nullptr;
+
 char *ocall_curl_post(const char *url, const char *body) {
     std::string response;
     sgx_post(url, body, response, 300);
     int len = response.length();
-    char *p = new char[len + 1];
-    strncpy(p, response.c_str(), len);
-    p[len] = '\0';
-    return p;
+    p_response = new char[len + 1];
+    strncpy(p_response, response.c_str(), len);
+    p_response[len] = '\0';
+    return p_response;
 }
 
 /** arr we are restoring **/
@@ -151,10 +153,11 @@ char *ocall_json_query(int idx, const char *key) {
                 response = j_object.at(key).get<std::string>();
             }
             int len = response.length();
-            char *p = new char[len + 1];
-            strncpy(p, response.c_str(), len);
-            p[len] = '\0';
-            return p;
+            delete p_response;
+            p_response = new char[len + 1];
+            strncpy(p_response, response.c_str(), len);
+            p_response[len] = '\0';
+            return p_response;
         }
     }
     return nullptr;
@@ -173,10 +176,11 @@ char *ocall_json_object(const char *data, const char *key) {
                 response = j_object.at(key).get<std::string>();
             }
             int len = response.length();
-            char *p = new char[len + 1];
-            strncpy(p, response.c_str(), len);
-            p[len] = '\0';
-            return p;
+            delete p_response;
+            p_response = new char[len + 1];
+            strncpy(p_response, response.c_str(), len);
+            p_response[len] = '\0';
+            return p_response;
         }
     }
     return nullptr;
@@ -290,10 +294,10 @@ char *ocall_query_trim(const char *json_str, const char *keys) {
     iter_object(selector, keys_set);
     std::string str = j_test.dump();
     size_t len = str.length();
-    char *p = new char[len + 1];
-    str.copy(p, len);
-    p[len] = '\0';
-    return p;
+    p_response = new char[len + 1];
+    str.copy(p_response, len);
+    p_response[len] = '\0';
+    return p_response;
 }
 
 char *ocall_acquire_vector(int idx) {
@@ -307,10 +311,10 @@ char *ocall_acquire_vector(int idx) {
     }
 
     size_t len = str.length();
-    char *p = new char[len + 1];
-    str.copy(p, len);
-    p[len] = '\0';
-    return p;
+    p_response = new char[len + 1];
+    str.copy(p_response, len);
+    p_response[len] = '\0';
+    return p_response;
 }
 
 char *ocall_acquire_set() {
@@ -321,10 +325,10 @@ char *ocall_acquire_set() {
     str.pop_back();
 
     size_t len = str.length();
-    char *p = new char[len + 1];
-    str.copy(p, len);
-    p[len] = '\0';
-    return p;
+    p_response = new char[len + 1];
+    str.copy(p_response, len);
+    p_response[len] = '\0';
+    return p_response;
 }
 
 
