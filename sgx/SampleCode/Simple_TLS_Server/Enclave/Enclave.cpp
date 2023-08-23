@@ -118,59 +118,7 @@ std::string curl_post(const char *url, const Request &request) {
     return response;
 }
 
-std::string curl_get(const char *url, const char *request) {
-    http_url httpUrl;
-    if (!httpUrl.parse(url)) {
-        exit(0);
-    }
-
-    auto auth_result = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
-                                      httpUrl.get_port());
-
-    std::string aesKey = auth_result.first;
-    std::string uuid = auth_result.second;
-
-    vector <string> param = params(request);
-    std::string base_url(url);
-    std::string res;
-    for (int i = 0; i < param.size(); ++i) {
-        std::string p = param[i];
-        if (i != 0 && i % 2 == 0) {
-            res += "&";
-        }
-        if (i % 2 != 0) {
-            res += "=";
-            p = ecb_encrypt(p.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                            aesKey.length(), PaddingModel::PKCS5OR7);
-            p = encode(p.c_str(), p.length());
-        }
-        res += p;
-    }
-    std::string final_url = base_url + "?" + res;
-    /** curl get **/
-    printf("Encalve final url: %s \n", final_url.c_str());
-    std::string response = sgx_curl_get(final_url.c_str());
-    printf("The RESPONSE: %s\n", response.c_str());
-    // decrypt
-    response = decode(response.c_str(), response.length());
-    response = ecb_decrypt(response.c_str(), response.length(),
-                           reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                           aesKey.length());
-    return response;
-}
-
-
 // ### below are the ecall ###
-
-char *ecall_curl_get(const char *url, const char *request) {
-    std::string response = curl_get(url, request);
-    // assemble
-    int len = response.length();
-    char *p = new char[len + 1];
-    response.copy(p, len);
-    p[len] = '\0';
-    return p;
-}
 
 char *ecall_complex_curl(const char *data) {
     // provide the requests

@@ -7,8 +7,6 @@
 
 #include <string>
 
-std::string filter_find(const std::string &db_name, const std::string &filter);
-
 std::string complex_filter(const std::string &data);
 
 std::string auth_sgx(const std::string &data);

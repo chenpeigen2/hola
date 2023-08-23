@@ -15,7 +15,6 @@ enclave {
 	
 	trusted {
 		public char *ecall_complex_curl([in, string] const char *data);
-		public char *ecall_curl_get([in, string] const char *url, [in, string] const char *request);
 		public int ecall_auth([in, string] const char* data);
 	};
 
