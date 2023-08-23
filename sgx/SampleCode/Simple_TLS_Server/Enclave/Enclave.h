@@ -50,16 +50,6 @@ enum PaddingModel {
     PKCS5OR7 //pkcs5 pkcs7 padding
 };
 
-void GenerateRSAKey(std::string &out_pub_key, std::string &out_pri_key);
-
-std::string RsaPriEncrypt(const std::string &clear_text, std::string &pri_key);
-
-std::string RsaPubDecrypt(const std::string &cipher_text, const std::string &pub_key);
-
-std::string RsaPubEncrypt(const std::string &clear_text, const std::string &pub_key);
-
-std::string RsaPriDecrypt(const std::string &cipher_text, const std::string &pri_key);
-
 #if defined(__cplusplus)
 }
 #endif

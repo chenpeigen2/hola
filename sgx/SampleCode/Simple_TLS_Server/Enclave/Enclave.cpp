@@ -207,57 +207,6 @@ void ecall_curl_get_response(const char *response) {
     printf("response return the data from the APP side: %s\n", response);
 }
 
-void ecall_generate_rsa() {
-    std::string pub_key;
-    std::string pri_key;
-    GenerateRSAKey(pub_key, pri_key);
-    sgx_save_rsa(pub_key.c_str(), pri_key.c_str());
-}
-
-void ecall_start_tls_server(void) {
-    /* Handle SSL/TLS connections */
-    std::string src_text = "test begin\n this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! this is an rsa test example!!! \ntest end";
-    //src_text = "rsa test";
-
-    std::string encrypt_text;
-    std::string decrypt_text;
-    // 生成密钥对
-    std::string pub_key;
-    std::string pri_key;
-    GenerateRSAKey(pub_key, pri_key);
-    printf("public key:\n");
-    printf("%s\n", pub_key.c_str());
-    printf("private key:\n");
-    printf("%s\n", pri_key.c_str());
-
-    // 私钥加密-公钥解密
-    encrypt_text = RsaPriEncrypt(src_text, pri_key);
-    printf("encrypt: len=%d\n", encrypt_text.length());
-    decrypt_text = RsaPubDecrypt(encrypt_text, pub_key);
-    printf("decrypt: len=%d\n", decrypt_text.length());
-    printf("decrypt: %s\n", decrypt_text.c_str());
-
-    // 公钥加密-私钥解密
-    encrypt_text = RsaPubEncrypt(src_text, pub_key);
-    printf("encrypt: len=%d\n", encrypt_text.length());
-    decrypt_text = RsaPriDecrypt(encrypt_text, pri_key);
-    printf("decrypt: len=%d\n", decrypt_text.length());
-    printf("decrypt: %s\n", decrypt_text.c_str());
-
-    // test RSA
-    char *data = "ABCDEFGHIJ123456";
-    auto abc = encrypt((unsigned char *) data, strlen(data),
-                       (const unsigned char *) PUBLICKEY, strlen(PUBLICKEY));
-    printf("encoded string: %s\n", encode(abc.c_str(), abc.length()).c_str());
-
-    // test AES
-    std::string src = "123ABC";
-    std::string aesKey = "0123456789abcdefghijklmn";
-    std::string ecb_aes = ecb_encrypt(src.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                                      strlen(aesKey.c_str()), PaddingModel::PKCS5OR7);
-    printf("encoded aes string: %s\n", encode(ecb_aes.c_str(), ecb_aes.length()).c_str());
-}
-
 void ecall_type_struct(struct struct_foo_t val) {
 
 }
