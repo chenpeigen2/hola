@@ -203,10 +203,6 @@ char *ecall_complex_curl(const char *data) {
     return p;
 }
 
-void ecall_curl_get_response(const char *response) {
-    printf("response return the data from the APP side: %s\n", response);
-}
-
 void ecall_type_struct(struct struct_foo_t val) {
 
 }
