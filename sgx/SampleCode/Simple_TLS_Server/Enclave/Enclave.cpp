@@ -121,6 +121,8 @@ std::string curl_post(const char *url, const Request &request) {
 
 // ### below are the ecall ###
 
+char *p_response = nullptr;
+
 char *ecall_complex_curl(const char *data) {
     // provide the requests
     auto provide_decode_data = provide_query(data);
@@ -145,10 +147,11 @@ char *ecall_complex_curl(const char *data) {
 
     // assemble
     int len = response.length();
-    char *p = new char[len + 1];
-    response.copy(p, len);
-    p[len] = '\0';
-    return p;
+    delete p_response; // delete the pointer
+    p_response = new char[len + 1];
+    response.copy(p_response, len);
+    p_response[len] = '\0';
+    return p_response;
 }
 
 int ecall_auth(const char *data) {
