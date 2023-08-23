@@ -50,7 +50,7 @@ std::vector <Request> provide_query(const std::string &source) {
         // we acquire the uid associate with the aes key
         std::string uid = sgx_json_query(i, "uid");
         std::string aesKey = client_get_aes_key(uid);
-        printf("the aes key: %s \n", aesKey.c_str());
+        /* printf("the aes key: %s \n", aesKey.c_str()); */
 
         std::string filter = sgx_json_query(i, "filter");
         // we acquire the filter
@@ -67,7 +67,7 @@ std::vector <Request> provide_query(const std::string &source) {
 
         for (int i = 0; i < len; ++i) {
             std::string text = sgx_acquire_vector(i);
-            printf("the acquired vector %s \n", text.c_str());
+            /* printf("the acquired vector %s \n", text.c_str()); */
             auto vec = convert_to_vec(text);
 
             // compute the vec start
@@ -139,12 +139,14 @@ std::vector <Request> provide_query(const std::string &source) {
         url_remove_map.clear();
     }
 
+    /*
     // print the queries
     printf("\n===================================\n");
     for (const auto &item: res) {
         printf("\n the url: %s  the filter: %s \n", item.url.c_str(), item.filter.c_str());
     }
     printf("\n===================================\n");
+     */
 
     return res;
 }
@@ -155,14 +157,14 @@ std::unordered_map <std::string, std::string> client_auth_map;
 bool client_auth(const std::string &source) {
     std::string &&uid = sgx_json_object(source.c_str(), "uid");
     std::string &&key = sgx_json_object(source.c_str(), "key");
-    printf("client_auth %s %s\n", uid.c_str(), key.c_str());
+    /* printf("client_auth %s %s\n", uid.c_str(), key.c_str()); */
 
     key = decode(key.c_str(), key.length());
     key = decrypt(reinterpret_cast<const unsigned char *>(key.c_str()), key.length(),
                   (const unsigned char *) PRIVATE_KEY, strlen(PRIVATE_KEY));
 
     client_auth_map[uid] = key.substr(0, key.find('\0'));
-    printf("client_auth %s %s\n", uid.c_str(), key.c_str());
+    /* printf("client_auth %s %s\n", uid.c_str(), key.c_str()); */
     return true;
 }
 
