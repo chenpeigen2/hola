@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+// CHECKED
+
 /** define the simple aggregation process **/
 std::string simple_aggregation(std::vector <std::string> &resp) {
     std::string ret;
