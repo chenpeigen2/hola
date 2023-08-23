@@ -154,7 +154,7 @@ int ocall_json_arr_length(const char *data) {
 char *ocall_json_query(int idx, const char *key) {
     if (j_arr != nullptr) {
         auto j_object = j_arr.at(idx);
-        std::cout << j_object.contains(key) << std::endl;
+        /* std::cout << j_object.contains(key) << std::endl; */
         if (j_object.contains(key)) {
             std::string response;
             if (j_object.at(key).is_object()) {
@@ -302,7 +302,7 @@ int ocall_simple_split(const char *data) {
     }
     simple_split_res = new std::vector <std::vector<std::string>>(nestedVector);
     simple_keys_set = new std::unordered_set<std::string>(keys_set);
-    std::cout << selector.dump() << std::endl;
+    /* std::cout << selector.dump() << std::endl; */
     return simple_split_res->size();
 }
 

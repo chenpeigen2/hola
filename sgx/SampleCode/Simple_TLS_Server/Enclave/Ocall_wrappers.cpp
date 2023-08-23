@@ -10,7 +10,7 @@ long sgx_clock(void) {
     return retv;
 }
 
-time_t sgx_time(time_t * timep) {
+time_t sgx_time(time_t *timep) {
     time_t retv;
     sgx_status_t sgx_retv;
     if ((sgx_retv = ocall_sgx_time(&retv, timep, sizeof(time_t))) != SGX_SUCCESS) {
@@ -179,6 +179,7 @@ std::string sgx_curl_get(const char *params) {
     char *retrival;
     ocall_curl_get(&retrival, params);
     std::string res(retrival);
+    delete retrival;
     return res;
 }
 
@@ -186,7 +187,8 @@ std::string sgx_curl_post(const char *url, const char *body) {
     char *retrival;
     ocall_curl_post(&retrival, url, body);
     std::string res(retrival);
-    printf("the post response: %s\n", retrival);
+    /* printf("the post response: %s\n", retrival); */
+    delete retrival;
     return res;
 }
 
@@ -196,6 +198,7 @@ std::string sgx_json_query(int idx, const char *key) {
     ocall_json_query(&retrival, idx, key);
     if (retrival == nullptr) return "null";
     std::string res(retrival);
+    delete retrival;
     return res;
 }
 
@@ -204,6 +207,7 @@ std::string sgx_json_object(const char *data, const char *key) {
     ocall_json_object(&retrival, data, key);
     if (retrival == nullptr) return "null";
     std::string res(retrival);
+    delete retrival;
     return res;
 }
 
@@ -212,6 +216,7 @@ std::string sgx_acquire_vector(int idx) {
     ocall_acquire_vector(&retrival, idx);
     if (retrival == nullptr) return "null";
     std::string res(retrival);
+    delete retrival;
     return res;
 }
 
@@ -220,6 +225,7 @@ std::string sgx_query_trim(const char *json, const char *keys) {
     ocall_query_trim(&retrival, json, keys);
     if (retrival == nullptr) return "null";
     std::string res(retrival);
+    delete retrival;
     return res;
 }
 
@@ -228,6 +234,7 @@ std::string sgx_acquire_set() {
     ocall_acquire_set(&retrival);
     if (retrival == nullptr) return "null";
     std::string res(retrival);
+    delete retrival;
     return res;
 }
 

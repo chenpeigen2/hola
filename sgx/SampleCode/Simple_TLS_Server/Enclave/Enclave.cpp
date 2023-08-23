@@ -113,7 +113,7 @@ std::string curl_post(const char *url, const Request &request) {
                            reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length());
 
-    printf("The RESPONSE: %s\n", response.c_str());
+    /* printf("The RESPONSE: %s\n", response.c_str()); */
 
     return response;
 }

@@ -41,18 +41,18 @@ std::vector <std::string> params(const std::string &params) {
 
 /** provide the query associate with the backbend **/
 std::vector <Request> provide_query(const std::string &source) {
-    int len = sgx_json_arr_length(source.c_str());
+    int len = sgx_json_arr_length(source.c_str()); // ocall
     std::vector <Request> res;
     // restore the data that need to remove for the filter
     std::unordered_map <std::string, std::unordered_set<std::string>> url_remove_map;
 
     for (int i = 0; i < len; ++i) {
         // we acquire the uid associate with the aes key
-        std::string uid = sgx_json_query(i, "uid");
+        std::string uid = sgx_json_query(i, "uid"); // ocall
         std::string aesKey = client_get_aes_key(uid);
         /* printf("the aes key: %s \n", aesKey.c_str()); */
 
-        std::string filter = sgx_json_query(i, "filter");
+        std::string filter = sgx_json_query(i, "filter"); // ocall
         // we acquire the filter
         filter = decode(filter.c_str(), filter.length());
         filter = ecb_decrypt(filter.c_str(), filter.length(),
@@ -60,13 +60,13 @@ std::vector <Request> provide_query(const std::string &source) {
                              aesKey.length());
 
         // here we expect to create our own new provide query execution
-        int len = sgx_simple_split(filter.c_str());
+        int len = sgx_simple_split(filter.c_str()); // ocall
 
         // acquire the hashset, which contains all the keys* we need
         auto keys_set = convert_to_set(sgx_acquire_set());
 
         for (int i = 0; i < len; ++i) {
-            std::string text = sgx_acquire_vector(i);
+            std::string text = sgx_acquire_vector(i); // ocall
             /* printf("the acquired vector %s \n", text.c_str()); */
             auto vec = convert_to_vec(text);
 
@@ -132,7 +132,7 @@ std::vector <Request> provide_query(const std::string &source) {
         for (const auto &item: url_remove_map) {
             std::unordered_set <std::string> set = item.second;
             auto sets_str = convert_set_to_string(set);
-            auto trim_filter = sgx_query_trim(filter.c_str(), sets_str.c_str());
+            auto trim_filter = sgx_query_trim(filter.c_str(), sets_str.c_str()); // ocall
             res.push_back(Request(item.first, trim_filter));
         }
         // clean the map
