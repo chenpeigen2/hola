@@ -186,7 +186,6 @@ std::string sgx_curl_post(const char *url, const char *body) {
     char *retrival;
     ocall_curl_post(&retrival, url, body);
     std::string res(retrival);
-    printf("the post response: %s\n", retrival);
     return res;
 }
 
