@@ -207,11 +207,6 @@ void ecall_curl_get_response(const char *response) {
     printf("response return the data from the APP side: %s\n", response);
 }
 
-std::string ecall_string_test() {
-    std::string str = "after milline of da Following keywords/attributes are supported for untrusted functions: we should treat it ok";
-    return str;
-}
-
 void ecall_generate_rsa() {
     std::string pub_key;
     std::string pri_key;
