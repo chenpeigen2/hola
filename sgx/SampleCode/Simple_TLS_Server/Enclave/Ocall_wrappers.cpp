@@ -249,12 +249,6 @@ int sgx_simple_split(const char *data) {
     return ret;
 }
 
-struct key_map_t sgx_key_map_struct(int idx) {
-    struct key_map_t ret;
-    ocall_key_map_struct(&ret, idx);
-    return ret;
-}
-
 void sgx_printe(const char *fname, const char *fmt, ...) {
     char ebuf[BUFSIZ] = {'\0'};
     char buf[BUFSIZ] = {'\0'};
