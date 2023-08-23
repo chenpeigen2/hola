@@ -151,13 +151,7 @@ char *ecall_complex_curl(const char *data) {
     return p;
 }
 
-void ecall_type_struct(struct struct_foo_t val) {
-
-}
-
-
 int ecall_auth(const char *data) {
     client_auth(data);
-    printf("the ecall_auth: %s", data);
     return 1;
 }
