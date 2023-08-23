@@ -14,21 +14,6 @@ using Json = nlohmann::json;
 
 void router(wfrest::HttpServer &server) {
 
-    /** filter find for **/
-    server.POST("/_find", [](const HttpReq *req, HttpResp *resp) {
-        if (req->content_type() != APPLICATION_JSON) {
-            resp->String("NOT APPLICATION_JSON");
-        }
-        if (req->has_query("db_name")) {
-            const std::string &db_name = req->query("db_name");
-            auto filter = req->json().dump(4);
-            std::string result = filter_find(db_name, filter);
-            resp->Json(result);
-        } else {
-            resp->String("the query has no db_name or filter");
-        }
-    });
-
     /** filter complex for **/
     server.POST("/_complex", [](const HttpReq *req, HttpResp *resp) {
         if (req->content_type() != APPLICATION_JSON) {
