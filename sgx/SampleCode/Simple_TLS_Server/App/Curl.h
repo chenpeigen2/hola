@@ -12,16 +12,12 @@
 extern "C" {
 #endif
 
-void hello_world_curl();
-
 CURLcode sgx_auth(const std::string &url, const std::string &data, std::string &response, int timeout);
 
 CURLcode sgx_post(const std::string &url, const std::string &data, std::string &response,
                   int timeout);
 
 CURLcode sgx_get(const std::string &url, std::string &response, int timeout);
-
-void sgx_curl_test();
 
 #if defined(__cplusplus)
 }
