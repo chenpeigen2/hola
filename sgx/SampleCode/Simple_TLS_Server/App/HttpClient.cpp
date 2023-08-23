@@ -11,7 +11,6 @@
 #include "Proxy.h"
 #include "Router.h"
 #include "Curl.h"
-#include "JWT.h"
 #include "Utils.h"
 #include <iostream>
 #include <string>
