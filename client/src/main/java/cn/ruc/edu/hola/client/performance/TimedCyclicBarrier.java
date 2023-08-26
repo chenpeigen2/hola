@@ -103,7 +103,7 @@ public final class TimedCyclicBarrier {
 
     public void reset() {
         resetInternal();
-        barrier.reset();
+//        barrier.reset();
     }
 
     private void resetInternal() {
