@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.client.performance;
 
+@Deprecated
 public class Package {
     public String thread_name;
 

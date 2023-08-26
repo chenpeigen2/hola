@@ -22,9 +22,9 @@ public class Entry {
         Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(Options.WorkerPoolSize));
         vertx.deployVerticle(Verticle.class.getName());
         vertx.deployVerticle(PerformanceVerticle.class.getName());
-        vertx.deployVerticle(BackgroundThreadVerticle.class.getName());
-
-        vertx.eventBus().registerDefaultCodec(Package.class, new PackageCodec());
+//        vertx.deployVerticle(BackgroundThreadVerticle.class.getName());
+//
+//        vertx.eventBus().registerDefaultCodec(Package.class, new PackageCodec());
 
         schedulePingPong(vertx);
         BackgroudThread.INSTANCE.start();

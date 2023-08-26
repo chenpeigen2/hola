@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+@Deprecated
 public class BackgroundThreadVerticle extends AbstractVerticle {
 
     Set<Package> set = new HashSet<>();

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 
+@Deprecated
 public class BackgroudThread extends Thread {
     public static Thread INSTANCE;
 

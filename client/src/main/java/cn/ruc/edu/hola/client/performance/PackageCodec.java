@@ -4,6 +4,7 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.MessageCodec;
 import io.vertx.core.json.JsonObject;
 
+@Deprecated
 public class PackageCodec implements MessageCodec<Package, Package> {
     @Override
     public void encodeToWire(Buffer buffer, Package aPackage) {

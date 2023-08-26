@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.client.performance;
 
 import java.util.concurrent.*;
 
+@Deprecated
 public final class TimedCyclicBarrier {
     private final long loopTime;
 
