@@ -1,8 +1,8 @@
 package cn.ruc.edu.hola.client;
 
 import cn.ruc.edu.hola.client.entity.Request;
-import cn.ruc.edu.hola.client.performance.Options;
-import cn.ruc.edu.hola.client.performance.PerformanceHandler;
+import cn.ruc.edu.hola.client.performance.*;
+import cn.ruc.edu.hola.client.performance.Package;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import cn.ruc.edu.hola.client.web.PerformanceVerticle;
 import cn.ruc.edu.hola.client.web.Verticle;
@@ -22,11 +22,16 @@ public class Entry {
         Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(Options.WorkerPoolSize));
         vertx.deployVerticle(Verticle.class.getName());
         vertx.deployVerticle(PerformanceVerticle.class.getName());
-        schedulePingPong(vertx);
+        vertx.deployVerticle(BackgroundThreadVerticle.class.getName());
+
+        vertx.eventBus().registerDefaultCodec(Package.class, new PackageCodec());
+
+//        schedulePingPong(vertx);
+        BackgroudThread.INSTANCE.start();
     }
 
     private static void schedulePingPong(Vertx vertx) {
-        vertx.setPeriodic(Duration.ofSeconds(1).toMillis(), PerformanceHandler.getInstance());
+        vertx.setPeriodic(Duration.ofMillis(5).toMillis(), PerformanceHandler.getInstance());
     }
 
     public static void triggerClient() {
