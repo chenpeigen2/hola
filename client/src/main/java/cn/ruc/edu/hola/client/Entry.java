@@ -31,7 +31,7 @@ public class Entry {
     }
 
     private static void schedulePingPong(Vertx vertx) {
-        vertx.setPeriodic(Duration.ofMillis(5).toMillis(), PerformanceHandler.getInstance());
+        vertx.setPeriodic(Duration.ofMillis(1).toMillis(), PerformanceHandler.getInstance());
     }
 
     public static void triggerClient() {

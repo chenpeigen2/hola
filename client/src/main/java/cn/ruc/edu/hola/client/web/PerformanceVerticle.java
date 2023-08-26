@@ -59,6 +59,8 @@ public class PerformanceVerticle extends Verticle {
 //                ;
 //                System.out.println(cargo);
 //            }
+
+            System.out.println(Thread.currentThread().getName());
 //
             PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
 //
