@@ -1,10 +1,12 @@
 package cn.ruc.edu.hola.client;
 
 import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.performance.Options;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import cn.ruc.edu.hola.client.web.PerformanceVerticle;
 import cn.ruc.edu.hola.client.web.Verticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.VertxOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
  **/
 public class Entry {
     public static void main(String[] args) {
-        Vertx vertx = Vertx.vertx();
+        Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(Options.WorkerPoolSize));
         vertx.deployVerticle(Verticle.class.getName());
         vertx.deployVerticle(PerformanceVerticle.class.getName());
     }
