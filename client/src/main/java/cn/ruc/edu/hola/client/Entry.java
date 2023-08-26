@@ -25,11 +25,9 @@ public class Entry {
         schedulePingPong(vertx);
     }
 
-
     private static void schedulePingPong(Vertx vertx) {
         vertx.setPeriodic(Duration.ofSeconds(1).toMillis(), PerformanceHandler.getInstance());
     }
-
 
     public static void triggerClient() {
         ApiService apiService = ApiService.getInstance();
