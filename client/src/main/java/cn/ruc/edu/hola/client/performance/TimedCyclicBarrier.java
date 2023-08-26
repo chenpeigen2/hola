@@ -2,7 +2,7 @@ package cn.ruc.edu.hola.client.performance;
 
 import java.util.concurrent.*;
 
-public class TimedCyclicBarrier extends CyclicBarrier {
+public final class TimedCyclicBarrier {
     private final long loopTime;
 
     private final CyclicBarrier barrier;
@@ -13,8 +13,7 @@ public class TimedCyclicBarrier extends CyclicBarrier {
 
     private Thread checkThread;
 
-    public TimedCyclicBarrier(long loopTime, int parties, Runnable barrierAction) {
-        super(parties, barrierAction);
+    public TimedCyclicBarrier(long loopTime, int parties, BarrierRunnable barrierAction) {
         this.loopTime = loopTime;
         barrier = new CyclicBarrier(parties, barrierAction);
     }
@@ -22,16 +21,15 @@ public class TimedCyclicBarrier extends CyclicBarrier {
     // runnable when barrier was release
     public static abstract class BarrierRunnable implements Runnable {
 
-        private final TimedCyclicBarrier barrier;
+        private TimedCyclicBarrier barrier;
 
-        public BarrierRunnable(TimedCyclicBarrier barrier) {
+        public void setBarrier(TimedCyclicBarrier barrier) {
             this.barrier = barrier;
         }
 
         @Override
         public void run() {
-            System.out.println();
-            barrier.reset();
+            System.out.println("导游：都到齐了！出发！青春没有售价！我们直飞拉萨，带着A,B,C产生的结果出发了！");
         }
     }
 
@@ -46,6 +44,7 @@ public class TimedCyclicBarrier extends CyclicBarrier {
         @Override
         public void run() {
             try {
+                System.out.println(Thread.currentThread().getName() + "waitinggggggggggggg");
                 barrier.await();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -53,6 +52,7 @@ public class TimedCyclicBarrier extends CyclicBarrier {
                 throw new RuntimeException(e);
             }
             // DO NOTHING
+            System.out.println(Thread.currentThread().getName() + "我们这些凑数的也都到了");
         }
     }
 
@@ -64,9 +64,7 @@ public class TimedCyclicBarrier extends CyclicBarrier {
         }
     }
 
-
-    @Override
-    public synchronized int await() throws InterruptedException, BrokenBarrierException {
+    public int await() throws InterruptedException, BrokenBarrierException {
         // produce fake thread
         if (!checked) {
             currentTime = System.currentTimeMillis();
@@ -90,28 +88,18 @@ public class TimedCyclicBarrier extends CyclicBarrier {
         return barrier.await();
     }
 
-    @Override
-    public int await(long timeout, TimeUnit unit) throws InterruptedException, BrokenBarrierException, TimeoutException {
-        // NO IMPLEMENTATION
-        return -1;
-    }
-
-    @Override
     public int getNumberWaiting() {
         return barrier.getNumberWaiting();
     }
 
-    @Override
     public int getParties() {
         return barrier.getParties();
     }
 
-    @Override
     public boolean isBroken() {
         return barrier.isBroken();
     }
 
-    @Override
     public void reset() {
         resetInternal();
         barrier.reset();
