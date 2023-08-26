@@ -1,9 +1,7 @@
 package cn.ruc.edu.hola.client.web;
 
-import cn.ruc.edu.hola.client.performance.BackgroudThread;
-import cn.ruc.edu.hola.client.performance.Options;
+import cn.ruc.edu.hola.client.performance.*;
 import cn.ruc.edu.hola.client.performance.Package;
-import cn.ruc.edu.hola.client.performance.PerformanceHandler;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
@@ -33,23 +31,23 @@ public class PerformanceVerticle extends Verticle {
 
         router.post("/_find1").blockingHandler(ctx -> {
 
-            HttpServerResponse response = ctx.response();
-            response.setChunked(true);
-            var postData = ctx.body().asString();
-            postData += Thread.currentThread().getName();
-
-            BackgroudThread thread = (BackgroudThread) BackgroudThread.INSTANCE;
-
-            EventBus eb = vertx.eventBus();
-            String thread_name = Thread.currentThread().getName();
-
-            eb.send("ping-address", new Package(thread_name));
-
-            // then we need to subscribe the response
-            eb.consumer(thread_name, message -> {
-                System.out.println("Consumer news on consumer 1: " + message.body());
-                out(ctx, "77788899");
-            });
+//            HttpServerResponse response = ctx.response();
+//            response.setChunked(true);
+//            var postData = ctx.body().asString();
+//            postData += Thread.currentThread().getName();
+//
+//            BackgroudThread thread = (BackgroudThread) BackgroudThread.INSTANCE;
+//
+//            EventBus eb = vertx.eventBus();
+//            String thread_name = Thread.currentThread().getName();
+//
+//            eb.send("ping-address", new Package(thread_name));
+//
+//            // then we need to subscribe the response
+//            eb.consumer(thread_name, message -> {
+//                System.out.println("Consumer news on consumer 1: " + message.body());
+//                out(ctx, "77788899");
+//            });
 //            eb.u
 
 
@@ -62,19 +60,22 @@ public class PerformanceVerticle extends Verticle {
 //                System.out.println(cargo);
 //            }
 //
-////            PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
-////
-////            String object = new String("" + Thread.currentThread().getName() + System.currentTimeMillis());
-////            handler.offer(object);
-////            for (; !handler.hasResult(object); ) {
-////
-////            }
+            PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
 //
-//            EventBus eb = vertx.eventBus();
+//            String object = new String("" + Thread.currentThread().getName() + System.currentTimeMillis());
+
+//            for (; !handler.hasResult(object); ) {
 //
-//            eb.consumer("ping-resp", message -> {
-//                System.out.println("Received message: " + message.body());
-//            });
+//            }
+
+            Callback callback = new Callback() {
+                @Override
+                public void onFinish(String text) {
+                    out(ctx, text);
+                }
+            };
+
+            handler.offer(callback);
 
 
         });

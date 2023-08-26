@@ -16,7 +16,7 @@ public final class PerformanceHandler implements Handler<Long> {
 
     int cnt = 0;
 
-    private final Queue<String> queue = new ArrayDeque<>();
+    private final Queue<Callback> queue = new ArrayDeque<>();
 
     private static final Handler<Long> handler = new PerformanceHandler();
 
@@ -28,9 +28,9 @@ public final class PerformanceHandler implements Handler<Long> {
         return !strings.contains(re);
     }
 
-    private Set<String> strings = new HashSet<>();
+    private Set<Callback> strings = new HashSet<>();
 
-    public synchronized void offer(String obj) {
+    public synchronized void offer(Callback obj) {
         strings.add(obj);
         cnt++;
         System.out.println(obj);
@@ -48,11 +48,8 @@ public final class PerformanceHandler implements Handler<Long> {
         int size = queue.size();
 
         for (int i = 0; i < size; i++) {
-            String x = queue.poll();
-            System.out.println(x);
-            synchronized (x) {
-                x.notifyAll();
-            }
+            Callback x = queue.poll();
+            x.onFinish("" + Thread.currentThread().getName() + System.currentTimeMillis());
         }
 
         strings.clear();

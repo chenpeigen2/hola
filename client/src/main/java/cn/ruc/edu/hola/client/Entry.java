@@ -26,7 +26,7 @@ public class Entry {
 
         vertx.eventBus().registerDefaultCodec(Package.class, new PackageCodec());
 
-//        schedulePingPong(vertx);
+        schedulePingPong(vertx);
         BackgroudThread.INSTANCE.start();
     }
 
