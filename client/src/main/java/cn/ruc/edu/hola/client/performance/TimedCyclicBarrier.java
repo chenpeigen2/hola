@@ -30,6 +30,7 @@ public final class TimedCyclicBarrier {
         @Override
         public void run() {
             System.out.println("导游：都到齐了！出发！青春没有售价！我们直飞拉萨，带着A,B,C产生的结果出发了！");
+            barrier.reset();
         }
     }
 
