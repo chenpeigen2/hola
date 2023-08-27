@@ -95,7 +95,7 @@ public final class QueryTransfer implements ContractInterface {
         }.getType();
         List<Query> queryList = gson.fromJson(queries, type);
         for (Query query : queryList) {
-            query.setResp("abc" + System.currentTimeMillis());
+            query.setResp("abc");
             // TODO YOUR WORK
 //            CreateQuery(ctx, sgxConfig, query.getQueryID(), query.getOwner(),
 //                    query.getDate(), query.getQuery(), query.getResp());

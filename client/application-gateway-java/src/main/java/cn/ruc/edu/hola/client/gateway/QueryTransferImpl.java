@@ -53,7 +53,7 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
             }.getType();
             return gson.fromJson(json_result, type);
         } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
-//            throw new RuntimeException(e);
+            //            throw new RuntimeException(e);
         }
 
         return null;
