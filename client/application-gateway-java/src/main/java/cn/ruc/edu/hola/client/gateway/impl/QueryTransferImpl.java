@@ -1,7 +1,8 @@
-package cn.ruc.edu.hola.client.gateway;
+package cn.ruc.edu.hola.client.gateway.impl;
 
 import cn.ruc.edu.hola.client.Query;
 import cn.ruc.edu.hola.client.QueryTransfer;
+import cn.ruc.edu.hola.client.gateway.BasicTransfer;
 import com.google.gson.reflect.TypeToken;
 import org.hyperledger.fabric.client.*;
 

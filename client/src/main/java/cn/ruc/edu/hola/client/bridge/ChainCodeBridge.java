@@ -3,8 +3,8 @@ package cn.ruc.edu.hola.client.bridge;
 import cn.ruc.edu.hola.client.AssetTransfer;
 import cn.ruc.edu.hola.client.Query;
 import cn.ruc.edu.hola.client.entity.RealResponse;
-import cn.ruc.edu.hola.client.gateway.AssetTransferImpl;
-import cn.ruc.edu.hola.client.gateway.QueryTransferImpl;
+import cn.ruc.edu.hola.client.gateway.impl.AssetTransferImpl;
+import cn.ruc.edu.hola.client.gateway.impl.QueryTransferImpl;
 import cn.ruc.edu.hola.client.impl.SgxConfig;
 import cn.ruc.edu.hola.client.json.JsonUtils;
 

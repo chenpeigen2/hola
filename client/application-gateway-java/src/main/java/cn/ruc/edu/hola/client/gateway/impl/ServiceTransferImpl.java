@@ -1,7 +1,9 @@
-package cn.ruc.edu.hola.client.gateway;
+package cn.ruc.edu.hola.client.gateway.impl;
 
 import cn.ruc.edu.hola.client.Service;
 import cn.ruc.edu.hola.client.ServiceTransfer;
+import cn.ruc.edu.hola.client.gateway.BasicTransfer;
+import cn.ruc.edu.hola.client.gateway.impl.QueryTransferImpl;
 import org.hyperledger.fabric.client.*;
 
 import java.util.logging.Logger;

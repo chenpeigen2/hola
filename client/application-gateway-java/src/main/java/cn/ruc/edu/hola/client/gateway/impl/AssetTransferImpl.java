@@ -1,7 +1,8 @@
-package cn.ruc.edu.hola.client.gateway;
+package cn.ruc.edu.hola.client.gateway.impl;
 
 import cn.ruc.edu.hola.client.Asset;
 import cn.ruc.edu.hola.client.AssetTransfer;
+import cn.ruc.edu.hola.client.gateway.BasicTransfer;
 import org.hyperledger.fabric.client.*;
 
 import java.nio.charset.StandardCharsets;
