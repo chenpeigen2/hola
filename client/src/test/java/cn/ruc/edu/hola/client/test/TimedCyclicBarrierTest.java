@@ -5,6 +5,7 @@ import cn.ruc.edu.hola.client.performance.TimedCyclicBarrier;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+@Deprecated
 public class TimedCyclicBarrierTest {
     public static void main(String[] args) {
         //一个私人旅行团包了一个导游（其实也可以没有导游），大家都相互熟悉，知道要等一下家人或者朋友
