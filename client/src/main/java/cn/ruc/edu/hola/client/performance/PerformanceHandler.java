@@ -2,8 +2,8 @@ package cn.ruc.edu.hola.client.performance;
 
 
 import cn.ruc.edu.hola.client.ApiService;
+import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.entity.RealResponse;
-import cn.ruc.edu.hola.client.entity.Request;
 import io.vertx.core.Handler;
 
 import java.util.ArrayDeque;
@@ -38,10 +38,10 @@ public final class PerformanceHandler implements Handler<Long> {
         for (int i = 0; i < size; i++) {
             callbacks.add(queue.poll());
         }
-        final List<List<Request>> requests = new ArrayList<>();
+        final List<List<ChaincodeRequest>> requests = new ArrayList<>();
         callbacks.forEach(callback -> {
-            if (callback.requests != null) {
-                requests.add(callback.requests);
+            if (callback.chaincodeRequests != null) {
+                requests.add(callback.chaincodeRequests);
             }
         });
 

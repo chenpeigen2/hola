@@ -3,7 +3,7 @@ package cn.ruc.edu.hola.client.web;
 import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.Entry;
 import cn.ruc.edu.hola.client.bridge.ChainCodeBridge;
-import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.AbstractVerticle;
@@ -51,9 +51,9 @@ public class Verticle extends AbstractVerticle {
         // delegate the query process
         router.get("/trigger_invoke_query").handler(ctx -> {
             impl.update("http", "127.0.0.1", 8888);
-            List<Request> requests = new ArrayList<>();
-            requests.add(new Request(RandomStringGenerator.UID, Entry.Action.query));
-            var text = impl.complex(requests).getDecryptResponse();
+            List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
+            chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, Entry.Action.query));
+            var text = impl.complex(chaincodeRequests).getDecryptResponse();
             out(ctx, text);
         });
 
@@ -62,9 +62,9 @@ public class Verticle extends AbstractVerticle {
             impl.update("http", "127.0.0.1", 8888); // select associate
             var postData = ctx.body().asString();
             var jsonData = QueryParser.basicParser(postData); // expected jsonData
-            List<Request> requests = new ArrayList<>();
-            requests.add(new Request(RandomStringGenerator.UID, jsonData));
-            var text = impl.complex(requests).getDecryptResponse();
+            List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
+            chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, jsonData));
+            var text = impl.complex(chaincodeRequests).getDecryptResponse();
             out(ctx, text);
         });
 

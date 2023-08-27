@@ -38,7 +38,7 @@ public final class Query {
     @Expose
     @SerializedName("resp")
     @Property
-    private final String resp;
+    private String resp;
 
     public String getQueryID() {
         return queryID;
@@ -59,6 +59,10 @@ public final class Query {
 
     public String getResp() {
         return resp;
+    }
+
+    public void setResp(String resp) {
+        this.resp = resp;
     }
 
     public Query(String queryID, String owner, String date, String query, String resp) {

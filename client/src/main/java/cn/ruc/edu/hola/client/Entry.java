@@ -1,12 +1,10 @@
 package cn.ruc.edu.hola.client;
 
-import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.performance.*;
-import cn.ruc.edu.hola.client.performance.Package;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import cn.ruc.edu.hola.client.web.PerformanceVerticle;
 import cn.ruc.edu.hola.client.web.Verticle;
-import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
 
@@ -37,9 +35,9 @@ public class Entry {
     public static void triggerClient() {
         ApiService apiService = ApiService.getInstance();
         apiService.update("http", "127.0.0.1", 8888);
-        List<Request> requests = new ArrayList<>();
-        requests.add(new Request(RandomStringGenerator.UID, Action.query));
-        var text = apiService.complex(requests).getResponse();
+        List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
+        chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, Action.query));
+        var text = apiService.complex(chaincodeRequests).getResponse();
         System.out.println(text);
 
     }

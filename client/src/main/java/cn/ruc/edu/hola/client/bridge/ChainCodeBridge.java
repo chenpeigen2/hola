@@ -9,6 +9,7 @@ import cn.ruc.edu.hola.client.impl.SgxConfig;
 import cn.ruc.edu.hola.client.json.JsonUtils;
 
 import java.time.Instant;
+import java.util.List;
 
 public final class ChainCodeBridge {
 
@@ -21,6 +22,7 @@ public final class ChainCodeBridge {
                 resp.setResponse(response);
             }
         } else {
+            // execute the chaincode
             var wrapper = QueryTransferImpl.init();
             var queryTransfer = new QueryTransferImpl(wrapper.gateway);
             response = resp.getResponse();
@@ -30,6 +32,19 @@ public final class ChainCodeBridge {
             QueryTransferImpl.destroy(wrapper);
         }
 
+        return resp;
+    }
+
+    public List<RealResponse> invokeMultiQueries(final SgxConfig sgxConfig, List<Query> queries, final List<RealResponse> resp) throws Exception {
+        // only use the chaincode
+        var wrapper = QueryTransferImpl.init();
+        var queryTransfer = new QueryTransferImpl(wrapper.gateway);
+        var qury_string = JsonUtils.INSTANCE.getJson().toJson(queries);
+        List<Query> chaincode_query = queryTransfer.CreateMultiQuery(JsonUtils.INSTANCE.getJson().toJson(sgxConfig), qury_string);
+        for (int i = 0; i < resp.size(); i++) {
+            resp.get(i).setResponse(chaincode_query.get(i).getResp());
+        }
+        QueryTransferImpl.destroy(wrapper);
         return resp;
     }
 

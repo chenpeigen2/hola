@@ -1,11 +1,9 @@
 package cn.ruc.edu.hola.client.web;
 
-import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.performance.*;
-import cn.ruc.edu.hola.client.performance.Package;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
-import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
@@ -91,10 +89,10 @@ public class PerformanceVerticle extends Verticle {
 
             var postData = ctx.body().asString();
             var jsonData = QueryParser.basicParser(postData); // expected jsonData
-            List<Request> requests = new ArrayList<>();
-            requests.add(new Request(RandomStringGenerator.UID, jsonData));
+            List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
+            chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, jsonData));
             PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
-            Callback callback = new Callback(requests) {
+            Callback callback = new Callback(chaincodeRequests) {
                 @Override
                 public void onFinish(String text) {
                     out(ctx, text);

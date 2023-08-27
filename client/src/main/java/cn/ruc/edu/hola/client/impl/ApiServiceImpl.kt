@@ -1,8 +1,10 @@
 package cn.ruc.edu.hola.client.impl
 
 import cn.ruc.edu.hola.client.ApiService
+import cn.ruc.edu.hola.client.Query
 import cn.ruc.edu.hola.client.bridge.ChainCodeBridge
 import cn.ruc.edu.hola.client.encrypy.EncryptUtils
+import cn.ruc.edu.hola.client.entity.ChaincodeRequest
 import cn.ruc.edu.hola.client.entity.RealResponse
 import cn.ruc.edu.hola.client.entity.auth.AuthData
 import cn.ruc.edu.hola.client.entity.auth.RSAAuthData
@@ -60,23 +62,23 @@ internal class ApiServiceImpl : ApiService() {
         map[baseUrl.toString()] = aesKey
     }
 
-    override fun complex(requests: MutableList<cn.ruc.edu.hola.client.entity.Request>): RealResponse {
+    override fun complex(chaincodeRequests: MutableList<ChaincodeRequest>): RealResponse {
         if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
             refresh() //refresh the key
         }
         val aesKey = map[baseUrl.toString()]
         println(aesKey)
-        val authedRequest = mutableListOf<cn.ruc.edu.hola.client.entity.Request>()
-        requests.forEach {
-            authedRequest.add(
-                cn.ruc.edu.hola.client.entity.Request(
+        val authedChaincodeRequest = mutableListOf<ChaincodeRequest>()
+        chaincodeRequests.forEach {
+            authedChaincodeRequest.add(
+                ChaincodeRequest(
                     it.uid,
                     EncryptUtils.encryptAES(it.filter(), aesKey)
                 )
             )
         }
 
-        val text = JsonUtils.json.toJson(authedRequest)
+        val text = JsonUtils.json.toJson(authedChaincodeRequest)
 
         val response: RealResponse
 
@@ -110,35 +112,50 @@ internal class ApiServiceImpl : ApiService() {
         return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
     }
 
-    override fun multiComplex(requests: MutableList<MutableList<cn.ruc.edu.hola.client.entity.Request>>): MutableList<RealResponse> {
+    override fun multiComplex(chaincodeRequests: MutableList<MutableList<ChaincodeRequest>>): MutableList<RealResponse> {
 //        if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
 //            refresh() //refresh the key
 //        }
         val aesKey = RandomStringGenerator.generateAESKey()
 //        println(aesKey)
-        val authRequests = mutableListOf<MutableList<cn.ruc.edu.hola.client.entity.Request>>()
+        val authChaincodeRequests = mutableListOf<MutableList<ChaincodeRequest>>()
 
-        requests.forEach {
-            val list = mutableListOf<cn.ruc.edu.hola.client.entity.Request>()
+        chaincodeRequests.forEach {
+            val list = mutableListOf<ChaincodeRequest>()
             it.forEach {
                 list.add(
-                    cn.ruc.edu.hola.client.entity.Request(
+                    ChaincodeRequest(
                         it.uid,
                         EncryptUtils.encryptAES(it.filter(), aesKey)
                     )
                 )
             }
-            authRequests.add(list)
+            authChaincodeRequests.add(list)
         }
 
-        val text = JsonUtils.json.toJson(authRequests)
+        val text = JsonUtils.json.toJson(authChaincodeRequests)
 
-        // execute using the blockchain
-        // TODO
+        // expected config
+        var sgxConfig = SgxConfig(scheme, host, port)
+        val queryId = UUID.randomUUID().toString(); // use the uuid to delegate the queryId
+        val owner = RandomStringGenerator.UID // use the query UID to delegate the owner
+        val date = System.currentTimeMillis().toString() // use current date to delegate the query time
+        val query = text // query encrypt text
 
-        return mutableListOf<RealResponse>().apply {
-            add(RealResponse(text, aesKey))
+        // replace with our own config
+        sgxConfig = SgxConfig(sgxConfig.scheme, "172.17.0.1", sgxConfig.port)
+
+        val sz = chaincodeRequests.size
+        val queries = mutableListOf<Query>()
+        val resp = mutableListOf<RealResponse>()
+
+        for (i in 0 until sz) {
+            val response = RealResponse("chaincode response", aesKey)
+            queries.add(Query(queryId, owner, date, query, response.response))
+            resp.add(response)
         }
+
+        return bridge.invokeMultiQueries(sgxConfig, queries, resp)
     }
 
     override fun getChaincodeQueries(): RealResponse {

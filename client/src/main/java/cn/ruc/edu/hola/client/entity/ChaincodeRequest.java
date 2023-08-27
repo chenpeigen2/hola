@@ -1,7 +1,7 @@
 package cn.ruc.edu.hola.client.entity;
 
-public record Request(String uid, String filter) {
-    public Request {
+public record ChaincodeRequest(String uid, String filter) {
+    public ChaincodeRequest {
         filter = filter.replaceAll("\\s", "");
     }
 }
