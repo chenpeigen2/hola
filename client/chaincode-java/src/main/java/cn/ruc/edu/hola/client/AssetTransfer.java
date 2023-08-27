@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.client;
 
+@Deprecated
 public interface AssetTransfer {
     Asset createAsset(final String assetID, final String color, final int size,
                       final String owner, final int appraisedValue);

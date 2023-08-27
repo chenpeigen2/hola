@@ -7,6 +7,7 @@ import org.hyperledger.fabric.client.*;
 
 import java.nio.charset.StandardCharsets;
 
+@Deprecated
 public class AssetTransferImpl extends BasicTransfer implements AssetTransfer {
 
     public AssetTransferImpl(final Gateway gateway) throws EndorseException, CommitException, SubmitException, CommitStatusException {
