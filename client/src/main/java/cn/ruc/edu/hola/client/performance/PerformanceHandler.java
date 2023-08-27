@@ -4,6 +4,7 @@ package cn.ruc.edu.hola.client.performance;
 import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.entity.RealResponse;
+import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.Handler;
 
 import java.util.ArrayDeque;
@@ -50,10 +51,12 @@ public final class PerformanceHandler implements Handler<Long> {
                 callbacks.forEach(callback -> callback.onFinish(Thread.currentThread().getName() + System.currentTimeMillis()));
                 return;
             }
+            // random spec uuid
+            String randomUUID = RandomStringGenerator.generateRandomUUID();
             List<RealResponse> responseList = api.multiComplex(requests);
             for (int i = 0; i < callbacks.size(); i++) {
-                String specText = responseList.get(0).getResponse();
-                callbacks.get(i).onFinish(specText);
+                String specText = responseList.get(i).getResponse();
+                callbacks.get(i).onFinish(specText + "\n" + randomUUID);
             }
         }
     }

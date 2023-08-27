@@ -89,7 +89,7 @@ public final class QueryTransfer implements ContractInterface {
     }
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public List<Query> CreateMultiQuery(final Context ctx, final String sgxConfig, final String queries) {
+    public String CreateMultiQuery(final Context ctx, final String sgxConfig, final String queries) {
         ChaincodeStub stub = ctx.getStub();
         Type type = new TypeToken<List<Query>>() {
         }.getType();
@@ -101,7 +101,7 @@ public final class QueryTransfer implements ContractInterface {
 //                    query.getDate(), query.getQuery(), query.getResp());
         }
         stub.putStringState("aaa", "bbb");
-        return queryList;
+        return gson.toJson(queryList);
     }
 
     @Transaction(intent = Transaction.TYPE.EVALUATE)
