@@ -30,6 +30,7 @@ public class Entry {
         vertx.setPeriodic(Duration.ofSeconds(1).toMillis(), PerformanceHandler.getInstance());
     }
 
+    @Deprecated
     public static void triggerClient() {
         ApiService apiService = ApiService.getInstance();
         apiService.update("http", "127.0.0.1", 8888);
@@ -40,6 +41,7 @@ public class Entry {
 
     }
 
+    @Deprecated
     public interface Action {
         String query = """
                 {
