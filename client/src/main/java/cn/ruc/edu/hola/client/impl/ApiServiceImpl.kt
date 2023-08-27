@@ -133,14 +133,11 @@ internal class ApiServiceImpl : ApiService() {
             authChaincodeRequests.add(list)
         }
 
-        val text = JsonUtils.json.toJson(authChaincodeRequests)
-
         // expected config
         var sgxConfig = SgxConfig(scheme, host, port)
         val queryId = UUID.randomUUID().toString(); // use the uuid to delegate the queryId
         val owner = RandomStringGenerator.UID // use the query UID to delegate the owner
         val date = System.currentTimeMillis().toString() // use current date to delegate the query time
-        val query = text // query encrypt text
 
         // replace with our own config
         sgxConfig = SgxConfig(sgxConfig.scheme, "172.17.0.1", sgxConfig.port)
@@ -151,7 +148,7 @@ internal class ApiServiceImpl : ApiService() {
 
         for (i in 0 until sz) {
             val response = RealResponse("chaincode response", aesKey)
-            queries.add(Query(queryId, owner, date, query, response.response))
+            queries.add(Query(queryId, owner, date, JsonUtils.json.toJson(authChaincodeRequests[i]), response.response))
             resp.add(response)
         }
 
