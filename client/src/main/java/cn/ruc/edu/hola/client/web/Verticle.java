@@ -28,7 +28,7 @@ public class Verticle extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
-        router.get("/trigger_new").handler(ctx -> {
+        /*router.get("/trigger_new").handler(ctx -> {
             System.out.println("hello world");
             ChainCodeBridge bridge = new ChainCodeBridge();
 //            Entry.triggerClient(); // trigger the query
@@ -55,7 +55,7 @@ public class Verticle extends AbstractVerticle {
             chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, Entry.Action.query));
             var text = impl.complex(chaincodeRequests).getDecryptResponse();
             out(ctx, text);
-        });
+        });*/
 
         // define yr own query process
         router.post("/_find").handler(ctx -> {
@@ -68,11 +68,12 @@ public class Verticle extends AbstractVerticle {
             out(ctx, text);
         });
 
-        router.get("/trigger_invoke_get_queries").handler(ctx -> {
+
+        /*router.get("/trigger_invoke_get_queries").handler(ctx -> {
             var response = impl.getChaincodeQueries();
             var text = response.getResponse();
             out(ctx, text);
-        });
+        });*/
 
         server.requestHandler(router).listen(PORT);
     }
