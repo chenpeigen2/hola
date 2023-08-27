@@ -5,8 +5,7 @@
 package org.hyperledger.fabric.samples.querytransfer;
 
 import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
+import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
 import org.hyperledger.fabric.Logger;
 import org.hyperledger.fabric.contract.Context;
@@ -19,7 +18,7 @@ import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
 import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 
-import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +88,14 @@ public final class QueryTransfer implements ContractInterface {
         return asset;
     }
 
+    @Transaction(intent = Transaction.TYPE.SUBMIT)
+    public List<Query> CreateMultiQuery(final Context ctx, final String sgxConfig, final String queries) {
+        Type type = new TypeToken<List<Query>>() {
+        }.getType();
+        List<Query> queryList = gson.fromJson(queries, type);
+        // TODO YOUR WORK
+        return queryList;
+    }
 
     @Transaction(intent = Transaction.TYPE.EVALUATE)
     public Query ReadQuery(final Context ctx, final String queryID) {

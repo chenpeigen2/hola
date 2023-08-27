@@ -2,8 +2,11 @@ package cn.ruc.edu.hola.client.gateway;
 
 import cn.ruc.edu.hola.client.Query;
 import cn.ruc.edu.hola.client.QueryTransfer;
+import com.google.gson.reflect.TypeToken;
 import org.hyperledger.fabric.client.*;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
@@ -29,6 +32,26 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
             logger.info(json_result);
             logger.info("CreateQuery <====");
             return gson.fromJson(json_result, Query.class);
+        } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
+//            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Query> CreateMultiQuery(String sgxConfig, String queries) {
+        System.out.println("\n--> Submit Transaction: CreateMultiQuery");
+
+        try {
+            var result = contract.submitTransaction("CreateMultiQuery", sgxConfig, queries);
+            var json_result = prettyJson(result);
+            logger.info("CreateMultiQuery ====>");
+            logger.info(json_result);
+            logger.info("CreateMultiQuery <====");
+            Type type = new TypeToken<List<Query>>() {
+            }.getType();
+            return gson.fromJson(json_result, type);
         } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
 //            throw new RuntimeException(e);
         }
