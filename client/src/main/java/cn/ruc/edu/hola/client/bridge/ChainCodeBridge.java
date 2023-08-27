@@ -48,6 +48,7 @@ public final class ChainCodeBridge {
         return resp;
     }
 
+    @Deprecated
     public String invokeGetAllQueries() throws Exception {
         var wrapper = QueryTransferImpl.init();
         var queryTransfer = new QueryTransferImpl(wrapper.gateway);
@@ -59,7 +60,7 @@ public final class ChainCodeBridge {
         return result;
     }
 
-
+    @Deprecated
     public void trigger() throws Exception {
         var wrapper = AssetTransferImpl.init();
 
