@@ -115,7 +115,7 @@ internal class ApiServiceImpl : ApiService() {
 //            refresh() //refresh the key
 //        }
         val aesKey = RandomStringGenerator.generateAESKey()
-        println(aesKey)
+//        println(aesKey)
         val authRequests = mutableListOf<MutableList<cn.ruc.edu.hola.client.entity.Request>>()
 
         requests.forEach {
@@ -131,7 +131,7 @@ internal class ApiServiceImpl : ApiService() {
             authRequests.add(list)
         }
 
-        val text = JsonUtils.json.toJson(requests)
+        val text = JsonUtils.json.toJson(authRequests)
 
         // execute using the blockchain
         // TODO
