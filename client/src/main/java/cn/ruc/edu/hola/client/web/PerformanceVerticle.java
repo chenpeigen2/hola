@@ -1,7 +1,10 @@
 package cn.ruc.edu.hola.client.web;
 
+import cn.ruc.edu.hola.client.entity.Request;
+import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.performance.*;
 import cn.ruc.edu.hola.client.performance.Package;
+import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
@@ -9,6 +12,9 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PerformanceVerticle extends Verticle {
 
@@ -70,7 +76,7 @@ public class PerformanceVerticle extends Verticle {
 //
 //            }
 
-            Callback callback = new Callback() {
+            Callback callback = new Callback(null) {
                 @Override
                 public void onFinish(String text) {
                     out(ctx, text);
@@ -78,8 +84,24 @@ public class PerformanceVerticle extends Verticle {
             };
 
             handler.offer(callback);
+        });
 
 
+        router.post("/multi_find").blockingHandler(ctx -> {
+
+            var postData = ctx.body().asString();
+            var jsonData = QueryParser.basicParser(postData); // expected jsonData
+            List<Request> requests = new ArrayList<>();
+            requests.add(new Request(RandomStringGenerator.UID, jsonData));
+            PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
+            Callback callback = new Callback(requests) {
+                @Override
+                public void onFinish(String text) {
+                    out(ctx, text);
+                }
+            };
+
+            handler.offer(callback);
         });
 
 //        https://blog.csdn.net/qq_40276626/article/details/120381161

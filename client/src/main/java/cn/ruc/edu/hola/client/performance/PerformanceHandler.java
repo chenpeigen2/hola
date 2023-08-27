@@ -1,14 +1,22 @@
 package cn.ruc.edu.hola.client.performance;
 
 
+import cn.ruc.edu.hola.client.ApiService;
+import cn.ruc.edu.hola.client.entity.RealResponse;
+import cn.ruc.edu.hola.client.entity.Request;
 import io.vertx.core.Handler;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 public final class PerformanceHandler implements Handler<Long> {
 
-    private PerformanceHandler() {}
+    private final ApiService api = ApiService.getInstance();
+
+    private PerformanceHandler() {
+    }
 
     private final Queue<Callback> queue = new ArrayDeque<>();
 
@@ -26,9 +34,27 @@ public final class PerformanceHandler implements Handler<Long> {
 
     public void handle(Long event) {
         int size = queue.size();
+        final List<Callback> callbacks = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            Callback x = queue.poll();
-            x.onFinish("" + Thread.currentThread().getName() + System.currentTimeMillis());
+            callbacks.add(queue.poll());
+        }
+        final List<List<Request>> requests = new ArrayList<>();
+        callbacks.forEach(callback -> {
+            if (callback.requests != null) {
+                requests.add(callback.requests);
+            }
+        });
+
+        if (!callbacks.isEmpty()) {
+            if (requests.isEmpty()) {
+                callbacks.forEach(callback -> callback.onFinish(Thread.currentThread().getName() + System.currentTimeMillis()));
+                return;
+            }
+            List<RealResponse> responseList = api.multiComplex(requests);
+            for (int i = 0; i < callbacks.size(); i++) {
+                String specText = responseList.get(0).getResponse();
+                callbacks.get(i).onFinish(specText);
+            }
         }
     }
 }

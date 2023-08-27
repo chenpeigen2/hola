@@ -15,7 +15,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import java.util.UUID
+import java.util.*
 
 internal class ApiServiceImpl : ApiService() {
 
@@ -108,6 +108,37 @@ internal class ApiServiceImpl : ApiService() {
         }
 
         return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
+    }
+
+    override fun multiComplex(requests: MutableList<MutableList<cn.ruc.edu.hola.client.entity.Request>>): MutableList<RealResponse> {
+//        if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
+//            refresh() //refresh the key
+//        }
+        val aesKey = RandomStringGenerator.generateAESKey()
+        println(aesKey)
+        val authRequests = mutableListOf<MutableList<cn.ruc.edu.hola.client.entity.Request>>()
+
+        requests.forEach {
+            val list = mutableListOf<cn.ruc.edu.hola.client.entity.Request>()
+            it.forEach {
+                list.add(
+                    cn.ruc.edu.hola.client.entity.Request(
+                        it.uid,
+                        EncryptUtils.encryptAES(it.filter(), aesKey)
+                    )
+                )
+            }
+            authRequests.add(list)
+        }
+
+        val text = JsonUtils.json.toJson(requests)
+
+        // execute using the blockchain
+        // TODO
+
+        return mutableListOf<RealResponse>().apply {
+            add(RealResponse(text, aesKey))
+        }
     }
 
     override fun getChaincodeQueries(): RealResponse {
