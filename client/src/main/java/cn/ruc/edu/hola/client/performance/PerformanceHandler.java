@@ -32,7 +32,6 @@ public final class PerformanceHandler implements Handler<Long> {
     }
 
     @Override
-
     public void handle(Long event) {
         int size = queue.size();
         final List<Callback> callbacks = new ArrayList<>();
@@ -53,6 +52,7 @@ public final class PerformanceHandler implements Handler<Long> {
             }
             // random spec uuid
             String randomUUID = RandomStringGenerator.generateRandomUUID();
+            api.update("http", "127.0.0.1", 8888); // select associate
             List<RealResponse> responseList = api.multiComplex(requests);
             for (int i = 0; i < callbacks.size(); i++) {
                 String specText = responseList.get(i).getResponse();

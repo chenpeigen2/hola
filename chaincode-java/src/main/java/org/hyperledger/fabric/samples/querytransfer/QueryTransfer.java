@@ -91,14 +91,18 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public String CreateMultiQuery(final Context ctx, final String sgxConfig, final String queries) {
         ChaincodeStub stub = ctx.getStub();
+        SgxConfig config = gson.fromJson(sgxConfig, SgxConfig.class);
         Type type = new TypeToken<List<Query>>() {
         }.getType();
         List<Query> queryList = gson.fromJson(queries, type);
         for (Query query : queryList) {
-            query.setResp("abc");
-            // TODO YOUR WORK
-//            CreateQuery(ctx, sgxConfig, query.getQueryID(), query.getOwner(),
-//                    query.getDate(), query.getQuery(), query.getResp());
+            // here we execute our own http request
+            try (Response response = HttpClient.INSTANCE.executeComplex(config, query.getQuery())) {
+                var resp = response.body().string();
+                query.setResp(resp);
+            } catch (Exception exception) {
+                logger.error(exception.toString());
+            }
         }
         stub.putStringState("aaa", "bbb");
         return gson.toJson(queryList);

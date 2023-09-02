@@ -113,11 +113,11 @@ internal class ApiServiceImpl : ApiService() {
     }
 
     override fun multiComplex(chaincodeRequests: MutableList<MutableList<ChaincodeRequest>>): MutableList<RealResponse> {
-//        if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
-//            refresh() //refresh the key
-//        }
-        val aesKey = RandomStringGenerator.generateAESKey()
-//        println(aesKey)
+        if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
+            refresh() //refresh the key
+        }
+        val aesKey = map[baseUrl.toString()]
+        println(aesKey)
         val authChaincodeRequests = mutableListOf<MutableList<ChaincodeRequest>>()
 
         chaincodeRequests.forEach {
