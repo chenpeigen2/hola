@@ -12,6 +12,7 @@ import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.*;
 import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
+import org.hyperledger.fabric.samples.querytransfer.performance.AsyncHttpClient;
 import org.hyperledger.fabric.samples.querytransfer.utils.ChaincodeConfig;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
@@ -95,6 +96,8 @@ public final class QueryTransfer implements ContractInterface {
         Type type = new TypeToken<List<Query>>() {
         }.getType();
         List<Query> queryList = gson.fromJson(queries, type);
+
+        /* executing without async
         for (Query query : queryList) {
             // here we execute our own http request
             try (Response response = HttpClient.INSTANCE.executeComplex(config, query.getQuery())) {
@@ -104,6 +107,10 @@ public final class QueryTransfer implements ContractInterface {
                 logger.error(exception.toString());
             }
         }
+        */
+
+        AsyncHttpClient.INSTANCE.executeQuery(queryList, config);
+
         stub.putStringState("aaa", "bbb");
         return gson.toJson(queryList);
     }

@@ -19,6 +19,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+// https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm
+    runtimeOnly 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3'
     testImplementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'

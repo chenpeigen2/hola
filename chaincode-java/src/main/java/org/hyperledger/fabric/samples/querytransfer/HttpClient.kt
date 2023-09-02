@@ -11,12 +11,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 object HttpClient {
 
-    private val headers = hashMapOf(
+    val headers = hashMapOf(
         "Accept" to "application/json",
         "Content-Type" to "application/json"
     )
 
-    private val client: OkHttpClient = OkHttpClient.Builder()
+    val client: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
         .build()
 
