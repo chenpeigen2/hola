@@ -1,5 +1,6 @@
 package org.hyperledger.fabric.samples.querytransfer.performance
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import okhttp3.Headers.Companion.toHeaders
@@ -30,7 +31,7 @@ object AsyncHttpClient {
 
     fun executeQuery(queryList: List<Query>, config: SgxConfig) = runBlocking {
         queryList.forEach {
-            it.resp = async {
+            it.resp = async(Dispatchers.Default) {
                 executeComplex(config, it.query).use { response ->
                     response.body?.string()
                 }
