@@ -42,7 +42,7 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
 
     @Override
     public List<Query> CreateMultiQuery(String sgxConfig, String queries) {
-        System.out.println("\n--> Submit Transaction: CreateMultiQuery");
+        /*System.out.println("\n--> Submit Transaction: CreateMultiQuery");*/
 
         try {
             // async commit
@@ -54,15 +54,14 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
             var result = commit.getResult();
 //            var result = contract.submitTransaction("CreateMultiQuery", sgxConfig, queries);
             var json_result = prettyJson(result);
-            logger.info("CreateMultiQuery ====>");
+            /*logger.info("CreateMultiQuery ====>");
             logger.info(json_result);
-            logger.info("CreateMultiQuery <====");
+            logger.info("CreateMultiQuery <====");*/
             Type type = new TypeToken<List<Query>>() {
             }.getType();
             return gson.fromJson(json_result, type);
         } catch (EndorseException | SubmitException e) {
-
-            //            throw new RuntimeException(e);
+            logger.severe(e.toString());
         }
 
         return null;
