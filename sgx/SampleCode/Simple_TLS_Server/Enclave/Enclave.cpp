@@ -35,6 +35,7 @@ std::unordered_map <std::string, std::string> auth_uuid_map;
 #define ELAPSE_MINUTES 15
 time_t start;
 
+// CHECKED
 bool refreshIfNeeded() {
     time_t now = sgx_time(nullptr);
     if (start == 0) {
@@ -147,7 +148,7 @@ char *ecall_complex_curl(const char *data) {
 
     // assemble
     int len = response.length();
-    delete p_response; // delete the pointer
+    delete[]p_response; // delete the pointer
     p_response = new char[len + 1];
     response.copy(p_response, len);
     p_response[len] = '\0';
