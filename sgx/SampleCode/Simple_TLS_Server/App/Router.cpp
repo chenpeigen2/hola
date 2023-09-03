@@ -21,7 +21,7 @@ void router(wfrest::HttpServer &server) {
         // 遍历数组并输出每个元素
         auto data = req->json().dump();
         std::string result = complex_filter(data);
-        std::cout << "the data from the encalve: " << result << std::endl;
+        /* std::cout << "the data from the encalve: " << result << std::endl; */
         resp->String(result);
     });
 

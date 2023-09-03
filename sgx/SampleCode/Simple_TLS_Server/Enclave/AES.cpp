@@ -12,7 +12,7 @@
 #include <openssl/aes.h>
 #include "Encrypt.h"
 
-
+// CHECKED
 void padding(std::string &src, int alignSize, PaddingModel mode) {
     int remainder = src.length() % alignSize;
     int paddingSize = (remainder == 0) ? alignSize : (alignSize - remainder);

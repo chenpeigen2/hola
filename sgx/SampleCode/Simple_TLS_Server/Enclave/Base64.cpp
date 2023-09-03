@@ -10,7 +10,7 @@
 #include <openssl/err.h>
 #include <string>
 #include "Encrypt.h"
-
+// CHECKED
 std::string encode(const char *src, size_t src_len) {
     BIO *bmem, *b64;
     BUF_MEM *bptr;
@@ -23,7 +23,7 @@ std::string encode(const char *src, size_t src_len) {
     BIO_get_mem_ptr(b64, &bptr);
     std::string str_result(bptr->data, bptr->length);
 
-    BIO_free_all(b64);
+    BIO_free_all(b64); // should check
     return str_result;
 }
 

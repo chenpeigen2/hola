@@ -13,7 +13,7 @@
 
 
 #define KEY_LENGTH  2048             // 密钥长度
-
+// CHECKED
 std::string encrypt(const unsigned char *src, size_t src_len,
                     const unsigned char *pub_key, size_t key_len) {
     BIO *keybio = nullptr;
