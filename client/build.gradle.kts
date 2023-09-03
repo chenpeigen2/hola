@@ -29,8 +29,8 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
     implementation("cn.hutool:hutool-crypto:5.8.21")
-    implementation("io.vertx:vertx-web:4.4.4")
-    implementation("io.vertx:vertx-web-validation:4.4.4")
+    implementation("io.vertx:vertx-web:4.4.5")
+    implementation("io.vertx:vertx-web-validation:4.4.5")
     implementation(project("application-gateway-java"))
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10.1")

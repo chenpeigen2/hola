@@ -19,8 +19,8 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("io.vertx:vertx-web:4.4.4")
-    implementation("io.vertx:vertx-web-validation:4.4.4")
+    implementation("io.vertx:vertx-web:4.4.5")
+    implementation("io.vertx:vertx-web-validation:4.4.5")
     // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.57.1")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
