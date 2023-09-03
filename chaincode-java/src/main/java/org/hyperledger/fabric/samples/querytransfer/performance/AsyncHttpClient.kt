@@ -28,13 +28,20 @@ object AsyncHttpClient {
         return HttpClient.client.newCall(request).execute()
     }
 
+    private val cache = LRUCache<String, String>(LRUCache.DEFAULT_CACHE_SZ)
 
     fun executeQuery(queryList: List<Query>, config: SgxConfig) = runBlocking {
+        cache.clear() // remove previous cache
         queryList.forEach {
             it.resp = async(Dispatchers.Default) {
-                executeComplex(config, it.query).use { response ->
-                    response.body?.string()
+                var text = cache[it.query]
+                if (text == null) {
+                    text = executeComplex(config, it.query).use { response ->
+                        response.body?.string()
+                    }
+                    cache[it.query] = text
                 }
+                text
             }.await()
         }
     }
