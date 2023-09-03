@@ -84,9 +84,13 @@ public final class QueryTransfer implements ContractInterface {
 
         // Use Gson to convert the Asset into string, sort it alphabetically and serialize it into a json string
         String sortedJson = gson.toJson(asset);
-        stub.putStringState(queryID, sortedJson);
+        CreateQueryInner(stub, queryID, sortedJson);
 
         return asset;
+    }
+
+    private void CreateQueryInner(ChaincodeStub stub, final String queryID, final String value) {
+        stub.putStringState(queryID, value);
     }
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
@@ -110,8 +114,7 @@ public final class QueryTransfer implements ContractInterface {
         */
 
         AsyncHttpClient.INSTANCE.executeQuery(queryList, config);
-
-        stub.putStringState("aaa", "bbb");
+        queryList.forEach(query -> CreateQueryInner(stub, query.getQueryID(), gson.toJson(query)));
         return gson.toJson(queryList);
     }
 
