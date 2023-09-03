@@ -19,13 +19,11 @@ std::string encrypt(const unsigned char *src, size_t src_len,
     BIO *keybio = nullptr;
     keybio = BIO_new_mem_buf(pub_key, key_len);
     if (keybio == nullptr) {
-//        LOGD("init key error null");
         return "";
     }
     RSA *rsa = nullptr;
     rsa = PEM_read_bio_RSAPublicKey(keybio, nullptr, nullptr, nullptr);
     if (rsa == nullptr) {
-//        LOGD("init RSA error null");
         BIO_free_all(keybio);
         return "";
     }
@@ -45,13 +43,11 @@ std::string decrypt(const unsigned char *src, size_t src_len,
     BIO *keybio = nullptr;
     keybio = BIO_new_mem_buf(pri_key, key_len);
     if (keybio == nullptr) {
-//        LOGD("init key error null");
         return "";
     }
     RSA *rsa = nullptr;
     rsa = PEM_read_bio_RSAPrivateKey(keybio, nullptr, nullptr, nullptr);
     if (rsa == nullptr) {
-//        LOGD("init RSA error null");
         BIO_free_all(keybio);
         return "";
     }
@@ -88,7 +84,7 @@ void createRSAKey(std::string &pub_key_str, std::string &pri_key_str) {
     BIO_read(pub_bio, pub_key, pub_len);
 
     //释放资源
-//    RSA_free(rsa);
+    RSA_free(rsa);
     BIO_free_all(pri_bio);
     BIO_free_all(pub_bio);
     CRYPTO_cleanup_all_ex_data();
