@@ -103,7 +103,7 @@ public class PerformanceVerticle extends Verticle {
         });
 
 //        https://blog.csdn.net/qq_40276626/article/details/120381161
-        router.post("/blocing")
+        router.post("/blocking")
                 .blockingHandler(ctx -> {
                     HttpServerResponse response = ctx.response();
                     response.setChunked(true);
