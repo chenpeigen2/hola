@@ -9,6 +9,7 @@ import cn.ruc.edu.hola.client.entity.RealResponse
 import cn.ruc.edu.hola.client.entity.auth.AuthData
 import cn.ruc.edu.hola.client.entity.auth.RSAAuthData
 import cn.ruc.edu.hola.client.json.JsonUtils
+import cn.ruc.edu.hola.client.performance.AsyncHttpClient
 import cn.ruc.edu.hola.client.utils.ChaincodeConfig
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator
 import cn.ruc.edu.hola.client.utils.Timer
@@ -150,6 +151,14 @@ internal class ApiServiceImpl : ApiService() {
             val response = RealResponse("chaincode response", aesKey)
             queries.add(Query(queryId, owner, date, JsonUtils.json.toJson(authChaincodeRequests[i]), response.response))
             resp.add(response)
+        }
+
+        if (!ChaincodeConfig.supportNet()) {
+            AsyncHttpClient.executeQuery(queries, sgxConfig)
+            for (i in resp.indices) {
+                resp[i].response = queries[i].resp
+            }
+            return resp;
         }
 
         return bridge.invokeMultiQueries(sgxConfig, queries, resp)
