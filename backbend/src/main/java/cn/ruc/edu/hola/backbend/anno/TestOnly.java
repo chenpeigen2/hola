@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.backbend;
+package cn.ruc.edu.hola.backbend.anno;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

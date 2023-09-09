@@ -1,6 +1,6 @@
 package cn.ruc.edu.hola.backbend.util;
 
-import cn.ruc.edu.hola.backbend.TestOnly;
+import cn.ruc.edu.hola.backbend.anno.TestOnly;
 
 import java.util.Random;
 import java.util.UUID;
