@@ -1,8 +1,6 @@
 package cn.ruc.edu.hola.client.web;
 
 import cn.ruc.edu.hola.client.ApiService;
-import cn.ruc.edu.hola.client.Entry;
-import cn.ruc.edu.hola.client.bridge.ChainCodeBridge;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
@@ -22,40 +20,11 @@ public class Verticle extends AbstractVerticle {
     private final ApiService impl = ApiService.getInstance();
 
     @Override
-    public void start() throws Exception {
+    public void start() {
         HttpServer server = vertx.createHttpServer();
         Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
-
-        /*router.get("/trigger_new").handler(ctx -> {
-            System.out.println("hello world");
-            ChainCodeBridge bridge = new ChainCodeBridge();
-//            Entry.triggerClient(); // trigger the query
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        bridge.trigger(); // trigger the chaincode
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-
-                }
-            }).start();
-
-            out(ctx, "trigger success");
-        });
-
-        // delegate the query process
-        router.get("/trigger_invoke_query").handler(ctx -> {
-            impl.update("http", "127.0.0.1", 8888);
-            List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
-            chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, Entry.Action.query));
-            var text = impl.complex(chaincodeRequests).getDecryptResponse();
-            out(ctx, text);
-        });*/
 
         // define yr own query process
         router.post("/_find").handler(ctx -> {
@@ -67,13 +36,6 @@ public class Verticle extends AbstractVerticle {
             var text = impl.complex(chaincodeRequests).getDecryptResponse();
             out(ctx, text);
         });
-
-
-        /*router.get("/trigger_invoke_get_queries").handler(ctx -> {
-            var response = impl.getChaincodeQueries();
-            var text = response.getResponse();
-            out(ctx, text);
-        });*/
 
         server.requestHandler(router).listen(PORT);
     }

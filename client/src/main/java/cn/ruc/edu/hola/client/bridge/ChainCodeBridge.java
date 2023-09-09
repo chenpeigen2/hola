@@ -1,14 +1,11 @@
 package cn.ruc.edu.hola.client.bridge;
 
-import cn.ruc.edu.hola.client.AssetTransfer;
 import cn.ruc.edu.hola.client.Query;
 import cn.ruc.edu.hola.client.entity.RealResponse;
-import cn.ruc.edu.hola.client.gateway.impl.AssetTransferImpl;
 import cn.ruc.edu.hola.client.gateway.impl.QueryTransferImpl;
 import cn.ruc.edu.hola.client.impl.SgxConfig;
 import cn.ruc.edu.hola.client.json.JsonUtils;
 
-import java.time.Instant;
 import java.util.List;
 
 public final class ChainCodeBridge {
@@ -46,45 +43,5 @@ public final class ChainCodeBridge {
         }
         QueryTransferImpl.destroy(wrapper);
         return resp;
-    }
-
-    @Deprecated
-    public String invokeGetAllQueries() throws Exception {
-        var wrapper = QueryTransferImpl.init();
-        var queryTransfer = new QueryTransferImpl(wrapper.gateway);
-
-        var result = queryTransfer.GetAllQueries();
-
-        QueryTransferImpl.destroy(wrapper);
-
-        return result;
-    }
-
-    @Deprecated
-    public void trigger() throws Exception {
-        var wrapper = AssetTransferImpl.init();
-
-        {
-            String assetId = "asset" + Instant.now().toEpochMilli();
-            // execute yr code here
-            AssetTransfer assetTransfer = new AssetTransferImpl(wrapper.gateway);
-
-            assetTransfer.getAllAssets();
-
-            assetTransfer.createAsset(assetId, "yellow", 5, "Tom", 1300);
-
-            assetTransfer.transferAsset(assetId, "Saptha");
-
-            assetTransfer.readAsset(assetId);
-
-            assetTransfer.updateAsset("asset70", "blue", 5, "Tomoko", 300);
-
-            assetTransfer.assetExists(assetId); // check exist
-
-            assetTransfer.deleteAsset(assetId); // delete asset
-
-        }
-
-        AssetTransferImpl.destroy(wrapper);
     }
 }

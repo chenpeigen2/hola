@@ -155,10 +155,6 @@ internal class ApiServiceImpl : ApiService() {
         return bridge.invokeMultiQueries(sgxConfig, queries, resp)
     }
 
-    override fun getChaincodeQueries(): RealResponse {
-        return RealResponse(bridge.invokeGetAllQueries(), null)
-    }
-
     override fun getAESKey(): String? {
         return map[baseUrl.toString()]
     }

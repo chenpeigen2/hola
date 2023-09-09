@@ -44,8 +44,6 @@ public abstract class ApiService {
 
     public abstract List<RealResponse> multiComplex(List<List<ChaincodeRequest>> requests);
 
-    public abstract RealResponse getChaincodeQueries();
-
     public abstract String getAESKey();
 
     public void update(String scheme, String host, int port) {
