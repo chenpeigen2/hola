@@ -11,7 +11,8 @@ import okhttp3.Response
 import org.hyperledger.fabric.samples.querytransfer.HttpClient
 import org.hyperledger.fabric.samples.querytransfer.Query
 import org.hyperledger.fabric.samples.querytransfer.SgxConfig
-import org.hyperledger.fabric.samples.querytransfer.utils.ChaincodeConfig
+import org.hyperledger.fabric.samples.querytransfer.config.ChaincodeConfig
+import org.hyperledger.fabric.samples.querytransfer.utils.LRUCache
 
 object AsyncHttpClient {
     suspend fun executeComplex(config: SgxConfig, query: String): Response {
@@ -29,7 +30,8 @@ object AsyncHttpClient {
         return HttpClient.client.newCall(request).execute()
     }
 
-    private val cache = LRUCache<String, String>(LRUCache.DEFAULT_CACHE_SZ)
+    private val cache =
+        LRUCache<String, String>(LRUCache.DEFAULT_CACHE_SZ)
 
     fun executeQuery(queryList: List<Query>, config: SgxConfig) = runBlocking {
         if (ChaincodeConfig.SUPPORT_CACHE) {

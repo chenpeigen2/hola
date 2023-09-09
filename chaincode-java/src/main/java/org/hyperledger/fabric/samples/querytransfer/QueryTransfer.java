@@ -13,7 +13,7 @@ import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.*;
 import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
 import org.hyperledger.fabric.samples.querytransfer.performance.AsyncHttpClient;
-import org.hyperledger.fabric.samples.querytransfer.utils.ChaincodeConfig;
+import org.hyperledger.fabric.samples.querytransfer.config.ChaincodeConfig;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;

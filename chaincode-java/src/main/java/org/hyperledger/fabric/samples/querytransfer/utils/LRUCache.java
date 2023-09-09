@@ -1,4 +1,4 @@
-package org.hyperledger.fabric.samples.querytransfer.performance;
+package org.hyperledger.fabric.samples.querytransfer.utils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

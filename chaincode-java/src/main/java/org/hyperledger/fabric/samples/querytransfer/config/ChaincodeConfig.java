@@ -1,4 +1,4 @@
-package org.hyperledger.fabric.samples.querytransfer.utils;
+package org.hyperledger.fabric.samples.querytransfer.config;
 
 import org.hyperledger.fabric.Logging;
 
