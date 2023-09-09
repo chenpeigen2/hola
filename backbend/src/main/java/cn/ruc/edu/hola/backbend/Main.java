@@ -4,6 +4,7 @@ import cn.ruc.edu.hola.backbend.db.CouchDBUtils;
 
 import java.io.IOException;
 
+@Deprecated
 @TestOnly
 public class Main {
     public static void main(String[] args) throws IOException {
