@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CookieJarImpl implements CookieJar {
 
-    private static boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private CookieStore cookieStore;
 
