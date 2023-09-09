@@ -1,7 +1,5 @@
 package cn.ruc.edu.hola.backbend.util;
 
-import cn.ruc.edu.hola.backbend.anno.TestOnly;
-
 import java.util.Random;
 import java.util.UUID;
 
@@ -29,10 +27,5 @@ public class RandomStringGenerator {
 
     public static String generateAESKey() {
         return generateRandomString(24);
-    }
-
-    @TestOnly
-    public static void main(String[] args) {
-        System.out.println(generateRandomUUID());
     }
 }

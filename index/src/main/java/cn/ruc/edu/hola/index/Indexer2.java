@@ -9,23 +9,24 @@ import com.google.gson.JsonParser;
 import java.util.*;
 import java.util.function.Consumer;
 
-import static cn.ruc.edu.hola.index.Indexer.getJsonKey;
 
 /**
  * indexer2 using the backbend register info
  */
 public final class Indexer2 {
-    private Indexer2() {}
+    private Indexer2() {
+    }
+
     public static Map<String, List<StructInfo>> struct = new HashMap<>();
     public static Map<String, BackBendInfo> backbend = new HashMap<>();
     public static Map<BackBendConfigInfo, String> registerPath = new HashMap<>();
-    public static Map<String, String > services = new HashMap<>();
+    public static Map<String, String> services = new HashMap<>();
 
     public final static ChainCodeBridge impl = new ChainCodeBridge();
 
     public static Service register(RegisterInfo registerInfo) {
-        registerPath.put(registerInfo.backBendConfigInfo(),registerInfo.serviceName()); // ping-pong usage
-        services.put(registerInfo.serviceName(),registerInfo.serviceId());
+        registerPath.put(registerInfo.backBendConfigInfo(), registerInfo.serviceName()); // ping-pong usage
+        services.put(registerInfo.serviceName(), registerInfo.serviceId());
         doRemappingStruct(registerInfo.serviceName(), registerInfo.struct());
         doRemappingInfo(registerInfo.serviceName(), registerInfo.info());
         Service service;
@@ -98,5 +99,15 @@ public final class Indexer2 {
         }
 
         backbend.put(serviceName, backBendInfo);
+    }
+
+    public static void getJsonKey(Set<String> ret, JsonElement element, String base) {
+        JsonObject obj = element.getAsJsonObject();
+        for (var entry : obj.entrySet()) {
+            ret.add(base + entry.getKey());
+            if (entry.getValue().isJsonObject()) {
+                getJsonKey(ret, entry.getValue(), base + entry.getKey() + ".");
+            }
+        }
     }
 }

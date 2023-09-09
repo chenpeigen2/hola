@@ -37,20 +37,10 @@ public final class PropsConfig {
                 LOGGER.warning(() -> "Can not open the properties file for input " + e);
             }
 
-
             LOGGER.info("<<<<<<<<<<<<<Properties options>>>>>>>>>>>>");
             LOGGER.info(() -> props.toString());
         }
 
         return props;
     }
-
-    public static boolean supportIndexer2() {
-        Properties properties = getPropsConfig();
-        if (properties.containsKey(USING_INDEX2)) {
-            return Boolean.parseBoolean((String) props.get(USING_INDEX2));
-        }
-        return true;
-    }
-
 }

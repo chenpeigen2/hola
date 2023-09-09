@@ -17,13 +17,8 @@ public class Verticle extends AbstractVerticle {
     public static Map<String, BackBendInfo> backbend;
 
     static {
-        if (PropsConfig.supportIndexer2()) {
-            struct = Indexer2.struct;
-            backbend = Indexer2.backbend;
-        } else {
-            struct = Indexer.remappingStruct("struct.json");
-            backbend = Indexer.remappingUrl("backbend.json");
-        }
+        struct = Indexer2.struct;
+        backbend = Indexer2.backbend;
     }
 
     @Override
