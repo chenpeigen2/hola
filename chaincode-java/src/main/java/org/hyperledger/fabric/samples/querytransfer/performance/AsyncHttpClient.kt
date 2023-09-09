@@ -11,6 +11,7 @@ import okhttp3.Response
 import org.hyperledger.fabric.samples.querytransfer.HttpClient
 import org.hyperledger.fabric.samples.querytransfer.Query
 import org.hyperledger.fabric.samples.querytransfer.SgxConfig
+import org.hyperledger.fabric.samples.querytransfer.utils.ChaincodeConfig
 
 object AsyncHttpClient {
     suspend fun executeComplex(config: SgxConfig, query: String): Response {
@@ -34,14 +35,20 @@ object AsyncHttpClient {
         cache.clear() // remove previous cache
         queryList.forEach {
             it.resp = async(Dispatchers.Default) {
-                var text = cache[it.query]
-                if (text == null) {
-                    text = executeComplex(config, it.query).use { response ->
+                if (ChaincodeConfig.SUPPORT_CACHE) {
+                    var text = cache[it.query]
+                    if (text == null) {
+                        text = executeComplex(config, it.query).use { response ->
+                            response.body?.string()
+                        }
+                        cache[it.query] = text
+                    }
+                    text
+                } else {
+                    executeComplex(config, it.query).use { response ->
                         response.body?.string()
                     }
-                    cache[it.query] = text
                 }
-                text
             }.await()
         }
     }
