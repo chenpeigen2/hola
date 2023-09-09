@@ -32,7 +32,9 @@ object AsyncHttpClient {
     private val cache = LRUCache<String, String>(LRUCache.DEFAULT_CACHE_SZ)
 
     fun executeQuery(queryList: List<Query>, config: SgxConfig) = runBlocking {
-        cache.clear() // remove previous cache
+        if (ChaincodeConfig.SUPPORT_CACHE) {
+            cache.clear() // remove previous cache
+        }
         queryList.forEach {
             it.resp = async(Dispatchers.Default) {
                 if (ChaincodeConfig.SUPPORT_CACHE) {
