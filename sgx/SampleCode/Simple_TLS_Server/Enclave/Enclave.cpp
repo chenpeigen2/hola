@@ -126,7 +126,9 @@ char *p_response = nullptr;
 
 char *ecall_complex_curl(const char *data) {
     // provide the requests
+    printf("1111111111\n");
     auto provide_decode_data = provide_query(data);
+    printf("22222222222\n");
     // the result
     std::vector <string> resp;
 
@@ -135,9 +137,11 @@ char *ecall_complex_curl(const char *data) {
         std::string &&return_data = curl_post(decode_data.url.c_str(), decode_data);
         resp.push_back(return_data);
     }
+    printf("333333\n");
 
     // aggregation process
     std::string &&response = simple_aggregation(resp);
+    printf("444444\n");
 
     // encrypt
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
@@ -145,6 +149,7 @@ char *ecall_complex_curl(const char *data) {
     response = ecb_encrypt(response.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length(), PaddingModel::PKCS5OR7);
     response = encode(response.c_str(), response.length());
+    printf("555555\n");
 
     // assemble
     int len = response.length();
@@ -152,6 +157,7 @@ char *ecall_complex_curl(const char *data) {
     p_response = new char[len + 1];
     response.copy(p_response, len);
     p_response[len] = '\0';
+    printf("6666666\n");
     return p_response;
 }
 
