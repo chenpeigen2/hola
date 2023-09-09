@@ -219,7 +219,6 @@ public class EncryptProxy extends AbstractProxy {
         String aesKey = EncryptUtils.rsaDecrypt(auth.getKey(), EncryptUtils.RSA_PRIVATE_KEY);
         if (aesKey == null) return null;
         this.mAesKey = aesKey;
-        System.err.println(" ==================     acquired aes key: " + mAesKey);
         var uuid = RandomStringGenerator.generateRandomUUID();
         aesKeyStore.put(uuid, aesKey);
         return uuid;
