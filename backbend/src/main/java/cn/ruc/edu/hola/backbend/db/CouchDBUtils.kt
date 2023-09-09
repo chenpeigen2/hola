@@ -35,7 +35,7 @@ data class CouchDBUtils(
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
         .addInterceptor(basicParamsInterceptor)
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE))
         .cache(Cache(File("./cachedir"), 10 * 1024 * 1024))
         .build()
 
