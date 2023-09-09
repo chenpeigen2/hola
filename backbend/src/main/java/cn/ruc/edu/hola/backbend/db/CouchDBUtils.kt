@@ -86,7 +86,13 @@ data class CouchDBUtils(
         val r: Request = Request.Builder().url(url)
             .method("POST", body)
             .build()
-        client.newCall(r).execute()
+        val response = client.newCall(r).execute()
+        response.use {
+            println(
+                "authed couchdb:\n" +
+                        it.body?.string()
+            )
+        }
     }
 
     private fun isExpired(url: HttpUrl): Boolean {

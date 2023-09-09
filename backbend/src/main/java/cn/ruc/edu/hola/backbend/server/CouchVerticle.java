@@ -123,7 +123,6 @@ public class CouchVerticle extends AbstractVerticle {
 
     private void auth(RoutingContext ctx) {
         try {
-            System.err.println("auth !!!");
             Auth auth = JsonUtils.INSTANCE.toAuth(ctx.body().asString());
             String uuid = proxyMethods.acquireAESKey(auth);
             List<String> resp = new ArrayList<>();
