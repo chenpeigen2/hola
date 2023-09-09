@@ -2,4 +2,4 @@ CHAINCODE_TRACES_ENABLED=true
 #CHAINCODE_TRACES_PROVIDER=org.hyperledger.fabric.traces.impl.OpenTelemetryTracesProvider
 CHAINCODE_METRICS_ENABLED=true
 #CHAINCODE_METRICS_PROVIDER=org.hyperledger.fabric.metrics.impl.OpenTelemetryMetricsProvider
-CHAINCODE_SUPPORT_NET=false
+CHAINCODE_SUPPORT_NET=true
