@@ -5,5 +5,5 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public interface Options {
     boolean DEBUG = false;
 
-    HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.BASIC;
+    HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.NONE;
 }
