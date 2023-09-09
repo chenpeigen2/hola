@@ -12,7 +12,7 @@ public class Entry {
         vertx.deployVerticle(ServiceRegisterVerticel.class.getName());
     }
 
-    // schedule 3 minus delay to ping the backbend server
+    // schedule 1 minus delay to ping the backbend server
     private static void schedulePingPong(Vertx vertx) {
         vertx.setPeriodic(Duration.ofMinutes(1).toMillis(), event -> Ping.pong());
     }
