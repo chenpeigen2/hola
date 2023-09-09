@@ -30,14 +30,14 @@ public class BasicParamsInterceptor implements Interceptor {
         // process header params inject
         Headers.Builder headerBuilder = request.headers().newBuilder();
         // 以 Entry 添加消息头
-        if (headerParamsMap.size() > 0) {
+        if (!headerParamsMap.isEmpty()) {
             for (Map.Entry<String, String> stringStringEntry : headerParamsMap.entrySet()) {
                 headerBuilder.add(stringStringEntry.getKey(), stringStringEntry.getValue());
             }
             requestBuilder.headers(headerBuilder.build());
         }
         // 以 String 形式添加消息头
-        if (headerLinesList.size() > 0) {
+        if (!headerLinesList.isEmpty()) {
             for (String line : headerLinesList) {
                 headerBuilder.add(line);
             }
@@ -47,12 +47,12 @@ public class BasicParamsInterceptor implements Interceptor {
 
 
         // process queryParams inject whatever it's GET or POST
-        if (queryParamsMap.size() > 0) {
+        if (!queryParamsMap.isEmpty()) {
             request = injectParamsIntoUrl(request.url().newBuilder(), requestBuilder, queryParamsMap);
         }
 
         // process post body inject
-        if (paramsMap.size() > 0) {
+        if (!paramsMap.isEmpty()) {
             if (canInjectIntoBody(request)) {
                 FormBody.Builder formBodyBuilder = new FormBody.Builder();
                 for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
@@ -60,7 +60,7 @@ public class BasicParamsInterceptor implements Interceptor {
                 }
                 RequestBody formBody = formBodyBuilder.build();
                 String postBodyString = bodyToString(request.body());
-                postBodyString += ((postBodyString.length() > 0) ? "&" : "") + bodyToString(formBody);
+                postBodyString += ((!postBodyString.isEmpty()) ? "&" : "") + bodyToString(formBody);
                 requestBuilder.post(RequestBody.create(postBodyString, MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8")));
             }
         }
@@ -97,7 +97,7 @@ public class BasicParamsInterceptor implements Interceptor {
 
     // func to inject params into url
     private Request injectParamsIntoUrl(HttpUrl.Builder httpUrlBuilder, Request.Builder requestBuilder, Map<String, String> paramsMap) {
-        if (paramsMap.size() > 0) {
+        if (!paramsMap.isEmpty()) {
             for (Map.Entry<String, String> stringStringEntry : paramsMap.entrySet()) {
                 httpUrlBuilder.addQueryParameter(stringStringEntry.getKey(), stringStringEntry.getValue());
             }
