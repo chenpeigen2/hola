@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client;
 
 
+import cn.ruc.edu.hola.client.config.Options;
 import cn.ruc.edu.hola.client.entity.RealResponse;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.impl.ApiServiceImpl;
@@ -29,7 +30,7 @@ public abstract class ApiService {
 
 
     protected static OkHttpClient client = new OkHttpClient.Builder()
-            .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+            .addInterceptor(new HttpLoggingInterceptor().setLevel(Options.LEVEL))
             .build();
 
     protected HttpUrl.Builder getBaseUrl() {

@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.okhttp;
 
+import cn.ruc.edu.hola.backbend.config.Options;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class CookieJarImpl implements CookieJar {
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = Options.DEBUG;
 
     private CookieStore cookieStore;
 

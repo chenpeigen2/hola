@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.db
 
+import cn.ruc.edu.hola.backbend.config.Options
 import cn.ruc.edu.hola.backbend.okhttp.BasicParamsInterceptor
 import cn.ruc.edu.hola.backbend.okhttp.CookieJarImpl
 import cn.ruc.edu.hola.backbend.okhttp.MemoryCookieStore
@@ -35,7 +36,7 @@ data class CouchDBUtils(
     private val client = OkHttpClient.Builder()
         .cookieJar(cookieJar)
         .addInterceptor(basicParamsInterceptor)
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+        .addInterceptor(HttpLoggingInterceptor().setLevel(Options.LEVEL))
         .cache(Cache(File("./cachedir"), 10 * 1024 * 1024))
         .build()
 
