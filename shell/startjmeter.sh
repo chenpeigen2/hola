@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 pwd
-cd ../jmeter/apache-jmeter-5.5/bin && ./jmeter
+cd ../jmeter/apache-jmeter-5.6.2/bin && ./jmeter
