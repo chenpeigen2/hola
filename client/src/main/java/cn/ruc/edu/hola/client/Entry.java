@@ -12,6 +12,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.ruc.edu.hola.client.performance.Options.Periodic_Millis;
+
 /**
  * only for trigger the entry
  **/
@@ -27,7 +29,7 @@ public class Entry {
     }
 
     private static void schedulePingPong(Vertx vertx) {
-        vertx.setPeriodic(Duration.ofMillis(50).toMillis(), PerformanceHandler.getInstance());
+        vertx.setPeriodic(Duration.ofMillis(Periodic_Millis).toMillis(), PerformanceHandler.getInstance());
     }
 
     @Deprecated

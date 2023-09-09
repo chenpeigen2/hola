@@ -2,7 +2,7 @@ package cn.ruc.edu.hola.client.utils
 
 object Timer {
 
-    const val ELAPSE_MINUTES = 15
+    private const val ELAPSE_MINUTES = 15
 
     private var lastTime: Long = -1L
 
@@ -17,6 +17,5 @@ object Timer {
         }
         return false
     }
-
 
 }

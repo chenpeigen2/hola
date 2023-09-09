@@ -25,6 +25,7 @@ public class PerformanceVerticle extends Verticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
+        /*
         // define yr own query process
         router.post("/_find").handler(ctx -> {
             var postData = ctx.body().asString();
@@ -83,7 +84,7 @@ public class PerformanceVerticle extends Verticle {
 
             handler.offer(callback);
         });
-
+         */
 
         router.post("/multi_find").blockingHandler(ctx -> {
 
@@ -102,6 +103,7 @@ public class PerformanceVerticle extends Verticle {
             handler.offer(callback);
         });
 
+        /*
 //        https://blog.csdn.net/qq_40276626/article/details/120381161
         router.post("/blocking")
                 .blockingHandler(ctx -> {
@@ -118,6 +120,7 @@ public class PerformanceVerticle extends Verticle {
                     }
                     ctx.end("over");
                 }, true);
+         */
 
         server.requestHandler(router).listen(PORT);
     }
