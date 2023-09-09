@@ -9,7 +9,7 @@ import cn.ruc.edu.hola.client.entity.RealResponse
 import cn.ruc.edu.hola.client.entity.auth.AuthData
 import cn.ruc.edu.hola.client.entity.auth.RSAAuthData
 import cn.ruc.edu.hola.client.json.JsonUtils
-import cn.ruc.edu.hola.client.utils.ChaincodeConfig
+import cn.ruc.edu.hola.client.config.ChaincodeConfig
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator
 import cn.ruc.edu.hola.client.utils.Timer
 import okhttp3.Headers.Companion.toHeaders

@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.client.utils;
+package cn.ruc.edu.hola.client.config;
 
 
 import java.io.IOException;

@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.client;
 
+import cn.ruc.edu.hola.client.config.Options;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.performance.*;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
@@ -12,7 +13,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.ruc.edu.hola.client.performance.Options.Periodic_Millis;
+import static cn.ruc.edu.hola.client.config.Options.Periodic_Millis;
 
 /**
  * only for trigger the entry
