@@ -15,6 +15,8 @@ public final class ChaincodeConfig {
 
     private static final String CHAINCODE_SUPPORT_NET = "CHAINCODE_SUPPORT_NET";
 
+    private static final String CHAINCODE_USE_CACHE = "CHAINCODE_USE_CACHE";
+
     /**
      * Obtains configuration specifically for running the chaincode and settable on
      * a per chaincode basis rather than taking properties from the Peers'
@@ -46,12 +48,18 @@ public final class ChaincodeConfig {
         return props;
     }
 
-    public static boolean supportNet() {
+    public static boolean SUPPORT_NET = false;
+
+    public static boolean SUPPORT_CACHE = true;
+
+    static {
         Properties properties = getChaincodeConfig();
         if (properties.containsKey(CHAINCODE_SUPPORT_NET)) {
-            return Boolean.parseBoolean((String) props.get(CHAINCODE_SUPPORT_NET));
+            SUPPORT_NET = Boolean.parseBoolean((String) props.get(CHAINCODE_SUPPORT_NET));
         }
-        return true;
+        if (properties.containsKey(CHAINCODE_USE_CACHE)) {
+            SUPPORT_CACHE = Boolean.parseBoolean((String) props.get(CHAINCODE_USE_CACHE));
+        }
     }
 
 }

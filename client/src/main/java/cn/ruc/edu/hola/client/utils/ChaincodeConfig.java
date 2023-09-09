@@ -45,12 +45,13 @@ public final class ChaincodeConfig {
         return props;
     }
 
-    public static boolean supportNet() {
+    public static boolean SUPPORT_NET = false;
+
+    static {
         Properties properties = getChaincodeConfig();
         if (properties.containsKey(CHAINCODE_SUPPORT_NET)) {
-            return Boolean.parseBoolean((String) props.get(CHAINCODE_SUPPORT_NET));
+            SUPPORT_NET = Boolean.parseBoolean((String) props.get(CHAINCODE_SUPPORT_NET));
         }
-        return true;
     }
 
 }
