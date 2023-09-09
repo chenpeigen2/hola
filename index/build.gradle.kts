@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.10"
+    application
 }
 
 group = "cn.ruc.edu.hola.index"
@@ -10,6 +11,10 @@ repositories {
     maven("https://maven.aliyun.com/repository/spring/")
     mavenLocal()
     mavenCentral()
+}
+
+application {
+    mainClass.set("cn.ruc.edu.hola.index.Entry")
 }
 
 dependencies {
