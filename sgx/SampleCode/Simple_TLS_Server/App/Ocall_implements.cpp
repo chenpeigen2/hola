@@ -145,7 +145,7 @@ int ocall_json_arr_length(const char *data) {
 char *ocall_json_query(int idx, const char *key) {
     if (j_arr != nullptr) {
         auto j_object = j_arr.at(idx);
-        std::cout << j_object.contains(key) << std::endl;
+        // std::cout << j_object.contains(key) << std::endl;
         if (j_object.contains(key)) {
             std::string response;
             if (j_object.at(key).is_object()) {
@@ -203,14 +203,14 @@ int ocall_simple_split(const char *data) {
     std::unordered_set <std::string> keys_set;
 
     std::vector <std::vector<std::string>> nestedVector;
-    std::cout << nestedVector.size() << std::endl;
+    // std::cout << nestedVector.size() << std::endl;
     if (selector.contains("$or")) {
         auto $or = selector.at("$or");
         for (auto &number_object: $or) {
             std::vector <std::string> vec; // define a vec
             // 遍历对象并打印每个键
             for (auto &element: number_object.items()) {
-                std::cout << element.key() << std::endl;
+                // std::cout << element.key() << std::endl;
                 if (keys_set.count(element.key()) == 0) {
                     keys_set.insert(element.key());
                 }
@@ -248,7 +248,7 @@ int ocall_simple_split(const char *data) {
     }
     simple_split_res = new std::vector <std::vector<std::string>>(nestedVector);
     simple_keys_set = new std::unordered_set<std::string>(keys_set);
-    std::cout << selector.dump() << std::endl;
+    // std::cout << selector.dump() << std::endl;
     return simple_split_res->size();
 }
 
@@ -288,7 +288,7 @@ void iter_object(json & obj, std::unordered_set < std::string > &keys) {
 char *ocall_query_trim(const char *json_str, const char *keys) {
     // we need to parser the given json_string for further execution
     json j_test = json::parse(json_str);
-    std::cout << j_test.dump() << std::endl;
+    // std::cout << j_test.dump() << std::endl;
     auto &selector = j_test.at("selector"); // find the selector
     // constructor a keys_set
     auto keys_set = convert_to_set(keys);
