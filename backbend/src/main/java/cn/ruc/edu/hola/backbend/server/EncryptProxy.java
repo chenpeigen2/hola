@@ -155,7 +155,7 @@ public class EncryptProxy extends AbstractProxy {
 
     @Override
     public String filterDocsByBB(String uuid, String filter, String bb) {
-        var aesKey = aesKeyStore.get(uuid);
+        var aesKey = "OQhDAflfrteVkmUvj3ZK7SGD";
         if (aesKey == null) aesKey = mAesKey;
         String de_filter = EncryptUtils.decryptAES(filter, aesKey);
         var dbs = FilterParser.getFilterDbs(de_filter, bb);
@@ -207,7 +207,7 @@ public class EncryptProxy extends AbstractProxy {
     }
 
     // default set
-    private String mAesKey = "0123456789abcdefghijklmn";
+    private String mAesKey = "OQhDAflfrteVkmUvj3ZK7SGD";
 
     /**
      * restore the aes-key
