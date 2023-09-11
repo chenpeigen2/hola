@@ -26,7 +26,7 @@ public class RandomStringGenerator {
     }
 
     public static String generateAESKey() {
-        return generateRandomString(24);
+        return "OQhDAflfrteVkmUvj3ZK7SGD";
     }
 
     public static void main(String[] args) {
