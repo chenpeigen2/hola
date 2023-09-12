@@ -36,18 +36,15 @@ object HttpClient {
         return client.newCall(request).execute()
     }
 
-    fun executeHello(): Response {
-        val url = HttpUrl.Builder().scheme("http")
-            .host("172.17.0.1")
-            .port(8000)
-            .build()
+    fun executeHello(url: String, filter: String): Response {
+        val body = filter.toRequestBody("application/json".toMediaType())
         val request = Request.Builder()
             .url(url)
-            .get()
+            .method("POST", body)
+            .headers(headers.toHeaders())
             .tag("executeHello")
             .build()
         return client.newCall(request).execute()
-
     }
 
     fun getBaseUrl(config: SgxConfig): HttpUrl.Builder {

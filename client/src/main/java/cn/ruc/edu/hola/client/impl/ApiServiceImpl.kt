@@ -113,10 +113,7 @@ internal class ApiServiceImpl : ApiService() {
     }
 
     override fun multiComplex(chaincodeRequests: MutableList<MutableList<ChaincodeRequest>>): MutableList<RealResponse> {
-        if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
-            refresh() //refresh the key
-        }
-        val aesKey = map[baseUrl.toString()]
+        val aesKey = "OQhDAflfrteVkmUvj3ZK7SGD"
         /*println(aesKey)*/
         val authChaincodeRequests = mutableListOf<MutableList<ChaincodeRequest>>()
 

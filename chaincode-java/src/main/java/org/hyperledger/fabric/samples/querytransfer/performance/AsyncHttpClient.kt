@@ -12,6 +12,7 @@ import org.hyperledger.fabric.samples.querytransfer.HttpClient
 import org.hyperledger.fabric.samples.querytransfer.Query
 import org.hyperledger.fabric.samples.querytransfer.SgxConfig
 import org.hyperledger.fabric.samples.querytransfer.config.ChaincodeConfig
+import org.hyperledger.fabric.samples.querytransfer.directcall.DirectX
 import org.hyperledger.fabric.samples.querytransfer.utils.LRUCache
 
 object AsyncHttpClient {
@@ -39,20 +40,10 @@ object AsyncHttpClient {
         }
         queryList.forEach {
             it.resp = async(Dispatchers.Default) {
-                if (ChaincodeConfig.SUPPORT_CACHE) {
-                    var text = cache[it.query]
-                    if (text == null) {
-                        text = executeComplex(config, it.query).use { response ->
-                            response.body?.string()
-                        }
-                        cache[it.query] = text
-                    }
-                    text
-                } else {
-                    executeComplex(config, it.query).use { response ->
-                        response.body?.string()
-                    }
-                }
+//                executeComplex(config, it.query).use { response ->
+//                    response.body?.string()
+//                }
+                DirectX.executeComplex(it.query)
             }.await()
         }
     }
