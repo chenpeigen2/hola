@@ -193,7 +193,7 @@ public class CouchVerticle extends AbstractVerticle {
     public void filterDocs(RoutingContext ctx) {
 
         var text = ctx.body().asString();
-        System.out.println(text);
+//        System.out.println(text);
         Filter object = JsonUtils.INSTANCE.toFilter(text);
 
         // ack the data
