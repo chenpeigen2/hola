@@ -1,5 +1,6 @@
 package org.hyperledger.fabric.samples.querytransfer.directcall;
 
+import com.google.gson.Gson;
 import okhttp3.Response;
 import org.hyperledger.fabric.samples.querytransfer.HttpClient;
 import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
@@ -11,7 +12,11 @@ public class Curl {
     public static String post(String url, Request request) {
         String filter = request.filter;
         filter = EncryptUtils.encryptAES(filter, Keys.AES_KEY);
-        String body = JsonUtils.INSTANCE.getJson().toJson(new Body("uuid", filter));
+        String body = new Gson().toJson(new Body("uuid", filter));
+
+        System.out.println(body);
+
+
         // post response;
         Response response = HttpClient.INSTANCE.executeHello(url, body);
         String text = null;
