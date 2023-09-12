@@ -13,10 +13,6 @@ public class Curl {
         String filter = request.filter;
         filter = EncryptUtils.encryptAES(filter, Keys.AES_KEY);
         String body = new Gson().toJson(new Body("uuid", filter));
-
-        System.out.println(body);
-
-
         // post response;
         Response response = HttpClient.INSTANCE.executeHello(url, body);
         String text = null;
