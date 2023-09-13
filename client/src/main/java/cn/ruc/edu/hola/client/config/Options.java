@@ -8,5 +8,5 @@ public interface Options {
 
     int Periodic_Millis = 50;
 
-    HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.BASIC;
+    HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.NONE;
 }
