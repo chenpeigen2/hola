@@ -39,9 +39,9 @@ public class Verticle extends AbstractVerticle {
 
         // test direct call backbend
         router.post("/_find_bb").blockingHandler(ctx -> {
-            impl.update("http", "127.0.0.1", 8888); // select associate
+            impl.update("http", "127.0.0.1", 8080); // select associate
             var postData = ctx.body().asString();
-            var text = impl.direct_complex(postData).getResponse();
+            var text = impl.direct_complex(postData).getDecryptResponse();
             out(ctx, text);
         });
 

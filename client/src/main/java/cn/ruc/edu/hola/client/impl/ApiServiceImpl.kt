@@ -152,8 +152,19 @@ internal class ApiServiceImpl : ApiService() {
         return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
     }
 
-    override fun direct_complex(body: String?): RealResponse {
-        TODO("Not yet implemented")
+    override fun direct_complex(text: String): RealResponse {
+        val body = text.toRequestBody("application/json".toMediaType())
+        val url = baseUrl
+            .addPathSegment("_find")
+            .build()
+        val request = Request.Builder()
+            .url(url)
+            .method("POST", body)
+            .headers(headers.toHeaders())
+//            .cacheControl()
+            .tag("complex")
+            .build()
+        return RealResponse(client.newCall(request).execute().body!!.string(), "OQhDAflfrteVkmUvj3ZK7SGD")
     }
 
     // test multi requests
