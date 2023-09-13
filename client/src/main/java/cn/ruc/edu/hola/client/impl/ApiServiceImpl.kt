@@ -62,6 +62,7 @@ internal class ApiServiceImpl : ApiService() {
         map[baseUrl.toString()] = aesKey
     }
 
+    // test single request
     override fun complex(chaincodeRequests: MutableList<ChaincodeRequest>): RealResponse {
         if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
             refresh() //refresh the key
@@ -112,6 +113,11 @@ internal class ApiServiceImpl : ApiService() {
         return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
     }
 
+    override fun direct_complex(body: String?): RealResponse {
+        TODO("Not yet implemented")
+    }
+
+    // test multi requests
     override fun multiComplex(chaincodeRequests: MutableList<MutableList<ChaincodeRequest>>): MutableList<RealResponse> {
         val aesKey = "OQhDAflfrteVkmUvj3ZK7SGD"
         /*println(aesKey)*/
