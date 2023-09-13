@@ -42,6 +42,7 @@ public abstract class ApiService {
 
     public abstract RealResponse complex(List<ChaincodeRequest> chaincodeRequests);
 
+    public abstract RealResponse direct_sgx(List<ChaincodeRequest> chaincodeRequests);
     public abstract RealResponse direct_complex(String body);
 
     public abstract List<RealResponse> multiComplex(List<List<ChaincodeRequest>> requests);

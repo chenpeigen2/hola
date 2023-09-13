@@ -113,6 +113,45 @@ internal class ApiServiceImpl : ApiService() {
         return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
     }
 
+    override fun direct_sgx(chaincodeRequests: MutableList<ChaincodeRequest>): RealResponse {
+        val aesKey = "OQhDAflfrteVkmUvj3ZK7SGD"
+        val authedChaincodeRequest = mutableListOf<ChaincodeRequest>()
+        chaincodeRequests.forEach {
+            authedChaincodeRequest.add(
+                ChaincodeRequest(
+                    it.uid,
+                    EncryptUtils.encryptAES(it.filter(), aesKey)
+                )
+            )
+        }
+
+        val text = JsonUtils.json.toJson(authedChaincodeRequest)
+
+        val response: RealResponse
+
+        // expected config
+        var sgxConfig = SgxConfig(scheme, host, port)
+        val queryId = UUID.randomUUID().toString(); // use the uuid to delegate the queryId
+        val owner = RandomStringGenerator.UID // use the query UID to delegate the owner
+        val date = System.currentTimeMillis().toString() // use current date to delegate the query time
+        val query = text // query encrypt text
+
+        val body = text.toRequestBody("application/json".toMediaType())
+        val url = baseUrl
+            .addPathSegment("_complex")
+            .build()
+        val request = Request.Builder()
+            .url(url)
+            .method("POST", body)
+            .headers(headers.toHeaders())
+//            .cacheControl()
+            .tag("complex")
+            .build()
+        response = RealResponse(client.newCall(request).execute(), aesKey)
+
+        return bridge.invokeQuery(sgxConfig, queryId, owner, date, query, response)
+    }
+
     override fun direct_complex(body: String?): RealResponse {
         TODO("Not yet implemented")
     }

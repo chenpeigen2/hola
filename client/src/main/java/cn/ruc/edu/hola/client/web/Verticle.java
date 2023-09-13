@@ -26,7 +26,6 @@ public class Verticle extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
-        // test direct call sgx
         // define yr own query process
         router.post("/_find").blockingHandler(ctx -> {
             impl.update("http", "127.0.0.1", 8888); // select associate
@@ -43,6 +42,17 @@ public class Verticle extends AbstractVerticle {
             impl.update("http", "127.0.0.1", 8888); // select associate
             var postData = ctx.body().asString();
             var text = impl.direct_complex(postData).getResponse();
+            out(ctx, text);
+        });
+
+        // test direct call sgx
+        router.post("/_find_sgx").blockingHandler(ctx -> {
+            impl.update("http", "127.0.0.1", 8888); // select associate
+            var postData = ctx.body().asString();
+            var jsonData = QueryParser.basicParser(postData); // expected jsonData
+            List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
+            chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, jsonData));
+            var text = impl.direct_sgx(chaincodeRequests).getDecryptResponse();
             out(ctx, text);
         });
 
