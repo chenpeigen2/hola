@@ -26,8 +26,8 @@ std::vector <Request> provide_query(const std::string &source) {
 
     for (int i = 0; i < len; ++i) {
         // we acquire the uid associate with the aes key
-        std::string uid = sgx_json_query(i, "uid");
-        std::string aesKey = client_get_aes_key(uid);
+//        std::string uid = sgx_json_query(i, "uid");
+        std::string aesKey = "OQhDAflfrteVkmUvj3ZK7SGD";
         /* printf("the aes key: %s \n", aesKey.c_str()); */
 
         std::string filter = sgx_json_query(i, "filter");

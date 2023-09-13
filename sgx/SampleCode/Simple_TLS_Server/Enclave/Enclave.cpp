@@ -90,11 +90,11 @@ std::string curl_post(const char *url, const Request &request) {
         exit(0);
     }
 
-    auto auth_result = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
-                                      httpUrl.get_port());
+//    auto auth_result = auth_if_needed(string(httpUrl.get_proto()), string(httpUrl.get_domain()),
+//                                      httpUrl.get_port());
 
-    std::string aesKey = auth_result.first;
-    std::string uuid = auth_result.second;
+    std::string aesKey = "OQhDAflfrteVkmUvj3ZK7SGD";
+    std::string uuid = "auth_result.second";
 
     std::string filter = request.filter;
     filter = ecb_encrypt(filter.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
@@ -141,7 +141,7 @@ char *ecall_complex_curl(const char *data) {
 
     // encrypt
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
-    std::string aesKey = client_get_aes_key(uid);
+    std::string aesKey = "OQhDAflfrteVkmUvj3ZK7SGD";
     response = ecb_encrypt(response.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length(), PaddingModel::PKCS5OR7);
     response = encode(response.c_str(), response.length());
