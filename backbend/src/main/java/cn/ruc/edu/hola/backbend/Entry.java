@@ -13,7 +13,7 @@ public final class Entry {
 
     public static void main(String[] args) {
         System.getProperties().setProperty("jdk.crypto.KeyAgreement.legacyKDF", "true");
-        Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(60));
+        Vertx vertx = Vertx.vertx();
         vertx.deployVerticle(CouchVerticle.class.getName());
         vertx.deployVerticle(CouchVerticle1.class.getName());
         vertx.deployVerticle(CouchVerticle2.class.getName());
