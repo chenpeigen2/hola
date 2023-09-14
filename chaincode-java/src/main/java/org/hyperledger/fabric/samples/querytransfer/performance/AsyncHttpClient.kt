@@ -40,10 +40,10 @@ object AsyncHttpClient {
         }
         queryList.forEach {
             it.resp = async(Dispatchers.Default) {
-                executeComplex(config, it.query).use { response ->
-                    response.body?.string()
-                }
-//                DirectX.executeComplex(it.query)
+//                executeComplex(config, it.query).use { response ->
+//                    response.body?.string()
+//                }
+                DirectX.executeComplex(it.query)
             }.await()
         }
     }
