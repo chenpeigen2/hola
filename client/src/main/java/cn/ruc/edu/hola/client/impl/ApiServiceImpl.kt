@@ -67,7 +67,6 @@ internal class ApiServiceImpl : ApiService() {
             refresh() //refresh the key
         }
         val aesKey = map[baseUrl.toString()]
-        println(aesKey)
         val authedChaincodeRequest = mutableListOf<ChaincodeRequest>()
         chaincodeRequests.forEach {
             authedChaincodeRequest.add(
