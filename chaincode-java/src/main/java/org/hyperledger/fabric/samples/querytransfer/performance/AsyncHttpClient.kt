@@ -38,7 +38,7 @@ object AsyncHttpClient {
             cache.clear() // remove previous cache
         }
         queryList.forEach {
-            it.resp = async(Dispatchers.Default) {
+            it.resp = async(Dispatchers.IO) {
                 if (ChaincodeConfig.SUPPORT_CACHE) {
                     var text = cache[it.query]
                     if (text == null) {
