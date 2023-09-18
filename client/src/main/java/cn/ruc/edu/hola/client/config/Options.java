@@ -6,7 +6,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public interface Options {
     int WorkerPoolSize = 40;
 
-    int Periodic_Millis = 50;
+    int Periodic_Millis = 60;
 
     HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.NONE;
 }
