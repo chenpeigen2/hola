@@ -8,9 +8,7 @@ import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import cn.ruc.edu.hola.backbend.register.Register;
 import cn.ruc.edu.hola.backbend.register.Registers;
 import com.google.gson.JsonSyntaxException;
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Context;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
@@ -41,19 +39,6 @@ public class CouchVerticle extends AbstractVerticle {
     @Override
     public void init(Vertx vertx, Context context) {
         super.init(vertx, context);
-        RegisterInfo registerInfo = null;
-        BackBendConfigInfo backBendConfigInfo = new BackBendConfigInfo(getHost(), getPort(), getPath());
-        if (getTag().equals("bb1")) {
-            registerInfo = Register.register(getTag(), getTag(), "bb1_config.json", backBendConfigInfo);
-        } else if (getTag().equals("bb2")) {
-            registerInfo = Register.register(getTag(), getTag(), "bb2_config.json", backBendConfigInfo);
-        } else if (getTag().equals("bb3")) {
-            registerInfo = Register.register(getTag(), getTag(), "bb3_config.json", backBendConfigInfo);
-        }
-        System.out.println(registerInfo);
-        if (registerInfo != null) {
-            doRegister(registerInfo);
-        }
     }
 
     private void doRegister(RegisterInfo registerInfo) {
@@ -80,7 +65,21 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/_index").handler(this::createIndex);
         router.post("/_auth").handler(this::auth); // should change to post
         installPing(router); // 保活
-        listen(server, router);
+        listen(server, router).onSuccess(event -> {
+            RegisterInfo registerInfo = null;
+            BackBendConfigInfo backBendConfigInfo = new BackBendConfigInfo(getHost(), getPort(), getPath());
+            if (getTag().equals("bb1")) {
+                registerInfo = Register.register(getTag(), getTag(), "bb1_config.json", backBendConfigInfo);
+            } else if (getTag().equals("bb2")) {
+                registerInfo = Register.register(getTag(), getTag(), "bb2_config.json", backBendConfigInfo);
+            } else if (getTag().equals("bb3")) {
+                registerInfo = Register.register(getTag(), getTag(), "bb3_config.json", backBendConfigInfo);
+            }
+            System.out.println(registerInfo);
+            if (registerInfo != null) {
+                doRegister(registerInfo);
+            }
+        });
     }
 
     private void installPing(Router router) {
@@ -89,8 +88,8 @@ public class CouchVerticle extends AbstractVerticle {
         });
     }
 
-    public void listen(HttpServer server, Router router) {
-        server.requestHandler(router).listen(PORT);
+    public Future<HttpServer> listen(HttpServer server, Router router) {
+        return server.requestHandler(router).listen(PORT);
     }
 
     private void out(RoutingContext ctx, String msg) {
