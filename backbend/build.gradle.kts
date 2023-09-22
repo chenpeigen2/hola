@@ -21,7 +21,7 @@ dependencies {
     implementation("com.google.guava:guava:32.1.2-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.21")
+    implementation("cn.hutool:hutool-crypto:5.8.22")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 }
