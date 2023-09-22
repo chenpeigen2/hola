@@ -132,7 +132,7 @@ char *ecall_complex_curl(const char *data) {
 
     // perform execution
     for (const auto &decode_data: provide_decode_data) {
-        std::string &&return_data = curl_post(decode_data.url.c_str(), decode_data);
+        std::string return_data = "aaabbbcccdddeeeeeeeeeeeefffff";
         resp.push_back(return_data);
     }
 

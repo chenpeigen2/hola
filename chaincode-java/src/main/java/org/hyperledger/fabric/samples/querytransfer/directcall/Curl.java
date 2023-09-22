@@ -21,9 +21,9 @@ public class Curl {
         } catch (IOException e) {
 //            throw new RuntimeException(e);
         }
-        if (text != null) {
-            text = EncryptUtils.encryptAES(text, Keys.AES_KEY);
-        }
+//        if (text != null) {
+//            text = EncryptUtils.encryptAES(text, Keys.AES_KEY);
+//        }
         return text;
     }
 }

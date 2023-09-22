@@ -41,7 +41,7 @@ public class Verticle extends AbstractVerticle {
         router.post("/_find_bb").blockingHandler(ctx -> {
             impl.update("http", "127.0.0.1", 8080); // select associate
             var postData = ctx.body().asString();
-            var text = impl.direct_complex(postData).getDecryptResponse();
+            var text = impl.direct_complex(postData).getResponse();
             out(ctx, text);
         });
 

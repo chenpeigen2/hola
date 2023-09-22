@@ -169,7 +169,8 @@ public class EncryptProxy extends AbstractProxy {
         var ret = sb.toString();
         if (ret.isBlank() || ret.isEmpty()) return null;
         ret = ret.trim();
-        ret = EncryptUtils.encryptAES(ret, aesKey);
+//        ret = EncryptUtils.encryptAES(ret, aesKey);
+        System.out.println(ret);
         return ret;
     }
 
