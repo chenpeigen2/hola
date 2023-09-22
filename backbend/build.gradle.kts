@@ -15,6 +15,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
+    implementation("io.vertx:vertx-service-discovery:4.4.5")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.vertx:vertx-web:4.4.5")
     implementation("io.vertx:vertx-web-validation:4.4.5")

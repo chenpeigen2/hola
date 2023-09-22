@@ -26,6 +26,8 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.vertx:vertx-web:4.4.5")
     implementation("io.vertx:vertx-web-validation:4.4.5")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
+    implementation("io.vertx:vertx-service-discovery:4.4.5")
     // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.57.2")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
