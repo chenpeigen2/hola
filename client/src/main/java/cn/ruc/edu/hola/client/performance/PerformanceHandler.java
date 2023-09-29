@@ -16,8 +16,7 @@ public final class PerformanceHandler implements Handler<Long> {
 
     private final ApiService api = ApiService.getInstance();
 
-    private PerformanceHandler() {
-    }
+    private PerformanceHandler() {}
 
     private final Queue<Callback> queue = new ArrayDeque<>();
 
