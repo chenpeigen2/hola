@@ -1,4 +1,4 @@
-package cn.deu.ruc.sample
+package cn.edu.ruc.hola.sample
 
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx

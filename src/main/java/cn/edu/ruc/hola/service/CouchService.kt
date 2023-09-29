@@ -1,6 +1,6 @@
 package cn.edu.ruc.hola.service
 
-import cn.deu.ruc.sample.QuerySq
+import cn.edu.ruc.hola.sample.QuerySq
 import cn.edu.ruc.hola.config.PerformanceConfig
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.utils.Debug

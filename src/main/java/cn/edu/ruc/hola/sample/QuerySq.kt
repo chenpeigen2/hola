@@ -1,4 +1,4 @@
-package cn.deu.ruc.sample
+package cn.edu.ruc.hola.sample
 
 object QuerySq {
 
