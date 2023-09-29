@@ -31,6 +31,10 @@ dependencies {
     implementation("cn.hutool:hutool-crypto:5.8.22")
     implementation("io.vertx:vertx-web:4.4.5")
     implementation("io.vertx:vertx-web-validation:4.4.5")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
+    implementation("io.vertx:vertx-auth-properties:4.4.5")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
+    implementation("io.vertx:vertx-auth-jwt:4.4.5")
     implementation(project("application-gateway-java"))
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.57.2")

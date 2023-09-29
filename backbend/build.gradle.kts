@@ -20,6 +20,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.vertx:vertx-web:4.4.5")
     implementation("io.vertx:vertx-web-validation:4.4.5")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
+    implementation("io.vertx:vertx-auth-properties:4.4.5")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
+    implementation("io.vertx:vertx-auth-jwt:4.4.5")
     implementation("com.google.guava:guava:32.1.2-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
