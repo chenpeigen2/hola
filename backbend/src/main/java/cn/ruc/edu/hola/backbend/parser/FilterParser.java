@@ -7,14 +7,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * parser the key we are using to indicate what we are looking for
  **/
 public final class FilterParser {
-    private FilterParser() {
-    }
+    private FilterParser() {}
 
     public static Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
 
@@ -33,13 +31,10 @@ public final class FilterParser {
 
         Set<String> ret = new HashSet<>();
 
-        keys.forEach(new Consumer<String>() {
-            @Override
-            public void accept(String key) {
-                for (StructInfo structInfo : structs) {
-                    if (structInfo.info().contains(key)) {
-                        ret.addAll(structInfo.dbs());
-                    }
+        keys.forEach(key -> {
+            for (StructInfo structInfo : structs) {
+                if (structInfo.info().contains(key)) {
+                    ret.addAll(structInfo.dbs());
                 }
             }
         });
@@ -62,33 +57,5 @@ public final class FilterParser {
         }
 
         return ret;
-    }
-
-    /**
-     * only for test
-     **/
-    public static void main(String[] args) {
-        String query = """
-                {
-                  "selector": {
-                    "$or": [
-                      {
-                        "data.countryid": {
-                          "$gt": -1
-                        }
-                      },
-                      {
-                        "message": "success"
-                      }
-                    ],
-                    "data.id": 0
-                  },
-                  "execution_stats": true
-                }""";
-
-        var ans = getFilterDbs(query, "bb1");
-
-        System.out.println(ans);
-
     }
 }
