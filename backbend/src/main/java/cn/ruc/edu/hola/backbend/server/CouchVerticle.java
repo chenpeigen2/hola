@@ -79,6 +79,11 @@ public class CouchVerticle extends AbstractVerticle {
             if (registerInfo != null) {
                 doRegister(registerInfo);
             }
+        }).onFailure(new Handler<Throwable>() {
+            @Override
+            public void handle(Throwable event) {
+                System.out.println("failing");
+            }
         });
     }
 
