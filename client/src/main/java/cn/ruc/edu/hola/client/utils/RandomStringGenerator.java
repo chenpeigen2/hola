@@ -26,10 +26,11 @@ public class RandomStringGenerator {
     }
 
     public static String generateAESKey() {
-        return generateRandomString(24);
+        return "x0kfC9q43wu8p8pK3Ihlzsze";
+//        return generateRandomString(24);
     }
 
     public static void main(String[] args) {
-        System.out.println(generateRandomUUID());
+        System.out.println(generateAESKey());
     }
 }

@@ -141,7 +141,8 @@ char *ecall_complex_curl(const char *data) {
 
     // encrypt
     std::string uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
-    std::string aesKey = client_get_aes_key(uid);
+//    std::string aesKey = client_get_aes_key(uid);
+    std::string aesKey = "x0kfC9q43wu8p8pK3Ihlzsze";
     response = ecb_encrypt(response.c_str(), reinterpret_cast<const unsigned char *>(aesKey.c_str()),
                            aesKey.length(), PaddingModel::PKCS5OR7);
     response = encode(response.c_str(), response.length());
