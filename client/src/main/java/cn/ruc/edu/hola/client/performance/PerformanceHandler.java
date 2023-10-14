@@ -52,7 +52,8 @@ public final class PerformanceHandler implements Handler<Long> {
             }
             // random spec uuid
             String randomUUID = RandomStringGenerator.generateRandomUUID();
-            api.update("http", "127.0.0.1", 8888); // select associate
+//            api.update("http", "127.0.0.1", 8888); // select associate
+            api.update("http", "127.0.0.1", 80); // select associate
             List<RealResponse> responseList = api.multiComplex(requests);
             int sz = callbacks.size();
             Logger.info(String.valueOf(size));

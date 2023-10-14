@@ -34,4 +34,8 @@ void router(wfrest::HttpServer &server) {
         auto ret = auth_sgx(data);
         fprintf(stderr, "Json : %s", req->json().dump(4).c_str());
     });
+
+    server.GET("/hello", [](const HttpReq *req, HttpResp *resp) {
+        resp->String("world !!!!!!\n");
+    });
 }
