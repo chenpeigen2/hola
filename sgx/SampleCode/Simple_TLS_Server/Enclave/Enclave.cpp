@@ -18,6 +18,10 @@
 #include "utils.h"
 #include "Encrypt.h"
 
+#include <thread>
+#include "pthread.h"
+#include "sgx_thread.h"
+
 // TODO provide query 重写
 // TODO attestion process
 
@@ -108,7 +112,7 @@ std::string curl_post(const char *url, const Request &request) {
                                                       "}";
     /** curl post **/
     std::string response;
-    response = sgx_curl_post(url, body.c_str());
+//    response = sgx_curl_post(url, body.c_str());
     response = "w4XnhIpxx1FPMo4F8PtkQRprijz9wsQVI3ytUqxQyxFTE22fV+1oS+WMOtwHq+15CLwsIpLxYkSdCx3sqXQu3Yyw0YZmQE49P/QzlLyUGIq7eVC+7UJ7lfzB0MOQe6rFKDoNAQvt28VwOslWBIGY9yRF64oBBUv+wqelCjSmumhTtdR576L4akSS7+ZScJFrdgQy6g9e581YXrAuU6DKPvDl1ioavt9dYT+RxFtqJq728u/wW+8OccDglJ2KyhpBcHdxdxEYvv7uPkq4S/1pQzVH4IKnjXW6/o6Xz1trrM9/HvZbKbrg7qxnmdfbVoWchJEF3m9tsD/sadAo5Jo6eoGTpdDRZP8YqathRrgcJjzNmR6HYq9gMw0nYHxvjiW25EfLpYwOCBA9kukfuvxbUWJYcN8LtjGECJ1m3q26sEeYZmpU46YpCfDgM8fsCTzYx7od2vh4vQt8ST9Jryqum3OVVfIuLno0/31qWC0xp0M=";
 
     // decrypt
