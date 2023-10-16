@@ -191,7 +191,21 @@ object Faken {
     }
 
     suspend fun fakeComplexStudentQuery(cnt: Int) {
-        val query = Action.queryStu.trimIndent()
+        var query = Action.querySocial.trimIndent()
+        ServerHelper.hosts.forEach {
+            it.let { host ->
+                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+                repeat(cnt) {
+                    dbUtils.filterDocs("fake$it", query).use { res ->
+                        val result = res.body?.string()
+                        println(result)
+//                        logger.info("$host fake$it $result")
+                    }
+                }
+            }
+        }
+
+        query = Action.queryStu.trimIndent()
         ServerHelper.hosts.forEach {
             it.let { host ->
                 val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)

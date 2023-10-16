@@ -33,4 +33,20 @@ public interface Action {
               },
               "execution_stats": true
             }""";
+
+    String querySocial = """
+            {
+              "selector": {
+                "$or": [
+                  {
+                    "social_id": "乒乓球"
+                  },
+                  {
+                    "social_id": "羽毛球"
+                  }
+                ],
+                "gender": 0
+              },
+              "execution_stats": true
+            }""";
 }
