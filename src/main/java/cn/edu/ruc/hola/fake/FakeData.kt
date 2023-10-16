@@ -1,6 +1,7 @@
 package cn.edu.ruc.hola.fake
 
 import cn.edu.ruc.hola.models.couchdb.Doc
+import com.google.gson.Gson
 import java.util.*
 
 object FakeData {
@@ -22,6 +23,13 @@ object FakeData {
       }
     }    
         """.trimIndent()
+    }
+
+    @JvmStatic
+    fun fakeStuData(classId: String): String {
+        val gender = if (Random().nextBoolean()) 1 else 0
+        val student = Student(UUID.randomUUID().toString(), NameRandom.getChineseName(gender), classId, gender, Date())
+        return Gson().toJson(student)
     }
 
     @JvmStatic

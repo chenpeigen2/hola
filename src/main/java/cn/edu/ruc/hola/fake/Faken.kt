@@ -81,8 +81,31 @@ object Faken {
                 dbUtils.addDoc("fake$it", data).use { res ->
                     val bos = res.body?.string()
                     logger.info("$host")
+                    logger.info("777777777777777777777")
                     logger.info("data : $data")
+                    logger.info("888888888888888888888")
                     logger.info(bos)
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    suspend fun addFakeStuData(cnt: Int, numberOfStudents: Int, classId: String) {
+        val props = ServerHelper.hosts
+
+        for (idx in props.indices) {
+            val host: Host = props[idx]
+            val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+            repeat(cnt) {
+                repeat(numberOfStudents) { stuIdx ->
+                    val data = FakeData.fakeStuData(classId)
+                    dbUtils.addDoc("fake$it", data).use { res ->
+                        val bos = res.body?.string()
+                        logger.info("$host")
+                    }
                 }
             }
         }
@@ -159,14 +182,32 @@ object Faken {
         return l
     }
 
+    suspend fun fakeComplexStudentQuery(cnt: Int) {
+        val query = Action.queryStu.trimIndent()
+        ServerHelper.hosts.forEach {
+            it.let { host ->
+                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+                repeat(cnt) {
+                    dbUtils.filterDocs("fake$it", query).use { res ->
+                        val result = res.body?.string()
+                        println(result)
+//                        logger.info("$host fake$it $result")
+                    }
+                }
+            }
+        }
+    }
+
 
 }
 
 
 suspend fun create() {
     Faken.createFakeDb(FakeConfig.count)
-    Faken.createFakeIndex(FakeConfig.count)
-    Faken.addFakeData(FakeConfig.count, FakeConfig.rate, FakeConfig.conspired)
+//    Faken.createFakeIndex(FakeConfig.count)
+//    Faken.addFakeData(FakeConfig.count, FakeConfig.rate, FakeConfig.conspired)
+    Faken.addFakeStuData(FakeConfig.count, 20, "17一班")
+    Faken.addFakeStuData(FakeConfig.count, 20, "17二班")
 }
 
 suspend fun delete() {
@@ -174,7 +215,8 @@ suspend fun delete() {
 }
 
 suspend fun query() {
-    Faken.fakeComplexQuery(FakeConfig.count)
+//    Faken.fakeComplexQuery(FakeConfig.count)
+    Faken.fakeComplexStudentQuery(FakeConfig.count)
 }
 
 

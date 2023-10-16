@@ -9,7 +9,7 @@ object FakeConfig {
     /**
      * default multi-count simulation
      */
-    const val count = 10
+    const val count = 5
 
     /**
      * for generation the rate of fake data
