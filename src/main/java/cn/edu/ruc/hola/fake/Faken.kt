@@ -1,11 +1,11 @@
 package cn.edu.ruc.hola.fake
 
 import cn.edu.ruc.hola.config.Host
-import cn.edu.ruc.hola.entity.Node
-import cn.edu.ruc.hola.models.couchdb.FilterDocs
-import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
 import cn.edu.ruc.hola.config.ServerHelper
+import cn.edu.ruc.hola.entity.Node
+import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
 import kotlinx.coroutines.runBlocking
+import java.util.*
 import java.util.logging.Logger
 
 object Faken {
@@ -93,7 +93,7 @@ object Faken {
     /**
      *
      */
-    suspend fun addFakeStuData(cnt: Int, numberOfStudents: Int, classId: String) {
+    suspend fun addFakeStuData(cnt: Int, numberOfStudents: Int, classId: String, socialId: String) {
         val props = ServerHelper.hosts
 
         for (idx in props.indices) {
@@ -101,8 +101,16 @@ object Faken {
             val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
             repeat(cnt) {
                 repeat(numberOfStudents) { stuIdx ->
-                    val data = FakeData.fakeStuData(classId)
+                    val gender = if (Random().nextBoolean()) 1 else 0
+                    val uid = UUID.randomUUID().toString();
+                    val nickName = NameRandom.getChineseName(gender)
+                    val data = FakeData.fakeStuData(classId, gender, uid, nickName)
+                    val dataSocial = FakeData.fakeSocialData(socialId, gender, uid, nickName)
                     dbUtils.addDoc("fake$it", data).use { res ->
+                        val bos = res.body?.string()
+//                        logger.info("$host")
+                    }
+                    dbUtils.addDoc("fake$it", dataSocial).use { res ->
                         val bos = res.body?.string()
                         logger.info("$host")
                     }
@@ -206,9 +214,9 @@ suspend fun create() {
     Faken.createFakeDb(FakeConfig.count)
 //    Faken.createFakeIndex(FakeConfig.count)
 //    Faken.addFakeData(FakeConfig.count, FakeConfig.rate, FakeConfig.conspired)
-    Faken.addFakeStuData(FakeConfig.count, 20, "17一班")
-    Faken.addFakeStuData(FakeConfig.count, 20, "17二班")
-    Faken.addFakeStuData(FakeConfig.count, 20, "17三班")
+    Faken.addFakeStuData(FakeConfig.count, 20, "17一班", "乒乓球")
+    Faken.addFakeStuData(FakeConfig.count, 20, "17二班", "羽毛球")
+    Faken.addFakeStuData(FakeConfig.count, 20, "17三班", "篮球")
 }
 
 suspend fun delete() {

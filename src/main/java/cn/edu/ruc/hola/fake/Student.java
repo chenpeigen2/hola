@@ -7,7 +7,6 @@ import java.util.Date;
 
 public final class Student {
 
-    private String _id; // expected couch db _id
     private String uid; // randomUUID
 
     private String nickName; // the name
@@ -20,7 +19,6 @@ public final class Student {
 
     public Student(String uid, String nickName, String class_id, int gender, Date birthDate) {
         this.uid = uid;
-        this._id = uid;
         this.nickName = nickName;
         this.class_id = class_id;
         this.gender = gender;

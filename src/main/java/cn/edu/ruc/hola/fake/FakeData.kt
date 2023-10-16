@@ -26,10 +26,15 @@ object FakeData {
     }
 
     @JvmStatic
-    fun fakeStuData(classId: String): String {
-        val gender = if (Random().nextBoolean()) 1 else 0
-        val student = Student(UUID.randomUUID().toString(), NameRandom.getChineseName(gender), classId, gender, Date())
+    fun fakeStuData(classId: String, gender: Int, uid: String, nickName: String): String {
+        val student = Student(uid, nickName, classId, gender, Date())
         return Gson().toJson(student)
+    }
+
+    @JvmStatic
+    fun fakeSocialData(socialId: String, gender: Int, uid: String, nickName: String): String {
+        val social = Social(uid, nickName, gender, socialId)
+        return Gson().toJson(social)
     }
 
     @JvmStatic
