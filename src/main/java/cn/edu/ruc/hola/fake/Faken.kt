@@ -208,6 +208,7 @@ suspend fun create() {
 //    Faken.addFakeData(FakeConfig.count, FakeConfig.rate, FakeConfig.conspired)
     Faken.addFakeStuData(FakeConfig.count, 20, "17一班")
     Faken.addFakeStuData(FakeConfig.count, 20, "17二班")
+    Faken.addFakeStuData(FakeConfig.count, 20, "17三班")
 }
 
 suspend fun delete() {
