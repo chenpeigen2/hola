@@ -46,7 +46,7 @@ public class NameRandom {
             index = getNum(0, length - 1);
             third = str.substring(index, index + 1);
         }
-        return name_sex + ":" + first + second + third;
+        return first + second + third;
     }
 
     public static int getNum(int start, int end) {
