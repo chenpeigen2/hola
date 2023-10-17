@@ -117,14 +117,14 @@ std::vector <Request> provide_query(const std::string &source) {
         url_remove_map.clear();
     }
 
-    /*
+
     // print the queries
     printf("\n===================================\n");
     for (const auto &item: res) {
         printf("\n the url: %s  the filter: %s \n", item.url.c_str(), item.filter.c_str());
     }
     printf("\n===================================\n");
-     */
+
 
     return res;
 }
