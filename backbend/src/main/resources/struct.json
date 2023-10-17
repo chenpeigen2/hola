@@ -5,16 +5,22 @@
         "fake1"
       ],
       "struct": {
-        "code": "i",
-        "message": "s",
-        "data": {
-          "id": "i",
-          "name": "s",
-          "bfirstletter": "s",
-          "logo": "s",
-          "country": "s",
-          "countryid": "i"
-        }
+        "uid": "string",
+        "nickName": "string",
+        "gender": "int",
+        "social_id": "string"
+      }
+    },
+    {
+      "dbs": [
+        "fake1"
+      ],
+      "struct": {
+        "uid": "string",
+        "nickName": "string",
+        "class_id": "string",
+        "gender": "int",
+        "birthDate": "date"
       }
     }
   ],
@@ -24,16 +30,22 @@
         "fake1"
       ],
       "struct": {
-        "code": "i",
-        "message": "s",
-        "data": {
-          "id": "i",
-          "name": "s",
-          "bfirstletter": "s",
-          "logo": "s",
-          "country": "s",
-          "countryid": "i"
-        }
+        "uid": "string",
+        "nickName": "string",
+        "gender": "int",
+        "social_id": "string"
+      }
+    },
+    {
+      "dbs": [
+        "fake1"
+      ],
+      "struct": {
+        "uid": "string",
+        "nickName": "string",
+        "class_id": "string",
+        "gender": "int",
+        "birthDate": "date"
       }
     }
   ],
@@ -43,16 +55,22 @@
         "fake1"
       ],
       "struct": {
-        "code": "i",
-        "message": "s",
-        "data": {
-          "id": "i",
-          "name": "s",
-          "bfirstletter": "s",
-          "logo": "s",
-          "country": "s",
-          "countryid": "i"
-        }
+        "uid": "string",
+        "nickName": "string",
+        "gender": "int",
+        "social_id": "string"
+      }
+    },
+    {
+      "dbs": [
+        "fake1"
+      ],
+      "struct": {
+        "uid": "string",
+        "nickName": "string",
+        "class_id": "string",
+        "gender": "int",
+        "birthDate": "date"
       }
     }
   ]
