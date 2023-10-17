@@ -7,12 +7,6 @@
         "data.countryid",
         "data.country",
         "message"
-      ],
-      "fake": [
-        "data.id",
-        "data.logo",
-        "code",
-        "message"
       ]
     }
   },
