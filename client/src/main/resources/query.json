@@ -1,0 +1,28 @@
+[
+  {
+    "selector": {
+      "$or": [
+        {
+          "social_id": "羽毛球"
+        },
+        {
+          "class_id": "17一班"
+        }
+      ],
+      "gender": 0
+    }
+  },
+  {
+    "selector": {
+      "$or": [
+        {
+          "class_id": "17一班"
+        },
+        {
+          "social_id": "羽毛球"
+        }
+      ],
+      "gender": 0
+    }
+  }
+]
