@@ -106,15 +106,25 @@ std::vector <Request> provide_query(const std::string &source) {
                 }
             }
             // compute the url_remove_map end
+
+            // execute the sgx_query_trim
+            for (const auto &item: url_remove_map) {
+                std::unordered_set <std::string> set = item.second;
+                auto sets_str = convert_set_to_string(set);
+                auto trim_filter = sgx_query_trim(filter.c_str(), sets_str.c_str());
+                res.push_back(Request(item.first, trim_filter));
+            }
+            // clean the map
+            url_remove_map.clear();
         }
 
         // execute the sgx_query_trim
-        for (const auto &item: url_remove_map) {
-            std::unordered_set <std::string> set = item.second;
-            auto sets_str = convert_set_to_string(set);
-            auto trim_filter = sgx_query_trim(filter.c_str(), sets_str.c_str());
-            res.push_back(Request(item.first, trim_filter));
-        }
+//        for (const auto &item: url_remove_map) {
+//            std::unordered_set <std::string> set = item.second;
+//            auto sets_str = convert_set_to_string(set);
+//            auto trim_filter = sgx_query_trim(filter.c_str(), sets_str.c_str());
+//            res.push_back(Request(item.first, trim_filter));
+//        }
         // clean the map
         url_remove_map.clear();
     }
