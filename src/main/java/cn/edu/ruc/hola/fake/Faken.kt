@@ -226,11 +226,11 @@ object Faken {
 
 suspend fun create() {
     Faken.createFakeDb(FakeConfig.count)
-//    Faken.createFakeIndex(FakeConfig.count)
-//    Faken.addFakeData(FakeConfig.count, FakeConfig.rate, FakeConfig.conspired)
-    Faken.addFakeStuData(FakeConfig.count, 20, "17一班", "乒乓球")
-    Faken.addFakeStuData(FakeConfig.count, 20, "17二班", "羽毛球")
-    Faken.addFakeStuData(FakeConfig.count, 20, "17三班", "篮球")
+    Faken.createFakeIndex(FakeConfig.count)
+    Faken.addFakeData(FakeConfig.count, FakeConfig.rate, FakeConfig.conspired)
+//    Faken.addFakeStuData(FakeConfig.count, 20, "17一班", "乒乓球")
+//    Faken.addFakeStuData(FakeConfig.count, 20, "17二班", "羽毛球")
+//    Faken.addFakeStuData(FakeConfig.count, 20, "17三班", "篮球")
 }
 
 suspend fun delete() {
@@ -238,8 +238,8 @@ suspend fun delete() {
 }
 
 suspend fun query() {
-//    Faken.fakeComplexQuery(FakeConfig.count)
-    Faken.fakeComplexStudentQuery(FakeConfig.count)
+    Faken.fakeComplexQuery(FakeConfig.count)
+//    Faken.fakeComplexStudentQuery(FakeConfig.count)
 }
 
 
