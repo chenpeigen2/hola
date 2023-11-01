@@ -40,7 +40,7 @@ public class Verticle extends AbstractVerticle {
         router.post("/_fake_find").handler(ctx -> {
             vertx.setTimer(50, id -> {
                 var postData = ctx.body().asString();
-                out(ctx, postData);
+                out(ctx, postData + "\naaa");
             });
         });
 
