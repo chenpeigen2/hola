@@ -337,7 +337,7 @@
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">3001</stringProp>
+          <stringProp name="HTTPSampler.port">8888</stringProp>
           <stringProp name="HTTPSampler.path">/_fake_find</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Verticle extends AbstractVerticle {
-    final static int PORT = 3001;
+    final static int PORT = 8888;
 
     private final ApiService impl = ApiService.getInstance();
 
