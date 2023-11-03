@@ -16,15 +16,15 @@ dependencies {
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
-    implementation("io.vertx:vertx-service-discovery:4.4.5")
+    implementation("io.vertx:vertx-service-discovery:4.4.6")
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("io.vertx:vertx-web:4.4.5")
-    implementation("io.vertx:vertx-web-validation:4.4.5")
+    implementation("io.vertx:vertx-web:4.4.6")
+    implementation("io.vertx:vertx-web-validation:4.4.6")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.4.5")
+    implementation("io.vertx:vertx-auth-properties:4.4.6")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
-    implementation("io.vertx:vertx-auth-jwt:4.4.5")
-    implementation("com.google.guava:guava:32.1.2-jre")
+    implementation("io.vertx:vertx-auth-jwt:4.4.6")
+    implementation("com.google.guava:guava:32.1.3-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
     implementation("cn.hutool:hutool-crypto:5.8.22")
