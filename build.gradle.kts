@@ -35,7 +35,7 @@ dependencies {
     implementation("commons-codec:commons-codec:1.16.0")
     implementation("com.google.guava:guava:32.1.3-jre")
     implementation("net.bytebuddy:byte-buddy:1.14.5")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation("io.vertx:vertx-web:4.4.6")
     implementation("org.springframework.boot:spring-boot-starter-web")
