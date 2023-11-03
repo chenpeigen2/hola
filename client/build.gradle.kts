@@ -18,7 +18,7 @@ application {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:32.1.2-jre")
+    implementation("com.google.guava:guava:32.1.3-jre")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
@@ -29,12 +29,12 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
     implementation("cn.hutool:hutool-crypto:5.8.22")
-    implementation("io.vertx:vertx-web:4.4.5")
-    implementation("io.vertx:vertx-web-validation:4.4.5")
+    implementation("io.vertx:vertx-web:4.4.6")
+    implementation("io.vertx:vertx-web-validation:4.4.6")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.4.5")
+    implementation("io.vertx:vertx-auth-properties:4.4.6")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
-    implementation("io.vertx:vertx-auth-jwt:4.4.5")
+    implementation("io.vertx:vertx-auth-jwt:4.4.6")
     implementation(project("application-gateway-java"))
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.57.2")
