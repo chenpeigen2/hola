@@ -19,7 +19,6 @@ public class Entry {
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(Options.WorkerPoolSize));
         vertx.deployVerticle(Verticle.class.getName());
-        vertx.deployVerticle(Verticle1.class.getName());
         vertx.deployVerticle(PerformanceVerticle.class.getName());
         schedulePingPong(vertx);
     }
