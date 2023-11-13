@@ -55,7 +55,6 @@ public final class PerformanceHandler implements Handler<Long> {
             api.update("http", "127.0.0.1", 8888); // select associate
             List<RealResponse> responseList = api.multiComplex(requests);
             int sz = callbacks.size();
-            Logger.info(String.valueOf(size));
             for (int i = 0; i < sz; i++) {
                 String specText = responseList.get(i).getDecryptResponse();
                 callbacks.get(i).onFinish(specText + "\n" + randomUUID);
