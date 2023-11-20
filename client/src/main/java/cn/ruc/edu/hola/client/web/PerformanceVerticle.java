@@ -1,11 +1,15 @@
 package cn.ruc.edu.hola.client.web;
 
+import cn.ruc.edu.hola.client.dataservice.DataService;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.performance.Callback;
 import cn.ruc.edu.hola.client.performance.PerformanceHandler;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
+import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -40,6 +44,28 @@ public class PerformanceVerticle extends Verticle {
             };
 
             handler.offer(callback);
+        });
+
+        router.post("/query/:productType").handler(new Handler<RoutingContext>() {
+            @Override
+            public void handle(RoutingContext ctx) {
+                String productType = ctx.pathParam("productType");
+                SharedData sharedData = vertx.sharedData();
+                var map = sharedData.getLocalMap(DataService.DEFAULT_LOCAL_MAP_NAME);
+
+                JsonObject newConfig = (JsonObject) map.get("newConfig");
+                JsonObject oldConfig = (JsonObject) map.get("oldConfig");
+
+                System.out.println(newConfig);
+                System.out.println(oldConfig);
+
+                var queryObject = newConfig.getJsonObject(productType);
+                if (queryObject == null) {
+                    out(ctx, "服务不存在！");
+                } else {
+                    out(ctx, queryObject.toString());
+                }
+            }
         });
 
         server.requestHandler(router).listen(PORT);

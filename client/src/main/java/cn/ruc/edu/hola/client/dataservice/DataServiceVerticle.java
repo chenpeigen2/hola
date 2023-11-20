@@ -1,13 +1,12 @@
 package cn.ruc.edu.hola.client.dataservice;
 
-import cn.ruc.edu.hola.client.json.JsonUtils;
-import com.google.gson.Gson;
 import io.vertx.config.ConfigChange;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.shareddata.SharedData;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -34,6 +33,15 @@ public class DataServiceVerticle extends AbstractVerticle {
             }
         });
 
+        router.post("/purge").handler(new Handler<RoutingContext>() {
+            @Override
+            public void handle(RoutingContext ctx) {
+                JsonObject config = new JsonObject();
+                DataService.writeFile(config.toString());
+                out(ctx, "purged");
+            }
+        });
+
         router.post("/add/:productType").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
@@ -42,7 +50,7 @@ public class DataServiceVerticle extends AbstractVerticle {
                 var object = body.asJsonObject();
                 JsonObject config = newConfig.copy();
                 config.put(productType, object);
-                DataServiceKt.writeFile(config.toString());
+                DataService.writeFile(config.toString());
                 out(ctx, productType + "\n" + object);
             }
         });
@@ -53,43 +61,26 @@ public class DataServiceVerticle extends AbstractVerticle {
                 String productType = ctx.pathParam("productType");
                 JsonObject config = newConfig.copy();
                 config.remove(productType);
-                DataServiceKt.writeFile(config.toString());
+                DataService.writeFile(config.toString());
                 out(ctx, productType + "\n" + "removed");
             }
         });
 
-        router.post("/purge").handler(new Handler<RoutingContext>() {
-            @Override
-            public void handle(RoutingContext ctx) {
-                JsonObject config = new JsonObject();
-                DataServiceKt.writeFile(config.toString());
-                out(ctx, "purged");
-            }
-        });
-
-        router.post("/query/:productType").handler(new Handler<RoutingContext>() {
-            @Override
-            public void handle(RoutingContext ctx) {
-                String productType = ctx.pathParam("productType");
-                var queryObject = newConfig.getJsonObject(productType);
-                if (queryObject == null) {
-                    out(ctx, "服务不存在！");
-                } else {
-                    out(ctx, queryObject.toString());
-                }
-            }
-        });
 
         server.requestHandler(router).listen(PORT).onSuccess(new Handler<HttpServer>() {
             @Override
             public void handle(HttpServer event) {
-                ConfigRetriever retriever = DataServiceKt.read(getVertx());
+                ConfigRetriever retriever = DataService.read(getVertx());
                 retriever.listen(new Handler<ConfigChange>() {
                     @Override
                     public void handle(ConfigChange configChange) {
                         System.out.println("dump: " + newConfig);
                         newConfig = configChange.getNewConfiguration();
                         oldConfig = configChange.getPreviousConfiguration();
+                        SharedData sd = vertx.sharedData();
+                        var map = sd.getLocalMap(DataService.DEFAULT_LOCAL_MAP_NAME);
+                        map.put("newConfig", newConfig);
+                        map.put("oldConfig", oldConfig);
                         System.out.println("dump: newConfig = " + newConfig + ",oldConfig = " + oldConfig);
                     }
                 });
