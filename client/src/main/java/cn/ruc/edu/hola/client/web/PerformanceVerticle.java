@@ -22,6 +22,22 @@ public class PerformanceVerticle extends Verticle {
 
     final static int PORT = 3002;
 
+
+    private void realExecute(RoutingContext ctx, String postData) {
+        var jsonData = QueryParser.basicParser(postData); // expected jsonData
+        List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
+        chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, jsonData));
+        PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
+        Callback callback = new Callback(chaincodeRequests) {
+            @Override
+            public void onFinish(String text) {
+                out(ctx, text);
+            }
+        };
+
+        handler.offer(callback);
+    }
+
     @Override
     public void start() {
         HttpServer server = vertx.createHttpServer();
@@ -30,20 +46,8 @@ public class PerformanceVerticle extends Verticle {
         router.route().handler(StaticHandler.create());
 
         router.post("/multi_find").blockingHandler(ctx -> {
-
             var postData = ctx.body().asString();
-            var jsonData = QueryParser.basicParser(postData); // expected jsonData
-            List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();
-            chaincodeRequests.add(new ChaincodeRequest(RandomStringGenerator.UID, jsonData));
-            PerformanceHandler handler = (PerformanceHandler) PerformanceHandler.getInstance();
-            Callback callback = new Callback(chaincodeRequests) {
-                @Override
-                public void onFinish(String text) {
-                    out(ctx, text);
-                }
-            };
-
-            handler.offer(callback);
+            realExecute(ctx, postData);
         });
 
         router.post("/query/:productType").handler(new Handler<RoutingContext>() {
@@ -52,18 +56,14 @@ public class PerformanceVerticle extends Verticle {
                 String productType = ctx.pathParam("productType");
                 SharedData sharedData = vertx.sharedData();
                 var map = sharedData.getLocalMap(DataService.DEFAULT_LOCAL_MAP_NAME);
-
                 JsonObject newConfig = (JsonObject) map.get("newConfig");
                 JsonObject oldConfig = (JsonObject) map.get("oldConfig");
-
-                System.out.println(newConfig);
-                System.out.println(oldConfig);
-
                 var queryObject = newConfig.getJsonObject(productType);
                 if (queryObject == null) {
                     out(ctx, "服务不存在！");
                 } else {
-                    out(ctx, queryObject.toString());
+                    var postData = queryObject.toString();
+                    realExecute(ctx, postData);
                 }
             }
         });

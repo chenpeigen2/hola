@@ -55,7 +55,7 @@ public class DataServiceVerticle extends AbstractVerticle {
             }
         });
 
-        router.delete("/add/:productType").handler(new Handler<RoutingContext>() {
+        router.delete("/delete/:productType").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
                 String productType = ctx.pathParam("productType");
