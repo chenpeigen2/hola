@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.client;
 
 import cn.ruc.edu.hola.client.config.Options;
+import cn.ruc.edu.hola.client.dataservice.DataServiceVerticle;
 import cn.ruc.edu.hola.client.performance.PerformanceHandler;
 import cn.ruc.edu.hola.client.web.PerformanceVerticle;
 import cn.ruc.edu.hola.client.web.Verticle;
@@ -19,6 +20,7 @@ public class Entry {
         Vertx vertx = Vertx.vertx(new VertxOptions().setWorkerPoolSize(Options.WorkerPoolSize));
         vertx.deployVerticle(Verticle.class.getName());
         vertx.deployVerticle(PerformanceVerticle.class.getName());
+        vertx.deployVerticle(DataServiceVerticle.class.getName());
         schedulePingPong(vertx);
     }
 

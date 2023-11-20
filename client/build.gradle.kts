@@ -35,6 +35,10 @@ dependencies {
     implementation("io.vertx:vertx-auth-properties:4.4.6")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
     implementation("io.vertx:vertx-auth-jwt:4.4.6")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-config
+    implementation("io.vertx:vertx-config:4.4.6")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
+    implementation("io.vertx:vertx-config-yaml:4.4.6")
     implementation(project("application-gateway-java"))
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.57.2")
