@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.index;
 
+import cn.ruc.edu.hola.index.config.Options;
 import cn.ruc.edu.hola.index.json.JsonUtils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
@@ -11,7 +12,6 @@ import io.vertx.ext.web.handler.StaticHandler;
 import java.util.*;
 
 public class Verticle extends AbstractVerticle {
-    final static int PORT = 3000;
 
     public static Map<String, List<StructInfo>> struct;
     public static Map<String, BackBendInfo> backbend;
@@ -129,8 +129,8 @@ public class Verticle extends AbstractVerticle {
             out(ctx, JsonUtils.INSTANCE.getJson().toJson(aggregate));
         });
 
-        server.requestHandler(router).listen(PORT);
-
+        var config = config().getJsonObject(Verticle.class.getSimpleName());
+        server.requestHandler(router).listen(config.getInteger(Options.Port));
     }
 
     public static List<String> retainElementList(List<List<String>> elementLists) {

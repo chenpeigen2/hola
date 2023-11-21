@@ -32,6 +32,10 @@ dependencies {
     implementation("io.vertx:vertx-auth-properties:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
     implementation("io.vertx:vertx-auth-jwt:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-config
+    implementation("io.vertx:vertx-config:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
+    implementation("io.vertx:vertx-config-yaml:4.5.0")
     // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.59.0")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded

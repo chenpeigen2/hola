@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.index;
 
 import cn.ruc.edu.hola.index.chaincode.ChainCodeBridge;
 import cn.ruc.edu.hola.index.chaincode.Service;
+import cn.ruc.edu.hola.index.config.Options;
 import cn.ruc.edu.hola.index.json.JsonUtils;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
@@ -11,7 +12,6 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 public class ServiceRegisterVerticel extends AbstractVerticle {
-    final static int PORT = 2999;
 
     final ChainCodeBridge impl = Indexer2.impl;
 
@@ -76,7 +76,8 @@ public class ServiceRegisterVerticel extends AbstractVerticle {
             }
         });
 
-        server.requestHandler(router).listen(PORT);
+        var config = config().getJsonObject(ServiceRegisterVerticel.class.getSimpleName());
+        server.requestHandler(router).listen(config.getInteger(Options.Port));
     }
 
     private void out(RoutingContext ctx, String msg) {

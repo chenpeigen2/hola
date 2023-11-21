@@ -1,0 +1,4 @@
+Verticle:
+  port: 3000
+ServiceRegisterVerticel:
+  port: 2999
