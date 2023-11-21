@@ -21,9 +21,6 @@ import java.util.List;
 
 public class PerformanceVerticle extends Verticle {
 
-    final static int PORT = 3002;
-
-
     private void realExecute(RoutingContext ctx, String postData) {
         var jsonData = QueryParser.basicParser(postData); // expected jsonData
         List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();

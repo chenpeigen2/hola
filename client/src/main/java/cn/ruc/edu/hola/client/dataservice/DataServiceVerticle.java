@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.client.dataservice;
 
 import cn.ruc.edu.hola.client.config.Options;
-import cn.ruc.edu.hola.client.web.PerformanceVerticle;
 import io.vertx.config.ConfigChange;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
@@ -15,7 +14,6 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 public class DataServiceVerticle extends AbstractVerticle {
-    final static int PORT = 3003;
 
     private JsonObject newConfig;
 
