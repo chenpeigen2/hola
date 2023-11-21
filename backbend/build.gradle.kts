@@ -24,6 +24,10 @@ dependencies {
     implementation("io.vertx:vertx-auth-properties:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
     implementation("io.vertx:vertx-auth-jwt:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-config
+    implementation("io.vertx:vertx-config:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
+    implementation("io.vertx:vertx-config-yaml:4.5.0")
     implementation("com.google.guava:guava:32.1.3-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto

@@ -1,0 +1,6 @@
+CouchVerticle:
+  port: 8080
+CouchVerticle1:
+  port: 8081
+CouchVerticle2:
+  port: 8082

@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.server;
 
+import cn.ruc.edu.hola.backbend.config.Options;
 import cn.ruc.edu.hola.backbend.entity.Auth;
 import cn.ruc.edu.hola.backbend.entity.BackBendConfigInfo;
 import cn.ruc.edu.hola.backbend.entity.Filter;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class CouchVerticle extends AbstractVerticle {
 
-    final static int PORT = 8080;
+    protected int port;
 
     final Proxy proxyMethods = new EncryptProxy();
 
@@ -29,7 +30,7 @@ public class CouchVerticle extends AbstractVerticle {
     }
 
     public int getPort() {
-        return 8080;
+        return port;
     }
 
     public String getPath() {
@@ -94,7 +95,9 @@ public class CouchVerticle extends AbstractVerticle {
     }
 
     public Future<HttpServer> listen(HttpServer server, Router router) {
-        return server.requestHandler(router).listen(PORT);
+        var config = config().getJsonObject(CouchVerticle.class.getSimpleName());
+        port = config.getInteger(Options.Port);
+        return server.requestHandler(router).listen(port);
     }
 
     private void out(RoutingContext ctx, String msg) {

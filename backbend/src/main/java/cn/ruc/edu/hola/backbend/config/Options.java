@@ -6,4 +6,6 @@ public interface Options {
     boolean DEBUG = false;
 
     HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.NONE;
+
+    String Port = "port";
 }
