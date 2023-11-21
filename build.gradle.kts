@@ -4,8 +4,8 @@ plugins {
     kotlin("jvm") version "1.9.20"
     id("de.qualersoft.jmeter") version "2.4.0"
     application
-    id("org.springframework.boot") version "3.1.2"
-    id("io.spring.dependency-management") version "1.1.2"
+    id("org.springframework.boot") version "3.1.5"
+    id("io.spring.dependency-management") version "1.1.4"
 }
 
 group = "cn.edu.ruc"
@@ -27,17 +27,17 @@ repositories {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("commons-codec:commons-codec:1.16.0")
     implementation("com.google.guava:guava:32.1.3-jre")
-    implementation("net.bytebuddy:byte-buddy:1.14.5")
+    implementation("net.bytebuddy:byte-buddy:1.14.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("io.vertx:vertx-web:4.4.6")
+    implementation("io.vertx:vertx-web:4.5.0")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
