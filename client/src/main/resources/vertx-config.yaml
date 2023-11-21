@@ -1,0 +1,6 @@
+Verticle:
+  port: 3001
+PerformanceVerticle:
+  port: 3002
+DataServiceVerticle:
+  port: 3003

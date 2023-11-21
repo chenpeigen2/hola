@@ -1,5 +1,7 @@
 package cn.ruc.edu.hola.client.dataservice;
 
+import cn.ruc.edu.hola.client.config.Options;
+import cn.ruc.edu.hola.client.web.PerformanceVerticle;
 import io.vertx.config.ConfigChange;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
@@ -66,8 +68,8 @@ public class DataServiceVerticle extends AbstractVerticle {
             }
         });
 
-
-        server.requestHandler(router).listen(PORT).onSuccess(new Handler<HttpServer>() {
+        var config = config().getJsonObject(DataServiceVerticle.class.getSimpleName());
+        server.requestHandler(router).listen(config.getInteger(Options.Port)).onSuccess(new Handler<HttpServer>() {
             @Override
             public void handle(HttpServer event) {
                 ConfigRetriever retriever = DataService.read(getVertx());

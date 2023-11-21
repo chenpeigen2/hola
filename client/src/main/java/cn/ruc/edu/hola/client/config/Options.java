@@ -9,4 +9,6 @@ public interface Options {
     int Periodic_Millis = 60;
 
     HttpLoggingInterceptor.Level LEVEL = HttpLoggingInterceptor.Level.NONE;
+
+    String Port = "port";
 }

@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.client.web;
 
+import cn.ruc.edu.hola.client.config.Options;
 import cn.ruc.edu.hola.client.dataservice.DataService;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
@@ -67,8 +68,8 @@ public class PerformanceVerticle extends Verticle {
                 }
             }
         });
-
-        server.requestHandler(router).listen(PORT);
+        var config = config().getJsonObject(PerformanceVerticle.class.getSimpleName());
+        server.requestHandler(router).listen(config.getInteger(Options.Port));
     }
 
     private void out(RoutingContext ctx, String msg) {
