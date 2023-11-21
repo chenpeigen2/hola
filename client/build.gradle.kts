@@ -20,32 +20,32 @@ application {
 dependencies {
     implementation("com.google.guava:guava:32.1.3-jre")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.22")
-    implementation("io.vertx:vertx-web:4.4.6")
-    implementation("io.vertx:vertx-web-validation:4.4.6")
+    implementation("cn.hutool:hutool-crypto:5.8.23")
+    implementation("io.vertx:vertx-web:4.5.0")
+    implementation("io.vertx:vertx-web-validation:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.4.6")
+    implementation("io.vertx:vertx-auth-properties:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
-    implementation("io.vertx:vertx-auth-jwt:4.4.6")
+    implementation("io.vertx:vertx-auth-jwt:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config
-    implementation("io.vertx:vertx-config:4.4.6")
+    implementation("io.vertx:vertx-config:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
-    implementation("io.vertx:vertx-config-yaml:4.4.6")
+    implementation("io.vertx:vertx-config-yaml:4.5.0")
     implementation(project("application-gateway-java"))
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
-    compileOnly("io.grpc:grpc-api:1.57.2")
+    compileOnly("io.grpc:grpc-api:1.59.0")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
-    runtimeOnly("io.grpc:grpc-netty-shaded:1.57.2")
+    runtimeOnly("io.grpc:grpc-netty-shaded:1.59.0")
 // https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
-    implementation("org.hyperledger.fabric:fabric-gateway:1.3.1")
+    implementation("org.hyperledger.fabric:fabric-gateway:1.4.0")
     implementation(project(":chaincode-java"))
 }
 

@@ -19,26 +19,26 @@ application {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 // https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.10.1")
-    implementation("io.vertx:vertx-web:4.4.6")
-    implementation("io.vertx:vertx-web-validation:4.4.6")
+    implementation("io.vertx:vertx-web:4.5.0")
+    implementation("io.vertx:vertx-web-validation:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
-    implementation("io.vertx:vertx-service-discovery:4.4.6")
+    implementation("io.vertx:vertx-service-discovery:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.4.6")
+    implementation("io.vertx:vertx-auth-properties:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
-    implementation("io.vertx:vertx-auth-jwt:4.4.6")
+    implementation("io.vertx:vertx-auth-jwt:4.5.0")
     // https://mvnrepository.com/artifact/io.grpc/grpc-api
-    compileOnly("io.grpc:grpc-api:1.57.2")
+    compileOnly("io.grpc:grpc-api:1.59.0")
     // https://mvnrepository.com/artifact/io.grpc/grpc-netty-shaded
-    runtimeOnly("io.grpc:grpc-netty-shaded:1.57.2")
+    runtimeOnly("io.grpc:grpc-netty-shaded:1.59.0")
 // https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
-    implementation("org.hyperledger.fabric:fabric-gateway:1.3.1")
-    testImplementation(platform("org.junit:junit-bom:5.9.3"))
+    implementation("org.hyperledger.fabric:fabric-gateway:1.4.0")
+    testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
