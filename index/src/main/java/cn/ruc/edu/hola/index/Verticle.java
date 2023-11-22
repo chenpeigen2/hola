@@ -37,7 +37,7 @@ public class Verticle extends AbstractVerticle {
                 struct.forEach((k, v) -> {
 
                     v.forEach(structInfo -> {
-                        if (structInfo.info().contains(keyWord)) {
+                        if (structInfo.keyWords().contains(keyWord)) {
                             var list = ret.getOrDefault(keyWord, new ArrayList<>());
                             list.add(k);
                             ret.put(keyWord, list);
@@ -66,7 +66,7 @@ public class Verticle extends AbstractVerticle {
                 var keyWord = jsonArray.getString(i);
                 struct.forEach((k, v) -> {
                     v.forEach(structInfo -> {
-                        if (structInfo.info().contains(keyWord)) {
+                        if (structInfo.keyWords().contains(keyWord)) {
                             var list = ret.getOrDefault(keyWord, new ArrayList<>());
                             list.add(backbend.getOrDefault(k, null));
                             ret.put(keyWord, list);
@@ -85,7 +85,7 @@ public class Verticle extends AbstractVerticle {
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
                     v.forEach(structInfo -> {
-                        if (structInfo.info().contains(keyWord)) {
+                        if (structInfo.keyWords().contains(keyWord)) {
                             list.add(k);
                         }
                     });
@@ -107,7 +107,7 @@ public class Verticle extends AbstractVerticle {
                 List<String> list = new ArrayList<>();
                 struct.forEach((k, v) -> {
                     v.forEach(structInfo -> {
-                        if (structInfo.info().contains(keyWord)) {
+                        if (structInfo.keyWords().contains(keyWord)) {
                             list.add(k);
                         }
                     });
