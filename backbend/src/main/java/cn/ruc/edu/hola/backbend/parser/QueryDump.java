@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class QueryDump {
+public final class QueryDump {
+
+    private QueryDump() {}
 
     public static List<String> dumpKeys(String query) {
         JsonObject object = JsonParser.parseString(query).getAsJsonObject();
