@@ -15,9 +15,7 @@
   },
   "$struct": [
     {
-      "dbs": [
-        "fake1"
-      ],
+      "db": "social",
       "struct": {
         "uid": "string",
         "nickName": "string",
@@ -26,9 +24,7 @@
       }
     },
     {
-      "dbs": [
-        "fake1"
-      ],
+      "db": "class",
       "struct": {
         "uid": "string",
         "nickName": "string",

@@ -1,7 +1,7 @@
 package cn.ruc.edu.hola.backbend.parser;
 
-import cn.ruc.edu.hola.backbend.index.Indexer;
-import cn.ruc.edu.hola.backbend.index.StructInfo;
+import cn.ruc.edu.hola.backbend.index.Indexer2;
+import cn.ruc.edu.hola.backbend.index.StructInfo2;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -14,7 +14,7 @@ import java.util.*;
 public final class FilterParser {
     private FilterParser() {}
 
-    public static Map<String, List<StructInfo>> struct = Indexer.remappingStruct("struct.json");
+    public static Map<String, List<StructInfo2>> struct = Indexer2.remappingStructFromFile();
 
     /**
      * 可能会误伤其他的struct结构（暂时先不考虑）
@@ -32,9 +32,9 @@ public final class FilterParser {
         Set<String> ret = new HashSet<>();
 
         keys.forEach(key -> {
-            for (StructInfo structInfo : structs) {
-                if (structInfo.info().contains(key)) {
-                    ret.addAll(structInfo.dbs());
+            for (StructInfo2 structInfo2 : structs) {
+                if (structInfo2.info().contains(key)) {
+                    ret.add(structInfo2.db());
                 }
             }
         });
