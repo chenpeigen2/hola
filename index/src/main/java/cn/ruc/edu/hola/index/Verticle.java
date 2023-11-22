@@ -13,7 +13,7 @@ import java.util.*;
 
 public class Verticle extends AbstractVerticle {
 
-    public static Map<String, List<StructInfo>> struct;
+    public static Map<String, List<StructInfo2>> struct;
     public static Map<String, BackBendInfo> backbend;
 
     static {

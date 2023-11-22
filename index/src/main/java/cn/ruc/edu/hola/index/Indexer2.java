@@ -14,10 +14,9 @@ import java.util.function.Consumer;
  * indexer2 using the backbend register info
  */
 public final class Indexer2 {
-    private Indexer2() {
-    }
+    private Indexer2() {}
 
-    public static Map<String, List<StructInfo>> struct = new HashMap<>();
+    public static Map<String, List<StructInfo2>> struct = new HashMap<>();
     public static Map<String, BackBendInfo> backbend = new HashMap<>();
     public static Map<BackBendConfigInfo, String> registerPath = new HashMap<>();
     public static Map<String, String> services = new HashMap<>();
@@ -50,25 +49,16 @@ public final class Indexer2 {
 
     private static void doRemappingStruct(String serviceName, String text) {
         JsonElement jsonElement = JsonParser.parseString(text);
-        List<StructInfo> list = new ArrayList<>();
+        List<StructInfo2> list = new ArrayList<>();
         jsonElement.getAsJsonArray().iterator().forEachRemaining(new Consumer<JsonElement>() {
             @Override
-            public void accept(JsonElement element) {
-                var structObject = element.getAsJsonObject();
-
-                var dbs = structObject.getAsJsonArray("dbs");
-                Set<String> db_set = new HashSet<>();
-                dbs.forEach(new Consumer<JsonElement>() {
-                    @Override
-                    public void accept(JsonElement element) {
-                        db_set.add(element.getAsString());
-                    }
-                });
-
-                var struct = structObject.getAsJsonObject("struct");
-                Set<String> struct_set = new HashSet<>();
-                getJsonKey(struct_set, struct, "");
-                list.add(new StructInfo(db_set, struct_set));
+            public void accept(JsonElement singleStruct) {
+                JsonObject structObject = singleStruct.getAsJsonObject();
+                String db = structObject.get("db").getAsString();
+                Set<String> structs = new HashSet<>();
+                getJsonKey(structs, structObject.get("struct"), "");
+                StructInfo2 structInfo2 = new StructInfo2(db, structs);
+                list.add(structInfo2);
             }
         });
 
