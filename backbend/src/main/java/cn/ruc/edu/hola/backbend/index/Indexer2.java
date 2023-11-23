@@ -16,13 +16,6 @@ import java.util.function.Consumer;
 
 public final class Indexer2 {
 
-
-    public static void main(String[] args) {
-        var ans = remappingStructFromFile();
-        System.out.println(ans);
-    }
-
-
     public static Map<String, List<StructInfo2>> remappingStructFromFile() {
         Map<String, List<StructInfo2>> result = new HashMap<>();
         remappingStructFromFile(result, "bb1_config.json");
