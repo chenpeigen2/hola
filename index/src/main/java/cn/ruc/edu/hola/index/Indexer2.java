@@ -4,7 +4,6 @@ import cn.ruc.edu.hola.index.chaincode.ChainCodeBridge;
 import cn.ruc.edu.hola.index.chaincode.Service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -24,13 +23,22 @@ public final class Indexer2 {
     public final static ChainCodeBridge impl = new ChainCodeBridge();
 
     public static Service register(RegisterInfo registerInfo) {
-        registerPath.put(registerInfo.backBendConfigInfo(), registerInfo.serviceName()); // ping-pong usage
-        services.put(registerInfo.serviceName(), registerInfo.serviceId());
-        doRemappingStruct(registerInfo.serviceName(), registerInfo.struct());
-        doRemappingInfo(registerInfo.serviceName(), registerInfo.info());
+        ServiceInfo serviceInfo = registerInfo.getServiceInfo();
+        JsonElement struct = registerInfo.getStruct();
+
+        BackBendConfigInfo configInfo = new BackBendConfigInfo(serviceInfo.getHost(), serviceInfo.getPort(), serviceInfo.getPath());
+
+        registerPath.put(configInfo, serviceInfo.getServiceName()); // ping-pong usage
+        services.put(serviceInfo.getServiceName(), serviceInfo.getServiceId());
+
+        doRemappingStruct(serviceInfo.getServiceName(), struct.getAsJsonObject().get("$struct"));
+        doRemappingInfo(serviceInfo.getServiceName(), struct.getAsJsonObject().get("$info"));
+
+
         Service service;
         try {
-            service = impl.register(registerInfo.serviceId(), registerInfo.toString()); // restore the register info data
+            System.out.println(registerInfo.toString());
+            service = impl.register(serviceInfo.getServiceId(), registerInfo.toString()); // restore the register info data
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -47,8 +55,7 @@ public final class Indexer2 {
         }
     }
 
-    private static void doRemappingStruct(String serviceName, String text) {
-        JsonElement jsonElement = JsonParser.parseString(text);
+    private static void doRemappingStruct(String serviceName, JsonElement jsonElement) {
         List<StructInfo2> list = new ArrayList<>();
         jsonElement.getAsJsonArray().iterator().forEachRemaining(new Consumer<JsonElement>() {
             @Override
@@ -65,8 +72,7 @@ public final class Indexer2 {
         struct.put(serviceName, list);
     }
 
-    private static void doRemappingInfo(String serviceName, String text) {
-        JsonElement element = JsonParser.parseString(text);
+    private static void doRemappingInfo(String serviceName, JsonElement element) {
         JsonObject jsonObj = element.getAsJsonObject();
         var bb_url = jsonObj.get("$url").getAsString();
 

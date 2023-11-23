@@ -1,10 +1,7 @@
 package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.config.Options;
-import cn.ruc.edu.hola.backbend.entity.Auth;
-import cn.ruc.edu.hola.backbend.entity.BackBendConfigInfo;
-import cn.ruc.edu.hola.backbend.entity.Filter;
-import cn.ruc.edu.hola.backbend.entity.RegisterInfo;
+import cn.ruc.edu.hola.backbend.entity.*;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import cn.ruc.edu.hola.backbend.register.Register;
 import cn.ruc.edu.hola.backbend.register.Registers;
@@ -68,13 +65,13 @@ public class CouchVerticle extends AbstractVerticle {
         installPing(router); // 保活
         listen(server, router).onSuccess(event -> {
             RegisterInfo registerInfo = null;
-            BackBendConfigInfo backBendConfigInfo = new BackBendConfigInfo(getHost(), getPort(), getPath());
+            ServiceInfo serviceInfo = new ServiceInfo(getHost(), getPort(), getPath(), getTag(), getTag()); // service info
             if (getTag().equals("bb1")) {
-                registerInfo = Register.register(getTag(), getTag(), "bb1_config.json", backBendConfigInfo);
+                registerInfo = Register.register(serviceInfo, "bb1_config.json");
             } else if (getTag().equals("bb2")) {
-                registerInfo = Register.register(getTag(), getTag(), "bb2_config.json", backBendConfigInfo);
+                registerInfo = Register.register(serviceInfo, "bb2_config.json");
             } else if (getTag().equals("bb3")) {
-                registerInfo = Register.register(getTag(), getTag(), "bb3_config.json", backBendConfigInfo);
+                registerInfo = Register.register(serviceInfo, "bb3_config.json");
             }
             System.out.println(registerInfo);
             if (registerInfo != null) {
@@ -130,7 +127,7 @@ public class CouchVerticle extends AbstractVerticle {
 
     private void auth(RoutingContext ctx) {
         try {
-            Auth auth = JsonUtils.INSTANCE.toAuth(ctx.body().asString());
+            Auth auth = RequestEntitiesKt.toAuth(ctx.body().asString());
             String uuid = proxyMethods.acquireAESKey(auth);
             List<String> resp = new ArrayList<>();
             resp.add((uuid != null) ? uuid : "null");
@@ -198,11 +195,11 @@ public class CouchVerticle extends AbstractVerticle {
     }
 
     public void filterDocs(RoutingContext ctx) {
-        Filter object = JsonUtils.INSTANCE.toFilter(ctx.body().asString());
+        Filter filterObject = RequestEntitiesKt.toFilter(ctx.body().asString());
 
         // ack the data
-        String filter = object.filter();
-        String uuid = object.uuid();
+        String filter = filterObject.getFilter();
+        String uuid = filterObject.getUuid();
 
         try {
             out(ctx, proxyMethods.filterDocsByBB(uuid, filter, getTag()));
