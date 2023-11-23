@@ -1,5 +1,7 @@
 package cn.ruc.edu.hola.index;
 
+import cn.ruc.edu.hola.index.http.HttpClient;
+
 import java.util.logging.Logger;
 
 public final class Ping {

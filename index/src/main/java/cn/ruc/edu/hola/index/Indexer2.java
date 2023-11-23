@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.index;
 
 import cn.ruc.edu.hola.index.chaincode.ChainCodeBridge;
 import cn.ruc.edu.hola.index.chaincode.Service;
+import cn.ruc.edu.hola.index.entity.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 

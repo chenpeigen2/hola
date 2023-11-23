@@ -1,5 +1,7 @@
-package cn.ruc.edu.hola.index;
+package cn.ruc.edu.hola.index.web;
 
+import cn.ruc.edu.hola.index.Indexer2;
+import cn.ruc.edu.hola.index.entity.RegisterInfo;
 import cn.ruc.edu.hola.index.chaincode.ChainCodeBridge;
 import cn.ruc.edu.hola.index.chaincode.Service;
 import cn.ruc.edu.hola.index.config.Options;

@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.index
+package cn.ruc.edu.hola.index.entity
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement

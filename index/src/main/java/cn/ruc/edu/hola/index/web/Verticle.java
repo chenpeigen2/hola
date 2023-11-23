@@ -1,5 +1,8 @@
-package cn.ruc.edu.hola.index;
+package cn.ruc.edu.hola.index.web;
 
+import cn.ruc.edu.hola.index.entity.BackBendInfo;
+import cn.ruc.edu.hola.index.Indexer2;
+import cn.ruc.edu.hola.index.entity.StructInfo2;
 import cn.ruc.edu.hola.index.config.Options;
 import cn.ruc.edu.hola.index.json.JsonUtils;
 import io.vertx.core.AbstractVerticle;

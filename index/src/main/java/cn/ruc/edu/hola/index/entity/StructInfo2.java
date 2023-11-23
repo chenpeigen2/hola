@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.index;
+package cn.ruc.edu.hola.index.entity;
 
 import java.util.Set;
 

@@ -1,5 +1,7 @@
 package cn.ruc.edu.hola.index;
 
+import cn.ruc.edu.hola.index.web.ServiceRegisterVerticel;
+import cn.ruc.edu.hola.index.web.Verticle;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
