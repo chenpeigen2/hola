@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.index;
 
+import cn.ruc.edu.hola.backbend.entity.StructInfo2;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

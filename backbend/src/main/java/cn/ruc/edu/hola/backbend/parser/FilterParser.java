@@ -1,7 +1,7 @@
 package cn.ruc.edu.hola.backbend.parser;
 
 import cn.ruc.edu.hola.backbend.index.Indexer2;
-import cn.ruc.edu.hola.backbend.index.StructInfo2;
+import cn.ruc.edu.hola.backbend.entity.StructInfo2;
 
 import java.util.HashSet;
 import java.util.List;
