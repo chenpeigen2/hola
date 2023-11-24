@@ -4,34 +4,9 @@
     "$url": "http://localhost:8082",
     "$path": {
       "/_find": [
-        "uid",
-        "nickName",
-        "gender",
-        "social_id",
-        "class_id",
-        "birthDate"
       ]
     }
   },
   "$struct": [
-    {
-      "db": "social",
-      "struct": {
-        "uid": "string",
-        "nickName": "string",
-        "gender": "int",
-        "social_id": "string"
-      }
-    },
-    {
-      "db": "class",
-      "struct": {
-        "uid": "string",
-        "nickName": "string",
-        "class_id": "string",
-        "gender": "int",
-        "birthDate": "date"
-      }
-    }
   ]
 }

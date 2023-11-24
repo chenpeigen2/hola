@@ -7,9 +7,7 @@
         "uid",
         "nickName",
         "gender",
-        "social_id",
-        "class_id",
-        "birthDate"
+        "social_id"
       ]
     }
   },
@@ -21,16 +19,6 @@
         "nickName": "string",
         "gender": "int",
         "social_id": "string"
-      }
-    },
-    {
-      "db": "class",
-      "struct": {
-        "uid": "string",
-        "nickName": "string",
-        "class_id": "string",
-        "gender": "int",
-        "birthDate": "date"
       }
     }
   ]

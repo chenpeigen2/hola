@@ -329,8 +329,9 @@ fun main() = runBlocking {
     deleteNamedFakeDb("social")
     createNamedDb("class")
     createNamedDb("social")
-    addFakeStuData(20, "17一班", "乒乓球")
-    addFakeStuData(20, "17二班", "羽毛球")
-    addFakeStuData(20, "17三班", "篮球")
+    addFakeStuData(1, "17一班", "乒乓球")
+    addFakeStuData(1, "17二班", "羽毛球")
+    addFakeStuData(1, "17三班", "篮球")
+    addFakeStuData(1, "17四班", "足球")
     fakeComplexStudentQuery()
 }

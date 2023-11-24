@@ -7,22 +7,12 @@
         "uid",
         "nickName",
         "gender",
-        "social_id",
         "class_id",
         "birthDate"
       ]
     }
   },
   "$struct": [
-    {
-      "db": "social",
-      "struct": {
-        "uid": "string",
-        "nickName": "string",
-        "gender": "int",
-        "social_id": "string"
-      }
-    },
     {
       "db": "class",
       "struct": {
