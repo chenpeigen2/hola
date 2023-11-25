@@ -47,7 +47,9 @@ std::vector <Request> provide_query(const std::string &source) {
             std::string text = sgx_acquire_vector(i);
 //            the acquired vector social_id#gender
 //            the acquired vector class_id#gender
-            printf("the acquired vector %s \n", text.c_str());
+//            printf("the acquired vector %s \n", text.c_str());
+
+
             auto vec = convert_to_vec(text);
 
             // compute the vec start
