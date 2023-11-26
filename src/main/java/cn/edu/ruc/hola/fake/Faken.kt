@@ -5,6 +5,7 @@ import cn.edu.ruc.hola.config.ServerHelper
 import cn.edu.ruc.hola.entity.Node
 import cn.edu.ruc.hola.fake.Faken.addFakeStuData
 import cn.edu.ruc.hola.fake.Faken.createNamedDb
+import cn.edu.ruc.hola.fake.Faken.createNamedFakeIndex
 import cn.edu.ruc.hola.fake.Faken.deleteNamedFakeDb
 import cn.edu.ruc.hola.fake.Faken.fakeComplexStudentQuery
 import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
@@ -44,6 +45,21 @@ object Faken {
             dbUtils.createDb(name).use { res ->
                 val ans = res.body?.string() ?: "null"
                 logger.info(ans)
+            }
+        }
+    }
+
+    suspend fun createNamedFakeIndex(dbName: String, indexInfo: String) {
+
+        ServerHelper.hosts.forEach {
+            it.let { host ->
+                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+                dbUtils.createIndex(dbName, indexInfo).use { res ->
+                    val bos = res.body?.string()
+                    logger.info("$host")
+                    logger.info(bos)
+                }
+
             }
         }
     }
@@ -325,10 +341,35 @@ suspend fun query() {
 
 
 fun main() = runBlocking {
+
+    val classInfo: String = """
+                        {
+                        "index": {
+                            "fields": ["gender", "class_id"]
+                        },
+                        "type" : "json"
+                    }
+            
+        """.trimIndent()
+
+
+    val socialInfo: String = """
+                        {
+                        "index": {
+                            "fields": ["gender", "social_id"]
+                        },
+                        "type" : "json"
+                    }
+            
+        """.trimIndent()
+
+
     deleteNamedFakeDb("class")
     deleteNamedFakeDb("social")
     createNamedDb("class")
     createNamedDb("social")
+    createNamedFakeIndex("class", classInfo)
+    createNamedFakeIndex("social", socialInfo)
     addFakeStuData(1, "17一班", "乒乓球")
     addFakeStuData(1, "17二班", "羽毛球")
     addFakeStuData(1, "17三班", "篮球")
