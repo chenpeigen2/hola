@@ -49,9 +49,13 @@ public class DataServiceVerticle extends AbstractVerticle {
                 var body = ctx.body();
                 var object = body.asJsonObject();
                 JsonObject config = newConfig.copy();
-                config.put(productType, object);
-                DataService.writeFile(config.toString());
-                out(ctx, productType + "\n" + object);
+                if (!config.containsKey(productType)) {
+                    config.put(productType, object);
+                    DataService.writeFile(config.toString());
+                    out(ctx, productType + "\n" + object);
+                } else {
+                    out(ctx, productType + " already exist");
+                }
             }
         });
 
@@ -60,9 +64,32 @@ public class DataServiceVerticle extends AbstractVerticle {
             public void handle(RoutingContext ctx) {
                 String productType = ctx.pathParam("productType");
                 JsonObject config = newConfig.copy();
-                config.remove(productType);
-                DataService.writeFile(config.toString());
-                out(ctx, productType + "\n" + "removed");
+                if (config.containsKey(productType)) {
+                    config.remove(productType);
+                    DataService.writeFile(config.toString());
+                    out(ctx, productType + "\n" + "removed");
+                } else {
+                    out(ctx, productType + " already removed");
+                }
+            }
+        });
+
+        router.delete("/update/:productType").handler(new Handler<RoutingContext>() {
+            @Override
+            public void handle(RoutingContext ctx) {
+                String productType = ctx.pathParam("productType");
+                var body = ctx.body();
+                var object = body.asJsonObject();
+
+                JsonObject config = newConfig.copy();
+                if (config.containsKey(productType)) {
+                    config.remove(productType);
+                    config.put(productType, object);
+                    DataService.writeFile(config.toString());
+                    out(ctx, productType + "\n" + "updated");
+                } else {
+                    out(ctx, productType + " do not exist");
+                }
             }
         });
 
@@ -74,7 +101,6 @@ public class DataServiceVerticle extends AbstractVerticle {
                 retriever.listen(new Handler<ConfigChange>() {
                     @Override
                     public void handle(ConfigChange configChange) {
-                        System.out.println("dump: " + newConfig);
                         newConfig = configChange.getNewConfiguration();
                         oldConfig = configChange.getPreviousConfiguration();
                         SharedData sd = vertx.sharedData();
