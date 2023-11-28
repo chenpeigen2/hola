@@ -27,3 +27,39 @@ $keyMapMatch	选择器	匹配并返回包含至少包含一个匹配所有指定
 其他	$mod	[除数，余数]	除数和余数都是正整数或负整数。非整数值导致404。匹配文档的位置 field % Divisor == Remainder 为true，并且仅当文档字段为整数时。
  	$regex	弦	与文档字段匹配的正则表达式模式。仅当字段为字符串值且与提供的正则表达式匹配时才匹配。匹配算法基于Perl兼容正则表达式（PCRE）库。有关实现内容的更多信息，请参见 Erlang Regular Expression
 ```
+
+```json
+{
+    "selector": {
+      "$or": [
+        {
+          "social_id": "羽毛球"
+        },
+        {
+          "class_id": "$classInfo"
+        }
+      ],
+      "gender": "#${gender}#"
+    }
+  }
+  
+  
+```
+
+if you pass the ?classInfo=17一班&gender=0 
+will inflate as bellows:
+```json
+{
+    "selector": {
+      "$or": [
+        {
+          "social_id": "羽毛球"
+        },
+        {
+          "class_id": "17一班"
+        }
+      ],
+      "gender": 0
+    }
+  }
+```
