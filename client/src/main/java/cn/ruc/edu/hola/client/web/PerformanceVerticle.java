@@ -6,6 +6,7 @@ import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.performance.Callback;
 import cn.ruc.edu.hola.client.performance.PerformanceHandler;
+import cn.ruc.edu.hola.client.template.TemplateController;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
@@ -15,6 +16,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
+import org.apache.velocity.VelocityContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,13 @@ public class PerformanceVerticle extends Verticle {
                     out(ctx, "服务不存在！");
                 } else {
                     var postData = queryObject.toString();
-                    realExecute(ctx, postData);
+                    VelocityContext velocityContext = TemplateController.INSTANCE.toVelocityContext(ctx.request().params());
+                    String evaluated = TemplateController.INSTANCE.evaluate(postData, velocityContext);
+                    if (TemplateController.INSTANCE.isTemplated(evaluated)) {
+                        realExecute(ctx, postData);
+                    } else {
+                        out(ctx, evaluated + "\n error");
+                    }
                 }
             }
         });
