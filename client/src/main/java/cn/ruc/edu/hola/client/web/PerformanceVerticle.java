@@ -3,6 +3,7 @@ package cn.ruc.edu.hola.client.web;
 import cn.ruc.edu.hola.client.config.Options;
 import cn.ruc.edu.hola.client.dataservice.DataService;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
+import cn.ruc.edu.hola.client.log.Logger;
 import cn.ruc.edu.hola.client.parser.QueryParser;
 import cn.ruc.edu.hola.client.performance.Callback;
 import cn.ruc.edu.hola.client.performance.PerformanceHandler;
@@ -67,6 +68,7 @@ public class PerformanceVerticle extends Verticle {
                     VelocityContext velocityContext = TemplateController.INSTANCE.toVelocityContext(ctx.request().params());
                     String evaluated = TemplateController.INSTANCE.evaluate(postData, velocityContext);
                     if (TemplateController.INSTANCE.isTemplated(evaluated)) {
+                        Logger.info(evaluated);
                         realExecute(ctx, postData);
                     } else {
                         out(ctx, evaluated + "\n error");
