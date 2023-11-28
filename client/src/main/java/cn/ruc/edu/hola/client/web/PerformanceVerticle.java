@@ -63,6 +63,7 @@ public class PerformanceVerticle extends Verticle {
                     out(ctx, "服务不存在！");
                 } else {
                     var postData = queryObject.toString();
+                    postData = TemplateController.INSTANCE.normalize(postData); // should normalize the json string
                     VelocityContext velocityContext = TemplateController.INSTANCE.toVelocityContext(ctx.request().params());
                     String evaluated = TemplateController.INSTANCE.evaluate(postData, velocityContext);
                     if (TemplateController.INSTANCE.isTemplated(evaluated)) {

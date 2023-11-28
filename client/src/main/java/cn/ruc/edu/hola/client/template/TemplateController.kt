@@ -21,6 +21,10 @@ object TemplateController {
         return context
     }
 
+    fun String.normalize(): String {
+        return InternalTemplateController.normalize(this)
+    }
+
     fun String.evaluate(context: VelocityContext): String {
         val stringWriter = StringWriter()
         Velocity.evaluate(context, stringWriter, TAG, this)

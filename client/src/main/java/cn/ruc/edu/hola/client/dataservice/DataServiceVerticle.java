@@ -42,6 +42,12 @@ public class DataServiceVerticle extends AbstractVerticle {
             }
         });
 
+//        JSON String,
+//        Number, ---> #
+//        Array,
+//        Object
+//        or token 'null',
+//        'true' or 'false'
         router.post("/add/:productType").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
