@@ -1,7 +1,8 @@
 > template engine if detect "# or #" will replace as -> "\0"
-> template engine only support ${[*]} or $[*] replacement
-> template engine do not support (important)
 
+> template engine only support ${[*]} or $[*] replacement
+
+> template engine do not support (important)
 ```text
 $and	数组	如果数组中的所有选择器匹配，则匹配。
 $or	数组	如果数组中的任何选择器匹配，则匹配。所有选择器必须使用相同的索引。
