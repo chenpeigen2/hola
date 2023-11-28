@@ -1,7 +1,7 @@
 ### 一些限制
 > template engine if detect "# or #" will replace as -> "\0"
 
-> template engine only support ${[*]} or $[*] replacement
+> template engine only support ${字段} or $字段 replacement
 
 > template engine do not support (important)
 ```text
