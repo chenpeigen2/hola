@@ -51,7 +51,7 @@ $keyMapMatch	选择器	匹配并返回包含至少包含一个匹配所有指定
   
 ```
 
-if you pass the ?classInfo=17一班&gender=0 
+if you pass the `?classInfo=17一班&gender=0`
 will inflate as bellows:
 ```json
 {
