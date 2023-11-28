@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.20"
+    kotlin("jvm") version "1.9.21"
     id("de.qualersoft.jmeter") version "2.4.0"
     application
     id("org.springframework.boot") version "3.1.5"
