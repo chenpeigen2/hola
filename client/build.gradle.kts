@@ -47,6 +47,8 @@ dependencies {
 // https://mvnrepository.com/artifact/org.hyperledger.fabric/fabric-gateway
     implementation("org.hyperledger.fabric:fabric-gateway:1.4.0")
     implementation(project(":chaincode-java"))
+    // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core
+    implementation("org.apache.velocity:velocity-engine-core:2.3")
 }
 
 tasks.getByName<Test>("test") {
