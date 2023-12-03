@@ -75,6 +75,15 @@ suspend fun addFakeStuData(numberOfStudents: Int, classId: String, socialId: Str
     }
 }
 
+suspend fun addFakeInfo(numberOfCounts: Int) {
+    val props = ServerHelper.hosts
+    for (idx in props.indices) {
+        val host: Host = props[idx]
+        val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+
+    }
+}
+
 
 suspend fun fakeComplexStudentQuery() {
     var query = Action.querySocial.trimIndent()
