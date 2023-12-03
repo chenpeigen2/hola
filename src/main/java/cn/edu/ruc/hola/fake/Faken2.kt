@@ -75,12 +75,24 @@ suspend fun addFakeStuData(numberOfStudents: Int, classId: String, socialId: Str
     }
 }
 
+
+suspend fun generateInsuranceInfo(date: Date): List<Insurance> {
+    val a = Insurance("a", "a", 12, 0.5f, date)
+    val b = Insurance("b", "b", 13, 0.6f, date)
+    val c = Insurance("c", "c", 14, 0.7f, date)
+    val d = Insurance("d", "d", 15, 0.4f, date)
+    val e = Insurance("e", "e", 16, 0.8f, date)
+    return listOf(a, b, c, d, e)
+}
+
+
 suspend fun addFakeInfo(numberOfCounts: Int) {
     val props = ServerHelper.hosts
+    val date = Date()
     for (idx in props.indices) {
         val host: Host = props[idx]
         val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
-
+        val insurances = generateInsuranceInfo(date)
     }
 }
 
