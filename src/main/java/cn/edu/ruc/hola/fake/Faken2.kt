@@ -2,109 +2,102 @@ package cn.edu.ruc.hola.fake
 
 import cn.edu.ruc.hola.config.Host
 import cn.edu.ruc.hola.config.ServerHelper
-import cn.edu.ruc.hola.fake.Faken.addFakeStuData
-import cn.edu.ruc.hola.fake.Faken.createNamedDb
-import cn.edu.ruc.hola.fake.Faken.createNamedFakeIndex
-import cn.edu.ruc.hola.fake.Faken.deleteNamedFakeDb
-import cn.edu.ruc.hola.fake.Faken.fakeComplexStudentQuery
 import cn.edu.ruc.hola.utils.okhttp.SuspendCouchDBUtils
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import java.util.logging.Logger
 
-object Faken2 {
 
-    private val logger = Logger.getLogger("Faken")
+private val logger = Logger.getLogger("Faken")
 
-    suspend fun createNamedDb(name: String) {
-        ServerHelper.hosts.forEach {
-            val dbUtils = SuspendCouchDBUtils.checkDbUtils(it)
-            dbUtils.createDb(name).use { res ->
-                val ans = res.body?.string() ?: "null"
-                logger.info(ans)
-            }
+suspend fun createNamedDb(name: String) {
+    ServerHelper.hosts.forEach {
+        val dbUtils = SuspendCouchDBUtils.checkDbUtils(it)
+        dbUtils.createDb(name).use { res ->
+            val ans = res.body?.string() ?: "null"
+            logger.info(ans)
         }
     }
+}
 
-    suspend fun createNamedFakeIndex(dbName: String, indexInfo: String) {
+suspend fun createNamedFakeIndex(dbName: String, indexInfo: String) {
 
-        ServerHelper.hosts.forEach {
-            it.let { host ->
-                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
-                dbUtils.createIndex(dbName, indexInfo).use { res ->
-                    val bos = res.body?.string()
-                    logger.info("$host")
-                    logger.info(bos)
-                }
-
-            }
-        }
-    }
-
-    suspend fun deleteNamedFakeDb(name: String) {
-        ServerHelper.hosts.forEach {
-            val dbUtils = SuspendCouchDBUtils.checkDbUtils(it)
-            dbUtils.deleteDb(name).use { res ->
-                logger.info("host at : $it")
-                val ans = res.body?.string() ?: "null"
-                logger.info(ans)
-            }
-        }
-    }
-
-    suspend fun addFakeStuData(numberOfStudents: Int, classId: String, socialId: String) {
-        val props = ServerHelper.hosts
-
-        for (idx in props.indices) {
-            val host: Host = props[idx]
+    ServerHelper.hosts.forEach {
+        it.let { host ->
             val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
-            repeat(numberOfStudents) { stuIdx ->
-                val gender = if (Random().nextBoolean()) 1 else 0
-                val uid = UUID.randomUUID().toString();
-                val nickName = NameRandom.getChineseName(gender)
-                val data = FakeData.fakeStuData(classId, gender, uid, nickName)
-                val dataSocial = FakeData.fakeSocialData(socialId, gender, uid, nickName)
+            dbUtils.createIndex(dbName, indexInfo).use { res ->
+                val bos = res.body?.string()
+                logger.info("$host")
+                logger.info(bos)
+            }
+
+        }
+    }
+}
+
+suspend fun deleteNamedFakeDb(name: String) {
+    ServerHelper.hosts.forEach {
+        val dbUtils = SuspendCouchDBUtils.checkDbUtils(it)
+        dbUtils.deleteDb(name).use { res ->
+            logger.info("host at : $it")
+            val ans = res.body?.string() ?: "null"
+            logger.info(ans)
+        }
+    }
+}
+
+suspend fun addFakeStuData(numberOfStudents: Int, classId: String, socialId: String) {
+    val props = ServerHelper.hosts
+
+    for (idx in props.indices) {
+        val host: Host = props[idx]
+        val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+        repeat(numberOfStudents) { stuIdx ->
+            val gender = if (Random().nextBoolean()) 1 else 0
+            val uid = UUID.randomUUID().toString();
+            val nickName = NameRandom.getChineseName(gender)
+            val data = FakeData.fakeStuData(classId, gender, uid, nickName)
+            val dataSocial = FakeData.fakeSocialData(socialId, gender, uid, nickName)
 
 
 
-                dbUtils.addDoc("class", data).use { res ->
-                    val bos = res.body?.string()
-                    logger.info("$host")
-                }
-                dbUtils.addDoc("social", dataSocial).use { res ->
-                    val bos = res.body?.string()
-                    logger.info("$host")
-                }
+            dbUtils.addDoc("class", data).use { res ->
+                val bos = res.body?.string()
+                logger.info("$host")
+            }
+            dbUtils.addDoc("social", dataSocial).use { res ->
+                val bos = res.body?.string()
+                logger.info("$host")
+            }
 
 
+        }
+    }
+}
+
+
+suspend fun fakeComplexStudentQuery() {
+    var query = Action.querySocial.trimIndent()
+    ServerHelper.hosts.forEach {
+        println("========================")
+        it.let { host ->
+            val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+            dbUtils.filterDocs("social", query).use { res ->
+                val result = res.body?.string()
+                println(result)
+//                        logger.info("$host fake$it $result")
             }
         }
     }
 
-
-    suspend fun fakeComplexStudentQuery() {
-        var query = Action.querySocial.trimIndent()
-        ServerHelper.hosts.forEach {
-            println("========================")
-            it.let { host ->
-                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
-                dbUtils.filterDocs("social", query).use { res ->
-                    val result = res.body?.string()
-                    println(result)
+    query = Action.queryStu.trimIndent()
+    ServerHelper.hosts.forEach {
+        it.let { host ->
+            val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
+            dbUtils.filterDocs("class", query).use { res ->
+                val result = res.body?.string()
+                println(result)
 //                        logger.info("$host fake$it $result")
-                }
-            }
-        }
-
-        query = Action.queryStu.trimIndent()
-        ServerHelper.hosts.forEach {
-            it.let { host ->
-                val dbUtils = SuspendCouchDBUtils.checkDbUtils(host)
-                dbUtils.filterDocs("class", query).use { res ->
-                    val result = res.body?.string()
-                    println(result)
-//                        logger.info("$host fake$it $result")
-                }
             }
         }
     }
