@@ -1,0 +1,7 @@
+{
+  "medicalCareId": "医疗产品信息编号",
+  "medicalCareSummary": "医疗产品信息",
+  "medicalCarePrice": "医疗产品价格",
+  "reimbursementRate": "报销比例",
+  "date": "时间"
+}

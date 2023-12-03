@@ -1,0 +1,10 @@
+{
+  "uid": "患者编号",
+  "name": "患者姓名",
+  "data": "发生时间",
+  "health": {
+    "heartRate": "心跳速率",
+    "bloodPressure": "血压"
+  },
+  "medicalId": "医院编号"
+}
