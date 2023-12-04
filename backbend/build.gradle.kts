@@ -32,6 +32,10 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
     implementation("cn.hutool:hutool-crypto:5.8.23")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
+    implementation("io.vertx:vertx-service-discovery:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-json-schema
+    implementation("io.vertx:vertx-json-schema:4.5.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
 }
