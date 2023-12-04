@@ -39,6 +39,10 @@ dependencies {
     implementation("io.vertx:vertx-config:4.5.0")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
     implementation("io.vertx:vertx-config-yaml:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
+    implementation("io.vertx:vertx-service-discovery:4.5.0")
+    // https://mvnrepository.com/artifact/io.vertx/vertx-json-schema
+    implementation("io.vertx:vertx-json-schema:4.5.0")
     implementation(project("application-gateway-java"))
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.59.0")
