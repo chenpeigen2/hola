@@ -5,7 +5,9 @@ import cn.ruc.edu.hola.backbend.entity.*;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import cn.ruc.edu.hola.backbend.register.Register;
 import cn.ruc.edu.hola.backbend.register.Registers;
+import cn.ruc.edu.hola.backbend.util.DataService;
 import com.google.gson.JsonSyntaxException;
+import io.vertx.config.ConfigRetriever;
 import io.vertx.core.*;
 import io.vertx.core.http.HttpServer;
 import io.vertx.ext.web.Router;
@@ -64,19 +66,35 @@ public class CouchVerticle extends AbstractVerticle {
         router.post("/_auth").handler(this::auth); // should change to post
         installPing(router); // 保活
         listen(server, router).onSuccess(event -> {
-            RegisterInfo registerInfo = null;
             ServiceInfo serviceInfo = new ServiceInfo(getHost(), getPort(), getPath(), getTag(), getTag()); // service info
+            // init the retriever
+            ConfigRetriever retriever = null;
             if (getTag().equals("bb1")) {
-                registerInfo = Register.register(serviceInfo, "./database/bb1_config.json");
+                retriever = DataService.read(getVertx(), "./database/bb1_config.json");
             } else if (getTag().equals("bb2")) {
-                registerInfo = Register.register(serviceInfo, "./database/bb2_config.json");
+                retriever = DataService.read(getVertx(), "./database/bb2_config.json");
             } else if (getTag().equals("bb3")) {
-                registerInfo = Register.register(serviceInfo, "./database/bb3_config.json");
+                retriever = DataService.read(getVertx(), "./database/bb3_config.json");
             }
-            System.out.println(registerInfo);
-            if (registerInfo != null) {
-                doRegister(registerInfo);
+            // add a listener
+            if (retriever != null) {
+                retriever.listen(event1 -> {
+                    RegisterInfo registerInfo = null;
+                    if (getTag().equals("bb1")) {
+                        registerInfo = Register.register(serviceInfo, "./database/bb1_config.json");
+                    } else if (getTag().equals("bb2")) {
+                        registerInfo = Register.register(serviceInfo, "./database/bb2_config.json");
+                    } else if (getTag().equals("bb3")) {
+                        registerInfo = Register.register(serviceInfo, "./database/bb3_config.json");
+                    }
+
+                    System.out.println(registerInfo);
+                    if (registerInfo != null) {
+//                            doRegister(registerInfo);
+                    }
+                });
             }
+
         }).onFailure(new Handler<Throwable>() {
             @Override
             public void handle(Throwable event) {
