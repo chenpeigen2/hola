@@ -67,11 +67,11 @@ public class CouchVerticle extends AbstractVerticle {
             RegisterInfo registerInfo = null;
             ServiceInfo serviceInfo = new ServiceInfo(getHost(), getPort(), getPath(), getTag(), getTag()); // service info
             if (getTag().equals("bb1")) {
-                registerInfo = Register.register(serviceInfo, "bb1_config.json");
+                registerInfo = Register.register(serviceInfo, "./database/bb1_config.json");
             } else if (getTag().equals("bb2")) {
-                registerInfo = Register.register(serviceInfo, "bb2_config.json");
+                registerInfo = Register.register(serviceInfo, "./database/bb2_config.json");
             } else if (getTag().equals("bb3")) {
-                registerInfo = Register.register(serviceInfo, "bb3_config.json");
+                registerInfo = Register.register(serviceInfo, "./database/bb3_config.json");
             }
             System.out.println(registerInfo);
             if (registerInfo != null) {

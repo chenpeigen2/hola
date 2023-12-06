@@ -7,8 +7,6 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -17,14 +15,11 @@ public final class Register {
 
     public static RegisterInfo register(ServiceInfo serviceInfo, String filePath) {
         RegisterInfo registerInfo = null;
-        URL url = Register.class.getClassLoader().getResource(filePath);
-        if (url != null) {
-            try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
-                JsonElement jsonElement = JsonParser.parseReader(reader);
-                registerInfo = new RegisterInfo(serviceInfo, jsonElement);
-            } catch (IOException | URISyntaxException ignored) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+            registerInfo = new RegisterInfo(serviceInfo, jsonElement);
+        } catch (IOException ignored) {
 
-            }
         }
         return registerInfo;
     }
