@@ -1,0 +1,12 @@
+{
+  "$info": {
+    "$name": "bb3",
+    "$url": "http://localhost:8082",
+    "$path": {
+      "/_find": [
+      ]
+    }
+  },
+  "$struct": [
+  ]
+}
