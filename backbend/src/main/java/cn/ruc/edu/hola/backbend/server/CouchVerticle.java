@@ -90,7 +90,7 @@ public class CouchVerticle extends AbstractVerticle {
 
                     System.out.println(registerInfo);
                     if (registerInfo != null) {
-//                            doRegister(registerInfo);
+                            doRegister(registerInfo);
                     }
                 });
             }

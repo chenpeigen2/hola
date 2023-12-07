@@ -8,8 +8,6 @@ import com.google.gson.JsonParser;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -19,23 +17,21 @@ public final class Indexer2 {
 
     public static Map<String, List<StructInfo2>> remappingStructFromFile() {
         Map<String, List<StructInfo2>> result = new HashMap<>();
-        remappingStructFromFile(result, "bb1_config.json");
-        remappingStructFromFile(result, "bb2_config.json");
-        remappingStructFromFile(result, "bb3_config.json");
+        remappingStructFromFile(result, "./database/bb1_config.json");
+        remappingStructFromFile(result, "./database/bb2_config.json");
+        remappingStructFromFile(result, "./database/bb3_config.json");
         return result;
     }
 
 
     private static void remappingStructFromFile(Map<String, List<StructInfo2>> result, String filePath) {
-        URL url = Indexer2.class.getClassLoader().getResource(filePath);
-        if (url == null) return;
-        try (Reader reader = Files.newBufferedReader(Paths.get(url.toURI()))) {
+        try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
             JsonElement element = JsonParser.parseReader(reader);
             JsonObject obj = element.getAsJsonObject();
             String bbName = acquireBBName(obj);
             List<StructInfo2> structs = acquireStructInfo2(obj);
             result.put(bbName, structs);
-        } catch (IOException | URISyntaxException ignored) {
+        } catch (IOException ignored) {
 
         }
     }
