@@ -19,11 +19,11 @@ public final class Entry {
         Vertx vertx = Vertx.vertx();
         ConfigRetriever retriever = readYaml(vertx);
         retriever.getConfig(event -> {
+            vertx.deployVerticle(PublishVerticle.class.getName());
             DeploymentOptions options = new DeploymentOptions().setConfig(event.result());
             vertx.deployVerticle(CouchVerticle.class.getName(), options);
             vertx.deployVerticle(CouchVerticle1.class.getName(), options);
             vertx.deployVerticle(CouchVerticle2.class.getName(), options);
-            vertx.deployVerticle(PublishVerticle.class.getName());
         });
     }
 
