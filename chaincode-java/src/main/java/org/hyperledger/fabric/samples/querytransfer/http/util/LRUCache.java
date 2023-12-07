@@ -1,4 +1,4 @@
-package org.hyperledger.fabric.samples.querytransfer.utils;
+package org.hyperledger.fabric.samples.querytransfer.http.util;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

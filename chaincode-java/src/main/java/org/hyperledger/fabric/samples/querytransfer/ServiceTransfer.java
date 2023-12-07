@@ -6,7 +6,6 @@ import org.hyperledger.fabric.contract.ClientIdentity;
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.*;
-import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
@@ -30,7 +29,7 @@ import java.util.List;
                         url = "https://gitlab.com/o1831938181o")))
 public class ServiceTransfer implements ContractInterface {
 
-    private final Gson gson = JsonUtils.INSTANCE.getJson();
+    private final Gson gson = EntitiesKt.getJson();
 
     private final Logger logger = Logger.getLogger(ServiceTransfer.class.getName());
 

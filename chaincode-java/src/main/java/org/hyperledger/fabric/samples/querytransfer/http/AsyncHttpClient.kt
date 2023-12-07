@@ -1,4 +1,4 @@
-package org.hyperledger.fabric.samples.querytransfer.performance
+package org.hyperledger.fabric.samples.querytransfer.http
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -8,14 +8,13 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
-import org.hyperledger.fabric.samples.querytransfer.HttpClient
+import org.hyperledger.fabric.samples.querytransfer.http.util.LRUCache
 import org.hyperledger.fabric.samples.querytransfer.Query
-import org.hyperledger.fabric.samples.querytransfer.SgxConfig
+import org.hyperledger.fabric.samples.querytransfer.SGXEntity
 import org.hyperledger.fabric.samples.querytransfer.config.ChaincodeConfig
-import org.hyperledger.fabric.samples.querytransfer.utils.LRUCache
 
 object AsyncHttpClient {
-    suspend fun executeComplex(config: SgxConfig, query: String): Response {
+    private suspend fun executeComplex(config: SGXEntity, query: String): Response {
         val body = query.toRequestBody("application/json".toMediaType())
         val url = HttpClient.getBaseUrl(config)
             .addPathSegment("_complex")
@@ -33,7 +32,7 @@ object AsyncHttpClient {
     private val cache =
         LRUCache<String, String>(LRUCache.DEFAULT_CACHE_SZ)
 
-    fun executeQuery(queryList: List<Query>, config: SgxConfig) = runBlocking {
+    fun executeQuery(queryList: List<Query>, config: SGXEntity) = runBlocking {
         if (ChaincodeConfig.SUPPORT_CACHE) {
             cache.clear() // remove previous cache
         }

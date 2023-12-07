@@ -1,4 +1,4 @@
-package org.hyperledger.fabric.samples.querytransfer
+package org.hyperledger.fabric.samples.querytransfer.http
 
 import okhttp3.Headers.Companion.toHeaders
 import okhttp3.HttpUrl
@@ -8,7 +8,9 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
+import org.hyperledger.fabric.samples.querytransfer.SGXEntity
 
+@Deprecated(message = "deprecated")
 object HttpClient {
 
     val headers = hashMapOf(
@@ -21,7 +23,7 @@ object HttpClient {
         .build()
 
 
-    fun executeComplex(config: SgxConfig, query: String): Response {
+    fun executeComplex(config: SGXEntity, query: String): Response {
         val body = query.toRequestBody("application/json".toMediaType())
         val url = getBaseUrl(config)
             .addPathSegment("_complex")
@@ -36,21 +38,7 @@ object HttpClient {
         return client.newCall(request).execute()
     }
 
-    fun executeHello(): Response {
-        val url = HttpUrl.Builder().scheme("http")
-            .host("172.17.0.1")
-            .port(8000)
-            .build()
-        val request = Request.Builder()
-            .url(url)
-            .get()
-            .tag("executeHello")
-            .build()
-        return client.newCall(request).execute()
-
-    }
-
-    fun getBaseUrl(config: SgxConfig): HttpUrl.Builder {
+    fun getBaseUrl(config: SGXEntity): HttpUrl.Builder {
         return HttpUrl.Builder().scheme(config.scheme).host(config.host).port(config.port);
     }
 }

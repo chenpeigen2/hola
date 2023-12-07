@@ -11,9 +11,9 @@ import org.hyperledger.fabric.Logger;
 import org.hyperledger.fabric.contract.Context;
 import org.hyperledger.fabric.contract.ContractInterface;
 import org.hyperledger.fabric.contract.annotation.*;
-import org.hyperledger.fabric.samples.querytransfer.json.JsonUtils;
-import org.hyperledger.fabric.samples.querytransfer.performance.AsyncHttpClient;
 import org.hyperledger.fabric.samples.querytransfer.config.ChaincodeConfig;
+import org.hyperledger.fabric.samples.querytransfer.http.AsyncHttpClient;
+import org.hyperledger.fabric.samples.querytransfer.http.HttpClient;
 import org.hyperledger.fabric.shim.ChaincodeException;
 import org.hyperledger.fabric.shim.ChaincodeStub;
 import org.hyperledger.fabric.shim.ledger.KeyValue;
@@ -40,7 +40,7 @@ import java.util.List;
 @Default
 public final class QueryTransfer implements ContractInterface {
 
-    private final Gson gson = JsonUtils.INSTANCE.getJson();
+    private final Gson gson = EntitiesKt.getJson();
 
     private final Logger logger = Logger.getLogger(QueryTransfer.class.getName());
 
@@ -61,13 +61,14 @@ public final class QueryTransfer implements ContractInterface {
         CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":565}", "asset6", "Michel", "111", "query", null);
     }
 
+    @Deprecated
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public Query CreateQuery(final Context ctx, final String sgxConfig, final String queryID,
                              final String owner, final String date, final String query, String resp) {
         ChaincodeStub stub = ctx.getStub();
         Query asset;
 
-        SgxConfig config = gson.fromJson(sgxConfig, SgxConfig.class);
+        SGXEntity config = gson.fromJson(sgxConfig, SGXEntity.class);
 
         if (!ChaincodeConfig.SUPPORT_NET) {
             asset = new Query(queryID, owner, date, query, resp);
@@ -96,23 +97,10 @@ public final class QueryTransfer implements ContractInterface {
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public String CreateMultiQuery(final Context ctx, final String sgxConfig, final String queries) {
         ChaincodeStub stub = ctx.getStub();
-        SgxConfig config = gson.fromJson(sgxConfig, SgxConfig.class);
+        SGXEntity config = gson.fromJson(sgxConfig, SGXEntity.class);
         Type type = new TypeToken<List<Query>>() {
         }.getType();
         List<Query> queryList = gson.fromJson(queries, type);
-
-        /* executing without async
-        for (Query query : queryList) {
-            // here we execute our own http request
-            try (Response response = HttpClient.INSTANCE.executeComplex(config, query.getQuery())) {
-                var resp = response.body().string();
-                query.setResp(resp);
-            } catch (Exception exception) {
-                logger.error(exception.toString());
-            }
-        }
-        */
-
         AsyncHttpClient.INSTANCE.executeQuery(queryList, config);
         queryList.forEach(query -> CreateQueryInner(stub, query.getQueryID(), gson.toJson(query)));
         return gson.toJson(queryList);
