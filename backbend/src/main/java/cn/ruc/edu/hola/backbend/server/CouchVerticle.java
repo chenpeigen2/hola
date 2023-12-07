@@ -100,6 +100,23 @@ public class CouchVerticle extends AbstractVerticle {
                 });
             }
 
+            router.post("/update").handler(ctx -> {
+                try {
+                    var object = ctx.body().asJsonObject();
+                    if (getTag().equals("bb1")) {
+                        DataService.writeFile(object.toString(), "./database/bb1_config.json");
+                    } else if (getTag().equals("bb2")) {
+                        DataService.writeFile(object.toString(), "./database/bb2_config.json");
+                    } else if (getTag().equals("bb3")) {
+                        DataService.writeFile(object.toString(), "./database/bb3_config.json");
+                    }
+                    out(ctx, "update info success !");
+                } catch (Exception e) {
+                    out(ctx, "不符合json字符串格式");
+                }
+            });
+
+
         }).onFailure(new Handler<Throwable>() {
             @Override
             public void handle(Throwable event) {
