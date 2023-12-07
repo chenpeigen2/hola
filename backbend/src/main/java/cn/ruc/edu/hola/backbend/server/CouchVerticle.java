@@ -2,7 +2,9 @@ package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.config.Options;
 import cn.ruc.edu.hola.backbend.entity.*;
+import cn.ruc.edu.hola.backbend.index.Indexer2;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
+import cn.ruc.edu.hola.backbend.parser.FilterParser;
 import cn.ruc.edu.hola.backbend.register.Register;
 import cn.ruc.edu.hola.backbend.register.Registers;
 import cn.ruc.edu.hola.backbend.util.DataService;
@@ -81,16 +83,19 @@ public class CouchVerticle extends AbstractVerticle {
                 retriever.listen(event1 -> {
                     RegisterInfo registerInfo = null;
                     if (getTag().equals("bb1")) {
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb1_config.json");
                         registerInfo = Register.register(serviceInfo, "./database/bb1_config.json");
                     } else if (getTag().equals("bb2")) {
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb2_config.json");
                         registerInfo = Register.register(serviceInfo, "./database/bb2_config.json");
                     } else if (getTag().equals("bb3")) {
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb3_config.json");
                         registerInfo = Register.register(serviceInfo, "./database/bb3_config.json");
                     }
 
                     System.out.println(registerInfo);
                     if (registerInfo != null) {
-                            doRegister(registerInfo);
+                        doRegister(registerInfo);
                     }
                 });
             }

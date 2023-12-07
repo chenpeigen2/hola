@@ -1,12 +1,8 @@
 package cn.ruc.edu.hola.backbend.parser;
 
-import cn.ruc.edu.hola.backbend.index.Indexer2;
 import cn.ruc.edu.hola.backbend.entity.StructInfo2;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -15,7 +11,7 @@ import java.util.function.Consumer;
 public final class FilterParser {
     private FilterParser() {}
 
-    public static Map<String, List<StructInfo2>> struct = Indexer2.remappingStructFromFile();
+    public static Map<String, List<StructInfo2>> struct = new HashMap<>();
 
     /**
      * 可能会误伤其他的struct结构（暂时先不考虑）

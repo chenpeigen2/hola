@@ -24,7 +24,7 @@ public final class Indexer2 {
     }
 
 
-    private static void remappingStructFromFile(Map<String, List<StructInfo2>> result, String filePath) {
+    public static void remappingStructFromFile(Map<String, List<StructInfo2>> result, String filePath) {
         try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
             JsonElement element = JsonParser.parseReader(reader);
             JsonObject obj = element.getAsJsonObject();
