@@ -69,7 +69,7 @@ public class PerformanceVerticle extends Verticle {
                     String evaluated = TemplateController.INSTANCE.evaluate(postData, velocityContext);
                     if (TemplateController.INSTANCE.isTemplated(evaluated)) {
                         Logger.info(evaluated);
-                        realExecute(ctx, postData);
+                        realExecute(ctx, evaluated);
                     } else {
                         out(ctx, evaluated + "\n error");
                     }
