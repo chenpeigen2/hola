@@ -9,6 +9,17 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.IOException
 
+private object IndexServiceEntity {
+    val scheme: String
+        get() = "http"
+    val host: String
+        get() = "127.0.0.1"
+    val port: Int
+        get() = 2999
+    val pathSegment: String
+        get() = "register"
+}
+
 object Registers {
     private val client: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
@@ -28,10 +39,10 @@ object Registers {
         val body = registerInfo.toJsonString().toRequestBody("application/json".toMediaType())
 
         val url = HttpUrl.Builder()
-            .scheme("http")
-            .host("127.0.0.1")
-            .port(2999)
-            .addPathSegment("register")
+            .scheme(IndexServiceEntity.scheme)
+            .host(IndexServiceEntity.host)
+            .port(IndexServiceEntity.port)
+            .addPathSegment(IndexServiceEntity.pathSegment)
             .build()
         val request = Request.Builder()
             .url(url)
