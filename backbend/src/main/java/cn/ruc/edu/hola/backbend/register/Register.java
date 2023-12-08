@@ -17,10 +17,19 @@ public final class Register {
         RegisterInfo registerInfo = null;
         try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
+            removeDataSourceInfo(jsonElement);
             registerInfo = new RegisterInfo(serviceInfo, jsonElement);
         } catch (IOException ignored) {
 
         }
         return registerInfo;
+    }
+
+
+    private static void removeDataSourceInfo(JsonElement element) {
+        if (element.isJsonObject()) {
+            var jsonObject = element.getAsJsonObject();
+            jsonObject.remove("$source");
+        }
     }
 }
