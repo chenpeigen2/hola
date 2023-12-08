@@ -21,5 +21,11 @@
         "social_id": "string"
       }
     }
-  ]
+  ],
+  "$source": {
+    "host": "127.0.0.1",
+    "port": 5984,
+    "name": "admin",
+    "password": "password"
+  }
 }
