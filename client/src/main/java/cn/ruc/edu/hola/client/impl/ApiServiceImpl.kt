@@ -115,7 +115,7 @@ internal class ApiServiceImpl : ApiService() {
         if (Timer.shouldRefresh() || !map.containsKey(baseUrl.toString())) {
             refresh() //refresh the key
         }
-        val aesKey = map[baseUrl.toString()]
+        val aesKey = aesKey
         /*println(aesKey)*/
         val authChaincodeRequests = mutableListOf<MutableList<ChaincodeRequest>>()
 

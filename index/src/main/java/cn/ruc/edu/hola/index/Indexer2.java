@@ -98,7 +98,7 @@ public final class Indexer2 {
         backbend.put(serviceName, backBendInfo);
     }
 
-    public static void getJsonKey(Set<String> ret, JsonElement element, String base) {
+    private static void getJsonKey(Set<String> ret, JsonElement element, String base) {
         JsonObject obj = element.getAsJsonObject();
         for (var entry : obj.entrySet()) {
             ret.add(base + entry.getKey());
