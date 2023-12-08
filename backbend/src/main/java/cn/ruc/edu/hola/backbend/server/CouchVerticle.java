@@ -83,13 +83,13 @@ public class CouchVerticle extends AbstractVerticle {
                 retriever.listen(event1 -> {
                     RegisterInfo registerInfo = null;
                     if (getTag().equals("bb1")) {
-                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb1_config.json");
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb1_config.json", proxyMethods);
                         registerInfo = Register.register(serviceInfo, "./database/bb1_config.json");
                     } else if (getTag().equals("bb2")) {
-                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb2_config.json");
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb2_config.json", proxyMethods);
                         registerInfo = Register.register(serviceInfo, "./database/bb2_config.json");
                     } else if (getTag().equals("bb3")) {
-                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb3_config.json");
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb3_config.json", proxyMethods);
                         registerInfo = Register.register(serviceInfo, "./database/bb3_config.json");
                     }
 

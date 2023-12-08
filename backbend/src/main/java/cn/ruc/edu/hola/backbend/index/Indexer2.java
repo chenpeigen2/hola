@@ -1,6 +1,8 @@
 package cn.ruc.edu.hola.backbend.index;
 
 import cn.ruc.edu.hola.backbend.entity.StructInfo2;
+import cn.ruc.edu.hola.backbend.server.AbstractProxy;
+import cn.ruc.edu.hola.backbend.server.Proxy;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,19 +17,18 @@ import java.util.function.Consumer;
 
 public final class Indexer2 {
 
-    public static Map<String, List<StructInfo2>> remappingStructFromFile() {
-        Map<String, List<StructInfo2>> result = new HashMap<>();
-        remappingStructFromFile(result, "./database/bb1_config.json");
-        remappingStructFromFile(result, "./database/bb2_config.json");
-        remappingStructFromFile(result, "./database/bb3_config.json");
-        return result;
-    }
-
-
-    public static void remappingStructFromFile(Map<String, List<StructInfo2>> result, String filePath) {
+    public static void remappingStructFromFile(Map<String, List<StructInfo2>> result, String filePath, Proxy proxy) {
         try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
             JsonElement element = JsonParser.parseReader(reader);
             JsonObject obj = element.getAsJsonObject();
+
+            {
+                var couchHolder = obj.get("$source").getAsJsonObject();
+                AbstractProxy.CouchEntities entities = new AbstractProxy.CouchEntities(couchHolder.get("host").getAsString(), couchHolder.get("port").getAsInt(),
+                        couchHolder.get("name").getAsString(), couchHolder.get("password").getAsString());
+                proxy.updateEntities(entities);
+            }
+
             String bbName = acquireBBName(obj);
             List<StructInfo2> structs = acquireStructInfo2(obj);
             result.put(bbName, structs);

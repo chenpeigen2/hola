@@ -35,4 +35,6 @@ public interface Proxy {
 
     /** auth for get the aes key **/
     String acquireAESKey(Auth auth);
+
+    void updateEntities(AbstractProxy.CouchEntities entities);
 }
