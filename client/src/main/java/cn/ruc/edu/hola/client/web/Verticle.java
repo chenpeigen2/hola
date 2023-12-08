@@ -4,6 +4,7 @@ import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.config.Options;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.parser.QueryParser;
+import cn.ruc.edu.hola.client.performance.SGXEntity;
 import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.http.HttpServer;
@@ -28,7 +29,7 @@ public class Verticle extends AbstractVerticle {
 
         // define yr own query process
         router.post("/_find").handler(ctx -> {
-            impl.update("http", "127.0.0.1", 8888); // select associate
+            impl.update(SGXEntity.scheme, SGXEntity.host, SGXEntity.port); // select associate
             var postData = ctx.body().asString();
             var jsonData = QueryParser.basicParser(postData); // expected jsonData
             List<ChaincodeRequest> chaincodeRequests = new ArrayList<>();

@@ -4,8 +4,6 @@ package cn.ruc.edu.hola.client.performance;
 import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.entity.RealResponse;
-import cn.ruc.edu.hola.client.log.Logger;
-import cn.ruc.edu.hola.client.utils.RandomStringGenerator;
 import io.vertx.core.Handler;
 
 import java.util.ArrayDeque;
@@ -51,7 +49,7 @@ public final class PerformanceHandler implements Handler<Long> {
                 return;
             }
             // random spec uuid
-            api.update("http", "127.0.0.1", 8888); // select associate
+            api.update(SGXEntity.scheme, SGXEntity.host, SGXEntity.port); // select associate
             List<RealResponse> responseList = api.multiComplex(requests);
             int sz = callbacks.size();
             for (int i = 0; i < sz; i++) {
