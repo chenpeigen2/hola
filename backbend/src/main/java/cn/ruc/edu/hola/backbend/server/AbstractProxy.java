@@ -17,11 +17,13 @@ public abstract class AbstractProxy implements Proxy {
         if (entities == null) {
             entities = new CouchEntities(b.host, b.port, b.name, b.password);
             couchDBUtils = new CouchDBUtils(entities.host, entities.port, entities.name, entities.password);
+            System.err.println("update source");
             return;
         }
         if (entities.equals(b)) return;
         entities = new CouchEntities(b.host, b.port, b.name, b.password);
         couchDBUtils = new CouchDBUtils(entities.host, entities.port, entities.name, entities.password);
+        System.err.println("update source");
     }
 
 
