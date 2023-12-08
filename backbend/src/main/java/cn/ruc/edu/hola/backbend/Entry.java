@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.backbend;
 
 
-import cn.ruc.edu.hola.backbend.publish.PublishVerticle;
 import cn.ruc.edu.hola.backbend.server.CouchVerticle;
 import cn.ruc.edu.hola.backbend.server.CouchVerticle1;
 import cn.ruc.edu.hola.backbend.server.CouchVerticle2;
@@ -19,7 +18,6 @@ public final class Entry {
         Vertx vertx = Vertx.vertx();
         ConfigRetriever retriever = readYaml(vertx);
         retriever.getConfig(event -> {
-            vertx.deployVerticle(PublishVerticle.class.getName());
             DeploymentOptions options = new DeploymentOptions().setConfig(event.result());
             vertx.deployVerticle(CouchVerticle.class.getName(), options);
             vertx.deployVerticle(CouchVerticle1.class.getName(), options);
