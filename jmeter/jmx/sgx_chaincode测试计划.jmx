@@ -1096,7 +1096,13 @@
         &quot;social_id&quot;: &quot;string&quot;&#xd;
       }&#xd;
     }&#xd;
-  ]&#xd;
+  ],&#xd;
+  &quot;$source&quot;: {&#xd;
+    &quot;host&quot;: &quot;127.0.0.1&quot;,&#xd;
+    &quot;port&quot;: 5984,&#xd;
+    &quot;name&quot;: &quot;admin&quot;,&#xd;
+    &quot;password&quot;: &quot;password&quot;&#xd;
+  }&#xd;
 }&#xd;
 &#xd;
 </stringProp>
