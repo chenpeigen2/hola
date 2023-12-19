@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.backbend.parser;
 
-import cn.ruc.edu.hola.backbend.entity.StructInfo2;
+import cn.ruc.edu.hola.backbend.entity.inner.$info;
+import cn.ruc.edu.hola.backbend.entity.inner.StructInfo2;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -11,7 +12,7 @@ import java.util.function.Consumer;
 public final class FilterParser {
     private FilterParser() {}
 
-    public static Map<String, List<StructInfo2>> struct = new HashMap<>();
+    public static Map<$info, List<StructInfo2>> struct = new HashMap<>();
 
     /**
      * 可能会误伤其他的struct结构（暂时先不考虑）
@@ -20,7 +21,7 @@ public final class FilterParser {
      **/
     public static Set<String> getFilterDbs(String filter, String backbendName) {
         var keys = QueryDump.dumpKeys(filter); // 获取得到这个请求的全部关键字
-        var structs = struct.get(backbendName); // 得到对应的bb的对应的所有的数据结构
+        var structs = struct.get(new $info(backbendName, null, null)); // 得到对应的bb的对应的所有的数据结构
         if (structs == null) return null;
 
         Set<String> ret = new HashSet<>();

@@ -2,6 +2,7 @@ package cn.ruc.edu.hola.backbend.server;
 
 import cn.ruc.edu.hola.backbend.config.Options;
 import cn.ruc.edu.hola.backbend.entity.*;
+import cn.ruc.edu.hola.backbend.entity.inner.$info;
 import cn.ruc.edu.hola.backbend.index.Indexer2;
 import cn.ruc.edu.hola.backbend.json.JsonUtils;
 import cn.ruc.edu.hola.backbend.parser.FilterParser;
@@ -64,6 +65,14 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/add_doc").handler(this::addDoc);
         router.get("/delete_doc").handler(this::deleteDoc);
         router.post("/_find").handler(this::filterDocs);
+        router.get("/:productType").handler(ctx -> {
+            String productType = ctx.pathParam("productType");
+            if (productType != null && FilterParser.struct.containsKey(new $info(productType, null, null))) {
+                filterDocs(ctx);
+            } else {
+                out(ctx, "接口不存在");
+            }
+        });
         router.get("/_index").handler(this::createIndex);
         router.post("/_auth").handler(this::auth); // should change to post
         installPing(router); // 保活
