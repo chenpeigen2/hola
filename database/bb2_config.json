@@ -3,7 +3,7 @@
     "$name": "bb2",
     "$url": "http://localhost:8081",
     "$path": {
-      "/_find": [
+      "/_find/b7": [
         "uid",
         "nickName",
         "gender",

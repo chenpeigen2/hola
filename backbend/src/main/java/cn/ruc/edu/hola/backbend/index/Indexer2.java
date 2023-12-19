@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.backbend.index;
 
+
 import cn.ruc.edu.hola.backbend.entity.StructInfo2;
 import cn.ruc.edu.hola.backbend.server.AbstractProxy;
 import cn.ruc.edu.hola.backbend.server.Proxy;
@@ -17,6 +18,8 @@ import java.util.function.Consumer;
 
 public final class Indexer2 {
 
+    public static Map<String, Set<String>> pathUrl = new HashMap<>();
+
     public static void remappingStructFromFile(Map<String, List<StructInfo2>> result, String filePath, Proxy proxy) {
         try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
             JsonElement element = JsonParser.parseReader(reader);
@@ -28,10 +31,10 @@ public final class Indexer2 {
                         couchHolder.get("name").getAsString(), couchHolder.get("password").getAsString());
                 proxy.updateEntities(entities);
             }
-
             String bbName = acquireBBName(obj);
             List<StructInfo2> structs = acquireStructInfo2(obj);
             result.put(bbName, structs);
+            pathUrl.put(bbName, acquirePathInfo(acquireBBPath(obj)));
         } catch (IOException ignored) {
 
         }
@@ -40,6 +43,25 @@ public final class Indexer2 {
     private static String acquireBBName(JsonObject obj) {
         JsonObject $info = obj.getAsJsonObject("$info");
         return $info.get("$name").getAsString();
+    }
+
+    private static String acquireBBUrl(JsonObject obj) {
+        JsonObject $info = obj.getAsJsonObject("$info");
+        return $info.get("$url").getAsString();
+    }
+
+    private static JsonObject acquireBBPath(JsonObject obj) {
+        JsonObject $info = obj.getAsJsonObject("$info");
+        return $info.get("$path").getAsJsonObject();
+    }
+
+    private static Set<String> acquirePathInfo(JsonObject obj) {
+        Set<String> pathSet = new HashSet<>();
+        obj.entrySet().forEach(elementEntry -> {
+            var path = elementEntry.getKey();
+            pathSet.add(path);
+        });
+        return pathSet;
     }
 
     private static List<StructInfo2> acquireStructInfo2(JsonObject obj) {

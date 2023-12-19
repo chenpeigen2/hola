@@ -63,7 +63,22 @@ public class CouchVerticle extends AbstractVerticle {
         router.get("/delete_db").handler(this::deleteDb);
         router.get("/add_doc").handler(this::addDoc);
         router.get("/delete_doc").handler(this::deleteDoc);
-        router.post("/_find").handler(this::filterDocs);
+//        router.post("/_find").handler(this::filterDocs);
+        router.post("/_find/:productType").handler(new Handler<RoutingContext>() {
+            @Override
+            public void handle(RoutingContext ctx) {
+                String productType = ctx.pathParam("productType");
+                if (productType == null) {
+                    filterDocs(ctx);
+                    return;
+                }
+                if (Indexer2.pathUrl.get(getTag()).contains("/_find/" + productType)) {
+                    filterDocs(ctx);
+                } else {
+                    out(ctx, "接口并不存在");
+                }
+            }
+        });
         router.get("/_index").handler(this::createIndex);
         router.post("/_auth").handler(this::auth); // should change to post
         installPing(router); // 保活
