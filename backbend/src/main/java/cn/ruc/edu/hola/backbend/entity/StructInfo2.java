@@ -1,4 +1,4 @@
-package cn.ruc.edu.hola.backbend.entity.inner;
+package cn.ruc.edu.hola.backbend.entity;
 
 import java.util.Set;
 
