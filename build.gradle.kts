@@ -37,7 +37,7 @@ dependencies {
     implementation("net.bytebuddy:byte-buddy:1.14.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("io.vertx:vertx-web:4.5.0")
+    implementation("io.vertx:vertx-web:4.5.1")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")

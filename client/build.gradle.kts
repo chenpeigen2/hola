@@ -29,20 +29,20 @@ dependencies {
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
     implementation("cn.hutool:hutool-crypto:5.8.23")
-    implementation("io.vertx:vertx-web:4.5.0")
-    implementation("io.vertx:vertx-web-validation:4.5.0")
+    implementation("io.vertx:vertx-web:4.5.1")
+    implementation("io.vertx:vertx-web-validation:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.5.0")
+    implementation("io.vertx:vertx-auth-properties:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
-    implementation("io.vertx:vertx-auth-jwt:4.5.0")
+    implementation("io.vertx:vertx-auth-jwt:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config
-    implementation("io.vertx:vertx-config:4.5.0")
+    implementation("io.vertx:vertx-config:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
-    implementation("io.vertx:vertx-config-yaml:4.5.0")
+    implementation("io.vertx:vertx-config-yaml:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
-    implementation("io.vertx:vertx-service-discovery:4.5.0")
+    implementation("io.vertx:vertx-service-discovery:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-json-schema
-    implementation("io.vertx:vertx-json-schema:4.5.0")
+    implementation("io.vertx:vertx-json-schema:4.5.1")
     implementation(project("application-gateway-java"))
 // https://mvnrepository.com/artifact/io.grpc/grpc-api
     compileOnly("io.grpc:grpc-api:1.59.0")
