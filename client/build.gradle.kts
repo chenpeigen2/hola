@@ -28,7 +28,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.23")
+    implementation("cn.hutool:hutool-crypto:5.8.24")
     implementation("io.vertx:vertx-web:4.5.1")
     implementation("io.vertx:vertx-web-validation:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties

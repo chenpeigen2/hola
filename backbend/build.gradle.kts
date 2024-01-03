@@ -31,7 +31,7 @@ dependencies {
     implementation("com.google.guava:guava:32.1.3-jre")
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
     // https://mvnrepository.com/artifact/cn.hutool/hutool-crypto
-    implementation("cn.hutool:hutool-crypto:5.8.23")
+    implementation("cn.hutool:hutool-crypto:5.8.24")
     // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
     implementation("io.vertx:vertx-service-discovery:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-json-schema
