@@ -1,20 +1,24 @@
 package cn.ruc.edu.hola.fakeTee.bridge;
 
 
-interface IMainTeeBridge {
+interface IMainTeeECallBridge {
     String complexFilter(String data);
 
-    String AuthTee(String data);
+    String AuthMainTee(String data);
 }
 
-public class MainTeeBridge implements IMainTeeBridge {
+interface IMainTeeOCallBridge {
+
+}
+
+public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
     @Override
     public String complexFilter(String data) {
         return null;
     }
 
     @Override
-    public String AuthTee(String data) {
+    public String AuthMainTee(String data) {
         return null;
     }
 }
