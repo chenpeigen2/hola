@@ -1,4 +1,4 @@
-package cn.edu.ruc;
+package cn.ruc.edu.hola.fakeTee;
 
 public class Main {
     public static void main(String[] args) {
