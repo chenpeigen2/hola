@@ -28,6 +28,6 @@ public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
 
     @Override
     public void printString(String... text) {
-        mainTeeOCall.print(text);
+        mainTeeOCall.oCallPrint(text);
     }
 }

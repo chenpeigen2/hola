@@ -2,7 +2,7 @@ package cn.ruc.edu.hola.fakeTee.ocall;
 
 
 public interface IMainTeeOCall {
-    void print(String... text);
+    void oCallPrint(String... text);
 
     static IMainTeeOCall getInstance() {
         return new MainTeeOCall();
@@ -11,7 +11,7 @@ public interface IMainTeeOCall {
 
 class MainTeeOCall implements IMainTeeOCall {
     @Override
-    public void print(String... text) {
+    public void oCallPrint(String... text) {
 
     }
 }
