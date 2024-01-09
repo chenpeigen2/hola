@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.fakeTee;
 
+import cn.ruc.edu.hola.fakeTee.bridge.MainTeeBridge;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
@@ -8,6 +9,9 @@ import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
 public class Router extends AbstractVerticle {
+
+    MainTeeBridge mainTeeBridge = new MainTeeBridge();
+
     @Override
     public void start() throws Exception {
         HttpServer server = vertx.createHttpServer();
@@ -15,17 +19,25 @@ public class Router extends AbstractVerticle {
         router.route().handler(BodyHandler.create());
         router.route().handler(StaticHandler.create());
 
-        router.post("/_complex").handler(new Handler<RoutingContext>() {
+        // tee init process
+        mainTeeBridge.init(); // we should init first
+
+
+        router.get("/_complex").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
-                out(ctx, "_complex");
+                var postData = ctx.body().asString();
+                var resp = mainTeeBridge.complexFilter(postData);
+                out(ctx, resp);
             }
         });
 
-        router.post("/_auth").handler(new Handler<RoutingContext>() {
+        router.get("/_auth").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
-                out(ctx, "_auth");
+                var postData = ctx.body().asString();
+                var resp = mainTeeBridge.authMainTee(postData);
+                out(ctx, resp);
             }
         });
 
