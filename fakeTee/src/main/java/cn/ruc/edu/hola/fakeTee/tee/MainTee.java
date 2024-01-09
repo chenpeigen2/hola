@@ -20,23 +20,23 @@ interface IMainTee {
 }
 
 public final class MainTee implements IMainTee {
-    boolean refreshIfNeeded() {
+    private boolean refreshIfNeeded() {
         return true;
     }
 
-    String randomString(int len) {
+    private String randomString(int len) {
         return "";
     }
 
-    String generateAESKey() {
+    private String generateAESKey() {
         return randomString(24);
     }
 
-    Pair authIfNeeded(DataTruncation proto, String domain, int port) {
+    private Pair authIfNeeded(DataTruncation proto, String domain, int port) {
         return null;
     }
 
-    String curlPost(String url, Request request) {
+    private String curlPost(String url, Request request) {
         return null;
     }
 

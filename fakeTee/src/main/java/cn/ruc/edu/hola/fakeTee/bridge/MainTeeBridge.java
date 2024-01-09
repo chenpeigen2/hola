@@ -20,9 +20,9 @@ interface IMainTeeOCallBridge {
 // delegate class , do not modify with other logic
 public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
 
-    private final MainTee mainTee = new MainTee(); // delegate tee
+    private final MainTee mainTee = new MainTee(); // delegate eCall
 
-    private MainTeeOCall mainTeeOCall;
+    private MainTeeOCall mainTeeOCall; // delegate oCall
 
     @Override
     public void init(MainTeeOCall mainTeeOCall) {
