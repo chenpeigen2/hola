@@ -4,16 +4,6 @@ package cn.ruc.edu.hola.fakeTee.bridge;
 import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
 import cn.ruc.edu.hola.fakeTee.tee.MainTee;
 
-interface IMainTeeECallBridge {
-    String complexFilter(String data);
-
-    String authMainTee(String data);
-}
-
-interface IMainTeeOCallBridge {
-    void printString(String... text);
-}
-
 // delegate class , do not modify with other logic
 public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
 
