@@ -1,5 +1,6 @@
 package cn.ruc.edu.hola.fakeTee.tee;
 
+import cn.ruc.edu.hola.fakeTee.bridge.MainTeeBridge;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Pair;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
 
@@ -9,9 +10,12 @@ interface IMainTee {
     // define your eCall
     String eCallComplexCurl(String data);
 
-    int eCallAuth(String data);
+    String eCallAuth(String data);
 
     // define your oCall
+    void inject(MainTeeBridge mainTeeBridge);
+
+    void oCallPrint(String... text);
 }
 
 public final class MainTee implements IMainTee {
@@ -42,7 +46,20 @@ public final class MainTee implements IMainTee {
     }
 
     @Override
-    public int eCallAuth(String data) {
-        return 0;
+    public String eCallAuth(String data) {
+        return "";
+    }
+
+    // should be internal
+    private MainTeeBridge mainTeeBridge;
+
+    @Override
+    public void inject(MainTeeBridge mainTeeBridge) {
+        this.mainTeeBridge = mainTeeBridge;
+    }
+
+    @Override
+    public void oCallPrint(String... text) {
+        mainTeeBridge.printString();
     }
 }

@@ -1,6 +1,7 @@
 package cn.ruc.edu.hola.fakeTee;
 
 import cn.ruc.edu.hola.fakeTee.bridge.MainTeeBridge;
+import cn.ruc.edu.hola.fakeTee.ocall.MainTeeOCall;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
@@ -11,6 +12,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 public class Router extends AbstractVerticle {
 
     MainTeeBridge mainTeeBridge = new MainTeeBridge();
+    MainTeeOCall mainTeeOCall = new MainTeeOCall();
 
     @Override
     public void start() throws Exception {
@@ -20,7 +22,7 @@ public class Router extends AbstractVerticle {
         router.route().handler(StaticHandler.create());
 
         // tee init process
-        mainTeeBridge.init(); // we should init first
+        mainTeeBridge.init(mainTeeOCall); // we should init first
 
 
         router.get("/_complex").handler(new Handler<RoutingContext>() {
