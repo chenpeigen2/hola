@@ -1,7 +1,6 @@
 package cn.ruc.edu.hola.fakeTee.tee;
 
 import cn.ruc.edu.hola.fakeTee.bridge.IMainTeeOCallBridge;
-import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Pair;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
 
@@ -21,7 +20,7 @@ public interface IMainTeeECall {
     }
 }
 
-final class MainTee implements IMainTeeECall, IMainTeeOCall {
+final class MainTee implements IMainTeeECall {
     private boolean refreshIfNeeded() {
         return true;
     }
@@ -50,20 +49,15 @@ final class MainTee implements IMainTeeECall, IMainTeeOCall {
 
     @Override
     public String eCallAuth(String data) {
-        print("hello");
+        mainTeeOCallBridge.printString("hello");
         return "yyy";
     }
 
     // should be internal
-    private IMainTeeOCallBridge mainTeeBridge;
+    private IMainTeeOCallBridge mainTeeOCallBridge;
 
     @Override
-    public void inject(IMainTeeOCallBridge mainTeeBridge) {
-        this.mainTeeBridge = mainTeeBridge;
-    }
-
-    @Override
-    public void print(String... text) {
-        mainTeeBridge.printString();
+    public void inject(IMainTeeOCallBridge mainTeeOCallBridge) {
+        this.mainTeeOCallBridge = mainTeeOCallBridge;
     }
 }
