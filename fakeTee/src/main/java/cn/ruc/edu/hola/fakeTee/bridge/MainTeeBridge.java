@@ -17,6 +17,7 @@ interface IMainTeeOCallBridge {
     void printString(String... text);
 }
 
+// delegate class , do not modify with other logic
 public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
 
     private final MainTee mainTee = new MainTee(); // delegate tee

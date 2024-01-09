@@ -6,6 +6,7 @@ import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
 
 import java.sql.DataTruncation;
 
+// define the method which include eCall and oCall
 interface IMainTee {
     // define your eCall
     String eCallComplexCurl(String data);
@@ -47,6 +48,7 @@ public final class MainTee implements IMainTee {
 
     @Override
     public String eCallAuth(String data) {
+        oCallPrint("hello");
         return "";
     }
 
