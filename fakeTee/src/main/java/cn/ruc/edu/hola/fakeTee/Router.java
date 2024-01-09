@@ -1,7 +1,7 @@
 package cn.ruc.edu.hola.fakeTee;
 
 import cn.ruc.edu.hola.fakeTee.bridge.MainTeeBridge;
-import cn.ruc.edu.hola.fakeTee.ocall.MainTeeOCall;
+import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;
@@ -12,7 +12,7 @@ import io.vertx.ext.web.handler.StaticHandler;
 public class Router extends AbstractVerticle {
 
     MainTeeBridge mainTeeBridge = new MainTeeBridge();
-    MainTeeOCall mainTeeOCall = new MainTeeOCall();
+    IMainTeeOCall mainTeeOCall = IMainTeeOCall.getInstance();
 
     @Override
     public void start() throws Exception {

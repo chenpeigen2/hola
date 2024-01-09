@@ -1,12 +1,13 @@
 package cn.ruc.edu.hola.fakeTee.bridge;
 
 
-import cn.ruc.edu.hola.fakeTee.ocall.MainTeeOCall;
+
+import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
 import cn.ruc.edu.hola.fakeTee.tee.MainTee;
 
 interface IMainTeeECallBridge {
 
-    void init(MainTeeOCall mainTeeOCall);
+    void init(IMainTeeOCall mainTeeOCall);
 
     String complexFilter(String data);
 
@@ -22,10 +23,10 @@ public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
 
     private final MainTee mainTee = new MainTee(); // delegate eCall
 
-    private MainTeeOCall mainTeeOCall; // delegate oCall
+    private IMainTeeOCall mainTeeOCall; // delegate oCall
 
     @Override
-    public void init(MainTeeOCall mainTeeOCall) {
+    public void init(IMainTeeOCall mainTeeOCall) {
         // inject oCall
         this.mainTeeOCall = mainTeeOCall;
         // pass the bridge to the tee for oCall

@@ -1,13 +1,14 @@
 package cn.ruc.edu.hola.fakeTee.tee;
 
 import cn.ruc.edu.hola.fakeTee.bridge.MainTeeBridge;
+import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Pair;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
 
 import java.sql.DataTruncation;
 
 // define the method which include eCall and oCall
-interface IMainTee {
+interface IMainTee extends IMainTeeOCall {
     // define your eCall
     String eCallComplexCurl(String data);
 
@@ -15,8 +16,6 @@ interface IMainTee {
 
     // define your oCall
     void inject(MainTeeBridge mainTeeBridge);
-
-    void oCallPrint(String... text);
 }
 
 public final class MainTee implements IMainTee {
@@ -48,7 +47,7 @@ public final class MainTee implements IMainTee {
 
     @Override
     public String eCallAuth(String data) {
-        oCallPrint("hello");
+        print("hello");
         return "";
     }
 
@@ -61,7 +60,7 @@ public final class MainTee implements IMainTee {
     }
 
     @Override
-    public void oCallPrint(String... text) {
+    public void print(String... text) {
         mainTeeBridge.printString();
     }
 }
