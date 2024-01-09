@@ -13,7 +13,6 @@ import io.vertx.ext.web.handler.StaticHandler;
 public class Router extends AbstractVerticle {
 
     IMainTeeECallBridge mainTeeBridge = new MainTeeBridge();
-    IMainTeeOCall mainTeeOCall = IMainTeeOCall.getInstance();
 
     @Override
     public void start() throws Exception {
@@ -23,7 +22,7 @@ public class Router extends AbstractVerticle {
         router.route().handler(StaticHandler.create());
 
         // tee init process
-        ((MainTeeBridge) mainTeeBridge).init(mainTeeOCall); // we should init first
+        ((MainTeeBridge) mainTeeBridge).init(); // we should init first
 
 
         router.get("/_complex").handler(new Handler<RoutingContext>() {

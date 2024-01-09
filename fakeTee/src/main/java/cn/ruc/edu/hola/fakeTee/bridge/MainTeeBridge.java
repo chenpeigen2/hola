@@ -2,30 +2,28 @@ package cn.ruc.edu.hola.fakeTee.bridge;
 
 
 import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
-import cn.ruc.edu.hola.fakeTee.tee.MainTee;
+import cn.ruc.edu.hola.fakeTee.tee.IMainTeeECall;
 
 // delegate class , do not modify with other logic
 public class MainTeeBridge implements IMainTeeECallBridge, IMainTeeOCallBridge {
 
-    private final MainTee mainTee = new MainTee(); // delegate eCall
+    private final IMainTeeECall mainTeeECall = IMainTeeECall.getInstance(); // delegate eCall
 
-    private IMainTeeOCall mainTeeOCall; // delegate oCall
+    private final IMainTeeOCall mainTeeOCall = IMainTeeOCall.getInstance(); // delegate oCall
 
-    public void init(IMainTeeOCall mainTeeOCall) {
-        // inject oCall
-        this.mainTeeOCall = mainTeeOCall;
+    public void init() {
         // pass the bridge to the tee for oCall
-        mainTee.inject(this);
+        mainTeeECall.inject(this);
     }
 
     @Override
     public String complexFilter(String data) {
-        return mainTee.eCallComplexCurl(data);
+        return mainTeeECall.eCallComplexCurl(data);
     }
 
     @Override
     public String authMainTee(String data) {
-        return mainTee.eCallAuth(data);
+        return mainTeeECall.eCallAuth(data);
     }
 
     @Override

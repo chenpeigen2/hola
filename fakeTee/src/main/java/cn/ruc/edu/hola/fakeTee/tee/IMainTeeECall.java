@@ -7,8 +7,7 @@ import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
 
 import java.sql.DataTruncation;
 
-// define the method which include eCall and oCall
-interface IMainTee extends IMainTeeOCall {
+public interface IMainTeeECall {
     // define your eCall
     String eCallComplexCurl(String data);
 
@@ -16,9 +15,13 @@ interface IMainTee extends IMainTeeOCall {
 
     // define your oCall
     void inject(IMainTeeOCallBridge mainTeeBridge);
+
+    static IMainTeeECall getInstance() {
+        return new MainTee();
+    }
 }
 
-public final class MainTee implements IMainTee {
+final class MainTee implements IMainTeeECall, IMainTeeOCall {
     private boolean refreshIfNeeded() {
         return true;
     }
