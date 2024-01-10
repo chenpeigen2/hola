@@ -49,8 +49,9 @@ final class MainTee implements IMainTeeECall {
 
     @Override
     public String eCallAuth(String data) {
-        mainTeeOCallBridge.printString("hello");
-        return "yyy";
+        boolean authed = Utils.clientAuth(data);
+        if (authed) return "true";
+        return "false";
     }
 
     // should be internal

@@ -105,4 +105,10 @@ public class EncryptUtils {
             return null;
         }
     }
+
+
+    public static void main(String[] args) {
+        var data = rsaEncrypt("abccded", RSA_PUBLIC_KEY);
+        System.out.println(rsaDecrypt(data, RSA_PRIVATE_KEY));
+    }
 }
