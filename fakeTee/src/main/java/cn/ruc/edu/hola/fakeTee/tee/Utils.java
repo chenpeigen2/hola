@@ -31,7 +31,7 @@ public class Utils {
         return clientAuthMap.getOrDefault(uid, null);
     }
 
-    public static List<Request> provideQuery() {
+    public static List<Request> provideQuery(String data) {
         return null;
     }
 }

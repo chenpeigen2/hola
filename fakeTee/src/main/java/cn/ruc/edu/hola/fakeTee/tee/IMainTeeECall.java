@@ -5,6 +5,9 @@ import cn.ruc.edu.hola.fakeTee.tee.entity.Pair;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
 
 import java.sql.DataTruncation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 public interface IMainTeeECall {
     // define your eCall
@@ -44,7 +47,27 @@ final class MainTee implements IMainTeeECall {
 
     @Override
     public String eCallComplexCurl(String data) {
-        return "xxx";
+        List<Request> provideDecodeData = Utils.provideQuery(data);
+        List<String> resp = new ArrayList<>();
+
+        provideDecodeData.forEach(new Consumer<Request>() {
+            @Override
+            public void accept(Request request) {
+                String returnData = curlPost(request.url, request);
+                resp.add(returnData);
+            }
+        });
+
+        String response = Aggregation.SimpleAggregation(resp);
+
+
+        // encrypt
+        String uid = "e51dce84-f2a4-43db-9b8f-311250ff0ba1";
+        String aesKey = Utils.clientGetAesKey(uid);
+        response = AES.encryptAES(response, aesKey);
+
+        // return the data
+        return response;
     }
 
     @Override
