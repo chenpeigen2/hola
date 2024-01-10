@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    kotlin("jvm") version "1.9.21"
 }
 
 group = "cn.edu.ruc"

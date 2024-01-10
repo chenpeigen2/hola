@@ -3,10 +3,14 @@ package cn.ruc.edu.hola.fakeTee.tee;
 import cn.ruc.edu.hola.fakeTee.bridge.IMainTeeOCallBridge;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Pair;
 import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import okhttp3.*;
+import okhttp3.logging.HttpLoggingInterceptor;
 
+import java.io.IOException;
 import java.sql.DataTruncation;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 public interface IMainTeeECall {
@@ -24,24 +28,103 @@ public interface IMainTeeECall {
 }
 
 final class MainTee implements IMainTeeECall {
+
+    private final Set<String> authSet = new HashSet<>();
+    private final Map<String, String> authMap = new HashMap<>();
+    private final Map<String, String> authUuidMap = new HashMap<>();
+    private final Map<String, String> headers = new HashMap<>();
+
+    {
+        headers.put("Accept", "application/json");
+        headers.put("Content-Type", "application/json");
+    }
+
+    private final OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)).build();
+
+
     private boolean refreshIfNeeded() {
-        return true;
+        return Timer.INSTANCE.shouldRefresh();
     }
 
     private String randomString(int len) {
-        return "";
+        return RandomStringGenerator.generateRandomString(len);
     }
 
     private String generateAESKey() {
         return randomString(24);
     }
 
-    private Pair authIfNeeded(DataTruncation proto, String domain, int port) {
-        return null;
+    private Pair authIfNeeded(String proto, String domain, int port) {
+        String url = proto + "://" + domain + ":" + port + "/_auth";
+        boolean refresh = refreshIfNeeded();
+        if (authMap.containsKey(url) && !refresh) {
+            return new Pair(authMap.get(url), authUuidMap.get(url));
+        }
+
+        String aesKey = generateAESKey();
+        String encryptKey = RSA.rsaEncrypt(aesKey, Utils.RSA_PUBLIC_KEY);
+
+
+        String body = "{\"key\":\"" +
+                encryptKey +
+                "\"}";
+
+        RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
+
+        var request = new okhttp3.Request.Builder()
+                .url(url)
+                .method("POST", requestBody)
+                .headers(Headers.of(headers))
+                .tag("authIfNeeded#TEE")
+                .build();
+
+        Pair pair = null;
+        try (var response = client.newCall(request).execute()) {
+            var postData = response.body().string();
+            // restore to the map
+            String uuid = JsonParser.parseString(postData).getAsJsonArray().get(0).getAsString();
+            authUuidMap.put(url, uuid);
+            authMap.put(url, aesKey);
+            pair = new Pair(aesKey, uuid);
+
+        } catch (Exception e) {
+
+        }
+
+        return pair;
     }
 
     private String curlPost(String url, Request request) {
-        return null;
+        HttpUrl httpUrl = HttpUrl.get(url);
+
+        Pair authResult = authIfNeeded(httpUrl.isHttps() ? "https" : "http",
+                httpUrl.host(), httpUrl.port());
+
+        String aesKey = authResult.a;
+        String uuid = authResult.b;
+
+        String filter = request.filter;
+        filter = AES.encryptAES(filter, aesKey);
+
+        String body = "{\"uuid\":\"" + uuid + "\",\"filter\":\"" + filter + "\"}";
+        RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
+        var requestBB = new okhttp3.Request.Builder()
+                .url(url)
+                .method("POST", requestBody)
+                .headers(Headers.of(headers))
+                .tag("curlPost#TEE")
+                .build();
+        String realResponse = null;
+        try (var response = client.newCall(requestBB).execute()) {
+            var postData = response.body().string();
+            // decrypt
+            postData = AES.decryptAES(postData, aesKey);
+            realResponse = postData;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return realResponse;
     }
 
 
