@@ -1,10 +1,10 @@
 package cn.ruc.edu.hola.fakeTee.tee;
 
 import cn.ruc.edu.hola.fakeTee.tee.entity.Request;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,9 @@ public class Utils {
 
     public static List<Request> provideQuery(String data) {
         // here we need offer fake query
-        return null;
+        List<Request> requests = new ArrayList<>();
+        requests.add(new Request("http://localhost:8080/_find/b2", "{\"selector\":{\"$or\":[{\"social_id\":\"羽毛球\"}],\"gender\":0}}"));
+        requests.add(new Request("http://localhost:8081/_find/b7", "{\"selector\":{\"$or\":[{\"class_id\":\"17一班\"}],\"gender\":0}}"));
+        return requests;
     }
 }
