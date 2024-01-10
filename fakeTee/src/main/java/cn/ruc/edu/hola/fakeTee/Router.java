@@ -25,7 +25,7 @@ public class Router extends AbstractVerticle {
         ((MainTeeBridge) mainTeeBridge).init(); // we should init first
 
 
-        router.get("/_complex").handler(new Handler<RoutingContext>() {
+        router.post("/_complex").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
                 var postData = ctx.body().asString();
@@ -34,19 +34,12 @@ public class Router extends AbstractVerticle {
             }
         });
 
-        router.get("/_auth").handler(new Handler<RoutingContext>() {
+        router.post("/_auth").handler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
                 var postData = ctx.body().asString();
                 var resp = mainTeeBridge.authMainTee(postData);
                 out(ctx, resp);
-            }
-        });
-
-        router.get("/hello").handler(new Handler<RoutingContext>() {
-            @Override
-            public void handle(RoutingContext ctx) {
-                out(ctx, "world");
             }
         });
 
