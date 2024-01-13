@@ -2,7 +2,6 @@ package cn.ruc.edu.hola.fakeTee;
 
 import cn.ruc.edu.hola.fakeTee.bridge.IMainTeeECallBridge;
 import cn.ruc.edu.hola.fakeTee.bridge.MainTeeBridge;
-import cn.ruc.edu.hola.fakeTee.ocall.IMainTeeOCall;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServer;

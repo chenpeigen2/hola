@@ -8,10 +8,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class Match {
 
@@ -47,9 +44,31 @@ public final class Match {
             ret = gson.fromJson(postData, new TypeToken<>() {
             });
         } catch (Exception e) {
-
+            System.err.println(e);
         }
 
         return ret;
+    }
+
+    public static void main(String[] args) {
+        var data = "[\"social_id\",\"gender\"]";
+        var urlList = simpleMatch(data);
+
+        for (int k = 0; k < urlList.size(); ) {
+            if (urlList.get(k).equals("$url")) {
+                k++; // move to $url value
+                String bbUrl = urlList.get(k);
+                k++; // move to $find
+                if (urlList.get(k).equals("$find")) {
+                    k++; // move to $find value
+                    String bbFind = urlList.get(k);
+                    System.out.println(bbUrl);
+                    System.out.println(bbFind);
+                }
+                k++;
+            }
+        }
+
+        System.out.println(urlList);
     }
 }
