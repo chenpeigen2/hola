@@ -129,7 +129,6 @@ public class Utils {
             urlRemoveMap.forEach(new BiConsumer<String, Set<String>>() {
                 @Override
                 public void accept(String url, Set<String> set) {
-                    System.out.println(finalFilter);
                     String trimQuery = queryTrim(finalFilter, set);
                     requests.add(new Request(url, trimQuery));
                 }
