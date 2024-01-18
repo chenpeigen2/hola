@@ -43,12 +43,14 @@ public final class ChaincodeConfig {
         return props;
     }
 
+    private static final String CHAINCODE_DO_NOT_USE_CHAINCODE = "DO_NOT_USE_CHAINCODE";
+
     public static boolean DO_NOT_USE_CHAINCODE = false;
 
     static {
         Properties properties = getChaincodeConfig();
-        if (properties.containsKey(DO_NOT_USE_CHAINCODE)) {
-            DO_NOT_USE_CHAINCODE = Boolean.parseBoolean((String) props.get(DO_NOT_USE_CHAINCODE));
+        if (properties.containsKey(CHAINCODE_DO_NOT_USE_CHAINCODE)) {
+            DO_NOT_USE_CHAINCODE = Boolean.parseBoolean((String) props.get(CHAINCODE_DO_NOT_USE_CHAINCODE));
         }
     }
 
