@@ -51,7 +51,7 @@ public class PerformanceVerticle extends Verticle {
             realExecute(ctx, postData);
         });
 
-        router.post("/query/:productType").handler(new Handler<RoutingContext>() {
+        router.post("/query/:productType").blockingHandler(new Handler<RoutingContext>() {
             @Override
             public void handle(RoutingContext ctx) {
                 String productType = ctx.pathParam("productType");
