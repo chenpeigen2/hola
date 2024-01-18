@@ -121,7 +121,7 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="find请求(绕过区块链)" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="find请求(绕过区块链)" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -131,15 +131,13 @@
   &quot;selector&quot;: {&#xd;
     &quot;$or&quot;: [&#xd;
       {&#xd;
-        &quot;data.countryid&quot;: {&#xd;
-          &quot;$gt&quot;: -1&#xd;
-        }&#xd;
+        &quot;social_id&quot;: &quot;羽毛球&quot;&#xd;
       },&#xd;
       {&#xd;
-        &quot;message&quot;: &quot;success&quot;&#xd;
+        &quot;class_id&quot;: &quot;17一班&quot;&#xd;
       }&#xd;
     ],&#xd;
-    &quot;data.country&quot;: &quot;China&quot;&#xd;
+    &quot;gender&quot;: 0&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -613,7 +611,7 @@
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询一个接口" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查询一个接口" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
