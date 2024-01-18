@@ -19,7 +19,7 @@ public final class Query {
     private final String query; // 查询的请求内容
 
 
-    private final String resp;
+    private String resp;
 
     public String getQueryID() {
         return queryID;
@@ -40,6 +40,9 @@ public final class Query {
 
     public String getResp() {
         return resp;
+    }
+    public void setResp(String resp) {
+        this.resp = resp;
     }
 
     public Query(String queryID, String owner, String date, String query, String resp) {

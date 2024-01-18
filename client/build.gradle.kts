@@ -53,6 +53,10 @@ dependencies {
     implementation(project(":chaincode-java"))
     // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core
     implementation("org.apache.velocity:velocity-engine-core:2.3")
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+// https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm
+    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
 }
 
 tasks.getByName<Test>("test") {
