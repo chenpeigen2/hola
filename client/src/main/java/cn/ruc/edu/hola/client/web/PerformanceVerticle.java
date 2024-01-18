@@ -68,7 +68,7 @@ public class PerformanceVerticle extends Verticle {
                     VelocityContext velocityContext = TemplateController.INSTANCE.toVelocityContext(ctx.request().params());
                     String evaluated = TemplateController.INSTANCE.evaluate(postData, velocityContext);
                     if (TemplateController.INSTANCE.isTemplated(evaluated)) {
-                        Logger.info(evaluated);
+//                        Logger.info(evaluated);
                         realExecute(ctx, evaluated);
                     } else {
                         out(ctx, evaluated + "\n error");

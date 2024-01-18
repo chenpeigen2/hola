@@ -135,11 +135,11 @@ public class Utils {
             });
         }
 
-        System.out.println("=======================");
-        for (Request request : requests) {
-            System.out.println(request);
-        }
-        System.out.println("=======================");
+//        System.out.println("=======================");
+//        for (Request request : requests) {
+//            System.out.println(request);
+//        }
+//        System.out.println("=======================");
 //        requests.clear();
 //
 //        requests.add(new Request("http://localhost:8080/_find/b2", "{\"selector\":{\"$or\":[{\"social_id\":\"羽毛球\"}],\"gender\":0}}"));
