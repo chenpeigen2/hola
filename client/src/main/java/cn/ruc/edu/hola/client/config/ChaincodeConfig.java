@@ -12,8 +12,6 @@ public final class ChaincodeConfig {
 
     private static final Logger LOGGER = Logger.getLogger(ChaincodeConfig.class.getName());
 
-    private static final String CHAINCODE_SUPPORT_NET = "CHAINCODE_SUPPORT_NET";
-
     /**
      * Obtains configuration specifically for running the chaincode and settable on
      * a per chaincode basis rather than taking properties from the Peers'
@@ -45,16 +43,12 @@ public final class ChaincodeConfig {
         return props;
     }
 
-    public static boolean SUPPORT_NET = false;
     public static boolean DO_NOT_USE_CHAINCODE = false;
 
     static {
         Properties properties = getChaincodeConfig();
-        if (properties.containsKey(CHAINCODE_SUPPORT_NET)) {
-            SUPPORT_NET = Boolean.parseBoolean((String) props.get(CHAINCODE_SUPPORT_NET));
-        }
         if (properties.containsKey(DO_NOT_USE_CHAINCODE)) {
-            SUPPORT_NET = Boolean.parseBoolean((String) props.get(DO_NOT_USE_CHAINCODE));
+            DO_NOT_USE_CHAINCODE = Boolean.parseBoolean((String) props.get(DO_NOT_USE_CHAINCODE));
         }
     }
 

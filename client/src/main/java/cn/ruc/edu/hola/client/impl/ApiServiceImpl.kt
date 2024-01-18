@@ -88,7 +88,7 @@ internal class ApiServiceImpl : ApiService() {
         val date = System.currentTimeMillis().toString() // use current date to delegate the query time
         val query = text // query encrypt text
 
-        if (!ChaincodeConfig.SUPPORT_NET) {
+        if (ChaincodeConfig.DO_NOT_USE_CHAINCODE) {
             val body = text.toRequestBody("application/json".toMediaType())
             val url = baseUrl
                 .addPathSegment("_complex")
