@@ -46,11 +46,15 @@ public final class ChaincodeConfig {
     }
 
     public static boolean SUPPORT_NET = false;
+    public static boolean DO_NOT_USE_CHAINCODE = false;
 
     static {
         Properties properties = getChaincodeConfig();
         if (properties.containsKey(CHAINCODE_SUPPORT_NET)) {
             SUPPORT_NET = Boolean.parseBoolean((String) props.get(CHAINCODE_SUPPORT_NET));
+        }
+        if (properties.containsKey(DO_NOT_USE_CHAINCODE)) {
+            SUPPORT_NET = Boolean.parseBoolean((String) props.get(DO_NOT_USE_CHAINCODE));
         }
     }
 
