@@ -63,7 +63,6 @@ public class ServiceTransfer implements ContractInterface {
 
         if (assetJSON == null || assetJSON.isEmpty()) {
             String errorMessage = String.format("Service %s does not exist", serviceId);
-            System.out.println(errorMessage);
             throw new ChaincodeException(errorMessage, ServiceTransferErrors.SERVICE_NOT_FOUND.toString());
         }
 
@@ -92,7 +91,6 @@ public class ServiceTransfer implements ContractInterface {
 
         if (!ServiceExists(ctx, serviceId)) {
             String errorMessage = String.format("Service %s does not exist", serviceId);
-            System.out.println(errorMessage);
             throw new ChaincodeException(errorMessage, ServiceTransferErrors.SERVICE_NOT_FOUND.toString());
         }
 
@@ -104,7 +102,7 @@ public class ServiceTransfer implements ContractInterface {
         ChaincodeStub stub = ctx.getStub();
         ClientIdentity identity = ctx.getClientIdentity();
 
-        List<Service> queryResults = new ArrayList<Service>();
+        List<Service> queryResults = new ArrayList<>();
 
         // To retrieve all assets from the ledger use getStateByRange with empty startKey & endKey.
         // Giving empty startKey & endKey is interpreted as all the keys from beginning to end.
@@ -114,32 +112,11 @@ public class ServiceTransfer implements ContractInterface {
 
         for (KeyValue result : results) {
             Service query = gson.fromJson(result.getStringValue(), Service.class);
-            System.out.println(query);
             queryResults.add(query);
         }
 
         final String response = gson.toJson(queryResults);
 
         return response;
-    }
-
-    @Override
-    public Context createContext(ChaincodeStub stub) {
-        return ContractInterface.super.createContext(stub);
-    }
-
-    @Override
-    public void beforeTransaction(Context ctx) {
-        ContractInterface.super.beforeTransaction(ctx);
-    }
-
-    @Override
-    public void afterTransaction(Context ctx, Object result) {
-        ContractInterface.super.afterTransaction(ctx, result);
-    }
-
-    @Override
-    public void unknownTransaction(Context ctx) {
-        ContractInterface.super.unknownTransaction(ctx);
     }
 }

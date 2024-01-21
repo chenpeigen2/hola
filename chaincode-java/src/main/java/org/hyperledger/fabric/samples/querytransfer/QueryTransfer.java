@@ -1,7 +1,3 @@
-/*
- * SPDX-License-Identifier: Apache-2.0
- */
-
 package org.hyperledger.fabric.samples.querytransfer;
 
 import com.google.gson.Gson;
@@ -47,18 +43,6 @@ public final class QueryTransfer implements ContractInterface {
     private enum AssetTransferErrors {
         ASSET_NOT_FOUND,
         ASSET_ALREADY_EXISTS
-    }
-
-
-    @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public void InitLedger(final Context ctx) {
-        ChaincodeStub stub = ctx.getStub();
-        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":56}", "asset1", "Tomoko", "111", "query", null);
-        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":561}", "asset2", "Brad", "111", "query", null);
-        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":562}", "asset3", "Jin Soo", "111", "query", null);
-        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":563}", "asset4", "Max", "111", "query", null);
-        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":564}", "asset5", "Adrian", "111", "query", null);
-        CreateQuery(ctx, "{\"scheme\":\"shceme\",\"host\":\"host\",\"port\":565}", "asset6", "Michel", "111", "query", null);
     }
 
     @Deprecated
@@ -113,7 +97,6 @@ public final class QueryTransfer implements ContractInterface {
 
         if (assetJSON == null || assetJSON.isEmpty()) {
             String errorMessage = String.format("Asset %s does not exist", queryID);
-            System.out.println(errorMessage);
             throw new ChaincodeException(errorMessage, AssetTransferErrors.ASSET_NOT_FOUND.toString());
         }
 
@@ -135,27 +118,11 @@ public final class QueryTransfer implements ContractInterface {
 
         for (KeyValue result : results) {
             Query query = gson.fromJson(result.getStringValue(), Query.class);
-            System.out.println(query);
             queryResults.add(query);
         }
 
         final String response = gson.toJson(queryResults);
 
         return response;
-    }
-
-    @Override
-    public void beforeTransaction(final Context ctx) {
-        ContractInterface.super.beforeTransaction(ctx);
-    }
-
-    @Override
-    public void afterTransaction(final Context ctx, final Object result) {
-        ContractInterface.super.afterTransaction(ctx, result);
-    }
-
-    @Override
-    public void unknownTransaction(final Context ctx) {
-        ContractInterface.super.unknownTransaction(ctx);
     }
 }
