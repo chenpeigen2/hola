@@ -370,9 +370,39 @@ fun main() = runBlocking {
     createNamedDb("social")
     createNamedFakeIndex("class", classInfo)
     createNamedFakeIndex("social", socialInfo)
-    addFakeStuData(1, "17一班", "乒乓球")
-    addFakeStuData(1, "17二班", "羽毛球")
-    addFakeStuData(1, "17三班", "篮球")
-    addFakeStuData(1, "17四班", "足球")
+
+
+    repeat(100) {
+        var randomNumber = kotlin.random.Random.nextInt(4)
+
+        val classid = if (randomNumber == 0) {
+            "17一班"
+        } else if (randomNumber == 1) {
+            "17二班"
+        } else if (randomNumber == 2) {
+            "17三班"
+        } else {
+            "17四班"
+        }
+        println("classid随机数为：$randomNumber")
+
+        randomNumber = kotlin.random.Random.nextInt(4)
+
+        val socialId = if (randomNumber == 0) {
+            "乒乓球"
+        } else if (randomNumber == 1) {
+            "羽毛球"
+        } else if (randomNumber == 2) {
+            "篮球"
+        } else {
+            "足球"
+        }
+        println("socialId随机数为：$randomNumber")
+
+        addFakeStuData(1, classid, socialId)
+    }
+
+
+
     fakeComplexStudentQuery()
 }
