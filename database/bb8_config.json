@@ -1,0 +1,31 @@
+{
+  "$info": {
+    "$name": "bb8",
+    "$url": "http://localhost:8087",
+    "$path": {
+      "/_find/b2": [
+        "uid",
+        "nickName",
+        "gender",
+        "social_id"
+      ]
+    }
+  },
+  "$struct": [
+    {
+      "db": "social",
+      "struct": {
+        "uid": "string",
+        "nickName": "string",
+        "gender": "int",
+        "social_id": "string"
+      }
+    }
+  ],
+  "$source": {
+    "host": "127.0.0.1",
+    "port": 5984,
+    "name": "admin",
+    "password": "password"
+  }
+}
