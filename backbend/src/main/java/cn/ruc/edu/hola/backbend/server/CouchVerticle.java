@@ -104,6 +104,10 @@ public class CouchVerticle extends AbstractVerticle {
                 retriever = DataService.read(getVertx(), "./database/bb8_config.json");
             } else if (getTag().equals("bb9")) {
                 retriever = DataService.read(getVertx(), "./database/bb9_config.json");
+            } else if (getTag().equals("bb10")) {
+                retriever = DataService.read(getVertx(), "./database/bb10_config.json");
+            } else if (getTag().equals("bb11")) {
+                retriever = DataService.read(getVertx(), "./database/bb11_config.json");
             }
             // add a listener
             if (retriever != null) {
@@ -136,6 +140,12 @@ public class CouchVerticle extends AbstractVerticle {
                     } else if (getTag().equals("bb9")) {
                         Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb9_config.json", proxyMethods);
                         registerInfo = Register.register(serviceInfo, "./database/bb9_config.json");
+                    } else if (getTag().equals("bb10")) {
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb10_config.json", proxyMethods);
+                        registerInfo = Register.register(serviceInfo, "./database/bb10_config.json");
+                    } else if (getTag().equals("bb11")) {
+                        Indexer2.remappingStructFromFile(FilterParser.struct, "./database/bb11_config.json", proxyMethods);
+                        registerInfo = Register.register(serviceInfo, "./database/bb11_config.json");
                     }
 
                     System.out.println(registerInfo);
@@ -166,6 +176,10 @@ public class CouchVerticle extends AbstractVerticle {
                         DataService.writeFile(object.toString(), "./database/bb8_config.json");
                     } else if (getTag().equals("bb9")) {
                         DataService.writeFile(object.toString(), "./database/bb9_config.json");
+                    } else if (getTag().equals("bb10")) {
+                        DataService.writeFile(object.toString(), "./database/bb10_config.json");
+                    } else if (getTag().equals("bb11")) {
+                        DataService.writeFile(object.toString(), "./database/bb11_config.json");
                     }
                     out(ctx, "update info success !");
                 } catch (Exception e) {

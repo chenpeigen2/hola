@@ -30,6 +30,8 @@ public final class Entry {
             vertx.deployVerticle(CouchVerticle6.class.getName(), options);
             vertx.deployVerticle(CouchVerticle7.class.getName(), options);
             vertx.deployVerticle(CouchVerticle8.class.getName(), options);
+            vertx.deployVerticle(CouchVerticle9.class.getName(), options);
+            vertx.deployVerticle(CouchVerticle10.class.getName(), options);
         });
     }
 
