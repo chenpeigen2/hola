@@ -4,6 +4,8 @@ package cn.ruc.edu.hola.backbend;
 import cn.ruc.edu.hola.backbend.server.CouchVerticle;
 import cn.ruc.edu.hola.backbend.server.CouchVerticle1;
 import cn.ruc.edu.hola.backbend.server.CouchVerticle2;
+import cn.ruc.edu.hola.backbend.server.ext.CouchVerticle3;
+import cn.ruc.edu.hola.backbend.server.ext.CouchVerticle4;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
@@ -22,6 +24,9 @@ public final class Entry {
             vertx.deployVerticle(CouchVerticle.class.getName(), options);
             vertx.deployVerticle(CouchVerticle1.class.getName(), options);
             vertx.deployVerticle(CouchVerticle2.class.getName(), options);
+
+            vertx.deployVerticle(CouchVerticle3.class.getName(), options);
+            vertx.deployVerticle(CouchVerticle4.class.getName(), options);
         });
     }
 
