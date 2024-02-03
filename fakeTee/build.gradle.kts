@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    kotlin("jvm") version "1.9.21"
+    kotlin("jvm") version "1.9.22"
 }
 
 group = "cn.edu.ruc"
@@ -11,8 +11,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.google.guava:guava:32.1.3-jre")
-    implementation("io.vertx:vertx-web:4.5.1")
+    implementation("com.google.guava:guava:33.0.0-jre")
+    implementation("io.vertx:vertx-web:4.5.2")
     implementation("com.google.code.gson:gson:2.10.1")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
