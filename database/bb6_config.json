@@ -3,7 +3,7 @@
     "$name": "bb6",
     "$url": "http://localhost:8085",
     "$path": {
-      "/_find/b2": [
+      "/_find/insurance": [
         "uid",
         "record_id",
         "total_amount",

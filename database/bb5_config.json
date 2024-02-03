@@ -3,7 +3,7 @@
     "$name": "bb5",
     "$url": "http://localhost:8084",
     "$path": {
-      "/_find/b7": [
+      "/_find/medicalCare": [
         "record_id",
         "medicalId",
         "uid",

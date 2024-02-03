@@ -1598,7 +1598,7 @@
   &quot;selector&quot;: {&#xd;
     &quot;$or&quot;: [&#xd;
       {&#xd;
-        &quot;health.heartRate&quot;: &quot;羽毛球&quot;&#xd;
+        &quot;health.heartRate&quot;: 546&#xd;
       },&#xd;
       {&#xd;
         &quot;medicalId&quot;: &quot;17一班&quot;&#xd;
@@ -1629,7 +1629,7 @@
           <stringProp name="TestPlan.comments">患者A在B医院T时间段就诊中因为xx的原因的medicalCare都干了什么。</stringProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="汇总报告" enabled="true">
+          <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="响应时间图" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -1666,7 +1666,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="响应时间图" enabled="true">
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="查看结果树" enabled="true">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
