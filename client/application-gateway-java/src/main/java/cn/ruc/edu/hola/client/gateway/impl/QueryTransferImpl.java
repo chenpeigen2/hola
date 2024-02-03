@@ -27,13 +27,22 @@ public class QueryTransferImpl extends BasicTransfer implements QueryTransfer {
     public Query CreateQuery(String config, String queryID, String owner, String date, String query, String resp) {
         System.out.println("\n--> Submit Transaction: CreateAsset, creates new asset with ID, Color, Size, Owner and AppraisedValue arguments");
         try {
-            var result = contract.submitTransaction("CreateQuery", config, queryID, owner, date, query, resp);
+//            var result = contract.submitTransaction("CreateQuery", config, queryID, owner, date, query, resp);
+
+            // async commit
+            var commit = contract.newProposal("CreateQuery")
+                    .addArguments(config, queryID, owner, date, query, resp)
+                    .build()
+                    .endorse()
+                    .submitAsync();
+            var result = commit.getResult();
+
             var json_result = prettyJson(result);
-            logger.info("CreateQuery ====>");
-            logger.info(json_result);
-            logger.info("CreateQuery <====");
+//            logger.info("CreateQuery ====>");
+//            logger.info(json_result);
+//            logger.info("CreateQuery <====");
             return gson.fromJson(json_result, Query.class);
-        } catch (EndorseException | SubmitException | CommitStatusException | CommitException e) {
+        } catch (EndorseException | SubmitException e) {
 //            throw new RuntimeException(e);
         }
 
