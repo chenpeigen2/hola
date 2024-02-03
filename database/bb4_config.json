@@ -12,11 +12,11 @@
         "phone",
         "insurance",
         "date",
-        "heath.heartRate",
-        "heath.bloodPressure",
-        "heath.bloodSugar",
-        "heath.bloodLipids",
-        "heath.bodyTemperature",
+        "health.heartRate",
+        "health.bloodPressure",
+        "health.bloodSugar",
+        "health.bloodLipids",
+        "health.bodyTemperature",
         "reason",
         "medicalId",
         "payed"
@@ -41,7 +41,7 @@
       "struct": {
         "uid": "string",
         "date": "string",
-        "heath": {
+        "health": {
           "heartRate": "int",
           "bloodPressure": "int",
           "bloodSugar": "int",
