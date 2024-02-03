@@ -69,7 +69,7 @@ public class PerformanceVerticle extends Verticle {
                     String evaluated = TemplateController.INSTANCE.evaluate(postData, velocityContext);
                     if (TemplateController.INSTANCE.isTemplated(evaluated)) {
 //                        Logger.info(evaluated);
-                        realExecute(ctx, evaluated);
+                        out(ctx, "### This Message Only for Data Service Test ###\nthe query successfully inflate as bellow: \n" + evaluated);
                     } else {
                         out(ctx, evaluated + "\n error");
                     }
