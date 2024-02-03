@@ -32,7 +32,7 @@
         "weight": "int",
         "height": "int",
         "age": "int",
-        "phone": "string",
+        "phone": "int",
         "insurance": "boolean"
       }
     },
