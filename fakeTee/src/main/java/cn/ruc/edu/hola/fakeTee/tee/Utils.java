@@ -46,20 +46,14 @@ public class Utils {
             String aesKey = clientGetAesKey(uid);
             filter = AES.decryptAES(filter, aesKey);
 
-            //System.out.println(filter);
-
-
             Set<String> notAppendUrl = new HashSet<>();
-
-            // {"selector":{"$or":[{"social_id":"羽毛球"},{"class_id":"17一班"}],"gender":0}}
-
-            // {"selector":{"$or":[{"health.heartRate":546},{"medicalId":"17一班"}],"uid":0,"date":"2012-12-12"}}
 
             // query split process start
             JsonObject object = JsonParser.parseString(filter).getAsJsonObject();
             JsonObject selectorObject = object.get("selector").getAsJsonObject();
             Set<String> keysSet = new HashSet<>();
             List<List<String>> nestedList = new ArrayList<>();
+            Set<String> listAll = new HashSet<>();
             // detect the keyword $or
             if (selectorObject.get("$or") != null) {
                 JsonArray $or = selectorObject.get("$or").getAsJsonArray();
@@ -67,23 +61,23 @@ public class Utils {
                     Set<String> keys = element.getAsJsonObject().keySet();
                     keysSet.addAll(keys);
                     List<String> vec = new ArrayList<>(keys);
+                    listAll.addAll(vec);
                     nestedList.add(vec);
                 });
             }
-            //System.out.println(nestedList);
 
+            Set<String> keys = selectorObject.keySet();
             if (nestedList.isEmpty()) {
-                Set<String> keys = selectorObject.keySet();
                 List<String> vec = new ArrayList<>(keys);
                 nestedList.add(vec);
             } else {
                 // [[health.heartRate], [medicalId]]
 
-                Set<String> keys = selectorObject.keySet();
                 keys.forEach(key -> {
                     if (!key.equals("$or")) {
                         for (List<String> list : nestedList) {
                             keysSet.add(key);
+                            listAll.add(key);
                             list.add(key);
                         }
                     }
@@ -92,10 +86,31 @@ public class Utils {
             // the split result
             List<List<String>> simpleSplitRes = new ArrayList<>(nestedList);
 
-            int sz = simpleSplitRes.size();
+            // pre-match for sure
+            List<String> urlList = Match.simpleMatch(gson.toJson(listAll));
+            for (int k = 0; k < urlList.size(); ) {
+                if (urlList.get(k).equals("$url")) {
+                    k++; // move to $url value
+                    bbUrl = urlList.get(k);
+                    k++; // move to $find
+                    if (urlList.get(k).equals("$find")) {
+                        k++; // move to $find value
+                        bbFind = urlList.get(k);
 
-            for (int j = 0; j < sz; j++) {
-                var vec = simpleSplitRes.get(j);
+                        requests.add(new Request(bbUrl + bbFind, filter));
+                        notAppendUrl.add(bbUrl + bbFind);
+
+                    }
+                    k++; // move to next
+                }
+            }
+
+
+            for (List<String> vec : simpleSplitRes) {
+                //                [health.heartRate, uid, date]
+//                [medicalId, uid, date]
+                System.out.println(vec);
+
                 // compute the vec start
                 Set<String> doHas = new HashSet<>();
                 Set<String> doNotHas = new HashSet<>();
@@ -107,15 +122,8 @@ public class Utils {
                         doNotHas.add(key);
                     }
                 }
-//                urlRemoveMap.clear();
-
                 // compute the vec end
-                List<String> urlList = Match.simpleMatch(gson.toJson(vec));
-
-                //System.out.println(">>>>>>>>>>>>>>>>>>>>>");
-                //System.out.println(gson.toJson(vec));
-                //System.out.println(urlList);
-                //System.out.println("<<<<<<<<<<<<<<<<<<<<");
+                urlList = Match.simpleMatch(gson.toJson(vec));
 
 
                 // compute the urlRemoveMap start
@@ -145,9 +153,6 @@ public class Utils {
                 }
                 // compute the urlRemoveMap end
 
-                //System.out.println(urlRemoveMap);
-                //System.out.println(urlRemoveMap.isEmpty());
-                //System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzz");
 
                 // execute the query trim
                 String finalFilter = filter;
@@ -172,29 +177,14 @@ public class Utils {
                     }
                     requests.add(new Request(bbUrl + bbFind, finalFilter));
                 }
-
-
             }
 
-
         }
-
-//        //System.out.println("=======================");
-//        for (Request request : requests) {
-//            //System.out.println(request);
-//        }
-//        //System.out.println("=======================");
-//        requests.clear();
-//
-//        requests.add(new Request("http://localhost:8080/_find/b2", "{\"selector\":{\"$or\":[{\"social_id\":\"羽毛球\"}],\"gender\":0}}"));
-//        requests.add(new Request("http://localhost:8081/_find/b7", "{\"selector\":{\"$or\":[{\"class_id\":\"17一班\"}],\"gender\":0}}"));
-//
-//
-        //System.out.println("++++++++++++++++++++");
+        System.out.println("++++++++++++++++++++");
         for (Request request : requests) {
-            //System.out.println(request);
+            System.out.println(request);
         }
-        //System.out.println("++++++++++++++++++++");
+        System.out.println("++++++++++++++++++++");
 
         return requests;
     }
