@@ -19,7 +19,6 @@
         "heath.bodyTemperature",
         "reason",
         "medicalId",
-        "insurance",
         "payed"
       ]
     }
@@ -51,7 +50,6 @@
         },
         "reason": "string",
         "medicalId": "string",
-        "insurance": "boolean",
         "payed": "float"
       }
     }

@@ -7,11 +7,12 @@
         "uid",
         "record_id",
         "total_amount",
+        "revenue_total_amount",
         "revenue_amount",
         "payed_amount",
         "revenue_percent",
         "medicalId",
-        "revenue_date",
+        "date",
         "reimbursement_type",
         "reimbursement_percent",
         "personal_revenue_min",
@@ -19,7 +20,6 @@
         "medicalCareId",
         "medicalCareSummary",
         "medicalCarePrice",
-        "date",
         "revenue_enable",
         "reimbursement_revenue",
         "reimbursement_type"
@@ -33,11 +33,12 @@
         "uid": "string",
         "record_id": "string",
         "total_amount": "float",
+        "revenue_total_amount" : "float",
         "revenue_amount": "float",
         "payed_amount": "float",
         "revenue_percent": "float",
         "medicalId": "string",
-        "revenue_date": "date"
+        "date": "date"
       }
     },
     {
