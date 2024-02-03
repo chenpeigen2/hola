@@ -14,13 +14,13 @@
   },
   "$struct": [
     {
-      "db": "class",
+      "db": "medical_care",
       "struct": {
+        "record_id": "string",
+        "medicalId": "string",
         "uid": "string",
-        "nickName": "string",
-        "class_id": "string",
-        "gender": "int",
-        "birthDate": "date"
+        "medicalCare": [],
+        "date": "date"
       }
     }
   ],

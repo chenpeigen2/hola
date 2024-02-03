@@ -13,12 +13,42 @@
   },
   "$struct": [
     {
-      "db": "social",
+      "db": "reimbursement_records",
       "struct": {
         "uid": "string",
-        "nickName": "string",
-        "gender": "int",
-        "social_id": "string"
+        "record_id": "string",
+        "total_amount": "float",
+        "revenue_amount": "float",
+        "payed_amount": "float",
+        "revenue_percent": "float",
+        "medicalId": "string",
+        "revenue_date": "date"
+      }
+    },
+    {
+      "db": "reimbursement_rule",
+      "struct": {
+        "reimbursement_type": "int",
+        "reimbursement_percent": "float",
+        "personal_revenue_min": "float",
+        "personal_revenue_max": "float"
+      }
+    },
+    {
+      "db": "medical_info",
+      "struct": {
+        "reimbursement_type": "int",
+        "reimbursement_percent": "float",
+        "personal_revenue_min": "float",
+        "personal_revenue_max": "float"
+      }
+    },{
+      "db": "reimbursement_entrance_info",
+      "struct": {
+        "uid": "string",
+        "reimbursement_revenue": "float",
+        "reimbursement_type": "int",
+        "personal_revenue_max": "float"
       }
     }
   ],

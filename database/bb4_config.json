@@ -13,12 +13,33 @@
   },
   "$struct": [
     {
-      "db": "social",
+      "db": "personal_info",
       "struct": {
         "uid": "string",
-        "nickName": "string",
-        "gender": "int",
-        "social_id": "string"
+        "name": "string",
+        "weight": "int",
+        "height": "int",
+        "age": "int",
+        "phone": "string",
+        "insurance": "boolean"
+      }
+    },
+    {
+      "db": "personal_hospital_record",
+      "struct": {
+        "uid": "string",
+        "date": "string",
+        "heath": {
+          "heartRate": "int",
+          "bloodPressure": "int",
+          "bloodSugar": "int",
+          "bloodLipids": "int",
+          "bodyTemperature": "float"
+        },
+        "reason": "string",
+        "medicalId": "string",
+        "insurance": "boolean",
+        "payed": "float"
       }
     }
   ],
