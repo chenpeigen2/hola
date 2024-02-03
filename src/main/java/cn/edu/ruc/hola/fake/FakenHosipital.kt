@@ -46,7 +46,7 @@ val personal_hospital_record = """
           "bloodLipids": 25,
           "bodyTemperature": 36.9
         },
-        "reason": "blood pressure",
+        "reason": "heartRate",
         "medicalId": "DX00C1",
         "payed": "198"
       }
