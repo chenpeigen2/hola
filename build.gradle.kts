@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.21"
+    kotlin("jvm") version "1.9.22"
     id("de.qualersoft.jmeter") version "2.4.0"
     application
     id("org.springframework.boot") version "3.1.5"
@@ -33,11 +33,11 @@ dependencies {
     implementation("org.apache.httpcomponents.client5:httpclient5:5.2.1")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("commons-codec:commons-codec:1.16.0")
-    implementation("com.google.guava:guava:32.1.3-jre")
+    implementation("com.google.guava:guava:33.0.0-jre")
     implementation("net.bytebuddy:byte-buddy:1.14.9")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.apache.commons:commons-math3:3.6.1")
-    implementation("io.vertx:vertx-web:4.5.1")
+    implementation("io.vertx:vertx-web:4.5.2")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
