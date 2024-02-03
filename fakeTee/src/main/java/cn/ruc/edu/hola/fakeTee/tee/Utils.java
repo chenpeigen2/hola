@@ -29,6 +29,9 @@ public class Utils {
         return clientAuthMap.getOrDefault(uid, null);
     }
 
+    static String bbUrl;
+    static String bbFind;
+
     public static List<Request> provideQuery(String data) {
         // [{"uid":"e51dce84-f2a4-43db-9b8f-311250ff0ba1","filter":"I8Jr2dNWSTMXIBVmr3ep0Rn/cC6eEzG6h6PKetf1TRly2j+uv2wT5g73HnHloeyl6uFf7ycRODliMpENP8A6xtiRDYxxJV19h5tA19e4QlaecLhjv9rvYa4q4NexLYy5"}]
         // here we need offer fake query
@@ -42,7 +45,15 @@ public class Utils {
             String filter = jsonObject.get("filter").getAsString();
             String aesKey = clientGetAesKey(uid);
             filter = AES.decryptAES(filter, aesKey);
+
+            //System.out.println(filter);
+
+
+            Set<String> notAppendUrl = new HashSet<>();
+
             // {"selector":{"$or":[{"social_id":"羽毛球"},{"class_id":"17一班"}],"gender":0}}
+
+            // {"selector":{"$or":[{"health.heartRate":546},{"medicalId":"17一班"}],"uid":0,"date":"2012-12-12"}}
 
             // query split process start
             JsonObject object = JsonParser.parseString(filter).getAsJsonObject();
@@ -59,12 +70,15 @@ public class Utils {
                     nestedList.add(vec);
                 });
             }
+            //System.out.println(nestedList);
 
             if (nestedList.isEmpty()) {
                 Set<String> keys = selectorObject.keySet();
                 List<String> vec = new ArrayList<>(keys);
                 nestedList.add(vec);
             } else {
+                // [[health.heartRate], [medicalId]]
+
                 Set<String> keys = selectorObject.keySet();
                 keys.forEach(key -> {
                     if (!key.equals("$or")) {
@@ -93,22 +107,30 @@ public class Utils {
                         doNotHas.add(key);
                     }
                 }
+//                urlRemoveMap.clear();
 
                 // compute the vec end
                 List<String> urlList = Match.simpleMatch(gson.toJson(vec));
+
+                //System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+                //System.out.println(gson.toJson(vec));
+                //System.out.println(urlList);
+                //System.out.println("<<<<<<<<<<<<<<<<<<<<");
+
+
                 // compute the urlRemoveMap start
                 for (int k = 0; k < urlList.size(); ) {
                     if (urlList.get(k).equals("$url")) {
                         k++; // move to $url value
-                        String bbUrl = urlList.get(k);
+                        bbUrl = urlList.get(k);
                         k++; // move to $find
                         if (urlList.get(k).equals("$find")) {
                             k++; // move to $find value
-                            String bbFind = urlList.get(k);
+                            bbFind = urlList.get(k);
 
                             if (!urlRemoveMap.containsKey(bbUrl + bbFind)) {
                                 Set<String> set = new HashSet<>(doNotHas);
-                                urlRemoveMap.put(bbUrl + bbFind, set);
+                                urlRemoveMap.put(bbUrl + bbFind, set); // here
                             } else {
                                 Set<String> set = urlRemoveMap.get(bbUrl + bbFind);
                                 // if prev the key in that map, we need to remove the key
@@ -122,35 +144,57 @@ public class Utils {
                     }
                 }
                 // compute the urlRemoveMap end
+
+                //System.out.println(urlRemoveMap);
+                //System.out.println(urlRemoveMap.isEmpty());
+                //System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzz");
+
+                // execute the query trim
+                String finalFilter = filter;
+
+                // {http://localhost:8084/_find/b7=[health.heartRate], http://localhost:8083/_find/b2=[health.heartRate], http://localhost:8085/_find/b2=[health.heartRate]}
+                urlRemoveMap.forEach((url, set) -> {
+                    String trimQuery = queryTrim(finalFilter, set);
+                    if (!notAppendUrl.contains(url)) {
+                        requests.add(new Request(url, trimQuery));
+                    }
+                });
+                if (urlRemoveMap.isEmpty()) {
+                    notAppendUrl.add(bbUrl + bbFind);
+                    Set<Integer> set = new HashSet<>();
+                    for (int k = 0; k < requests.size(); k++) {
+                        if (notAppendUrl.contains(requests.get(k).url)) {
+                            set.add(k);
+                        }
+                    }
+                    for (Integer integer : set) {
+                        requests.remove(integer);
+                    }
+                    requests.add(new Request(bbUrl + bbFind, finalFilter));
+                }
+
+
             }
 
-            // execute the query trim
-            String finalFilter = filter;
-            urlRemoveMap.forEach(new BiConsumer<String, Set<String>>() {
-                @Override
-                public void accept(String url, Set<String> set) {
-                    String trimQuery = queryTrim(finalFilter, set);
-                    requests.add(new Request(url, trimQuery));
-                }
-            });
+
         }
 
-//        System.out.println("=======================");
+//        //System.out.println("=======================");
 //        for (Request request : requests) {
-//            System.out.println(request);
+//            //System.out.println(request);
 //        }
-//        System.out.println("=======================");
+//        //System.out.println("=======================");
 //        requests.clear();
 //
 //        requests.add(new Request("http://localhost:8080/_find/b2", "{\"selector\":{\"$or\":[{\"social_id\":\"羽毛球\"}],\"gender\":0}}"));
 //        requests.add(new Request("http://localhost:8081/_find/b7", "{\"selector\":{\"$or\":[{\"class_id\":\"17一班\"}],\"gender\":0}}"));
 //
 //
-        System.out.println("++++++++++++++++++++");
+        //System.out.println("++++++++++++++++++++");
         for (Request request : requests) {
-            System.out.println(request);
+            //System.out.println(request);
         }
-        System.out.println("++++++++++++++++++++");
+        //System.out.println("++++++++++++++++++++");
 
         return requests;
     }
