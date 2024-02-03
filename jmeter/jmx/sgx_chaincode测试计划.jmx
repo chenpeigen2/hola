@@ -1598,14 +1598,14 @@
   &quot;selector&quot;: {&#xd;
     &quot;$or&quot;: [&#xd;
       {&#xd;
-        &quot;health.heartRate&quot;: 546&#xd;
+        &quot;medicalId&quot;: &quot;DX00C1&quot;&#xd;
       },&#xd;
       {&#xd;
-        &quot;medicalId&quot;: &quot;17一班&quot;&#xd;
+        &quot;reason&quot;: &quot;heartRate&quot;&#xd;
       }&#xd;
     ],&#xd;
-    &quot;uid&quot;: 0,&#xd;
-    &quot;date&quot; : &quot;2012-12-12&quot;&#xd;
+    &quot;uid&quot;: &quot;C0001&quot;,&#xd;
+    &quot;date&quot; : &quot;2023-12-12&quot;&#xd;
   }&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
