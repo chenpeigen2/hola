@@ -58,7 +58,7 @@ public class DataServiceVerticle extends AbstractVerticle {
                 if (!config.containsKey(productType)) {
                     config.put(productType, object);
                     DataService.writeFile(config.toString());
-                    out(ctx, productType + "\n" + object);
+                    out(ctx, "write success");
                 } else {
                     out(ctx, productType + " already exist");
                 }
