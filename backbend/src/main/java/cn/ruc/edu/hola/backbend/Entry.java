@@ -20,20 +20,20 @@ public final class Entry {
         ConfigRetriever retriever = readYaml(vertx);
         retriever.getConfig(event -> {
             DeploymentOptions options = new DeploymentOptions().setConfig(event.result());
-            vertx.deployVerticle(CouchVerticle.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle1.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle2.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle1.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle2.class.getName(), options);
 
             vertx.deployVerticle(CouchVerticle3.class.getName(), options);
             vertx.deployVerticle(CouchVerticle4.class.getName(), options);
             vertx.deployVerticle(CouchVerticle5.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle6.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle7.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle8.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle9.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle10.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle11.class.getName(), options);
-            vertx.deployVerticle(CouchVerticle12.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle6.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle7.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle8.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle9.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle10.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle11.class.getName(), options);
+//            vertx.deployVerticle(CouchVerticle12.class.getName(), options);
         });
     }
 

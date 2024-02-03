@@ -146,11 +146,11 @@ public class Utils {
 //        requests.add(new Request("http://localhost:8081/_find/b7", "{\"selector\":{\"$or\":[{\"class_id\":\"17一班\"}],\"gender\":0}}"));
 //
 //
-//        System.out.println("++++++++++++++++++++");
-//        for (Request request : requests) {
-//            System.out.println(request);
-//        }
-//        System.out.println("++++++++++++++++++++");
+        System.out.println("++++++++++++++++++++");
+        for (Request request : requests) {
+            System.out.println(request);
+        }
+        System.out.println("++++++++++++++++++++");
 
         return requests;
     }
