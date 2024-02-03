@@ -13,3 +13,7 @@
 ./network.sh deployCC -ccn basic -ccp ../../chaincode-java/ -ccl java
 
 ./network.sh down
+
+
+
+./apache-jmeter-5.6.2/bin/jmeter.sh -n -t ./jmx/sgx_chaincode测试计划.jmx -l result.jtl -e -o ./ResultReport
