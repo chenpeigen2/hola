@@ -4,11 +4,11 @@
     "$url": "http://localhost:8084",
     "$path": {
       "/_find/b7": [
+        "record_id",
+        "medicalId",
         "uid",
-        "nickName",
-        "gender",
-        "class_id",
-        "birthDate"
+        "medicalCare",
+        "date"
       ]
     }
   },

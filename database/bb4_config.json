@@ -5,9 +5,22 @@
     "$path": {
       "/_find/b2": [
         "uid",
-        "nickName",
-        "gender",
-        "social_id"
+        "name",
+        "weight",
+        "height",
+        "age",
+        "phone",
+        "insurance",
+        "date",
+        "heath.heartRate",
+        "heath.bloodPressure",
+        "heath.bloodSugar",
+        "heath.bloodLipids",
+        "heath.bodyTemperature",
+        "reason",
+        "medicalId",
+        "insurance",
+        "payed"
       ]
     }
   },
