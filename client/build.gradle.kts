@@ -32,7 +32,7 @@ dependencies {
     implementation("io.vertx:vertx-web:4.5.2")
     implementation("io.vertx:vertx-web-validation:4.5.2")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.5.2")
+    implementation("io.vertx:vertx-auth-properties:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
     implementation("io.vertx:vertx-auth-jwt:4.5.2")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config

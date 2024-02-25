@@ -54,10 +54,10 @@ public class Utils {
             Set<String> keysSet = new HashSet<>();
             List<List<String>> nestedList = new ArrayList<>();
             Set<String> listAll = new HashSet<>();
-            // detect the keyword $or
-            if (selectorObject.get("$or") != null) {
-                JsonArray $or = selectorObject.get("$or").getAsJsonArray();
-                $or.forEach(element -> {
+            // detect the keyword $and
+            if (selectorObject.get("$and") != null) {
+                JsonArray $and = selectorObject.get("$and").getAsJsonArray();
+                $and.forEach(element -> {
                     Set<String> keys = element.getAsJsonObject().keySet();
                     keysSet.addAll(keys);
                     List<String> vec = new ArrayList<>(keys);
@@ -74,7 +74,7 @@ public class Utils {
                 // [[health.heartRate], [medicalId]]
 
                 keys.forEach(key -> {
-                    if (!key.equals("$or")) {
+                    if (!key.equals("$and")) {
                         for (List<String> list : nestedList) {
                             keysSet.add(key);
                             listAll.add(key);
@@ -107,6 +107,7 @@ public class Utils {
 
 
             for (List<String> vec : simpleSplitRes) {
+                urlRemoveMap.clear();
                 //                [health.heartRate, uid, date]
 //                [medicalId, uid, date]
                 System.out.println(vec);
@@ -190,7 +191,7 @@ public class Utils {
     }
 
     private static String queryTrim(String filter, Set<String> keysSet) {
-        // {"selector":{"$or":[{"social_id":"羽毛球"},{"class_id":"17一班"}],"gender":0}}
+        // {"selector":{"$and":[{"social_id":"羽毛球"},{"class_id":"17一班"}],"gender":0}}
         JsonObject jsonObject = JsonParser.parseString(filter).getAsJsonObject();
         JsonObject selectorObject = jsonObject.get("selector").getAsJsonObject();
         interJsonObject(selectorObject, keysSet);

@@ -29,7 +29,7 @@ dependencies {
     // https://mvnrepository.com/artifact/io.vertx/vertx-service-discovery
     implementation("io.vertx:vertx-service-discovery:4.5.2")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-properties
-    implementation("io.vertx:vertx-auth-properties:4.5.2")
+    implementation("io.vertx:vertx-auth-properties:4.5.1")
     // https://mvnrepository.com/artifact/io.vertx/vertx-auth-jwt
     implementation("io.vertx:vertx-auth-jwt:4.5.2")
     // https://mvnrepository.com/artifact/io.vertx/vertx-config
