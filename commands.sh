@@ -17,3 +17,5 @@
 
 
 ./apache-jmeter-5.6.2/bin/jmeter.sh -n -t ./jmx/sgx_chaincode测试计划.jmx -l result.jtl -e -o ./ResultReport
+
+docker logs -f c746f3da0d13 | grep "代码执行时长-chaincode" > chaincode.txt
