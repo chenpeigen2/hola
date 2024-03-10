@@ -4,12 +4,14 @@ package cn.ruc.edu.hola.client.performance;
 import cn.ruc.edu.hola.client.ApiService;
 import cn.ruc.edu.hola.client.entity.ChaincodeRequest;
 import cn.ruc.edu.hola.client.entity.RealResponse;
+import com.google.common.base.Stopwatch;
 import io.vertx.core.Handler;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.TimeUnit;
 
 public final class PerformanceHandler implements Handler<Long> {
 
@@ -31,6 +33,8 @@ public final class PerformanceHandler implements Handler<Long> {
 
     @Override
     public void handle(Long event) {
+        Stopwatch watch = Stopwatch.createStarted();
+
         int size = queue.size();
         final List<Callback> callbacks = new ArrayList<>();
         for (int i = 0; i < size; i++) {
@@ -57,5 +61,11 @@ public final class PerformanceHandler implements Handler<Long> {
                 callbacks.get(i).onFinish(specText);
             }
         }
+
+
+        watch.stop();
+        long time = watch.elapsed(TimeUnit.MILLISECONDS);
+        System.out.println("代码执行时长-client：" + time);
+
     }
 }
