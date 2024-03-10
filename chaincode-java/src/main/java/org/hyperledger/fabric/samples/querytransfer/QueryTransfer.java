@@ -1,5 +1,6 @@
 package org.hyperledger.fabric.samples.querytransfer;
 
+import com.google.common.base.Stopwatch;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.Response;
@@ -18,6 +19,7 @@ import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @Contract(
@@ -80,6 +82,8 @@ public final class QueryTransfer implements ContractInterface {
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public String CreateMultiQuery(final Context ctx, final String sgxConfig, final String queries) {
+        Stopwatch watch = Stopwatch.createStarted();
+
         ChaincodeStub stub = ctx.getStub();
         SGXEntity config = gson.fromJson(sgxConfig, SGXEntity.class);
         Type type = new TypeToken<List<Query>>() {
@@ -87,7 +91,13 @@ public final class QueryTransfer implements ContractInterface {
         List<Query> queryList = gson.fromJson(queries, type);
         AsyncHttpClient.INSTANCE.executeQuery(queryList, config);
         queryList.forEach(query -> CreateQueryInner(stub, query.getQueryID(), gson.toJson(query)));
-        return gson.toJson(queryList);
+        var ret = gson.toJson(queryList);
+
+        watch.stop();
+        long time = watch.elapsed(TimeUnit.MILLISECONDS);
+        System.out.println("代码执行时长-chaincode：" + time);
+
+        return ret;
     }
 
     @Transaction(intent = Transaction.TYPE.EVALUATE)
